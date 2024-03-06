@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - train
+  - hpsearch: bnn_lrt
+  - debug: null
+  - override /callbacks: hpsearch
+  - _self_
+
+task_name: hps_lrt
+hpsearch:
+  n_trials: 60
+test: False

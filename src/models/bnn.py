@@ -8,7 +8,7 @@ import torch.nn.functional as F
 import tyxe
 from tyxe import guides, priors, likelihoods, VariationalBNN
 from tyxe.guides import AutoNormal, AutoRadial
-import lightning as L
+import pytorch_lightning as L
 from functools import partial
 import copy
 import contextlib
@@ -32,8 +32,7 @@ class BNN(L.LightningModule):
         super().__init__()
         pyro.clear_param_store()
         self.save_hyperparameters(logger=False, ignore=["net"])
-        self.mc_samples_train = 10
-        self.net = net
+        self.net = net.double()
 
     def define_bnn(self):
         if not self.hparams.pretrain_epochs == 0:
@@ -121,7 +120,7 @@ class BNN(L.LightningModule):
 
         with tyxe.poutine.local_reparameterization():
             elbo = self.svi.step(x,y)
-            loc, scale = self.bnn.predict(x[0], x[1],num_predictions=self.mc_samples_train)
+            loc, scale = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_train)
             kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
@@ -141,7 +140,7 @@ class BNN(L.LightningModule):
         )
         elbo = self.svi.evaluate_loss(x, y.squeeze())
         # Aggregate = False if num_prediction = 1, else nans in sd
-        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.mc_samples_train)
+        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_train)
         kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         mse = F.mse_loss(y.squeeze(), loc.squeeze())
@@ -175,7 +174,7 @@ class BNN(L.LightningModule):
         pred = dict()
         loc, scale = self.bnn.predict(
             x,
-            num_predictions=self.mc_samples_train
+            num_predictions=self.hparams.mc_samples_train
         )
         pred["preds"] = loc.cpu().numpy()
         pred["stds"] = scale.cpu().numpy()

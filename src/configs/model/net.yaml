@@ -1,0 +1,8 @@
+net:
+  _target_: src.models.nets.network.NetAtom
+  input_size: ???  
+  hidden_size: ???  
+  species: ???  
+  active_names: ???  
+  alpha: ???
+  device: 'cpu'
