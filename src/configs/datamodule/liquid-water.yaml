@@ -1,0 +1,4 @@
+defaults:
+  - default
+
+data_dir: ${paths.data_dir}/liquid-water/train.in

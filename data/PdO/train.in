@@ -1,4 +1,4 @@
-TRAININGSET /home/riccardo/bin/repos/aenet-bayesian/examples/PdO/data.train.ascii
+TRAININGSET /media/riccardo/HardDisk/data/PdO/aims-db/data.train.ascii
 TESTPERCENT 5
 ITERATIONS 20000
 ITERWRITE 1

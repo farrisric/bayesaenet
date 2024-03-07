@@ -5,7 +5,7 @@
 defaults:
   - _self_
   - datamodule: datamodule
-  - model: bnn
+  - model: bnn_lrt
   - callbacks: default
   - logger: tensorboard
   - trainer: cpu

@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - prediction: PdO
+  - trainer: cpu
+  - paths: default
+  - hydra: default
+
+task_name: predict
+tags: ["dev"]
+subsets: ["val"]
+ckpt_path: all
+seed: null

@@ -158,8 +158,8 @@ class BNN(L.LightningModule):
         y = batch[0][11]
         loc, scale = self.bnn.predict(x[0], x[1],num_predictions=800)
 
-        nll = F.gaussian_nll_loss(loc, y, torch.square(scale))
-        mse = F.mse_loss(y, loc)
+        nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
+        mse = F.mse_loss(y.squeeze(), loc.squeeze())
         self.log("nll/test", nll, batch_size=len(y))
         self.log("mse/test", mse, batch_size=len(y))
         return nll

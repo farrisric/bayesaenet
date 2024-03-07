@@ -39,9 +39,6 @@ def train(cfg: DictConfig, trial: Optional[optuna.trial.Trial] = None):
     :param cfg: A DictConfig configuration composed by Hydra.
     :return: A tuple with metrics and dict with all instantiated objects.
     """
-    # set seed for random number generators in pytorch, numpy and python.random
-    if cfg.get("seed"):
-        L.seed_everything(cfg.seed, workers=True)
 
     log.info(f"Instantiating datamodule <{cfg.datamodule._target_}>")
     datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
@@ -52,7 +49,6 @@ def train(cfg: DictConfig, trial: Optional[optuna.trial.Trial] = None):
     cfg.model.net.species = datamodule.species
     cfg.model.net.active_names = datamodule.active_names
     cfg.model.net.alpha = datamodule.alpha
-    print(cfg.model)
     if OmegaConf.is_missing(cfg.model, "dataset_size"):
         cfg.model.dataset_size = datamodule.train_size
     model: LightningModule = hydra.utils.instantiate(
