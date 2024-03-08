@@ -55,4 +55,5 @@ docs/_build/
 
 # Logs
 .logs/
-.src/results
+.src/logs/
+.src/results/
