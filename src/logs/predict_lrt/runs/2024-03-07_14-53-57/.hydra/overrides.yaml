@@ -1,0 +1,3 @@
+- task_name=predict_lrt
+- ckpt_path=src/results/TiO/runs/LRT/0/checkpoints/epoch_366-step_2569.ckpt
+- prediction=TiO

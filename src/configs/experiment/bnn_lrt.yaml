@@ -2,11 +2,11 @@
 
 defaults:
 #  - override /datamodule: datamodule
-  - override /model: bnn
+  - override /model: bnn_lrt
   - override /callbacks: default
   - override /trainer: default
 
-tags: ["ncmapss", "bayesian", "lrt"]
+tags: ["TiO", "bayesian", "lrt"]
 
 seed: 12345
 

@@ -1,0 +1,1 @@
+python src/tasks/train.py experiment=bnn_lrt seed=5 trainer.deterministic=False task_name=train_fo datamodule=TiO

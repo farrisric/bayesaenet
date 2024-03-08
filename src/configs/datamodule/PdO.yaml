@@ -1,4 +1,4 @@
 defaults:
-  - default
+  - datamodule
 
 data_dir: ${paths.data_dir}/PdO/train.in

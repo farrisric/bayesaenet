@@ -1,0 +1,31 @@
+# @package _global_
+
+defaults:
+#  - override /datamodule: datamodule
+  - override /model: bnn_rad
+  - override /callbacks: default
+  - override /trainer: default
+
+tags: ["TiO", "bayesian", "rad"]
+
+seed: 12345
+
+trainer:
+  min_epochs: 1
+  max_epochs: 500
+
+model:
+  lr: 0.000857
+  prior_scale: 0.138793
+  q_scale: 0.001351
+  pretrain_epochs: 5
+  mc_samples_train: 1
+  mc_samples_eval: 20
+
+callbacks:
+  model_checkpoint:
+    monitor: elbo/val
+
+  early_stopping:
+    monitor: elbo/val
+    patience: 20

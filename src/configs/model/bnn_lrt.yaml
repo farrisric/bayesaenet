@@ -1,17 +1,5 @@
 defaults:
-  - net
+  - bnn
 
-_target_: src.models.bnn.BNN
-
-lr: 0.001
-pretrain_epochs: 0
-mc_samples_train: 1
-mc_samples_eval: 20,
-dataset_size: ???
-fit_context: 'rad
-'
-guide: 'normal'
-prior_loc: 1
-prior_scale: 1
-q_scale: 1
-obs_scale: 1
+fit_context: lrt
+guide: normal

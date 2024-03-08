@@ -1,9 +1,0 @@
-# @package _global_
-
-defaults:
-  - _self_
-  - /datamodule: datamodule
-  - /model@LRT: bnn_lrt
-
-dataset: PdO
-runs_dir: ${paths.results_dir}/${dataset}/runs

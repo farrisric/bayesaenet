@@ -2,7 +2,7 @@
 
 defaults:
   - _self_
-  - prediction: PdO
+  - prediction: dataset
   - trainer: cpu
   - paths: default
   - hydra: default

@@ -1,0 +1,3 @@
+- model=bnn_lrt
+- +ckp_path=src/results/TiO/runs/LRT/0/
+- datamodule=TiO

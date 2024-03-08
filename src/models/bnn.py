@@ -102,10 +102,8 @@ class BNN(L.LightningModule):
         )
 
         self.svi = self.svi = SVI(
-            pyro.poutine.scale(self.bnn.model,scale=1.0/(self.count_parameters()),),
-            pyro.poutine.scale(self.bnn.guide,scale=1.0/(self.count_parameters()),),
-            #pyro.poutine.scale(self.bnn.model,scale=1.0),
-            #pyro.poutine.scale(self.bnn.guide,scale=1.0),
+            pyro.poutine.scale(self.bnn.model,scale=1.0/self.hparams.dataset_size,),
+            pyro.poutine.scale(self.bnn.guide,scale=1.0/self.hparams.dataset_size,),
             self.optimizer,
             self.loss,)
 
@@ -118,7 +116,7 @@ class BNN(L.LightningModule):
         )
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
 
-        with tyxe.poutine.local_reparameterization():
+        with self.fit_ctxt():
             elbo = self.svi.step(x,y)
             loc, scale = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_train)
             kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
@@ -193,9 +191,6 @@ class BNN(L.LightningModule):
             checkpoint["state_dict"] = remove_dict_entry_startswith(
                 checkpoint["state_dict"], "bnn"
             )
-    
-    def count_parameters(self):
-        return sum(p.numel() for p in self.parameters() if p.requires_grad)
 
 def param_store_to(device: str):
     ps = pyro.get_param_store().get_state()
@@ -225,3 +220,35 @@ def weights_init(m):
         torch.nn.init.xavier_normal_(m.weight)
     elif isinstance(m, nn.Linear):
         torch.nn.init.kaiming_normal_(m.weight)
+
+class NN(L.LightningModule):
+    """
+    Class used by BNNs to pretrain their weights. This class is instantiated,
+    trained for X epochs and then it stores its weights in the log directory.
+    VIBnnWrapper then loads the weights and starts the Bayesian training
+    """
+
+    def __init__(self, net: torch.nn.Module, optimizer: torch.optim.Optimizer):
+        super().__init__()
+        self.save_hyperparameters(logger=False, ignore=["net"])
+        self.net = net
+        self.net.apply(weights_init)
+
+    def forward(self, x):
+        return self.net(x)
+
+    def step(self, batch):
+        x = batch[0][10], batch[0][12]
+        y = batch[0][11]
+        y_hat = self.net(x)
+        return F.mse_loss(y_hat, y.squeeze())
+
+    def training_step(self, batch, batch_idx):
+        return self.step(batch)
+
+    def validation_step(self, batch, batch_idx):
+        mse = self.step(batch)
+        self.log("mse/val", mse, on_step=False, on_epoch=True)
+
+    def configure_optimizers(self):
+        return self.hparams.optimizer(params=self.parameters())

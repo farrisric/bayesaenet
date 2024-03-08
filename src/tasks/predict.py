@@ -12,8 +12,7 @@ from pathlib import Path
 from utils import get_pylogger
 import sys
 
-sys.path.append('/home/riccardo/bin/repos/aenet-bnn/src/utils')
-from miscellaneous import ResultSaver
+from src.utils.miscellaneous import ResultSaver
 
 root = pyrootutils.setup_root(
     search_from=__file__,
@@ -42,11 +41,13 @@ def predict(cfg: DictConfig):
     for ckpt_path in ckpt_paths:
         method, run = ckpt_path.as_posix().split("/")[-4:-2]
         run = f"{int(run):03d}"
-
         model = cfg[method]
         log.info(f"Instantiating model <{model._target_}>")
-        model.net.win_length = datamodule.win_length
-        model.net.n_features = datamodule.n_features
+        cfg.model.net.input_size = datamodule.input_size
+        cfg.model.net.hidden_size = datamodule.hidden_size
+        cfg.model.net.species = datamodule.species
+        cfg.model.net.active_names = datamodule.active_names
+        cfg.model.net.alpha = datamodule.alpha
         if OmegaConf.is_missing(model, "dataset_size"):
             model.dataset_size = datamodule.train_size
         model: LightningModule = hydra.utils.instantiate(
