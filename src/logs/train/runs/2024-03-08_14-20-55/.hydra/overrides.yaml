@@ -1,0 +1,4 @@
+- trainer.max_epochs=1000
+- model=bnn_lrt
+- datamodule=TiO
+- ckpt_path=/home/riccardo/bin/repos/aenet-bnn/src/logs/train_lrt/runs/2024-03-08_14-19-14/checkpoints/epoch_262-step_1841.ckpt

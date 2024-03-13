@@ -1,0 +1,5 @@
+- experiment=bnn_lrt
+- seed=5
+- trainer.deterministic=False
+- task_name=train_lrt
+- datamodule=TiO

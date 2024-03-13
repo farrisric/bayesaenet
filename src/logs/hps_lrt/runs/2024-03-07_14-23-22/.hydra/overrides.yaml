@@ -1,4 +1,0 @@
-- model=bnn_fo
-- datamodule=TiO
-- hpsearch=bnn_lrt
-- task_name=hps_lrt

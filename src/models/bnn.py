@@ -108,8 +108,8 @@ class BNN(L.LightningModule):
             self.loss,)
 
     def training_step(self, batch, batch_idx):
-        x = batch[0][10], batch[0][12]
-        y = batch[0][11]
+        x = batch[10], batch[12]
+        y = batch[11]
         self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
         self.svi_no_obs = SVI(
             self.bnn_no_obs, self.bnn.guide, self.optimizer, self.loss
@@ -130,15 +130,15 @@ class BNN(L.LightningModule):
         self.log("likelihood/train", elbo - kl, on_step=False, on_epoch=True, batch_size=len(y))
 
     def validation_step(self, batch, batch_idx):
-        x = batch[0][10], batch[0][12]
-        y = batch[0][11]
+        x = batch[10], batch[12]
+        y = batch[11]
         self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
         self.svi_no_obs = SVI(
             self.bnn_no_obs, self.bnn.guide, self.optimizer, self.loss
         )
         elbo = self.svi.evaluate_loss(x, y.squeeze())
         # Aggregate = False if num_prediction = 1, else nans in sd
-        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_train)
+        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
         kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         mse = F.mse_loss(y.squeeze(), loc.squeeze())
@@ -152,9 +152,9 @@ class BNN(L.LightningModule):
         param_store_to(self.device)
 
     def test_step(self, batch, batch_idx):
-        x = batch[0][10], batch[0][12]
-        y = batch[0][11]
-        loc, scale = self.bnn.predict(x[0], x[1],num_predictions=800)
+        x = batch[10], batch[12]
+        y = batch[11]
+        loc, scale = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_eval)
 
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
         mse = F.mse_loss(y.squeeze(), loc.squeeze())
@@ -167,12 +167,12 @@ class BNN(L.LightningModule):
         param_store_to(self.device)
 
     def predict_step(self, batch, batch_idx, dataloader_idx=0):
-        x = batch[0][10], batch[0][12]
-        y = batch[0][11]
+        x = batch[10], batch[12]
+        y = batch[11]
         pred = dict()
         loc, scale = self.bnn.predict(
             x,
-            num_predictions=self.hparams.mc_samples_train
+            num_predictions=self.hparams.mc_samples_eval
         )
         pred["preds"] = loc.cpu().numpy()
         pred["stds"] = scale.cpu().numpy()
@@ -238,8 +238,8 @@ class NN(L.LightningModule):
         return self.net(x)
 
     def step(self, batch):
-        x = batch[0][10], batch[0][12]
-        y = batch[0][11]
+        x = batch[10], batch[12]
+        y = batch[11]
         y_hat = self.net(x)
         return F.mse_loss(y_hat, y.squeeze())
 

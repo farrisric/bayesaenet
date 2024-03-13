@@ -1,4 +1,0 @@
-- trainer.max_epochs=100
-- model=bnn_lrt
-- ckpt_path=src/results/TiO/runs/LRT/0/checkpoints/epoch_366-step_2569.ckpt
-- datamodule=TiO

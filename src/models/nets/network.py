@@ -83,7 +83,7 @@ class NetAtom(nn.Module):
 		return list_E_ann
 
 
-	def forward_F(self, group_descrp, group_sfderiv_i, group_sfderiv_j, group_indices_F,
+	def forward_F(self, group_descrp, grousp_sfderiv_i, group_sfderiv_j, group_indices_F,
 				  grp_indices_F_i, logic_reduce, input_size, max_nnb):
 		"""
 		[Force training] Compute atomic energy and forces for each atom in the current batch.
