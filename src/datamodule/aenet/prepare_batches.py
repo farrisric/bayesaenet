@@ -1,3 +1,5 @@
+from torch.utils.data import random_split
+
 from data_set import *
 from data_loader import *
 from read_trainset import *
@@ -37,17 +39,17 @@ def get_N_batch(len_dataset, batch_size):
 	return N_batch
 
 
-def split_database(dataset_size, test_split):
+def split_database(dataset_size, test_split, valid_split):
 	"""
 	Returns indices of the structures in the training and testing sets
 	"""
+	print([1-(test_split+valid_split), valid_split, test_split])
 	indices = list(range(dataset_size))
-	np.random.shuffle(indices)
-	split   = int(np.floor(test_split * dataset_size))
+	train_indices, valid_indices, test_indices = random_split(
+		indices, [1-(test_split+valid_split), valid_split, test_split]
+		)
 
-	train_indices, test_indices = indices[split:], indices[:split]
-
-	return train_indices, test_indices
+	return list(train_indices), list(valid_indices), list(test_indices)
 
 
 def select_batch_size(tin, list_structures_energy, list_structures_forces):
@@ -56,12 +58,16 @@ def select_batch_size(tin, list_structures_energy, list_structures_forces):
 	"""
 	N_data_E = len(list_structures_energy)
 	N_data_F = len(list_structures_forces)
-	train_sampler_E, valid_sampler_E = split_database(N_data_E, tin.test_split)
-	train_sampler_F, valid_sampler_F = split_database(N_data_F, tin.test_split)
+	
+	train_sampler_E, valid_sampler_E, test_sampler_E = split_database(N_data_E, tin.valid_split, tin.test_split)
+	train_sampler_F, valid_sampler_F, test_sampler_F = split_database(N_data_F, tin.valid_split, tin.test_split)
 
 	N_data_train_E = len(train_sampler_E)
+	N_data_test_E = len(test_sampler_E)
 	N_data_valid_E = len(valid_sampler_E)
+
 	N_data_train_F = len(train_sampler_F)
+	N_data_test_F = len(test_sampler_F)
 	N_data_valid_F = len(valid_sampler_F)
 
 	forcespercent  = N_data_F/(N_data_F + N_data_E)
@@ -69,11 +75,12 @@ def select_batch_size(tin, list_structures_energy, list_structures_forces):
 		tin.batch_size = round((1 - forcespercent)*tin.batch_size)
 		N_batch_train = get_N_batch(N_data_train_E, tin.batch_size)
 		N_batch_valid = get_N_batch(N_data_valid_E, tin.batch_size)
-		print(N_batch_train, N_batch_valid)
+		N_batch_test = get_N_batch(N_data_test_E, tin.batch_size)
 	else:
 		tin.batch_size = forcespercent*tin.batch_size
 
 		N_batch_train = get_N_batch(N_data_train_F, tin.batch_size)
+		N_batch_test = get_N_batch(N_data_test_F, tin.batch_size)
 		N_batch_valid = get_N_batch(N_data_valid_F, tin.batch_size)
 
 	if N_data_F!= 0 and N_batch_train > N_data_F:
@@ -81,12 +88,16 @@ def select_batch_size(tin, list_structures_energy, list_structures_forces):
 	
 	if N_data_F!= 0 and N_batch_valid > N_data_F:
 		N_batch_valid = N_data_F
+	
+	if N_data_F!= 0 and N_batch_test > N_data_F:
+		N_batch_test = N_data_F
+	
 
-	return N_batch_train, N_batch_valid
+	return N_batch_train, N_batch_valid, N_batch_test
 
 
 def select_batches(tin, trainset_params, device, list_structures_energy, list_structures_forces,
-				   max_nnb, N_batch_train, N_batch_valid):
+				   max_nnb, N_batch_train, N_batch_valid, N_batch_test):
 	"""
 	Select which structures belong to each batch for training.
 	Returns: four objects of the class data_set_loader.PrepDataloader(), for train/test and energy/forces
@@ -102,16 +113,18 @@ def select_batches(tin, trainset_params, device, list_structures_energy, list_st
 		stp_shift, stp_scale = dataset_energy.normalize_stp(sfval_avg, sfval_cov)
 
 		# Split in train/test
-		train_sampler_E, valid_sampler_E = split_database(dataset_energy_size, tin.test_split)
+		train_sampler_E, valid_sampler_E, test_sampler_E = split_database(dataset_energy_size, tin.test_split, tin.test_split)
 
 		train_energy_data = PrepDataloader(dataset=dataset_energy, train_forces=False, N_batch=N_batch_train,
 		                               sampler=train_sampler_E, memory_mode=tin.memory_mode, device=device, dataname="train_energy")
 		valid_energy_data = PrepDataloader(dataset=dataset_energy, train_forces=False, N_batch=N_batch_valid,
 		                               sampler=valid_sampler_E, memory_mode=tin.memory_mode, device=device, dataname="valid_energy")
+		test_energy_data = PrepDataloader(dataset=dataset_energy, train_forces=False, N_batch=N_batch_test,
+		                               sampler=test_sampler_E, memory_mode=tin.memory_mode, device=device, dataname="test_energy")
 
 	else:
 		dataset_energy = None
-		train_energy_data, valid_energy_data = None, None
+		train_energy_data, valid_energy_data, test_energy_data = None, None, None
 
 
 	if len(list_structures_forces) != 0:
@@ -126,18 +139,20 @@ def select_batches(tin, trainset_params, device, list_structures_energy, list_st
 		stp_shift, stp_scale = dataset_forces.normalize_stp(sfval_avg, sfval_cov)
 
 		# Split in train/test
-		train_sampler_F, valid_sampler_F = split_database(dataset_forces_size, tin.test_split)
+		train_sampler_F, valid_sampler_F, test_sampler_F = split_database(dataset_energy_size, tin.test_split, tin.test_split)
 
 		train_forces_data = PrepDataloader(dataset=dataset_forces, train_forces=True, N_batch=N_batch_train,
 		                               sampler=train_sampler_F, memory_mode=tin.memory_mode, device=device, dataname="train_forces")
 		valid_forces_data = PrepDataloader(dataset=dataset_forces, train_forces=True, N_batch=N_batch_valid,
 		                               sampler=valid_sampler_F, memory_mode=tin.memory_mode, device=device, dataname="valid_forces")
+		test_forces_data = PrepDataloader(dataset=dataset_forces, train_forces=True, N_batch=N_batch_test,
+		                               sampler=test_sampler_F, memory_mode=tin.memory_mode, device=device, dataname="test_forces")
 
 	else:
 		dataset_forces = None
-		train_forces_data, valid_forces_data = None, None
+		train_forces_data, valid_forces_data, test_forces_data = None, None, None
 
-	return train_forces_data, valid_forces_data, train_energy_data, valid_energy_data
+	return train_forces_data, valid_forces_data, test_forces_data, train_energy_data, valid_energy_data, test_energy_data
 
 
 def save_datsets(save, train_forces_data, valid_forces_data, train_energy_data, valid_energy_data):

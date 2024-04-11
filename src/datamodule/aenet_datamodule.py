@@ -18,11 +18,12 @@ class AenetDataModule(L.LightningDataModule):
             device: str = 'cpu', 
             batch_size: int = 128,
             test_split: float = 0.1,
+            valid_split: float = 0.1,
         ):
         super().__init__()
         self.data_dir = data_dir
         self.device = device
-        self.load_db()
+        self.load_db(test_split, valid_split)
         self.input_size = self.tin.networks_param["input_size"]
         self.hidden_size = self.tin.networks_param["hidden_size"]
         self.species = self.tin.sys_species
@@ -32,8 +33,9 @@ class AenetDataModule(L.LightningDataModule):
         #override
         self.tin.batch_size = batch_size
         self.tin.test_split = test_split
+        self.tin.valid_split = valid_split
     
-    def load_db(self):
+    def load_db(self, test_split, valid_split):
         self.tin = read_train_in(self.data_dir)
         torch.manual_seed(self.tin.pytorch_seed)
         np.random.seed(self.tin.numpy_seed)
@@ -43,23 +45,25 @@ class AenetDataModule(L.LightningDataModule):
         N_removed = len(self.list_removed)
         N_struc_E = len(self.list_structures_energy)
         N_struc_F = len(self.list_structures_forces)
-        self.train_size = int(len(self.list_structures_energy)*(1-self.tin.test_split))
+
+        self.train_size = int(len(self.list_structures_energy)*(1-test_split-valid_split))
 
     def setup(self, stage: str):
-        N_batch_train, N_batch_valid = select_batch_size(self.tin, 
+        N_batch_train, N_batch_valid, N_batch_test = select_batch_size(self.tin, 
                                                          self.list_structures_energy, 
                                                          self.list_structures_forces)
-        N_batch_valid = 1
         # Join datasets with forces and only energies in a single torch dataset AND prepare batches
-        train_forces_data, valid_forces_data, train_energy_data, valid_energy_data = select_batches(
+        train_forces_data, valid_forces_data, test_forces_data, train_energy_data, valid_energy_data, test_energy_data = select_batches(
             self.tin, self.tin.trainset_params, self.device, 
             self.list_structures_energy, self.list_structures_forces,
-            self.max_nnb, N_batch_train, N_batch_valid)
+            self.max_nnb, N_batch_train, N_batch_valid, N_batch_test)
 
         self.grouped_train_data = GroupedDataset(train_energy_data, train_forces_data,
 									 memory_mode=self.tin.memory_mode, device=self.device, dataname="train")
         self.grouped_valid_data = GroupedDataset(valid_energy_data, valid_forces_data,
 									 memory_mode=self.tin.memory_mode, device=self.device, dataname="valid")
+        self.grouped_test_data = GroupedDataset(test_energy_data, test_forces_data,
+									 memory_mode=self.tin.memory_mode, device=self.device, dataname="test")
 
 
     def train_dataloader(self):
@@ -69,10 +73,10 @@ class AenetDataModule(L.LightningDataModule):
         return self.grouped_valid_data
 
     def test_dataloader(self):
-        return self.grouped_valid_data
+        return self.grouped_test_data
 
     def predict_dataloader(self):
-        return self.grouped_valid_data
+        return self.grouped_test_data
 
     def teardown(self, stage: str):
         pass
