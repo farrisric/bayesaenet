@@ -23,6 +23,7 @@ class AenetDataModule(L.LightningDataModule):
         super().__init__()
         self.data_dir = data_dir
         self.device = device
+        self.batch_size = batch_size
         self.load_db(test_split, valid_split)
         self.input_size = self.tin.networks_param["input_size"]
         self.hidden_size = self.tin.networks_param["hidden_size"]

@@ -43,7 +43,6 @@ def split_database(dataset_size, test_split, valid_split):
 	"""
 	Returns indices of the structures in the training and testing sets
 	"""
-	print([1-(test_split+valid_split), valid_split, test_split])
 	indices = list(range(dataset_size))
 	train_indices, valid_indices, test_indices = random_split(
 		indices, [1-(test_split+valid_split), valid_split, test_split]

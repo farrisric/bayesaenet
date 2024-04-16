@@ -1,0 +1,24 @@
+# @package _global_
+
+defaults:
+#  - override /datamodule: datamodule
+  - override /model: nn
+  - override /callbacks: default
+  - override /trainer: default
+
+seed: 12345
+
+trainer:
+  min_epochs: 1
+  max_epochs: 5
+
+callbacks:
+  model_checkpoint:
+    filename: "pretrained"
+    monitor: "mse/val"
+    mode: "min"
+    save_last: False
+    auto_insert_metric_name: False
+  early_stopping: null
+
+test: False

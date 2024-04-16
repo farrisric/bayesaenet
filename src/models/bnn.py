@@ -238,9 +238,14 @@ class NN(L.LightningModule):
         return self.net(x)
 
     def step(self, batch):
-        x = batch[10], batch[12]
-        y = batch[11]
-        y_hat = self.net(x)
+        x_a, x_b = batch[10], batch[12]
+        for x in x_a:
+            x = x.float()
+        for x in x_b:
+            x = x.float()
+        y = batch[11].float()
+        y_hat = self.net(x_a, x_b)
+        batch_size=len(y)
         return F.mse_loss(y_hat, y.squeeze())
 
     def training_step(self, batch, batch_idx):
@@ -248,7 +253,7 @@ class NN(L.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         mse = self.step(batch)
-        self.log("mse/val", mse, on_step=False, on_epoch=True)
+        self.log("mse/val", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
 
     def configure_optimizers(self):
         return self.hparams.optimizer(params=self.parameters())

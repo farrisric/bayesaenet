@@ -1,1 +1,1 @@
-python src/tasks/hpsearch.py model=bnn_fo datamodule=TiO hpsearch=bnn_fo task_name=hps_fo
+python src/tasks/hpsearch.py model=bnn_fo datamodule=PdO hpsearch=bnn_fo task_name=hps_fo

@@ -31,7 +31,7 @@ def objective(trial: Trial, cfg: DictConfig, output_dir: str):
 
 def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
     cfg.model.pretrain_epochs = trial.suggest_categorical(
-        "pretrain_epochs", [0, 0]
+        "pretrain_epochs", [0, 5]
     )
     log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs")
     cfg.model.lr = trial.suggest_float(

@@ -6,7 +6,7 @@ defaults:
   - override /callbacks: default
   - override /trainer: default
 
-tags: ["TiO", "bayesian", "rad"]
+tags: ["PdO", "bayesian", "rad"]
 
 seed: 12345
 
