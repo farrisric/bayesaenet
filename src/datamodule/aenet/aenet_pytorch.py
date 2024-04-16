@@ -119,7 +119,7 @@ del valid_energy_data
 if tin.verbose: io_network_initialize(tin)
 
 model = NetAtom(tin.networks_param["input_size"], tin.networks_param["hidden_size"],
-			    tin.sys_species, tin.networks_param["activations"], tin.alpha, device).double()
+			    tin.sys_species, tin.networks_param["activations"], tin.alpha, device)  
 model.to(device)
 init_optimizer(tin, model)
 if tin.mode == "train":

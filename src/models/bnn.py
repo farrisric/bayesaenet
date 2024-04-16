@@ -32,7 +32,7 @@ class BNN(L.LightningModule):
         super().__init__()
         pyro.clear_param_store()
         self.save_hyperparameters(logger=False, ignore=["net"])
-        self.net = net.double()
+        self.net = net  
 
     def define_bnn(self):
         if not self.hparams.pretrain_epochs == 0:
