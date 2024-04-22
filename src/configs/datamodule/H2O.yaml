@@ -1,0 +1,4 @@
+defaults:
+  - datamodule
+
+data_dir: ${paths.data_dir}/H2O/train.in

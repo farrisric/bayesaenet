@@ -15,12 +15,13 @@ trainer:
   max_epochs: 500
 
 model:
-  lr: 0.000857
-  prior_scale: 0.138793
-  q_scale: 0.001351
-  pretrain_epochs: 5
+  lr: 0.0008278920233005766
+  prior_scale: 0.044452153824433085
+  q_scale: 0.00045412875836353276
+  pretrain_epochs: 0
   mc_samples_train: 1
   mc_samples_eval: 20
+  obs_scale: 0.6127231816537825
 
 callbacks:
   model_checkpoint:

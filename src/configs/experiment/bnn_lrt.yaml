@@ -6,20 +6,21 @@ defaults:
   - override /callbacks: default
   - override /trainer: default
 
-tags: ["PdO", "bayesian", "lrt"]
+tags: ["IrO", "bayesian", "lrt"]
 
 seed: 12345
 
 trainer:
   min_epochs: 1
-  max_epochs: 500
+  max_epochs: 10000
 
 model:
-  lr: 0.000857
-  prior_scale: 0.138793
-  q_scale: 0.001351
-  pretrain_epochs: 5
-  mc_samples_train: 1
+  lr: 0.0007954206118735181  
+  mc_samples_train: 2
+  obs_scale: 0.7114471414997354
+  pretrain_epochs: 0
+  prior_scale:   0.3366512900618621
+  q_scale: 0.000577853191930812
   mc_samples_eval: 20
 
 callbacks:

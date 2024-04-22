@@ -1,1 +1,1 @@
-python src/tasks/train.py experiment=bnn_lrt seed=5 trainer.deterministic=False task_name=train_fo datamodule=TiO
+python src/tasks/train.py trainer.min_epochs=1000 experiment=bnn_fo seed=5 trainer.deterministic=False task_name=train_fo datamodule=PdO ckpt_path=src/results/PdO/FO/hps/epoch_18-step_1824.ckpt

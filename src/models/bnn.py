@@ -154,7 +154,7 @@ class BNN(L.LightningModule):
     def test_step(self, batch, batch_idx):
         x = batch[10], batch[12]
         y = batch[11]
-        loc, scale = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_eval)
+        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
 
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
         mse = F.mse_loss(y.squeeze(), loc.squeeze())
@@ -171,7 +171,7 @@ class BNN(L.LightningModule):
         y = batch[11]
         pred = dict()
         loc, scale = self.bnn.predict(
-            x,
+            x[0], x[1],
             num_predictions=self.hparams.mc_samples_eval
         )
         pred["preds"] = loc.cpu().numpy()
