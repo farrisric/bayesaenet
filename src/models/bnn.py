@@ -12,7 +12,7 @@ import pytorch_lightning as L
 from functools import partial
 import copy
 import contextlib
-
+import numpy as np
 class BNN(L.LightningModule):
     def __init__(
             self,
@@ -123,7 +123,8 @@ class BNN(L.LightningModule):
 
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
         
-        mse = F.mse_loss(y.squeeze(), loc.squeeze()).item()
+        #mse = rmse(loc, y, batch[14])
+        mse = F.mse_loss(loc, y)
         self.log("mse/train", mse, on_step=False, on_epoch=True, batch_size=len(y) )
         self.log("elbo/train", elbo, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("kl/train", kl, on_step=False, on_epoch=True, batch_size=len(y))
@@ -132,6 +133,7 @@ class BNN(L.LightningModule):
     def validation_step(self, batch, batch_idx):
         x = batch[10], batch[12]
         y = batch[11]
+
         self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
         self.svi_no_obs = SVI(
             self.bnn_no_obs, self.bnn.guide, self.optimizer, self.loss
@@ -141,7 +143,8 @@ class BNN(L.LightningModule):
         loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
         kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
-        mse = F.mse_loss(y.squeeze(), loc.squeeze())
+        #mse = rmse(loc, y, batch[14])
+        mse = F.mse_loss(loc, y)
         self.log("elbo/val", elbo, batch_size=len(y))
         self.log("mse/val", mse, batch_size=len(y))
         self.log("kl/val", kl, batch_size=len(y))
@@ -157,7 +160,8 @@ class BNN(L.LightningModule):
         loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
 
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
-        mse = F.mse_loss(y.squeeze(), loc.squeeze())
+        #mse = rmse(loc, y, batch[14])
+        mse = F.mse_loss(loc, y)
         self.log("nll/test", nll, batch_size=len(y))
         self.log("mse/test", mse, batch_size=len(y))
         return nll
@@ -238,22 +242,33 @@ class NN(L.LightningModule):
         return self.net(x)
 
     def step(self, batch):
-        x_a, x_b = batch[10], batch[12]
-        for x in x_a:
+        grp_descrp, grp_energy, logic_reduce, grp_N_atom = batch[10], batch[11], batch[12], batch[14]
+        for x in grp_descrp:
             x = x.float()
-        for x in x_b:
+        for x in logic_reduce:
             x = x.float()
-        y = batch[11].float()
-        y_hat = self.net(x_a, x_b)
-        batch_size=len(y)
-        return F.mse_loss(y_hat, y.squeeze())
+        grp_energy = batch[11].float()
+        y_hat = self.net.forward(grp_descrp, logic_reduce)
+        return rmse(y_hat, grp_energy, grp_N_atom)
 
     def training_step(self, batch, batch_idx):
-        return self.step(batch)
+        mse = self.step(batch)
+        self.log("mse/train", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        return mse
 
     def validation_step(self, batch, batch_idx):
         mse = self.step(batch)
         self.log("mse/val", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
 
+    def test_step(self, batch, batch_idx):
+        mse = self.step(batch)
+        self.log("mse/test", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+
     def configure_optimizers(self):
         return self.hparams.optimizer(params=self.parameters())
+    
+
+def rmse(list_E_ann, grp_energy, grp_N_atom):
+    differences = (list_E_ann - grp_energy)
+    l2 = torch.sum( differences**2/grp_N_atom**2 )
+    return l2

@@ -14,11 +14,8 @@ trainer:
 
 callbacks:
   model_checkpoint:
-    filename: "pretrained"
-    monitor: "mse/val"
-    mode: "min"
-    save_last: False
-    auto_insert_metric_name: False
-  early_stopping: null
+    monitor: mse/val
 
-test: False
+  early_stopping:
+    monitor: mse/val
+    patience: 20

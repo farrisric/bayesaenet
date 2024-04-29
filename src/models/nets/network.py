@@ -83,7 +83,7 @@ class NetAtom(nn.Module):
 		return list_E_ann
 
 
-	def forward_F(self, group_descrp, grousp_sfderiv_i, group_sfderiv_j, group_indices_F,
+	def forward_F(self, group_descrp, group_sfderiv_i, group_sfderiv_j, group_indices_F,
 				  grp_indices_F_i, logic_reduce, input_size, max_nnb):
 		"""
 		[Force training] Compute atomic energy and forces for each atom in the current batch.
@@ -163,3 +163,10 @@ class NetAtom(nn.Module):
 		l_F  = torch.sqrt( torch.sum( diff_F**2) / N_data_F )
 
 		return l2_E, l_F, N_data_E, N_data_F
+	
+	def save(self, path: str) -> None:
+		torch.save(self.state_dict(),path)
+
+	def load(self, path: str, map_location = torch.device("cpu")):
+		state_dict = torch.load(path,map_location=map_location)
+		self.load_state_dict(state_dict)

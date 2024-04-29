@@ -1,0 +1,1 @@
+python src/tasks/hpsearch.py model=bnn_rad datamodule=PdO hpsearch=bnn_rad task_name=hps_rad tags=["PdO"] datamodule.test_split=0.7 seed=1234 

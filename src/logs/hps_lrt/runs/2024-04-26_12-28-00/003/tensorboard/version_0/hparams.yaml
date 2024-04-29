@@ -1,0 +1,80 @@
+model:
+  net:
+    _target_: src.models.nets.network.NetAtom
+    input_size:
+    - 52
+    - 52
+    hidden_size:
+    - - 15
+      - 10
+    - - 15
+      - 10
+    species:
+    - Pd
+    - O
+    active_names:
+    - - tanh
+      - tanh
+    - - tanh
+      - tanh
+    alpha: 0.0
+    device: cpu
+  _target_: src.models.bnn.BNN
+  lr: 2.336545096950015e-05
+  pretrain_epochs: 0
+  mc_samples_train: 2
+  mc_samples_eval: 20
+  dataset_size: 12269
+  fit_context: lrt
+  guide: normal
+  prior_loc: 0
+  prior_scale: 0.1023881426733586
+  q_scale: 0.001165790000863127
+  obs_scale: 0.11385861721302043
+model/params/total: 1932
+model/params/trainable: 1932
+model/params/non_trainable: 0
+datamodule:
+  _target_: src.datamodule.aenet_datamodule.AenetDataModule
+  data_dir: /home/riccardo/bin/repos/aenet-bnn/data//PdO/train.in
+  device: cpu
+  batch_size: 512
+trainer:
+  _target_: pytorch_lightning.trainer.Trainer
+  default_root_dir: /home/riccardo/bin/repos/aenet-bnn/src/logs/hps_lrt/runs/2024-04-26_12-28-00/003
+  min_epochs: 1
+  max_epochs: 20
+  accelerator: cpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  deterministic: false
+callbacks:
+  model_checkpoint:
+    _target_: pytorch_lightning.callbacks.ModelCheckpoint
+    dirpath: /home/riccardo/bin/repos/aenet-bnn/src/logs/hps_lrt/runs/2024-04-26_12-28-00/003/checkpoints
+    filename: epoch_{epoch}-step_{step}
+    monitor: elbo/val
+    verbose: false
+    save_last: true
+    save_top_k: 1
+    mode: min
+    auto_insert_metric_name: false
+    save_weights_only: false
+    every_n_train_steps: null
+    train_time_interval: null
+    every_n_epochs: null
+    save_on_train_epoch_end: null
+  rich_progress_bar:
+    _target_: pytorch_lightning.callbacks.RichProgressBar
+  model_summary:
+    _target_: pytorch_lightning.callbacks.RichModelSummary
+    max_depth: -1
+  optuna_pruner:
+    _target_: optuna.integration.PyTorchLightningPruningCallback
+  early_stopping: null
+extras: null
+task_name: hps_lrt
+tags:
+- PdO
+ckpt_path: null
+seed: 12345

@@ -39,15 +39,20 @@ def get_N_batch(len_dataset, batch_size):
 	return N_batch
 
 
-def split_database(dataset_size, test_split, valid_split):
+def split_database(dataset_size, valid_split, test_split):
 	"""
 	Returns indices of the structures in the training and testing sets
 	"""
 	indices = list(range(dataset_size))
+	
+	if len(indices) == 0:
+		return [], [], []
+	train_split = float(1 - test_split - valid_split)
+	print(train_split, valid_split, test_split)
 	train_indices, valid_indices, test_indices = random_split(
-		indices, [1-(test_split+valid_split), valid_split, test_split]
+		indices, [train_split, valid_split, test_split]
 		)
-
+	print(list(train_indices)[:5])
 	return list(train_indices), list(valid_indices), list(test_indices)
 
 
@@ -112,7 +117,7 @@ def select_batches(tin, trainset_params, device, list_structures_energy, list_st
 		stp_shift, stp_scale = dataset_energy.normalize_stp(sfval_avg, sfval_cov)
 
 		# Split in train/test
-		train_sampler_E, valid_sampler_E, test_sampler_E = split_database(dataset_energy_size, tin.test_split, tin.test_split)
+		train_sampler_E, valid_sampler_E, test_sampler_E = split_database(dataset_energy_size, tin.valid_split, tin.test_split)
 
 		train_energy_data = PrepDataloader(dataset=dataset_energy, train_forces=False, N_batch=N_batch_train,
 		                               sampler=train_sampler_E, memory_mode=tin.memory_mode, device=device, dataname="train_energy")

@@ -1,0 +1,1 @@
+python src/tasks/train.py trainer.min_epochs=1000 experiment=bnn_lrt seed=5 trainer.deterministic=False task_name=train_lrt datamodule=PdO

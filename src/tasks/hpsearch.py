@@ -21,6 +21,10 @@ log = get_pylogger(__name__)
 
 
 def objective(trial: Trial, cfg: DictConfig, output_dir: str):
+    cfg.datamodule.batch_size = trial.suggest_categorical(
+        "batch_size", [32, 64, 128, 256, 512]
+    )
+    log.info(f"{cfg.datamodule.batch_size} batch_size")
     log.info(
         f"_________________ Starting trial {trial.number:03d} __________________"
     )
@@ -51,7 +55,7 @@ def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
         )
     log.info(f"{cfg.model.q_scale} q_scale")
     cfg.model.obs_scale = trial.suggest_float(
-        "obs_scale", 0.1, 1, log=True
+        "obs_scale", 0.1, 2, log=True
         )
     log.info(f"{cfg.model.obs_scale} obs_scale")
     return objective(trial, cfg, output_dir)
@@ -64,7 +68,7 @@ def main(cfg: DictConfig) -> Optional[float]:
     path = Path(f"{cfg.paths.results_dir}")
     study: Study = hydra.utils.instantiate(
         cfg.hpsearch.study,
-        storage=f"sqlite:///{path.as_posix()}/{cfg.hpsearch.study.study_name}.db",
+        storage=f"sqlite:///{path.as_posix()}/{cfg.tags[0]}/{cfg.hpsearch.study.study_name}.db",
     )
     log.info(f"Instantiating objective <{cfg.hpsearch.objective._target_}>")
     objective = hydra.utils.instantiate(cfg.hpsearch.objective, _partial_=True)

@@ -1,7 +1,0 @@
-- trainer.min_epochs=1000
-- experiment=bnn_lrt
-- seed=5
-- trainer.deterministic=False
-- task_name=train_lrt
-- datamodule=PdO
-- ckpt_path=src/logs/hps_lrt/runs/2024-04-16_14-02-41/025/checkpoints/epoch_19-step_1920.ckpt

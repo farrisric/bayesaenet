@@ -1,1 +1,1 @@
-python src/tasks/train.py trainer.min_epochs=1000 experiment=bnn_lrt seed=5 trainer.deterministic=False task_name=train_lrt datamodule=H2O ckpt_path=
+python src/tasks/train.py trainer.min_epochs=1000 experiment=bnn_lrt seed=5 trainer.deterministic=False task_name=train_lrt datamodule=H2O ckpt_path=/home/riccardo/bin/repos/aenet-bnn/src/results/H2O/032/checkpoints/epoch_19-step_1140.ckpt
