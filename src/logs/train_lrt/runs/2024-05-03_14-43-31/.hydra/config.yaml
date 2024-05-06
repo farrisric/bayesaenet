@@ -1,0 +1,94 @@
+task_name: train_lrt
+tags:
+- IrO
+- bayesian
+- lrt
+train: true
+test: true
+ckpt_path: /home/riccardo/bin/repos/aenet-bnn/src/logs/train_lrt/runs/2024-05-02_13-05-47/checkpoints/last.ckpt
+seed: 5
+datamodule:
+  _target_: src.datamodule.aenet_datamodule.AenetDataModule
+  data_dir: ${paths.data_dir}/PdO/train.in
+  device: cpu
+  batch_size: 100
+  test_split: 0.37
+  valid_split: 0.38
+model:
+  net:
+    _target_: src.models.nets.network.NetAtom
+    input_size: ???
+    hidden_size: ???
+    species: ???
+    active_names: ???
+    alpha: ???
+    device: cpu
+  _target_: src.models.bnn.BNN
+  lr: 0.0009549627167707569
+  pretrain_epochs: 0
+  mc_samples_train: 2
+  mc_samples_eval: 20
+  dataset_size: ???
+  fit_context: lrt
+  guide: normal
+  prior_loc: 0
+  prior_scale: 0.026705525180274015
+  q_scale: 0.0005171823159504436
+  obs_scale: 0.47612142594698453
+callbacks:
+  model_checkpoint:
+    _target_: pytorch_lightning.callbacks.ModelCheckpoint
+    dirpath: ${paths.output_dir}/checkpoints
+    filename: epoch_{epoch}-step_{step}
+    monitor: elbo/val
+    verbose: false
+    save_last: true
+    save_top_k: 1
+    mode: min
+    auto_insert_metric_name: false
+    save_weights_only: false
+    every_n_train_steps: null
+    train_time_interval: null
+    every_n_epochs: null
+    save_on_train_epoch_end: null
+  early_stopping:
+    _target_: pytorch_lightning.callbacks.EarlyStopping
+    monitor: elbo/val
+    min_delta: 0.0
+    patience: 20
+    verbose: false
+    mode: min
+    strict: true
+    check_finite: true
+    stopping_threshold: null
+    divergence_threshold: null
+    check_on_train_epoch_end: null
+  model_summary:
+    _target_: pytorch_lightning.callbacks.RichModelSummary
+    max_depth: -1
+  rich_progress_bar:
+    _target_: pytorch_lightning.callbacks.RichProgressBar
+logger:
+  tensorboard:
+    _target_: pytorch_lightning.loggers.tensorboard.TensorBoardLogger
+    save_dir: ${paths.output_dir}/tensorboard/
+    name: null
+    log_graph: false
+    default_hp_metric: true
+    prefix: ''
+trainer:
+  _target_: pytorch_lightning.trainer.Trainer
+  default_root_dir: ${paths.output_dir}
+  min_epochs: 10000
+  max_epochs: 10000
+  accelerator: cpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  deterministic: false
+paths:
+  root_dir: ${oc.env:PROJECT_ROOT}
+  data_dir: ${paths.root_dir}/data/
+  log_dir: ${paths.root_dir}/src/logs/
+  output_dir: ${hydra:runtime.output_dir}
+  work_dir: ${hydra:runtime.cwd}
+  results_dir: ${paths.root_dir}/src/results/

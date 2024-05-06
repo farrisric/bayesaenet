@@ -25,11 +25,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import uncertainty_toolbox as uct
 import glob
-from lightning.pytorch import seed_everything
 
-seed_everything(143, workers=True)
-
-datamodele = AenetDataModule(data_dir='../data/PdO/train.in',batch_size=100,test_split=0.3,valid_split=0.3)
+datamodele = AenetDataModule(data_dir='../data/PdO/train.in',batch_size=100,test_split=0.37,valid_split=0.38)
 
 net = NetAtom(datamodele.input_size, datamodele.hidden_size, datamodele.species, datamodele.active_names, datamodele.alpha,'cpu')
 
@@ -54,7 +51,7 @@ early_stopping = EarlyStopping(monitor='elbo/val', min_delta = 0., # minimum cha
   strict= True, # whether to crash the training if monitor is not found in the validation metrics
   check_finite= True,)
 
-ckpt_path = glob.glob('/home/riccardo/bin/repos/aenet-bnn/train/lightning_logs/version_14/checkpoints/*')[0]
+ckpt_path = glob.glob('/home/riccardo/bin/repos/aenet-bnn/src/logs/train_lrt/runs/2024-05-03_14-45-16/checkpoints/epoch_305-step_11628.ckpt')[-1]
 
 model = BNN(**model_kwargs)
 trainer = L.Trainer(deterministic=True)

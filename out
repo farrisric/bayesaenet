@@ -1,0 +1,51 @@
+nohup: ignoring input
+[[36m2024-05-06 10:35:28,209[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2024-05-06 10:35:28,210[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.24999999999999997 0.1 0.65
+[12833, 10600, 4868, 5601, 6351]
+0.24999999999999997 0.1 0.65
+[297, 7446, 3021, 11251, 9173]
+[[36m2024-05-06 10:35:44,594[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-05-06 10:35:44,610[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2024-05-06 10:35:44,611[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <pytorch_lightning.callbacks.ModelCheckpoint>[0m
+[[36m2024-05-06 10:35:44,617[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <pytorch_lightning.callbacks.EarlyStopping>[0m
+[[36m2024-05-06 10:35:44,619[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <pytorch_lightning.callbacks.RichModelSummary>[0m
+[[36m2024-05-06 10:35:44,620[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <pytorch_lightning.callbacks.RichProgressBar>[0m
+[[36m2024-05-06 10:35:44,621[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2024-05-06 10:35:44,622[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <pytorch_lightning.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2024-05-06 10:35:44,637[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <pytorch_lightning.trainer.Trainer>[0m
+Trainer already configured with model summary callbacks: [<class 'pytorch_lightning.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+[[36m2024-05-06 10:35:44,715[0m][[34m__main__[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2024-05-06 10:35:44,912[0m][[34m__main__[0m][[32mINFO[0m] - Starting training![0m
+Restoring states from the checkpoint path at /home/riccardo/bin/repos/aenet-bnn/src/logs/train_lrt/runs/2024-05-03_14-45-16/checkpoints/epoch_305-step_11628.ckpt
+/home/riccardo/anaconda3/envs/bayesian/lib/python3.12/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:360: The dirpath has changed from '/home/riccardo/bin/repos/aenet-bnn/src/logs/train_lrt/runs/2024-05-03_14-45-16/checkpoints' to '/home/riccardo/bin/repos/aenet-bnn/src/logs/train_lrt/runs/2024-05-06_10-35-28/checkpoints', therefore `best_model_score`, `kth_best_model_path`, `kth_value`, `last_model_path` and `best_k_models` won't be reloaded. Only `best_model_path` will be reloaded.
+/home/riccardo/anaconda3/envs/bayesian/lib/python3.12/site-packages/pytorch_lightning/core/optimizer.py:181: `LightningModule.configure_optimizers` returned `None`, this fit will run with no optimizer
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                          ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                           │ NetAtom    │  1.9 K │
+│ 1  │ net.linear                    │ Identity   │      0 │
+│ 2  │ net.tanh                      │ Tanh       │      0 │
+│ 3  │ net.sigmoid                   │ Sigmoid    │      0 │
+│ 4  │ net.functions                 │ ModuleList │  1.9 K │
+│ 5  │ net.functions.0               │ Sequential │    966 │
+│ 6  │ net.functions.0.Linear_Sp1_F1 │ Linear     │    795 │
+│ 7  │ net.functions.0.Linear_Sp1_F2 │ Linear     │    160 │
+│ 8  │ net.functions.0.Linear_Sp1_F3 │ Linear     │     11 │
+│ 9  │ net.functions.1               │ Sequential │    966 │
+│ 10 │ net.functions.1.Linear_Sp2_F1 │ Linear     │    795 │
+│ 11 │ net.functions.1.Linear_Sp2_F2 │ Linear     │    160 │
+│ 12 │ net.functions.1.Linear_Sp2_F3 │ Linear     │     11 │
+└────┴───────────────────────────────┴────────────┴────────┘
+Trainable params: 1.9 K                                                         
+Non-trainable params: 0                                                         
+Total params: 1.9 K                                                             
+Total estimated model params size (MB): 0                                       
+Restored all states from the checkpoint at /home/riccardo/bin/repos/aenet-bnn/src/logs/train_lrt/runs/2024-05-03_14-45-16/checkpoints/epoch_305-step_11628.ckpt
+/home/riccardo/anaconda3/envs/bayesian/lib/python3.12/site-packages/pytorch_lightning/loops/fit_loop.py:298: The number of training batches (38) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+/home/riccardo/anaconda3/envs/bayesian/lib/python3.12/site-packages/pytorch_lightning/loops/optimization/automatic.py:132: `training_step` returned `None`. If this was on purpose, ignore this warning...
+Trainer was signaled to stop but the required `min_epochs=10000` or `min_steps=None` has not been met. Training will continue...
