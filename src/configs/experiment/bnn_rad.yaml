@@ -12,15 +12,15 @@ seed: 12345
 
 trainer:
   min_epochs: 1
-  max_epochs: 500
+  max_epochs: 10000
 
 model:
-  lr: 0.0009788619025802843
-  mc_samples_train: 2
-  obs_scale: 0.990878816554534 
+  lr: 0.0009410248956021665
+  mc_samples_train: 1
+  obs_scale: 0.3555713872117341
   pretrain_epochs: 5 
-  prior_scale: 0.019240951470053693
-  q_scale: 0.002223982343432341
+  prior_scale: 0.06343664261871752
+  q_scale: 0.00020116582693680395
   mc_samples_eval: 20
 
 callbacks:

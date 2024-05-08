@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/riccardo/bin/repos/aenet-bayesian/aenet')
+sys.path.append('/home/g15farris/bin/bayesaenet/src/datamodule/aenet')
 
 import torch 
 from torch.utils.data import DataLoader
@@ -67,6 +67,7 @@ class AenetDataModule(L.LightningDataModule):
         self.grouped_test_data = GroupedDataset(test_energy_data, test_forces_data,
 									 memory_mode=self.tin.memory_mode, device=self.device, dataname="test")
 
+        
     def setup(self, stage: str):
         pass
 

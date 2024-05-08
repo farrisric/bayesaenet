@@ -32,6 +32,31 @@ def objective(trial: Trial, cfg: DictConfig, output_dir: str):
     metric_dict, _ = train(cfg, trial)
     return metric_dict[cfg.hpsearch.monitor]
 
+# def objective_nn(trial: Trial, cfg: DictConfig, output_dir: str):
+#     hidden_size = [[], []]
+#     activations = [[], []]
+#     layer_number = trial.suggest_categorical("layer_number", [1,2,3])
+#     log.info(f"{layer_number} layer_number")
+#     for n_layer in range(layer_number):
+#         name_layer = f'layer_{n_layer}'
+#         # node1 = trial.suggest_int(f'node0_{n_layer}', 5, 20)
+#         # node2 = trial.suggest_int(f'node1_{n_layer}', 5, 20)
+#         #activation = trial.suggest_categorical("activation", ['linear', 'sigmoid', 'tanh'])
+#         activations[0].append(trial.suggest_categorical("activation", ['linear', 'sigmoid', 'tanh']))
+#         activations[1].append(trial.suggest_categorical("activation", ['linear', 'sigmoid', 'tanh']))
+        
+#         hidden_size[0].append(trial.suggest_int(f'node0_{n_layer}', 5, 20))
+#         hidden_size[1].append(trial.suggest_int(f'node1_{n_layer}', 5, 20))
+        
+#     cfg.model.optimizer.lr = trial.suggest_float("lr", 1e-4, 5e-3, log=True)
+#     log.info(f"{cfg.model.optimizer.lr} lr")
+    
+#     cfg.model.net.hidden_size = hidden_size
+#     log.info(f"{cfg.model.net.hidden_size} hidden_size")
+    
+#     cfg.model.net.active_names = activations
+#     log.info(f"{cfg.model.net.active_names} active_names")
+#     return objective(trial, cfg, output_dir)
 
 def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
     cfg.model.pretrain_epochs = trial.suggest_categorical(

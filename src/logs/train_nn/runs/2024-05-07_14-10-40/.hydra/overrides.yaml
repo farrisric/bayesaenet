@@ -1,0 +1,5 @@
+- trainer.min_epochs=10000
+- experiment=nn
+- seed=15
+- trainer.deterministic=False
+- task_name=train_nn

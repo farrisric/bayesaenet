@@ -1,0 +1,92 @@
+[2024-05-07 10:09:06,384][utils.utils][WARNING] - Extras config not found! <cfg.extras=null>
+[2024-05-07 10:09:06,385][__main__][INFO] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>
+0.1
+0.8 0.1 0.1
+[12833, 10600, 4868, 5601, 6351]
+0.8 0.1 0.1
+[297, 7446, 3021, 11251, 9173]
+[2024-05-07 10:09:31,087][__main__][INFO] - Instantiating model <src.models.bnn.BNN>
+[2024-05-07 10:09:31,244][__main__][INFO] - Instantiating callbacks...
+[2024-05-07 10:09:31,245][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.ModelCheckpoint>
+[2024-05-07 10:09:31,248][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.EarlyStopping>
+[2024-05-07 10:09:31,249][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichModelSummary>
+[2024-05-07 10:09:31,249][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichProgressBar>
+[2024-05-07 10:09:31,253][__main__][INFO] - Instantiating loggers...
+[2024-05-07 10:09:31,253][utils.utils][INFO] - Instantiating logger <pytorch_lightning.loggers.tensorboard.TensorBoardLogger>
+[2024-05-07 10:09:31,403][__main__][INFO] - Instantiating trainer <pytorch_lightning.trainer.Trainer>
+[2024-05-07 10:09:31,598][__main__][INFO] - Logging hyperparameters!
+[2024-05-07 10:09:32,655][__main__][INFO] - Starting training!
+[2024-05-07 10:09:32,661][__main__][INFO] - Restoring pretrained net from: /home/g15farris/bin/bayesaenet/src/results/PdO/pretrained/4/checkpoints/pretrained.ckpt
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                          ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                           │ NetAtom    │  1.9 K │
+│ 1  │ net.linear                    │ Identity   │      0 │
+│ 2  │ net.tanh                      │ Tanh       │      0 │
+│ 3  │ net.sigmoid                   │ Sigmoid    │      0 │
+│ 4  │ net.functions                 │ ModuleList │  1.9 K │
+│ 5  │ net.functions.0               │ Sequential │    966 │
+│ 6  │ net.functions.0.Linear_Sp1_F1 │ Linear     │    795 │
+│ 7  │ net.functions.0.Linear_Sp1_F2 │ Linear     │    160 │
+│ 8  │ net.functions.0.Linear_Sp1_F3 │ Linear     │     11 │
+│ 9  │ net.functions.1               │ Sequential │    966 │
+│ 10 │ net.functions.1.Linear_Sp2_F1 │ Linear     │    795 │
+│ 11 │ net.functions.1.Linear_Sp2_F2 │ Linear     │    160 │
+│ 12 │ net.functions.1.Linear_Sp2_F3 │ Linear     │     11 │
+└────┴───────────────────────────────┴────────────┴────────┘
+Trainable params: 1.9 K                                                         
+Non-trainable params: 0                                                         
+Total params: 1.9 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 499/499 ━━━━━━━━━━━━━━━━━ 383/383 0:00:12 • 0:00:00 29.71it/s v_num: 0.000
+[2024-05-07 12:45:59,148][__main__][INFO] - Starting testing!
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃        Test metric        ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         mse/test          │    0.02707470544843161    │
+│         nll/test          │    -0.9767614138476683    │
+└───────────────────────────┴───────────────────────────┘
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48/48 0:00:03 • 0:00:00 14.39it/s 
+[2024-05-07 12:46:02,524][__main__][INFO] - Best ckpt path: /home/g15farris/bin/bayesaenet/src/logs/train_rad/runs/2024-05-07_10-09-06/checkpoints/epoch_499-step_191500.ckpt
+[2024-05-07 12:46:02,533][utils.utils][INFO] - Closing loggers...
+[2024-05-07 12:46:04,563][utils.utils][INFO] - Output dir: /home/g15farris/bin/bayesaenet/src/logs/train_rad/runs/2024-05-07_10-09-06
+[2024-05-07 13:14:09,159][utils.utils][WARNING] - Extras config not found! <cfg.extras=null>
+[2024-05-07 13:14:09,160][__main__][INFO] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>
+0.1
+0.8 0.1 0.1
+[12833, 10600, 4868, 5601, 6351]
+0.8 0.1 0.1
+[297, 7446, 3021, 11251, 9173]
+[2024-05-07 13:14:33,012][__main__][INFO] - Instantiating model <src.models.bnn.BNN>
+[2024-05-07 13:14:33,042][__main__][INFO] - Instantiating callbacks...
+[2024-05-07 13:14:33,042][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.ModelCheckpoint>
+[2024-05-07 13:14:33,046][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.EarlyStopping>
+[2024-05-07 13:14:33,047][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichModelSummary>
+[2024-05-07 13:14:33,047][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichProgressBar>
+[2024-05-07 13:14:33,049][__main__][INFO] - Instantiating loggers...
+[2024-05-07 13:14:33,049][utils.utils][INFO] - Instantiating logger <pytorch_lightning.loggers.tensorboard.TensorBoardLogger>
+[2024-05-07 13:14:33,167][__main__][INFO] - Instantiating trainer <pytorch_lightning.trainer.Trainer>
+[2024-05-07 13:14:33,444][__main__][INFO] - Logging hyperparameters!
+[2024-05-07 13:14:37,809][__main__][INFO] - Starting training!
+[2024-05-07 13:14:37,815][__main__][INFO] - Restoring pretrained net from: /home/g15farris/bin/bayesaenet/src/results/PdO/pretrained/4/checkpoints/pretrained.ckpt
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                          ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                           │ NetAtom    │  1.9 K │
+│ 1  │ net.linear                    │ Identity   │      0 │
+│ 2  │ net.tanh                      │ Tanh       │      0 │
+│ 3  │ net.sigmoid                   │ Sigmoid    │      0 │
+│ 4  │ net.functions                 │ ModuleList │  1.9 K │
+│ 5  │ net.functions.0               │ Sequential │    966 │
+│ 6  │ net.functions.0.Linear_Sp1_F1 │ Linear     │    795 │
+│ 7  │ net.functions.0.Linear_Sp1_F2 │ Linear     │    160 │
+│ 8  │ net.functions.0.Linear_Sp1_F3 │ Linear     │     11 │
+│ 9  │ net.functions.1               │ Sequential │    966 │
+│ 10 │ net.functions.1.Linear_Sp2_F1 │ Linear     │    795 │
+│ 11 │ net.functions.1.Linear_Sp2_F2 │ Linear     │    160 │
+│ 12 │ net.functions.1.Linear_Sp2_F3 │ Linear     │     11 │
+└────┴───────────────────────────────┴────────────┴────────┘
+Trainable params: 1.9 K                                                         
+Non-trainable params: 0                                                         
+Total params: 1.9 K                                                             
+Total estimated model params size (MB): 0                                       

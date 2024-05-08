@@ -16,12 +16,12 @@ trainer:
 
 model:
   mc_samples_eval: 20
-  lr: 0.0009549627167707569 
+  lr: 0.0009410248956021665
   mc_samples_train: 2 
-  obs_scale: 0.47612142594698453
+  obs_scale: 0.3555713872117341
   pretrain_epochs: 0
-  prior_scale: 0.026705525180274015
-  q_scale: 0.0005171823159504436
+  prior_scale: 0.06343664261871752
+  q_scale: 0.00020116582693680395
 
 callbacks:
   model_checkpoint:

@@ -51,6 +51,7 @@ def train(cfg: DictConfig, trial: Optional[optuna.trial.Trial] = None):
     cfg.model.net.species = datamodule.species
     cfg.model.net.active_names = datamodule.active_names
     cfg.model.net.alpha = datamodule.alpha
+    cfg.model.net.device = datamodule.device
     if OmegaConf.is_missing(cfg.model, "dataset_size"):
         cfg.model.dataset_size = datamodule.train_size
     model: LightningModule = hydra.utils.instantiate(

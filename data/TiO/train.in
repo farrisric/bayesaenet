@@ -1,15 +1,11 @@
-TRAININGSET /home/riccardo/bin/repos/aenet-bayesian/examples/TiO_2/TiO.train.ascii
+TRAININGSET /work/g15farris/database/TiO/TiO.data.ascii
 TESTPERCENT 10
-ITERATIONS  200000
-ITERWRITE   5000
-BATCHSIZE   128
-
+VALIDPERCENT 10
+ITERATIONS 20000
+ITERWRITE 1
+BATCHSIZE 64
 NPSEED 1
 PHSEED 2
-
-#FORCES
-#alpha=0.1
-
 
 MEMORY_MODE cpu
 

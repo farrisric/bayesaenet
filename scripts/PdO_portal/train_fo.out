@@ -1,0 +1,90 @@
+[2024-05-07 10:09:06,320][utils.utils][WARNING] - Extras config not found! <cfg.extras=null>
+[2024-05-07 10:09:06,321][__main__][INFO] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>
+0.1
+0.8 0.1 0.1
+[12833, 10600, 4868, 5601, 6351]
+0.8 0.1 0.1
+[297, 7446, 3021, 11251, 9173]
+[2024-05-07 10:09:31,114][__main__][INFO] - Instantiating model <src.models.bnn.BNN>
+[2024-05-07 10:09:31,270][__main__][INFO] - Instantiating callbacks...
+[2024-05-07 10:09:31,271][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.ModelCheckpoint>
+[2024-05-07 10:09:31,274][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.EarlyStopping>
+[2024-05-07 10:09:31,275][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichModelSummary>
+[2024-05-07 10:09:31,275][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichProgressBar>
+[2024-05-07 10:09:31,277][__main__][INFO] - Instantiating loggers...
+[2024-05-07 10:09:31,277][utils.utils][INFO] - Instantiating logger <pytorch_lightning.loggers.tensorboard.TensorBoardLogger>
+[2024-05-07 10:09:31,403][__main__][INFO] - Instantiating trainer <pytorch_lightning.trainer.Trainer>
+[2024-05-07 10:09:31,599][__main__][INFO] - Logging hyperparameters!
+[2024-05-07 10:09:32,655][__main__][INFO] - Starting training!
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                          ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                           │ NetAtom    │  1.9 K │
+│ 1  │ net.linear                    │ Identity   │      0 │
+│ 2  │ net.tanh                      │ Tanh       │      0 │
+│ 3  │ net.sigmoid                   │ Sigmoid    │      0 │
+│ 4  │ net.functions                 │ ModuleList │  1.9 K │
+│ 5  │ net.functions.0               │ Sequential │    966 │
+│ 6  │ net.functions.0.Linear_Sp1_F1 │ Linear     │    795 │
+│ 7  │ net.functions.0.Linear_Sp1_F2 │ Linear     │    160 │
+│ 8  │ net.functions.0.Linear_Sp1_F3 │ Linear     │     11 │
+│ 9  │ net.functions.1               │ Sequential │    966 │
+│ 10 │ net.functions.1.Linear_Sp2_F1 │ Linear     │    795 │
+│ 11 │ net.functions.1.Linear_Sp2_F2 │ Linear     │    160 │
+│ 12 │ net.functions.1.Linear_Sp2_F3 │ Linear     │     11 │
+└────┴───────────────────────────────┴────────────┴────────┘
+Trainable params: 1.9 K                                                         
+Non-trainable params: 0                                                         
+Total params: 1.9 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 499/499 ━━━━━━━━━━━━━━━━━ 383/383 0:00:18 • 0:00:00 20.18it/s v_num: 0.000
+[2024-05-07 13:05:23,681][__main__][INFO] - Starting testing!
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃        Test metric        ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         mse/test          │   0.0005002542971199368   │
+│         nll/test          │    -0.8122943775434185    │
+└───────────────────────────┴───────────────────────────┘
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48/48 0:00:03 • 0:00:00 12.08it/s 
+[2024-05-07 13:05:27,697][__main__][INFO] - Best ckpt path: /home/g15farris/bin/bayesaenet/src/logs/train_fo/runs/2024-05-07_10-09-06/checkpoints/epoch_298-step_114517.ckpt
+[2024-05-07 13:05:27,700][utils.utils][INFO] - Closing loggers...
+[2024-05-07 13:05:27,703][utils.utils][INFO] - Output dir: /home/g15farris/bin/bayesaenet/src/logs/train_fo/runs/2024-05-07_10-09-06
+[2024-05-07 13:14:09,159][utils.utils][WARNING] - Extras config not found! <cfg.extras=null>
+[2024-05-07 13:14:09,159][__main__][INFO] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>
+0.1
+0.8 0.1 0.1
+[12833, 10600, 4868, 5601, 6351]
+0.8 0.1 0.1
+[297, 7446, 3021, 11251, 9173]
+[2024-05-07 13:14:34,072][__main__][INFO] - Instantiating model <src.models.bnn.BNN>
+[2024-05-07 13:14:34,115][__main__][INFO] - Instantiating callbacks...
+[2024-05-07 13:14:34,115][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.ModelCheckpoint>
+[2024-05-07 13:14:34,118][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.EarlyStopping>
+[2024-05-07 13:14:34,119][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichModelSummary>
+[2024-05-07 13:14:34,120][utils.utils][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichProgressBar>
+[2024-05-07 13:14:34,121][__main__][INFO] - Instantiating loggers...
+[2024-05-07 13:14:34,121][utils.utils][INFO] - Instantiating logger <pytorch_lightning.loggers.tensorboard.TensorBoardLogger>
+[2024-05-07 13:14:34,129][__main__][INFO] - Instantiating trainer <pytorch_lightning.trainer.Trainer>
+[2024-05-07 13:14:34,302][__main__][INFO] - Logging hyperparameters!
+[2024-05-07 13:14:37,810][__main__][INFO] - Starting training!
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                          ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                           │ NetAtom    │  1.9 K │
+│ 1  │ net.linear                    │ Identity   │      0 │
+│ 2  │ net.tanh                      │ Tanh       │      0 │
+│ 3  │ net.sigmoid                   │ Sigmoid    │      0 │
+│ 4  │ net.functions                 │ ModuleList │  1.9 K │
+│ 5  │ net.functions.0               │ Sequential │    966 │
+│ 6  │ net.functions.0.Linear_Sp1_F1 │ Linear     │    795 │
+│ 7  │ net.functions.0.Linear_Sp1_F2 │ Linear     │    160 │
+│ 8  │ net.functions.0.Linear_Sp1_F3 │ Linear     │     11 │
+│ 9  │ net.functions.1               │ Sequential │    966 │
+│ 10 │ net.functions.1.Linear_Sp2_F1 │ Linear     │    795 │
+│ 11 │ net.functions.1.Linear_Sp2_F2 │ Linear     │    160 │
+│ 12 │ net.functions.1.Linear_Sp2_F3 │ Linear     │     11 │
+└────┴───────────────────────────────┴────────────┴────────┘
+Trainable params: 1.9 K                                                         
+Non-trainable params: 0                                                         
+Total params: 1.9 K                                                             
+Total estimated model params size (MB): 0                                       

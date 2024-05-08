@@ -1,1 +1,0 @@
-python src/tasks/hpsearch.py model=bnn_lrt datamodule=IrO hpsearch=bnn_lrt task_name=hps_lrt

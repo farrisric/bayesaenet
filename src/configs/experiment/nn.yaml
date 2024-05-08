@@ -8,9 +8,16 @@ defaults:
 
 seed: 12345
 
+tags: ["PdO", "nn", "lrt"]
+
 trainer:
   min_epochs: 1
-  max_epochs: 5
+  max_epochs: 500
+
+model:
+  optimizer:
+    lr: 0.001574 #0.0005
+    weight_decay: 0.001
 
 callbacks:
   model_checkpoint:

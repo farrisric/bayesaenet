@@ -1,0 +1,6 @@
+- trainer.min_epochs=10000
+- experiment=bnn_fo
+- seed=15
+- trainer.deterministic=False
+- task_name=train_fo
+- datamodule=PdO

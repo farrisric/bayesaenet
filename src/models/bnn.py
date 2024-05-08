@@ -7,7 +7,8 @@ from torch import nn
 import torch.nn.functional as F
 import tyxe
 from tyxe import guides, priors, likelihoods, VariationalBNN
-from tyxe.guides import AutoNormal, AutoRadial
+from tyxe.guides import AutoNormal
+from .guides.radial import AutoRadial
 import pytorch_lightning as L
 from functools import partial
 import copy

@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - /hpsearch/study: study
+  - /hpsearch/objective: nn
+  - override /experiment: nn
+
+hpsearch:
+  monitor: mse/val
+  study:
+    study_name: nn_hps
+
+trainer:
+  max_epochs: 20

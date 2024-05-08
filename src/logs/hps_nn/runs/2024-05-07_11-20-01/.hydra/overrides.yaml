@@ -1,0 +1,5 @@
+- model=nn
+- datamodule=PdO
+- hpsearch=nn
+- task_name=hps_nn
+- tags=[PdO]

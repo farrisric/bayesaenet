@@ -1,1 +1,6 @@
-python src/tasks/hpsearch.py model=bnn_lrt datamodule=PdO hpsearch=bnn_lrt task_name=hps_lrt tags=["PdO"]
+python src/tasks/hpsearch.py \
+    model=bnn_lrt \
+    datamodule=PdO \
+    hpsearch=bnn_lrt \
+    task_name=hps_lrt \
+    tags=["PdO"] \
