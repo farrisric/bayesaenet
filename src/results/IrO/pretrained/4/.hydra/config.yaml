@@ -26,7 +26,7 @@ model:
     weight_decay: 0.001
 callbacks:
   model_checkpoint:
-    _target_: pytorch_lightning.callbacks.ModelCheckpoint
+    _target_: lightning.pytorch.callbacks.ModelCheckpoint
     dirpath: ${paths.output_dir}/checkpoints
     filename: pretrained
     monitor: mse/val
@@ -42,20 +42,20 @@ callbacks:
     save_on_train_epoch_end: null
   early_stopping: null
   model_summary:
-    _target_: pytorch_lightning.callbacks.RichModelSummary
+    _target_: lightning.pytorch.callbacks.RichModelSummary
     max_depth: -1
   rich_progress_bar:
-    _target_: pytorch_lightning.callbacks.RichProgressBar
+    _target_: lightning.pytorch.callbacks.RichProgressBar
 logger:
   tensorboard:
-    _target_: pytorch_lightning.loggers.tensorboard.TensorBoardLogger
+    _target_: lightning.pytorch.loggers.tensorboard.TensorBoardLogger
     save_dir: ${paths.output_dir}/tensorboard/
     name: null
     log_graph: false
     default_hp_metric: true
     prefix: ''
 trainer:
-  _target_: pytorch_lightning.trainer.Trainer
+  _target_: lightning.pytorch.trainer.Trainer
   default_root_dir: ${paths.output_dir}
   min_epochs: 1
   max_epochs: 5

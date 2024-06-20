@@ -1,0 +1,13 @@
+- trainer.min_epochs=10000
+- experiment=bnn_lrt
+- trainer.deterministic=False
+- task_name=train_lrt
+- datamodule=IrO
+- model.pretrain_epochs=0
+- model.lr=0.0007398133016577721
+- model.mc_samples_train=2
+- model.prior_scale=0.03390593691630177
+- model.q_scale=0.001225864173360612
+- model.obs_scale=0.4345323712845741
+- datamodule.batch_size=32
+- tags=[IrO]

@@ -1,0 +1,7 @@
+python src/tasks/train.py \
+ task_name=pretrain \
+ experiment=nn \
+ datamodule=TiO \
+ trainer.max_epochs=5 \
+ datamodule.test_split=0.1 \
+ datamodule.valid_split=0.1 \

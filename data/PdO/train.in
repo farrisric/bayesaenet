@@ -1,4 +1,4 @@
-TRAININGSET /media/riccardo/HardDisk/data/PdO/aims-db/data.train.ascii
+TRAININGSET /work/g15farris/PdO.train.ascii
 TESTPERCENT 10
 VALIDPERCENT 10
 ITERATIONS 20000

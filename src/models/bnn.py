@@ -7,8 +7,9 @@ from torch import nn
 import torch.nn.functional as F
 import tyxe
 from tyxe import guides, priors, likelihoods, VariationalBNN
-from tyxe.guides import AutoNormal, AutoRadial
-import pytorch_lightning as L
+from tyxe.guides import AutoNormal 
+from .guides.radial import AutoRadial
+import lightning.pytorch as L
 from functools import partial
 import copy
 import contextlib
@@ -174,6 +175,7 @@ class BNN(L.LightningModule):
         x = batch[10], batch[12]
         y = batch[11]
         pred = dict()
+        pred["true"] = batch[11].cpu().numpy()
         loc, scale = self.bnn.predict(
             x[0], x[1],
             num_predictions=self.hparams.mc_samples_eval

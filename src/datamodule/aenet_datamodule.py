@@ -1,9 +1,9 @@
 import sys
-sys.path.append('/home/riccardo/bin/repos/aenet-bayesian/aenet')
+sys.path.append('/home/g15farris/bin/bayesaenet/src/datamodule/aenet')
 
 import torch 
 from torch.utils.data import DataLoader
-import pytorch_lightning as L
+import lightning.pytorch as L
 
 from src.datamodule.aenet.read_input import read_train_in
 from src.datamodule.aenet.prepare_batches import select_batch_size, select_batches, read_list_structures

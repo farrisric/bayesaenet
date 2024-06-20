@@ -1,0 +1,4 @@
+- prediction=PdO
+- ckpt_path=all
+- datamodule=PdO
+- tags=[PdO]

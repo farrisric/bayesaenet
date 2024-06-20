@@ -1,0 +1,3 @@
+- prediction=IrO
+- ckpt_path=all
+- datamodule=IrO

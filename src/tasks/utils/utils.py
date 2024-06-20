@@ -7,9 +7,9 @@ from typing import Callable, List, Optional
 import hydra
 import optuna
 from omegaconf import DictConfig
-from pytorch_lightning import Callback
-from pytorch_lightning.loggers.logger import Logger
-from pytorch_lightning.utilities import rank_zero_only
+from lightning.pytorch import Callback
+from lightning.pytorch.loggers.logger import Logger
+from lightning.pytorch.utilities import rank_zero_only
 
 from . import pylogger, rich_utils
 
@@ -147,7 +147,7 @@ def instantiate_loggers(logger_cfg: DictConfig) -> List[Logger]:
 
 @rank_zero_only
 def log_hyperparameters(object_dict: dict) -> None:
-    """Controls which config parts are saved by pytorch_lightning loggers.
+    """Controls which config parts are saved by lightning.pytorch loggers.
 
     Additionally saves:
     - Number of model parameters

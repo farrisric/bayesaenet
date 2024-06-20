@@ -1,4 +1,4 @@
-TRAININGSET /media/riccardo/HardDisk/data/IrO/data.train.ascii
+TRAININGSET /work/g15farris/database/IrO/data.train.ascii
 TESTPERCENT 5
 VALIDPERCENT 5
 ITERATIONS 20000
@@ -23,5 +23,5 @@ REGULARIZATION 0.001
 NETWORKS
 ! atom   network         hidden
 ! types  file-name       layers  nodes:activation
-Ir       Ir.nn           2       10:tanh 10:tanh
-O        O.nn            2       10:tanh 10:tanh
+Ir       Ir.nn           2       15:tanh 10:tanh
+O        O.nn            2       15:tanh 10:tanh

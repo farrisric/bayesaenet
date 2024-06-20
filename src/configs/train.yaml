@@ -26,7 +26,7 @@ tags: ["dev"]
 train: True
 
 # evaluate on test set, using best model weights achieved during training
-# pytorch_lightning chooses best weights based on the metric specified in checkpoint callback
+# lightning.pytorch chooses best weights based on the metric specified in checkpoint callback
 test: True
 
 # simply provide checkpoint path to resume training

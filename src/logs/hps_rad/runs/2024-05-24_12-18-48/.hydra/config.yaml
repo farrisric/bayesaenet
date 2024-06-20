@@ -1,0 +1,103 @@
+task_name: hps_rad
+tags:
+- PdO
+train: true
+test: false
+ckpt_path: null
+seed: 12345
+datamodule:
+  _target_: src.datamodule.aenet_datamodule.AenetDataModule
+  data_dir: ${paths.data_dir}/PdO/train.in
+  device: cpu
+  batch_size: 100
+  test_split: 0.1
+  valid_split: 0.1
+model:
+  net:
+    _target_: src.models.nets.network.NetAtom
+    input_size: ???
+    hidden_size: ???
+    species: ???
+    active_names: ???
+    alpha: ???
+    device: cpu
+  _target_: src.models.bnn.BNN
+  lr: 0.0009788619025802843
+  pretrain_epochs: 5
+  mc_samples_train: 2
+  mc_samples_eval: 20
+  dataset_size: ???
+  fit_context: null
+  guide: radial
+  prior_loc: 0
+  prior_scale: 0.019240951470053693
+  q_scale: 0.002223982343432341
+  obs_scale: 0.990878816554534
+callbacks:
+  model_checkpoint:
+    _target_: lightning.pytorch.callbacks.ModelCheckpoint
+    dirpath: ${paths.output_dir}/checkpoints
+    filename: epoch_{epoch}-step_{step}
+    monitor: elbo/val
+    verbose: false
+    save_last: true
+    save_top_k: 1
+    mode: min
+    auto_insert_metric_name: false
+    save_weights_only: false
+    every_n_train_steps: null
+    train_time_interval: null
+    every_n_epochs: null
+    save_on_train_epoch_end: null
+  rich_progress_bar:
+    _target_: lightning.pytorch.callbacks.RichProgressBar
+  model_summary:
+    _target_: lightning.pytorch.callbacks.RichModelSummary
+    max_depth: -1
+  optuna_pruner:
+    _target_: optuna.integration.PyTorchLightningPruningCallback
+  early_stopping: null
+logger:
+  tensorboard:
+    _target_: lightning.pytorch.loggers.tensorboard.TensorBoardLogger
+    save_dir: ${paths.output_dir}/tensorboard/
+    name: null
+    log_graph: false
+    default_hp_metric: true
+    prefix: ''
+trainer:
+  _target_: lightning.pytorch.trainer.Trainer
+  default_root_dir: ${paths.output_dir}
+  min_epochs: 1
+  max_epochs: 20
+  accelerator: cpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  deterministic: false
+paths:
+  root_dir: ${oc.env:PROJECT_ROOT}
+  data_dir: ${paths.root_dir}/data/
+  log_dir: ${paths.root_dir}/src/logs/
+  output_dir: ${hydra:runtime.output_dir}
+  work_dir: ${hydra:runtime.cwd}
+  results_dir: ${paths.root_dir}/src/results/
+hpsearch:
+  study:
+    _target_: optuna.create_study
+    direction: minimize
+    study_name: bnn_rad
+    sampler:
+      _target_: optuna.samplers.TPESampler
+      seed: 1234
+      n_startup_trials: 10
+    pruner:
+      _target_: optuna.pruners.PatientPruner
+      wrapped_pruner:
+        _target_: optuna.pruners.MedianPruner
+      patience: 2
+    storage: ???
+    load_if_exists: true
+  objective:
+    _target_: src.tasks.hpsearch.objective_bnn
+  monitor: elbo/val
+  n_trials: 60

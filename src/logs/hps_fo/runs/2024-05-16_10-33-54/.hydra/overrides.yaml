@@ -1,0 +1,5 @@
+- model=bnn_fo
+- datamodule=IrO
+- hpsearch=bnn_fo
+- task_name=hps_fo
+- tags=[IrO]

@@ -1,0 +1,14 @@
+- experiment=bnn_rad
+- trainer.deterministic=False
+- trainer.min_epochs=10000
+- task_name=train_rad
+- datamodule=IrO
+- model.pretrain_epochs=0
+- model.lr=0.00048357862190424346
+- model.mc_samples_train=2
+- model.prior_scale=0.32525978096701874
+- model.q_scale=0.007456841427543389
+- model.obs_scale=0.3624831404788194
+- datamodule.batch_size=32
+- tags=[IrO]
+- ckpt_path=/home/g15farris/bin/forks/bayesaenet/src/logs/train_rad/runs/2024-05-17_09-23-04/checkpoints/epoch_237-step_68544.ckpt

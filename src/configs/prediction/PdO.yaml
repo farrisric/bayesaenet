@@ -1,0 +1,11 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - /datamodule: PdO
+  - /model@LRT: bnn_lrt
+  - /model@FO: bnn_fo
+  - /model@RAD: bnn_rad
+
+dataset: PdO
+runs_dir: ${paths.results_dir}/${dataset}/runs/

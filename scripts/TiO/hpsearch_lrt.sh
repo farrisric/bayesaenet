@@ -1,0 +1,6 @@
+python src/tasks/hpsearch.py \
+    model=bnn_lrt \
+    datamodule=TiO \
+    hpsearch=bnn_lrt \
+    task_name=hps_lrt \
+    tags=["TiO"]

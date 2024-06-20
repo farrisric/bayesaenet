@@ -1,0 +1,6 @@
+- task_name=train_nn
+- experiment=nn
+- datamodule=PdO
+- trainer.max_epochs=10000
+- tags=[PdO]
+- seed=8
