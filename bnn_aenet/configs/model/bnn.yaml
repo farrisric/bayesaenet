@@ -1,0 +1,16 @@
+defaults:
+  - net
+
+_target_: bnn_aenet.models.bnn.BNN
+
+lr: 0.0009824656143295528
+pretrain_epochs: 5
+mc_samples_train: 1
+mc_samples_eval: 20
+dataset_size: ???
+fit_context: null
+guide: ???
+prior_loc: 0
+prior_scale: 0.2171090239098832
+q_scale: 0.0006242035259876877
+obs_scale: 1.5567159523167973

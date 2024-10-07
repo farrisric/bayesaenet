@@ -1,7 +1,7 @@
 import sys
 sys.path.append('/home/g15farris/bin/forks/bayesaenet/src')
 
-#from src.utils.miscellaneous import ResultSaver
+#from bnn_aenet.utils.miscellaneous import ResultSaver
 import uncertainty_toolbox as uct
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression

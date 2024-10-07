@@ -1,6 +1,0 @@
-_target_: src.datamodule.aenet_datamodule.AenetDataModule
-data_dir: ${paths.data_dir}/train.in
-device: 'cpu'
-batch_size: 100
-test_split: 0.1
-valid_split: 0.1

@@ -1,11 +1,11 @@
 [[36m2024-07-08 13:58:00,634[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 13:58:00,634[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 13:58:00,634[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 13:58:02,166[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 13:58:02,166[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 13:58:02,182[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 13:58:02,182[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 13:58:02,186[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.EarlyStopping>[0m
@@ -51,13 +51,13 @@ RuntimeError: Error(s) in loading state_dict for BNN:
 	size mismatch for net.functions.1.Linear_Sp2_F3.weight: copying a param with shape torch.Size([1, 10]) from checkpoint, the shape in current model is torch.Size([1, 15]).
 [[36m2024-07-08 13:58:12,753[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 14:20:07,235[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 14:20:07,236[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 14:20:07,236[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 14:20:08,440[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 14:20:08,440[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 14:20:08,449[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 14:20:08,449[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 14:20:08,452[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.EarlyStopping>[0m
@@ -102,13 +102,13 @@ Testing ━━━━━━━━━━━━━━━━━━━━━━━━
 [[36m2024-07-08 20:06:44,173[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 20:06:45,418[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/train_rad/runs/2024-07-08_14-20-07[0m
 [[36m2024-07-10 09:29:38,774[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-10 09:29:38,776[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-10 09:29:38,776[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [438, 3268, 1427, 6123, 1344]
 0.8 0.1 0.1
 [1982, 285, 321, 6931, 5191]
-[[36m2024-07-10 09:30:12,126[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-10 09:30:12,126[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-10 09:30:12,155[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-10 09:30:12,157[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-10 09:30:12,169[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.EarlyStopping>[0m

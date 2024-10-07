@@ -4,8 +4,8 @@ sys.path.append('../')
 from ase.db import connect
 import os
 import pyro
-from src.models.bnn import BNN, NN
-from src.models.nets.network import NetAtom
+from bnn_aenet.models.bnn import BNN, NN
+from bnn_aenet.models.nets.network import NetAtom
 import torch
 import pytorch_lightning as L
 import torch.utils.data as data
@@ -16,7 +16,7 @@ from optuna import Study
 import optuna
 from optuna.trial import Trial
 
-from src.datamodule.aenet_datamodule import AenetDataModule
+from bnn_aenet.datamodule.aenet_datamodule import AenetDataModule
 
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression

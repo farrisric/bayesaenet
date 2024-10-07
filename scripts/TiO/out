@@ -1,11 +1,11 @@
 [[36m2024-07-08 11:23:53,200[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:23:53,200[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:23:53,200[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:23:54,992[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.NN>[0m
+[[36m2024-07-08 11:23:54,992[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.NN>[0m
 [[36m2024-07-08 11:23:55,038[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:23:55,039[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:23:55,045[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.EarlyStopping>[0m
@@ -56,39 +56,39 @@ Testing ━━━━━━━━━━━━━━━━━━━━━━━━
 [[36m2024-07-08 11:30:15,083[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating study <optuna.create_study>[0m
 {'_target_': 'lightning.pytorch.trainer.Trainer', 'default_root_dir': '${paths.output_dir}', 'min_epochs': 1, 'max_epochs': 20, 'accelerator': 'cpu', 'devices': 1, 'check_val_every_n_epoch': 1, 'deterministic': False}
 [[36m2024-07-08 11:42:55,565[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating study <optuna.create_study>[0m
-[[36m2024-07-08 11:42:56,136[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating objective <src.tasks.hpsearch.objective_bnn>[0m
+[[36m2024-07-08 11:42:56,136[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating objective <bnn_aenet.tasks.hpsearch.objective_bnn>[0m
 [[36m2024-07-08 11:42:56,141[0m][[34m__main__[0m][[32mINFO[0m] - Starting hyperparameter search ...[0m
-[[36m2024-07-08 11:42:56,207[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
-[[36m2024-07-08 11:42:56,219[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 7.50681093606854e-05, lr[0m
-[[36m2024-07-08 11:42:56,232[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
-[[36m2024-07-08 1[[36m2024-07-08 11:43:08,814[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
-[[36m2024-07-08 11:43:08,828[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 7.50681093606854e-05, lr[0m
-[[36m2024-07-08 11:43:08,841[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
-[[36m2024-07-08 11:43:08,856[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.029048697214318013 prior_scale[0m
-[[36m2024-07-08 11:43:08,869[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.0003572140318996377 q_scale[0m
-[[36m2024-07-08 11:43:08,883[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1.1047391773518673 obs_scale[0m
-[[36m2024-07-08 11:43:08,895[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 32 batch_size[0m
-[[36m2024-07-08 11:43:08,895[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 000 __________________[0m
+[[36m2024-07-08 11:42:56,207[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
+[[36m2024-07-08 11:42:56,219[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 7.50681093606854e-05, lr[0m
+[[36m2024-07-08 11:42:56,232[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2024-07-08 1[[36m2024-07-08 11:43:08,814[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
+[[36m2024-07-08 11:43:08,828[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 7.50681093606854e-05, lr[0m
+[[36m2024-07-08 11:43:08,841[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2024-07-08 11:43:08,856[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.029048697214318013 prior_scale[0m
+[[36m2024-07-08 11:43:08,869[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0003572140318996377 q_scale[0m
+[[36m2024-07-08 11:43:08,883[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1.1047391773518673 obs_scale[0m
+[[36m2024-07-08 11:43:08,895[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 32 batch_size[0m
+[[36m2024-07-08 11:43:08,895[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 000 __________________[0m
 [[36m2024-07-08 11:43:08,896[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:08,896[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
-[[36m2024-07-08 11:43:09,111[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating objective <src.tasks.hpsearch.objective_bnn>[0m
+[[36m2024-07-08 11:43:08,896[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:09,111[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating objective <bnn_aenet.tasks.hpsearch.objective_bnn>[0m
 [[36m2024-07-08 11:43:09,116[0m][[34m__main__[0m][[32mINFO[0m] - Starting hyperparameter search ...[0m
-[[36m2024-07-08 11:43:09,185[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
-[[36m2024-07-08 11:43:09,197[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 7.50681093606854e-05, lr[0m
-[[36m2024-07-08 11:43:09,213[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
-[[36m2024-07-08 11:43:09,229[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.029048697214318013 prior_scale[0m
-[[36m2024-07-08 11:43:09,240[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.0003572140318996377 q_scale[0m
-[[36m2024-07-08 11:43:09,252[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1.1047391773518673 obs_scale[0m
-[[36m2024-07-08 11:43:09,263[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 32 batch_size[0m
-[[36m2024-07-08 11:43:09,263[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 001 __________________[0m
+[[36m2024-07-08 11:43:09,185[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
+[[36m2024-07-08 11:43:09,197[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 7.50681093606854e-05, lr[0m
+[[36m2024-07-08 11:43:09,213[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2024-07-08 11:43:09,229[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.029048697214318013 prior_scale[0m
+[[36m2024-07-08 11:43:09,240[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0003572140318996377 q_scale[0m
+[[36m2024-07-08 11:43:09,252[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1.1047391773518673 obs_scale[0m
+[[36m2024-07-08 11:43:09,263[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 32 batch_size[0m
+[[36m2024-07-08 11:43:09,263[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 001 __________________[0m
 [[36m2024-07-08 11:43:09,263[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:09,263[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:09,263[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:10,185[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:10,185[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:10,194[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:10,195[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:10,196[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -102,7 +102,7 @@ Testing ━━━━━━━━━━━━━━━━━━━━━━━━
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:10,271[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:10,271[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:10,281[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:10,281[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:10,283[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -160,22 +160,22 @@ Non-trainable params: 0
 Total params: 2.2 K                                                             
 Total estimated model params size (MB): 0                                       
 bin/forks/bayesaenet/src/logs/hps_fo/runs/2024-07-08_11-42-55/000[0m
-[[36m2024-07-08 11:43:19,789[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
-[[36m2024-07-08 11:43:19,803[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.0001325538578998538, lr[0m
-[[36m2024-07-08 11:43:19,816[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
-[[36m2024-07-08 11:43:19,830[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.20559343783957656 prior_scale[0m
-[[36m2024-07-08 11:43:19,843[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.0058248182837850404 q_scale[0m
-[[36m2024-07-08 11:43:19,856[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.29835107709343195 obs_scale[0m
-[[36m2024-07-08 11:43:19,870[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 256 batch_size[0m
-[[36m2024-07-08 11:43:19,870[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 001 __________________[0m
+[[36m2024-07-08 11:43:19,789[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2024-07-08 11:43:19,803[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0001325538578998538, lr[0m
+[[36m2024-07-08 11:43:19,816[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2024-07-08 11:43:19,830[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.20559343783957656 prior_scale[0m
+[[36m2024-07-08 11:43:19,843[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0058248182837850404 q_scale[0m
+[[36m2024-07-08 11:43:19,856[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.29835107709343195 obs_scale[0m
+[[36m2024-07-08 11:43:19,870[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 256 batch_size[0m
+[[36m2024-07-08 11:43:19,870[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 001 __________________[0m
 [[36m2024-07-08 11:43:19,871[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:19,871[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:19,871[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:20,991[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:20,991[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:20,997[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:20,997[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:20,999[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -210,22 +210,22 @@ Total estimated model params size (MB): 0
 Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━━━ 3/3 0:00:00 • 0:00:00 18.68it/s v_num: 0.000
 [[36m2024-07-08 11:43:26,624[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 11:43:26,625[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_fo/runs/2024-07-08_11-42-55/001[0m
-[[36m2024-07-08 11:43:26,726[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
-[[36m2024-07-08 11:43:26,736[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 4.3020182095898586e-05, lr[0m
-[[36m2024-07-08 11:43:26,747[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
-[[36m2024-07-08 11:43:26,757[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.05508654872763757 prior_scale[0m
-[[36m2024-07-08 11:43:26,768[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.004020640881061957 q_scale[0m
-[[36m2024-07-08 11:43:26,778[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.1538313853200085 obs_scale[0m
-[[36m2024-07-08 11:43:26,788[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 256 batch_size[0m
-[[36m2024-07-08 11:43:26,788[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 002 __________________[0m
+[[36m2024-07-08 11:43:26,726[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
+[[36m2024-07-08 11:43:26,736[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 4.3020182095898586e-05, lr[0m
+[[36m2024-07-08 11:43:26,747[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
+[[36m2024-07-08 11:43:26,757[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.05508654872763757 prior_scale[0m
+[[36m2024-07-08 11:43:26,768[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.004020640881061957 q_scale[0m
+[[36m2024-07-08 11:43:26,778[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.1538313853200085 obs_scale[0m
+[[36m2024-07-08 11:43:26,788[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 256 batch_size[0m
+[[36m2024-07-08 11:43:26,788[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 002 __________________[0m
 [[36m2024-07-08 11:43:26,788[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:26,788[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:26,788[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:27,801[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:27,801[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:27,807[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:27,807[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:27,809[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -260,22 +260,22 @@ Total params: 2.2 K
 Total estimated model params size (MB): 0                                       
 utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 11:43:31,546[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_lrt/runs/2024-07-08_11-43-07/001[0m
-[[36m2024-07-08 11:43:31,658[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
-[[36m2024-07-08 11:43:31,670[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.0001325538578998538, lr[0m
-[[36m2024-07-08 11:43:31,683[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
-[[36m2024-07-08 11:43:31,694[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.20559343783957656 prior_scale[0m
-[[36m2024-07-08 11:43:31,705[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.0058248182837850404 q_scale[0m
-[[36m2024-07-08 11:43:31,716[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.29835107709343195 obs_scale[0m
-[[36m2024-07-08 11:43:31,727[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 256 batch_size[0m
-[[36m2024-07-08 11:43:31,727[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 002 __________________[0m
+[[36m2024-07-08 11:43:31,658[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2024-07-08 11:43:31,670[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0001325538578998538, lr[0m
+[[36m2024-07-08 11:43:31,683[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2024-07-08 11:43:31,694[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.20559343783957656 prior_scale[0m
+[[36m2024-07-08 11:43:31,705[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0058248182837850404 q_scale[0m
+[[36m2024-07-08 11:43:31,716[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.29835107709343195 obs_scale[0m
+[[36m2024-07-08 11:43:31,727[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 256 batch_size[0m
+[[36m2024-07-08 11:43:31,727[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 002 __________________[0m
 [[36m2024-07-08 11:43:31,728[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:31,728[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:31,728[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:32,727[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:32,727[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:32,733[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:32,733[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:32,735[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -310,22 +310,22 @@ Total estimated model params size (MB): 0
 Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━━━━ 3/3 0:00:00 • 0:00:00 9.43it/s v_num: 0.000
 [[36m2024-07-08 11:43:37,214[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 11:43:37,215[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_fo/runs/2024-07-08_11-42-55/002[0m
-[[36m2024-07-08 11:43:37,321[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
-[[36m2024-07-08 11:43:37,333[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 2.336545096950015e-05, lr[0m
-[[36m2024-07-08 11:43:37,344[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
-[[36m2024-07-08 11:43:37,355[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.1023881426733586 prior_scale[0m
-[[36m2024-07-08 11:43:37,365[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.001165790000863127 q_scale[0m
-[[36m2024-07-08 11:43:37,376[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.11385861721302043 obs_scale[0m
-[[36m2024-07-08 11:43:37,387[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 512 batch_size[0m
-[[36m2024-07-08 11:43:37,387[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 003 __________________[0m
+[[36m2024-07-08 11:43:37,321[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2024-07-08 11:43:37,333[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2.336545096950015e-05, lr[0m
+[[36m2024-07-08 11:43:37,344[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
+[[36m2024-07-08 11:43:37,355[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.1023881426733586 prior_scale[0m
+[[36m2024-07-08 11:43:37,365[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.001165790000863127 q_scale[0m
+[[36m2024-07-08 11:43:37,376[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.11385861721302043 obs_scale[0m
+[[36m2024-07-08 11:43:37,387[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 512 batch_size[0m
+[[36m2024-07-08 11:43:37,387[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 003 __________________[0m
 [[36m2024-07-08 11:43:37,387[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:37,387[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:37,387[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:38,411[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:38,411[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:38,417[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:38,417[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:38,419[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -363,22 +363,22 @@ Total estimated model params size (MB): 0
 Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━━━ 3/3 0:00:00 • 0:00:00 22.72it/s v_num: 0.000
 [[36m2024-07-08 11:43:37,888[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 11:43:37,889[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_lrt/runs/2024-07-08_11-43-07/002[0m
-[[36m2024-07-08 11:43:38,008[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
-[[36m2024-07-08 11:43:38,023[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 4.3020182095898586e-05, lr[0m
-[[36m2024-07-08 11:43:38,038[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
-[[36m2024-07-08 11:43:38,052[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.05508654872763757 prior_scale[0m
-[[36m2024-07-08 11:43:38,067[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.004020640881061957 q_scale[0m
-[[36m2024-07-08 11:43:38,081[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.1538313853200085 obs_scale[0m
-[[36m2024-07-08 11:43:38,095[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 256 batch_size[0m
-[[36m2024-07-08 11:43:38,095[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 003 __________________[0m
+[[36m2024-07-08 11:43:38,008[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
+[[36m2024-07-08 11:43:38,023[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 4.3020182095898586e-05, lr[0m
+[[36m2024-07-08 11:43:38,038[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
+[[36m2024-07-08 11:43:38,052[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.05508654872763757 prior_scale[0m
+[[36m2024-07-08 11:43:38,067[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.004020640881061957 q_scale[0m
+[[36m2024-07-08 11:43:38,081[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.1538313853200085 obs_scale[0m
+[[36m2024-07-08 11:43:38,095[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 256 batch_size[0m
+[[36m2024-07-08 11:43:38,095[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 003 __________________[0m
 [[36m2024-07-08 11:43:38,096[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:38,096[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:38,096[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:39,209[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:39,209[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:39,215[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:39,215[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:39,217[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -414,22 +414,22 @@ Total estimated model params size (MB): 0
 Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━━━ 3/3 0:00:00 • 0:00:00 18.02it/s v_num: 0.000
 [[36m2024-07-08 11:43:41,705[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 11:43:41,706[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_rad/runs/2024-07-08_11-43-08/002[0m
-[[36m2024-07-08 11:43:41,807[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
-[[36m2024-07-08 11:43:41,817[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 2.336545096950015e-05, lr[0m
-[[36m2024-07-08 11:43:41,827[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
-[[36m2024-07-08 11:43:41,840[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.1023881426733586 prior_scale[0m
-[[36m2024-07-08 11:43:41,853[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.001165790000863127 q_scale[0m
-[[36m2024-07-08 11:43:41,866[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.11385861721302043 obs_scale[0m
-[[36m2024-07-08 11:43:41,878[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 512 batch_size[0m
-[[36m2024-07-08 11:43:41,878[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 003 __________________[0m
+[[36m2024-07-08 11:43:41,807[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2024-07-08 11:43:41,817[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2.336545096950015e-05, lr[0m
+[[36m2024-07-08 11:43:41,827[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
+[[36m2024-07-08 11:43:41,840[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.1023881426733586 prior_scale[0m
+[[36m2024-07-08 11:43:41,853[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.001165790000863127 q_scale[0m
+[[36m2024-07-08 11:43:41,866[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.11385861721302043 obs_scale[0m
+[[36m2024-07-08 11:43:41,878[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 512 batch_size[0m
+[[36m2024-07-08 11:43:41,878[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 003 __________________[0m
 [[36m2024-07-08 11:43:41,879[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:41,879[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:41,879[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:43,001[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:43,001[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:43,007[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:43,007[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:43,009[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -464,22 +464,22 @@ Total estimated model params size (MB): 0
 Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━━━ 3/3 0:00:00 • 0:00:00 11.83it/s v_num: 0.000
 [[36m2024-07-08 11:43:47,198[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 11:43:47,199[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_lrt/runs/2024-07-08_11-43-07/003[0m
-[[36m2024-07-08 11:43:47,312[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
-[[36m2024-07-08 11:43:47,325[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 2.336545096950015e-05, lr[0m
-[[36m2024-07-08 11:43:47,337[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
-[[36m2024-07-08 11:43:47,348[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.1023881426733586 prior_scale[0m
-[[36m2024-07-08 11:43:47,360[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.001165790000863127 q_scale[0m
-[[36m2024-07-08 11:43:47,371[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.11385861721302043 obs_scale[0m
-[[36m2024-07-08 11:43:47,383[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 512 batch_size[0m
-[[36m2024-07-08 11:43:47,383[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 004 __________________[0m
+[[36m2024-07-08 11:43:47,312[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2024-07-08 11:43:47,325[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2.336545096950015e-05, lr[0m
+[[36m2024-07-08 11:43:47,337[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
+[[36m2024-07-08 11:43:47,348[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.1023881426733586 prior_scale[0m
+[[36m2024-07-08 11:43:47,360[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.001165790000863127 q_scale[0m
+[[36m2024-07-08 11:43:47,371[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.11385861721302043 obs_scale[0m
+[[36m2024-07-08 11:43:47,383[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 512 batch_size[0m
+[[36m2024-07-08 11:43:47,383[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 004 __________________[0m
 [[36m2024-07-08 11:43:47,383[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:47,383[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:47,383[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:48,430[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:48,430[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:48,435[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:48,436[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:48,437[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -514,22 +514,22 @@ Total estimated model params size (MB): 0
 Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━━━ 2/2 0:00:00 • 0:00:00 15.27it/s v_num: 0.000
 [[36m2024-07-08 11:43:48,503[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 11:43:48,504[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_rad/runs/2024-07-08_11-43-08/003[0m
-[[36m2024-07-08 11:43:48,606[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
-[[36m2024-07-08 11:43:48,617[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.00017174472922154303, lr[0m
-[[36m2024-07-08 11:43:48,627[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
-[[36m2024-07-08 11:43:48,638[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.48474869983391317 prior_scale[0m
-[[36m2024-07-08 11:43:48,648[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.008271866644681318 q_scale[0m
-[[36m2024-07-08 11:43:48,659[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1.0724303485094406 obs_scale[0m
-[[36m2024-07-08 11:43:48,669[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 64 batch_size[0m
-[[36m2024-07-08 11:43:48,669[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 004 __________________[0m
+[[36m2024-07-08 11:43:48,606[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2024-07-08 11:43:48,617[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.00017174472922154303, lr[0m
+[[36m2024-07-08 11:43:48,627[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2024-07-08 11:43:48,638[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.48474869983391317 prior_scale[0m
+[[36m2024-07-08 11:43:48,648[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.008271866644681318 q_scale[0m
+[[36m2024-07-08 11:43:48,659[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1.0724303485094406 obs_scale[0m
+[[36m2024-07-08 11:43:48,669[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 64 batch_size[0m
+[[36m2024-07-08 11:43:48,669[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 004 __________________[0m
 [[36m2024-07-08 11:43:48,669[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:48,669[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:48,669[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:49,649[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:49,649[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:49,654[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:49,655[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:49,656[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -564,22 +564,22 @@ Total estimated model params size (MB): 0
 Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━━━━ 2/2 0:00:00 • 0:00:00 9.60it/s v_num: 0.000
 [[36m2024-07-08 11:43:55,336[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 11:43:55,337[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_lrt/runs/2024-07-08_11-43-07/004[0m
-[[36m2024-07-08 11:43:55,453[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
-[[36m2024-07-08 11:43:55,466[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.00017174472922154303, lr[0m
-[[36m2024-07-08 11:43:55,478[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
-[[36m2024-07-08 11:43:55,490[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.48474869983391317 prior_scale[0m
-[[36m2024-07-08 11:43:55,502[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.008271866644681318 q_scale[0m
-[[36m2024-07-08 11:43:55,514[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1.0724303485094406 obs_scale[0m
-[[36m2024-07-08 11:43:55,526[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 64 batch_size[0m
-[[36m2024-07-08 11:43:55,526[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 005 __________________[0m
+[[36m2024-07-08 11:43:55,453[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2024-07-08 11:43:55,466[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.00017174472922154303, lr[0m
+[[36m2024-07-08 11:43:55,478[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2024-07-08 11:43:55,490[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.48474869983391317 prior_scale[0m
+[[36m2024-07-08 11:43:55,502[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.008271866644681318 q_scale[0m
+[[36m2024-07-08 11:43:55,514[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1.0724303485094406 obs_scale[0m
+[[36m2024-07-08 11:43:55,526[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 64 batch_size[0m
+[[36m2024-07-08 11:43:55,526[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 005 __________________[0m
 [[36m2024-07-08 11:43:55,526[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:43:55,526[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:43:55,526[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:43:56,513[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:43:56,513[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:43:56,520[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:43:56,520[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:43:56,522[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -614,22 +614,22 @@ Total estimated model params size (MB): 0
 Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━ 13/13 0:00:00 • 0:00:00 30.70it/s v_num: 0.000
 [[36m2024-07-08 11:44:00,126[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-07-08 11:44:00,128[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_fo/runs/2024-07-08_11-42-55/004[0m
-[[36m2024-07-08 11:44:00,248[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
-[[36m2024-07-08 11:44:00,258[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.0009204696704635324, lr[0m
-[[36m2024-07-08 11:44:00,268[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
-[[36m2024-07-08 11:44:00,279[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.17977467814503606 prior_scale[0m
-[[36m2024-07-08 11:44:00,292[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.0014948832198169292 q_scale[0m
-[[36m2024-07-08 11:44:00,303[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 0.4107788493789703 obs_scale[0m
-[[36m2024-07-08 11:44:00,316[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - 128 batch_size[0m
-[[36m2024-07-08 11:44:00,316[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 005 __________________[0m
+[[36m2024-07-08 11:44:00,248[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 5 pretrain_epochs[0m
+[[36m2024-07-08 11:44:00,258[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0009204696704635324, lr[0m
+[[36m2024-07-08 11:44:00,268[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2024-07-08 11:44:00,279[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.17977467814503606 prior_scale[0m
+[[36m2024-07-08 11:44:00,292[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0014948832198169292 q_scale[0m
+[[36m2024-07-08 11:44:00,303[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.4107788493789703 obs_scale[0m
+[[36m2024-07-08 11:44:00,316[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 128 batch_size[0m
+[[36m2024-07-08 11:44:00,316[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 005 __________________[0m
 [[36m2024-07-08 11:44:00,317[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-07-08 11:44:00,317[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-07-08 11:44:00,317[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.1
 0.8 0.1 0.1
 [848, 205, 453, 475, 414]
 0.8 0.1 0.1
 [493, 772, 240, 942, 886]
-[[36m2024-07-08 11:44:01,561[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 11:44:01,561[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-07-08 11:44:01,567[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-07-08 11:44:01,567[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-07-08 11:44:01,569[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
@@ -949,7 +949,7 @@ Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━━�
 ┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
 ┃    ┃ Name                          ┃ Type       ┃ Params ┃
 ┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
-│ 0  │ net                           �om    │  2.2 K │
+│ 0  │ net                           �om    │  2.2 K │
 │ 1  │ net.linear                    │ Identity   │      0 │
 │ 2  │ net.tanh                      │ Tanh       │      0 │
 │ 3  │ net.sigmoid                   │ Sigmoid    │      0 │
@@ -4891,7 +4891,7 @@ Trainable params: 2.2 K
 Non-trainable params: 0                                                         
 Total params: 2.2 K                                                             
 Total estimated model params size (MB): 0                                       
-�┴────────────┴────────┘
+�┴────────────┴────────┘
 Trainable params: 2.2 K                                                         
 Non-trainable params: 0                                                         
 Total params: 2.2 K                                                             
@@ -5027,7 +5027,7 @@ Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━ 25/2
 [[36m2024-07-08 11:57:33,804[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
 ┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
 ┃    ┃ Name                          ┃ Type       ┃ Params ┃
-┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━�━━━━━━━━━━━╇━━━━━━━━┩
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━�━━━━━━━━━━━╇━━━━━━━━┩
 │ 0  │ net                           │ NetAtom    │  2.2 K │
 │ 1  │ net.linear                    │ Identity   │      0 │
 │ 2  │ net.tanh                      │ Tanh       │      0 │
@@ -5338,7 +5338,7 @@ Trainable params: 2.2 K
 Non-trainable params: 0                                                         
 Total params: 2.2 K                                                             
 Total estimated model params size (MB): 0                                       
-�━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+�━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
 │ 0  │ net                           │ NetAtom    │  2.2 K │
 │ 1  │ net.linear                    │ Identity   │      0 │
 │ 2  │ net.tanh                      │ Tanh       │      0 │
@@ -6736,7 +6736,7 @@ Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━ 25/2
 [[36m2024-07-09 11:45:02,439[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
 [[36m2024-07-09 11:45:02,448[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
 [[36m2024-07-09 11:45:02,673[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
-��───────────────────────┴────────────┴────────┘
+��───────────────────────┴────────────┴────────┘
 ┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
 ┃    ┃ Name                          ┃ Type       ┃ Params ┃
 ┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
@@ -6816,7 +6816,7 @@ Trainable params: 1.7 K
 Non-trainable params: 0                                                         
 Total params: 1.7 K                                                             
 Total estimated model params size (MB): 0                                       
-�━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+�━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
 │ 0  │ net                           │ NetAtom    │  1.7 K │
 │ 1  │ net.linear                    │ Identity   │      0 │
 │ 2  │ net.tanh                      │ Tanh       │      0 │
@@ -7883,7 +7883,7 @@ Epoch 19/19 ━━━━━━━━━━━━━━━━━━━━━ 49/4
 [[36m2024-07-09 11:56:13,150[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 018 __________________[0m
 [[36m2024-07-09 11:56:13,150[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
 [[36m2024-07-09 11:56:13,150[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
-��━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+��━━┳━━━━━━━━━━━━┳━━━━━━━━┓
 ┃    ┃ Name                          ┃ Type       ┃ Params ┃
 ┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
 │ 0  │ net                           │ NetAtom    │  1.7 K │
@@ -11652,7 +11652,7 @@ Epoch 19/19 ━━━━━━━━━━━━━━━━━━━ 195/195 0:
 [[36m2024-07-09 12:51:38,149[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
 [[36m2024-07-09 12:51:38,195[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
 [[36m2024-07-09 12:51:38,216[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
-[[36m2024-07-09 12:51:38,218[0m][[34mtrain[0m][[32mINFO[0m] - Restoring pretrained net from: /home/g15farri�━━━━━━━━━━━━┳━━━━━━━━┓
+[[36m2024-07-09 12:51:38,218[0m][[34mtrain[0m][[32mINFO[0m] - Restoring pretrained net from: /home/g15farri�━━━━━━━━━━━━┳━━━━━━━━┓
 ┃    ┃ Name                          ┃ Type       ┃ Params ┃
 ┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
 │ 0  │ net                           │ NetAtom    │  1.7 K │
@@ -12836,7 +12836,7 @@ Epoch 19/19 ━━━━━━━━━━━━━━━━━━━ 195/195 0:
 [[36m2024-07-09 13:12:29,111[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 074 __________________[0m
 [[36m2024-07-09 13:12:29,112[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
 [[36m2024-07-09 13:12:29,112[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
-�──────────┴────────┘
+�──────────┴────────┘
 Trainable params: 1.7 K                                                         
 Non-trainable params: 0                                                         
 Total params: 1.7 K                                                             
@@ -13282,7 +13282,7 @@ Epoch 19/19 ━━━━━━━━━━━━━━━━━━━ 195/195 0:
 [[36m2024-07-09 13:20:05,801[0m][[34msrc.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 078 __________________[0m
 [[36m2024-07-09 13:20:05,802[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
 [[36m2024-07-09 13:20:05,802[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
-��━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+��━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
 ┃    ┃ Name                          ┃ Type       ┃ Params ┃
 ┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
 │ 0  │ net                           │ NetAtom    │  1.7 K │

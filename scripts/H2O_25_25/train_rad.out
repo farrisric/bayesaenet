@@ -1,11 +1,11 @@
 [[36m2024-05-17 10:06:47,907[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-05-17 10:06:47,908[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-05-17 10:06:47,908[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.05
 0.8 0.1 0.1
 [3483, 3292, 5863, 2805, 7737]
 0.8 0.1 0.1
 [3404, 7741, 6927, 8732, 4979]
-[[36m2024-05-17 10:08:23,764[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-05-17 10:08:23,764[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-05-17 10:08:23,775[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-05-17 10:08:23,776[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-05-17 10:08:23,780[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.EarlyStopping>[0m

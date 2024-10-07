@@ -1,11 +1,11 @@
 [[36m2024-05-17 09:23:04,636[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-05-17 09:23:04,637[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-05-17 09:23:04,637[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.05
 0.8 0.1 0.1
 [5360, 6523, 5087, 10099, 8364]
 0.8 0.1 0.1
 [825, 6249, 1807, 6078, 219]
-[[36m2024-05-17 09:23:16,692[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-05-17 09:23:16,692[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-05-17 09:23:16,701[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-05-17 09:23:16,702[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-05-17 09:23:16,706[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.EarlyStopping>[0m
@@ -51,13 +51,13 @@ Testing ━━━━━━━━━━━━━━━━━━━━━━━━
 [[36m2024-05-17 10:41:39,417[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2024-05-17 10:41:39,420[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/train_rad/runs/2024-05-17_09-23-04[0m
 [[36m2024-05-17 15:07:36,943[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
-[[36m2024-05-17 15:07:36,944[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+[[36m2024-05-17 15:07:36,944[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
 0.05
 0.8 0.1 0.1
 [5360, 6523, 5087, 10099, 8364]
 0.8 0.1 0.1
 [825, 6249, 1807, 6078, 219]
-[[36m2024-05-17 15:07:50,719[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-05-17 15:07:50,719[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
 [[36m2024-05-17 15:07:50,739[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
 [[36m2024-05-17 15:07:50,739[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
 [[36m2024-05-17 15:07:50,743[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.EarlyStopping>[0m
