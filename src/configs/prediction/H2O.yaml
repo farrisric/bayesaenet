@@ -1,0 +1,11 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - /datamodule: H2O
+  - /model@LRT: bnn_lrt
+  - /model@FO: bnn_fo
+  - /model@RAD: bnn_rad
+
+dataset: H2O
+runs_dir: ${paths.results_dir}/${dataset}/runs/

@@ -1,0 +1,103 @@
+[[36m2024-07-08 13:58:00,629[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2024-07-08 13:58:00,629[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+0.8 0.1 0.1
+[848, 205, 453, 475, 414]
+0.8 0.1 0.1
+[493, 772, 240, 942, 886]
+[[36m2024-07-08 13:58:02,202[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-08 13:58:02,216[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2024-07-08 13:58:02,217[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2024-07-08 13:58:02,221[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.EarlyStopping>[0m
+[[36m2024-07-08 13:58:02,223[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2024-07-08 13:58:02,223[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2024-07-08 13:58:02,225[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2024-07-08 13:58:02,225[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2024-07-08 13:58:02,286[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2024-07-08 13:58:02,503[0m][[34m__main__[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2024-07-08 13:58:04,515[0m][[34m__main__[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                          ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                           │ NetAtom    │  2.2 K │
+│ 1  │ net.linear                    │ Identity   │      0 │
+│ 2  │ net.tanh                      │ Tanh       │      0 │
+│ 3  │ net.sigmoid                   │ Sigmoid    │      0 │
+│ 4  │ net.functions                 │ ModuleList │  2.2 K │
+│ 5  │ net.functions.0               │ Sequential │  1.1 K │
+│ 6  │ net.functions.0.Linear_Sp1_F1 │ Linear     │    855 │
+│ 7  │ net.functions.0.Linear_Sp1_F2 │ Linear     │    240 │
+│ 8  │ net.functions.0.Linear_Sp1_F3 │ Linear     │     16 │
+│ 9  │ net.functions.1               │ Sequential │  1.1 K │
+│ 10 │ net.functions.1.Linear_Sp2_F1 │ Linear     │    855 │
+│ 11 │ net.functions.1.Linear_Sp2_F2 │ Linear     │    240 │
+│ 12 │ net.functions.1.Linear_Sp2_F3 │ Linear     │     16 │
+└────┴───────────────────────────────┴────────────┴────────┘
+Trainable params: 2.2 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.2 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 9999/9999 ━━━━━━━━━━━━━━━━━ 25/25 0:00:01 • 0:00:00 18.22it/s v_num: 0.000
+[[36m2024-07-08 18:33:59,488[0m][[34m__main__[0m][[32mINFO[0m] - Starting testing![0m
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃        Test metric        ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         mse/test          │     0.142430582828099     │
+│         nll/test          │   -0.17227734509389486    │
+└───────────────────────────┴───────────────────────────┘
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3/3 0:00:00 • 0:00:00 20.27it/s 
+[[36m2024-07-08 18:34:01,002[0m][[34m__main__[0m][[32mINFO[0m] - Best ckpt path: /home/g15farris/bin/forks/bayesaenet/src/logs/train_lrt/runs/2024-07-08_13-58-00/checkpoints/epoch_7111-step_177800.ckpt[0m
+[[36m2024-07-08 18:34:01,076[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2024-07-08 18:34:01,221[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/train_lrt/runs/2024-07-08_13-58-00[0m
+[[36m2024-07-10 09:29:38,791[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2024-07-10 09:29:38,793[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <src.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+0.8 0.1 0.1
+[438, 3268, 1427, 6123, 1344]
+0.8 0.1 0.1
+[1982, 285, 321, 6931, 5191]
+[[36m2024-07-10 09:30:12,093[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <src.models.bnn.BNN>[0m
+[[36m2024-07-10 09:30:12,121[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2024-07-10 09:30:12,122[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2024-07-10 09:30:12,134[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.EarlyStopping>[0m
+[[36m2024-07-10 09:30:12,138[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2024-07-10 09:30:12,139[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2024-07-10 09:30:12,141[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2024-07-10 09:30:12,142[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2024-07-10 09:30:12,170[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2024-07-10 09:30:12,604[0m][[34m__main__[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2024-07-10 09:30:12,858[0m][[34m__main__[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                          ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                           │ NetAtom    │  1.7 K │
+│ 1  │ net.linear                    │ Identity   │      0 │
+│ 2  │ net.tanh                      │ Tanh       │      0 │
+│ 3  │ net.sigmoid                   │ Sigmoid    │      0 │
+│ 4  │ net.functions                 │ ModuleList │  1.7 K │
+│ 5  │ net.functions.0               │ Sequential │    831 │
+│ 6  │ net.functions.0.Linear_Sp1_F1 │ Linear     │    710 │
+│ 7  │ net.functions.0.Linear_Sp1_F2 │ Linear     │    110 │
+│ 8  │ net.functions.0.Linear_Sp1_F3 │ Linear     │     11 │
+│ 9  │ net.functions.1               │ Sequential │    831 │
+│ 10 │ net.functions.1.Linear_Sp2_F1 │ Linear     │    710 │
+│ 11 │ net.functions.1.Linear_Sp2_F2 │ Linear     │    110 │
+│ 12 │ net.functions.1.Linear_Sp2_F3 │ Linear     │     11 │
+└────┴───────────────────────────────┴────────────┴────────┘
+Trainable params: 1.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 1.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 9999/9999 ━━━━━━━━━━━━━━━━━ 195/195 0:00:33 •        5.86it/s v_num: 0.000
+                                          0:00:00                               
+[[36m2024-07-14 07:29:33,761[0m][[34m__main__[0m][[32mINFO[0m] - Starting testing![0m
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃        Test metric        ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         mse/test          │   0.0007704726263120552   │
+│         nll/test          │    -1.8984612747661067    │
+└───────────────────────────┴───────────────────────────┘
+Testing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 24/24 0:00:03 • 0:00:00 7.26it/s 
+[[36m2024-07-14 07:29:38,601[0m][[34m__main__[0m][[32mINFO[0m] - Best ckpt path: /home/g15farris/bin/forks/bayesaenet/src/logs/train_lrt/runs/2024-07-10_09-29-38/checkpoints/epoch_5200-step_1014195.ckpt[0m
+[[36m2024-07-14 07:29:39,447[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2024-07-14 07:29:39,633[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/forks/bayesaenet/src/logs/train_lrt/runs/2024-07-10_09-29-38[0m

@@ -1,0 +1,14 @@
+- trainer.min_epochs=10000
+- experiment=bnn_fo
+- seed=15
+- trainer.deterministic=False
+- task_name=train_fo
+- datamodule=PdO
+- model.pretrain_epochs=0
+- model.lr=0.0005752880938533469
+- model.mc_samples_train=1
+- model.prior_scale=0.09932446036472461
+- model.q_scale=0.00019597689702210828
+- model.obs_scale=0.4404073995649561
+- datamodule.batch_size=32
+- tags=[PdO]

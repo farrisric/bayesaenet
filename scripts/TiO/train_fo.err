@@ -1,0 +1,25 @@
+cat: /scratch/3203746.1.iqtc09.q/.gpus: No such file or directory
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/core/optimizer.py:181: `LightningModule.configure_optimizers` returned `None`, this fit will run with no optimizer
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:298: The number of training batches (25) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/optimization/automatic.py:132: `training_step` returned `None`. If this was on purpose, ignore this warning...
+Trainer was signaled to stop but the required `min_epochs=10000` or `min_steps=None` has not been met. Training will continue...
+`Trainer.fit` stopped: `max_epochs=10000` reached.
+Restoring states from the checkpoint path at /home/g15farris/bin/forks/bayesaenet/src/logs/train_fo/runs/2024-07-08_13-58-00/checkpoints/epoch_2869-step_71750.ckpt
+Loaded model weights from the checkpoint at /home/g15farris/bin/forks/bayesaenet/src/logs/train_fo/runs/2024-07-08_13-58-00/checkpoints/epoch_2869-step_71750.ckpt
+cat: /scratch/3205505.1.iqtc09.q/.gpus: No such file or directory
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/core/optimizer.py:181: `LightningModule.configure_optimizers` returned `None`, this fit will run with no optimizer
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/optimization/automatic.py:132: `training_step` returned `None`. If this was on purpose, ignore this warning...
+Trainer was signaled to stop but the required `min_epochs=10000` or `min_steps=None` has not been met. Training will continue...
+`Trainer.fit` stopped: `max_epochs=10000` reached.
+Restoring states from the checkpoint path at /home/g15farris/bin/forks/bayesaenet/src/logs/train_fo/runs/2024-07-10_09-29-29/checkpoints/epoch_8861-step_868476.ckpt
+Loaded model weights from the checkpoint at /home/g15farris/bin/forks/bayesaenet/src/logs/train_fo/runs/2024-07-10_09-29-29/checkpoints/epoch_8861-step_868476.ckpt

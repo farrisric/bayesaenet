@@ -1,0 +1,82 @@
+model:
+  net:
+    _target_: src.models.nets.network.NetAtom
+    input_size:
+    - 70
+    - 70
+    hidden_size:
+    - - 10
+      - 10
+    - - 10
+      - 10
+    species:
+    - Ti
+    - O
+    active_names:
+    - - tanh
+      - tanh
+    - - tanh
+      - tanh
+    alpha: 0.0
+    device: cpu
+  _target_: src.models.bnn.BNN
+  lr: 0.00017174472922154303
+  pretrain_epochs: 0
+  mc_samples_train: 1
+  mc_samples_eval: 20
+  dataset_size: 6252
+  fit_context: lrt
+  guide: normal
+  prior_loc: 0
+  prior_scale: 0.48474869983391317
+  q_scale: 0.008271866644681318
+  obs_scale: 1.0724303485094406
+model/params/total: 1662
+model/params/trainable: 1662
+model/params/non_trainable: 0
+datamodule:
+  _target_: src.datamodule.aenet_datamodule.AenetDataModule
+  data_dir: /home/g15farris/bin/forks/bayesaenet/data//TiO/train.in
+  device: cpu
+  batch_size: 64
+  test_split: 0.1
+  valid_split: 0.1
+trainer:
+  _target_: lightning.pytorch.trainer.Trainer
+  default_root_dir: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_lrt/runs/2024-07-09_11-44-35/004
+  min_epochs: 1
+  max_epochs: 20
+  accelerator: cpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  deterministic: false
+callbacks:
+  model_checkpoint:
+    _target_: lightning.pytorch.callbacks.ModelCheckpoint
+    dirpath: /home/g15farris/bin/forks/bayesaenet/src/logs/hps_lrt/runs/2024-07-09_11-44-35/004/checkpoints
+    filename: epoch_{epoch}-step_{step}
+    monitor: elbo/val
+    verbose: false
+    save_last: true
+    save_top_k: 1
+    mode: min
+    auto_insert_metric_name: false
+    save_weights_only: false
+    every_n_train_steps: null
+    train_time_interval: null
+    every_n_epochs: null
+    save_on_train_epoch_end: null
+  rich_progress_bar:
+    _target_: lightning.pytorch.callbacks.RichProgressBar
+  model_summary:
+    _target_: lightning.pytorch.callbacks.RichModelSummary
+    max_depth: -1
+  optuna_pruner:
+    _target_: optuna.integration.PyTorchLightningPruningCallback
+  early_stopping: null
+extras: null
+task_name: hps_lrt
+tags:
+- TiO
+ckpt_path: null
+seed: 12345

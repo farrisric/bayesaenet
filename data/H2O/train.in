@@ -23,5 +23,5 @@ REGULARIZATION 0.001
 NETWORKS
 ! atom   network         hidden
 ! types  file-name       layers  nodes:activation
-H        H.nn            2       25:tanh 25:tanh
-O        O.nn            2       25:tanh 25:tanh
+H        H.nn            2       15:tanh 15:tanh
+O        O.nn            2       15:tanh 15:tanh

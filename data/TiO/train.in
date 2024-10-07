@@ -1,4 +1,4 @@
-TRAININGSET /work/g15farris/database/TiO/TiO.data.ascii
+TRAININGSET /work/g15farris/database/TiO/data.train.ascii
 TESTPERCENT 10
 VALIDPERCENT 10
 ITERATIONS 20000
@@ -21,5 +21,5 @@ REGULARIZATION 0.001
 NETWORKS
 ! atom   network         hidden
 ! types  file-name       layers  nodes:activation
-  Ti     Ti.pytorch.nn    2    15:tanh    15:tanh
-  O       O.pytorch.nn    2    15:tanh    15:tanh
+  Ti     Ti.pytorch.nn    2    10:tanh    10:tanh
+  O       O.pytorch.nn    2    10:tanh    10:tanh

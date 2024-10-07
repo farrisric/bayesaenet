@@ -1,0 +1,14 @@
+- trainer.min_epochs=10000
+- experiment=bnn_fo
+- seed=15
+- trainer.deterministic=False
+- task_name=train_fo
+- datamodule=TiO
+- model.pretrain_epochs=0
+- model.lr=0.0009168825295212765
+- model.mc_samples_train=2
+- model.prior_scale=0.4326826642047144
+- model.q_scale=0.001766174206238929
+- model.obs_scale=0.6695094449052109
+- datamodule.batch_size=32
+- tags=[TiO]
