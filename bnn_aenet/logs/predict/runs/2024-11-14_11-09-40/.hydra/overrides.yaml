@@ -1,0 +1,4 @@
+- prediction=PdO
+- +method=LRT
+- +run=1
+- ckpt_path=bnn_aenet/logs/train_lrt_10/runs/2024-11-13_14-10-30/checkpoints/epoch_9831-step_471936.ckpt

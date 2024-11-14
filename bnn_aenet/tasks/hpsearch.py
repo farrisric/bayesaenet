@@ -65,7 +65,9 @@ def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
 def main(cfg: DictConfig) -> Optional[float]:
     print(cfg.trainer)
     log.info(f"Instantiating study <{cfg.hpsearch.study._target_}>")
+    
     path = Path(f"{cfg.paths.results_dir}")
+    log.info(f"Results will be stored in sqlite:///{path.as_posix()}/{cfg.tags[0]}/{cfg.hpsearch.study.study_name}.db")
     study: Study = hydra.utils.instantiate(
         cfg.hpsearch.study,
         storage=f"sqlite:///{path.as_posix()}/{cfg.tags[0]}/{cfg.hpsearch.study.study_name}.db",

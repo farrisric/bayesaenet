@@ -24,18 +24,23 @@ root = pyrootutils.setup_root(
 
 log = get_pylogger(__name__)
 
-def load_model_hyperparams(model, hp_path):
+def load_model_hyperparams(model, datamodule, hp_path):
     with open(hp_path, 'r') as file:
         hp_override = yaml.safe_load(file)
     for x in hp_override:
         if x[:5] == 'model':
             key, value = x[6:].split('=')
+            if key == 'mc_samples_eval':
+                continue
             model[key] = float(value)
-    return model
+            log.info(f"Overriding hyperparameter {key} with value {value}")
+        if x[:11] == 'datamodule.':
+            key, value = x[11:].split('=')
+            datamodule[key] = float(value)
+            log.info(f"Overriding hyperparameter {key} with value {value}")
+    return model, datamodule
 
 def predict(cfg: DictConfig):
-    log.info(f"Instantiating datamodule <{cfg.datamodule._target_}>")
-    datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
     log.info(f"Instantiating trainer <{cfg.trainer._target_}>")
     trainer: Trainer = hydra.utils.instantiate(cfg.trainer)
 
@@ -43,21 +48,23 @@ def predict(cfg: DictConfig):
     hp_paths = []
     if cfg.ckpt_path == "all":
         path = Path(f"{cfg.runs_dir}")
-        print(path)
         for ckpt_path in path.glob("**/epoch*.ckpt"):
             ckpt_paths.append(ckpt_path)
         for hp_path in path.glob("**/overrides.yaml"):
             hp_paths.append(hp_path)            
     else:
         ckpt_paths.append(Path(cfg.ckpt_path))
+        hp_paths.append(Path(cfg.ckpt_path).parent / "../.hydra/overrides.yaml")
     
     
     for ckpt_path, hp_path in zip(ckpt_paths, hp_paths):
-        method, run = ckpt_path.as_posix().split("/")[-4:-2]
-        run = f"{int(run):03d}"
-        model = cfg[method]
-        model = load_model_hyperparams(model, hp_path)
-        print(model['lr'])
+        #method, run = ckpt_path.as_posix().split("/")[-4:-2]
+        #run = f"{int(run):03d}"
+        model = cfg[cfg.method]
+        run = cfg.run 
+        model, cfg.datamodule, = load_model_hyperparams(model, cfg.datamodule, hp_path)
+        log.info(f"Instantiating datamodule <{cfg.datamodule._target_}>")
+        datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
         log.info(f"Instantiating model <{model._target_}>")
         model.net.input_size = datamodule.input_size
         model.net.hidden_size = datamodule.hidden_size
@@ -71,7 +78,7 @@ def predict(cfg: DictConfig):
         )
         for subset in cfg.subsets:
             
-            filename = f"{method}_{run}_{subset}.parquet"
+            filename = f"{cfg.method}_{run}_{subset}.parquet"
             #datamodule.set_predict_dataset(subset)
             predictions = trainer.predict(
                 model=model, datamodule=datamodule, ckpt_path=ckpt_path

@@ -127,7 +127,7 @@ class NetAtom(nn.Module):
 
 		return list_E_ann, F_ann
 
-
+	
 	def get_loss_RMSE(self, grp_descrp, grp_energy, logic_reduce, grp_N_atom):
 		"""
 		[Energy training] Compute root mean squared error of energies in the batch

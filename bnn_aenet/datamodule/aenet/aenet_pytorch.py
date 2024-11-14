@@ -83,7 +83,8 @@ else:
 	N_batch_train, N_batch_valid = select_batch_size(tin, list_structures_energy, list_structures_forces)
 	print(N_batch_train, N_batch_valid)
 	# Join datasets with forces and only energies in a single torch dataset AND prepare batches
-	train_forces_data, valid_forces_data, train_energy_data, valid_energy_data = select_batches(tin, tin.trainset_params, device, list_structures_energy, list_structures_forces,
+	train_forces_data, valid_forces_data, train_energy_data, valid_energy_data = select_batches(tin, tin.trainset_params,
+                                                                                             device, list_structures_energy, list_structures_forces,
 																							max_nnb, N_batch_train, N_batch_valid)
 
 	del list_structures_energy

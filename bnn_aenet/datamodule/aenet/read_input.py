@@ -5,7 +5,7 @@ Read 'train.in' input file
 read_train_in(infile) :: Returns an object of the class InputParameters()
 """
 
-from data_classes import *
+from .data_classes import *
 
 
 def read_keyword_logical(keyword, lines):

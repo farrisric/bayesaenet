@@ -1,4 +1,0 @@
-- task_name=pretrain
-- experiment=nn
-- datamodule=TiO
-- trainer.max_epochs=5

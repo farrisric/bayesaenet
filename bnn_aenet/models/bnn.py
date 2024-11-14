@@ -126,8 +126,10 @@ class BNN(L.LightningModule):
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
         
         #mse = rmse(loc, y, batch[14])
+        rmse = get_rmse(loc, y, batch[14])
         mse = F.mse_loss(loc, y)
         self.log("mse/train", mse, on_step=False, on_epoch=True, batch_size=len(y) )
+        self.log("rmse/train", rmse, on_step=False, on_epoch=True, batch_size=len(y) )
         self.log("elbo/train", elbo, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("kl/train", kl, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("likelihood/train", elbo - kl, on_step=False, on_epoch=True, batch_size=len(y))
@@ -147,6 +149,8 @@ class BNN(L.LightningModule):
 
         #mse = rmse(loc, y, batch[14])
         mse = F.mse_loss(loc, y)
+        rmse = get_rmse(loc, y, batch[14])
+        self.log("rmse/val", rmse, batch_size=len(y))
         self.log("elbo/val", elbo, batch_size=len(y))
         self.log("mse/val", mse, batch_size=len(y))
         self.log("kl/val", kl, batch_size=len(y))
@@ -164,8 +168,10 @@ class BNN(L.LightningModule):
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
         #mse = rmse(loc, y, batch[14])
         mse = F.mse_loss(loc, y)
+        rmse = get_rmse(loc, y, batch[14])
         self.log("nll/test", nll, batch_size=len(y))
         self.log("mse/test", mse, batch_size=len(y))
+        self.log("rmse/test", rmse, batch_size=len(y))
         return nll
     
     def on_predict_start(self) -> None:
@@ -252,26 +258,26 @@ class NN(L.LightningModule):
             x = x.float()
         grp_energy = batch[11].float()
         y_hat = self.net.forward(grp_descrp, logic_reduce)
-        return rmse(y_hat, grp_energy, grp_N_atom)
+        return get_rmse(y_hat, grp_energy, grp_N_atom)
 
     def training_step(self, batch, batch_idx):
         mse = self.step(batch)
-        self.log("mse/train", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        self.log("rmse/train", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
         return mse
 
     def validation_step(self, batch, batch_idx):
         mse = self.step(batch)
-        self.log("mse/val", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        self.log("rmse/val", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
 
     def test_step(self, batch, batch_idx):
         mse = self.step(batch)
-        self.log("mse/test", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        self.log("rmse/test", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
 
     def configure_optimizers(self):
         return self.hparams.optimizer(params=self.parameters())
     
 
-def rmse(list_E_ann, grp_energy, grp_N_atom):
+def get_rmse(list_E_ann, grp_energy, grp_N_atom):
     differences = (list_E_ann - grp_energy)
     l2 = torch.sum( differences**2/grp_N_atom**2 )
     return l2

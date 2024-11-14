@@ -1,6 +1,6 @@
 import numpy as np
-from data_classes import *
-from read_forces_bin import *
+from .data_classes import *
+from .read_forces_bin import *
 
 
 def read_train_forces_together(tin):

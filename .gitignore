@@ -56,8 +56,8 @@ docs/_build/
 
 # Logs
 .logs/
-.src/logs/
-.src/results/
+.bnn_aenet/logs/
+.bnn_aenet/results/
 *.db
 *.out
 *.err

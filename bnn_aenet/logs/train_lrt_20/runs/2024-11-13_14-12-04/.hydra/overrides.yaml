@@ -1,0 +1,17 @@
+- trainer.min_epochs=10000
+- experiment=bnn_lrt
+- seed=15
+- trainer.deterministic=False
+- task_name=train_lrt_20
+- datamodule=PdO
+- datamodule.test_split=0.7
+- datamodule.valid_split=0.1
+- datamodule.batch_size=32
+- model.lr=0.0005640905763748237
+- model.pretrain_epochs=5
+- model.mc_samples_train=1
+- model.mc_samples_eval=20
+- model.prior_loc=0
+- model.prior_scale=0.30626638683269564
+- model.q_scale=0.0003362429608708878
+- model.obs_scale=1.9663562574521685

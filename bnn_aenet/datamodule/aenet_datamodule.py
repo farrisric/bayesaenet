@@ -1,13 +1,10 @@
-import sys
-sys.path.append('/home/g15farris/bin/bayesaenet/src/datamodule/aenet')
-
 import torch 
 from torch.utils.data import DataLoader
 import lightning.pytorch as L
 
-from bnn_aenet.datamodule.aenet.read_input import read_train_in
-from bnn_aenet.datamodule.aenet.prepare_batches import select_batch_size, select_batches, read_list_structures
-from bnn_aenet.datamodule.aenet.data_set import GroupedDataset
+from .aenet.read_input import read_train_in
+from .aenet.prepare_batches import select_batch_size, select_batches, read_list_structures
+from .aenet.data_set import GroupedDataset
 
 import numpy as np
 
@@ -17,7 +14,7 @@ class AenetDataModule(L.LightningDataModule):
             data_dir: str, 
             device: str = 'cpu', 
             batch_size: int = 128,
-            test_split: float = 0.10,
+            test_split: float = 0.60,
             valid_split: float = 0.10,
         ):
         super().__init__()
@@ -40,8 +37,8 @@ class AenetDataModule(L.LightningDataModule):
         self.tin.batch_size = self.batch_size
         self.tin.test_split = self.test_split
         self.tin.valid_split = self.valid_split
-        torch.manual_seed(self.tin.pytorch_seed)
-        np.random.seed(self.tin.numpy_seed)
+        # torch.manual_seed(self.tin.pytorch_seed)
+        # np.random.seed(self.tin.numpy_seed)
         self.tin.device = self.device
         self.list_structures_energy, self.list_structures_forces, self.list_removed, self.max_nnb, self.tin = read_list_structures(self.tin)
 

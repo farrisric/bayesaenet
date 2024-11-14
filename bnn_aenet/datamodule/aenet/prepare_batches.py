@@ -1,8 +1,8 @@
 from torch.utils.data import random_split
 
-from data_set import *
-from data_loader import *
-from read_trainset import *
+from .data_set import *
+from .data_loader import *
+from .read_trainset import *
 
 
 def read_list_structures(tin):
@@ -39,7 +39,7 @@ def get_N_batch(len_dataset, batch_size):
 	return N_batch
 
 
-def split_database(dataset_size, valid_split, test_split):
+def split_database(dataset_size, valid_split, test_split, seed=42):
 	"""
 	Returns indices of the structures in the training and testing sets
 	"""
@@ -48,11 +48,13 @@ def split_database(dataset_size, valid_split, test_split):
 	if len(indices) == 0:
 		return [], [], []
 	train_split = float(1 - test_split - valid_split)
-	print(train_split, valid_split, test_split)
 	train_indices, valid_indices, test_indices = random_split(
-		indices, [train_split, valid_split, test_split]
+		indices, [train_split, valid_split, test_split],
+		generator=torch.Generator().manual_seed(seed)
 		)
-	print(list(train_indices)[:5])
+	print('Train indices:', len(train_indices), list(train_indices)[:5])
+	print('Valid indices:', len(valid_indices), list(valid_indices)[:5])
+	print('Test indices:', len(test_indices), list(test_indices)[:5])
 	return list(train_indices), list(valid_indices), list(test_indices)
 
 

@@ -1,8 +1,0 @@
-- trainer.min_epochs=10000
-- experiment=bnn_rad
-- seed=15
-- trainer.deterministic=False
-- task_name=train_rad
-- datamodule=PdO
-- datamodule.test_split=0.8
-- datamodule.valid_split=0.1

@@ -1,5 +1,0 @@
-- model=bnn_fo
-- datamodule=H2O
-- hpsearch=bnn_fo
-- task_name=hps_fo
-- tags=[H2O]
