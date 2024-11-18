@@ -247,8 +247,14 @@ class NN(L.LightningModule):
         self.net = net
         self.net.apply(weights_init)
 
-    def forward(self, x):
-        return self.net(x)
+    def forward(self, batch):
+        grp_descrp, grp_energy, logic_reduce, grp_N_atom = batch[10], batch[11], batch[12], batch[14]
+        for x in grp_descrp:
+            x = x.float()
+        for x in logic_reduce:
+            x = x.float()
+        grp_energy = batch[11].float()
+        return self.net.forward(grp_descrp, logic_reduce)
 
     def step(self, batch):
         grp_descrp, grp_energy, logic_reduce, grp_N_atom = batch[10], batch[11], batch[12], batch[14]
@@ -273,6 +279,17 @@ class NN(L.LightningModule):
         mse = self.step(batch)
         self.log("rmse/test", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
 
+    def predict_step(self, batch, batch_idx, dataloader_idx=0):
+        grp_descrp, grp_energy, logic_reduce, grp_N_atom = batch[10], batch[11], batch[12], batch[14]
+        for x in grp_descrp:
+            x = x.float()
+        for x in logic_reduce:
+            x = x.float()
+        pred = dict()
+        pred["true"] = grp_energy.cpu().numpy()
+        pred["preds"] = self.net.forward(grp_descrp, logic_reduce).cpu().numpy()
+        return pred
+    
     def configure_optimizers(self):
         return self.hparams.optimizer(params=self.parameters())
     

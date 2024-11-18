@@ -30,6 +30,10 @@ def load_model_hyperparams(model, datamodule, hp_path):
     for x in hp_override:
         if x[:5] == 'model':
             key, value = x[6:].split('=')
+            if len(key.split('.')) == 2:
+                key, subkey = key.split('.')
+                model[key][subkey] = float(value)
+                continue
             if key == 'mc_samples_eval':
                 continue
             model[key] = float(value)
@@ -43,7 +47,7 @@ def load_model_hyperparams(model, datamodule, hp_path):
 def predict(cfg: DictConfig):
     log.info(f"Instantiating trainer <{cfg.trainer._target_}>")
     trainer: Trainer = hydra.utils.instantiate(cfg.trainer)
-
+    print(Path(f"{cfg.runs_dir}"))
     ckpt_paths = []
     hp_paths = []
     if cfg.ckpt_path == "all":
@@ -56,12 +60,16 @@ def predict(cfg: DictConfig):
         ckpt_paths.append(Path(cfg.ckpt_path))
         hp_paths.append(Path(cfg.ckpt_path).parent / "../.hydra/overrides.yaml")
     
-    
+    run_i = 0
     for ckpt_path, hp_path in zip(ckpt_paths, hp_paths):
-        #method, run = ckpt_path.as_posix().split("/")[-4:-2]
-        #run = f"{int(run):03d}"
+        method, run = ckpt_path.as_posix().split("/")[-4:-2]
+        try:
+            run = f"{int(run):03d}"
+        except ValueError:
+            run = run_i
+            run_i += 1
         model = cfg[cfg.method]
-        run = cfg.run 
+        # run = cfg.run 
         model, cfg.datamodule, = load_model_hyperparams(model, cfg.datamodule, hp_path)
         log.info(f"Instantiating datamodule <{cfg.datamodule._target_}>")
         datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
@@ -88,7 +96,7 @@ def predict(cfg: DictConfig):
                 predictions.columns.tolist()
             ).reset_index(drop=True)
             log.info(f"Saving predicions: {cfg.paths.output_dir}")
-            results = ResultSaver(f"{cfg.paths.output_dir}", f"{filename}")
+            results = ResultSaver(f"{cfg.paths.output_dir}", f"{filename}") 
             results.save(predictions)
 
 
