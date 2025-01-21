@@ -126,10 +126,10 @@ class BNN(L.LightningModule):
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
         
         #mse = rmse(loc, y, batch[14])
-        rmse = get_rmse(loc, y, batch[14])
+        rmse = get_rmse_atom(loc, y, batch[14])
         mse = F.mse_loss(loc, y)
         self.log("mse/train", mse, on_step=False, on_epoch=True, batch_size=len(y) )
-        self.log("rmse/train", rmse, on_step=False, on_epoch=True, batch_size=len(y) )
+        self.log("rmse/train", rmse, on_step=False, prog_bar=True, on_epoch=True, batch_size=len(y) )
         self.log("elbo/train", elbo, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("kl/train", kl, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("likelihood/train", elbo - kl, on_step=False, on_epoch=True, batch_size=len(y))
@@ -149,12 +149,12 @@ class BNN(L.LightningModule):
 
         #mse = rmse(loc, y, batch[14])
         mse = F.mse_loss(loc, y)
-        rmse = get_rmse(loc, y, batch[14])
-        self.log("rmse/val", rmse, batch_size=len(y))
-        self.log("elbo/val", elbo, batch_size=len(y))
-        self.log("mse/val", mse, batch_size=len(y))
-        self.log("kl/val", kl, batch_size=len(y))
-        self.log("likelihood/val", elbo - kl, batch_size=len(y))
+        rmse = get_rmse_atom(loc, y, batch[14])
+        self.log("rmse/val", rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y))
+        self.log("elbo/val", elbo, on_step=False, on_epoch=True, batch_size=len(y))
+        self.log("mse/val", mse, on_step=False, on_epoch=True, batch_size=len(y))
+        self.log("kl/val", kl, on_step=False, on_epoch=True, batch_size=len(y))
+        self.log("likelihood/val", elbo - kl, on_step=False, on_epoch=True, batch_size=len(y))
 
     def on_test_start(self) -> None:
         self.define_bnn()
@@ -168,7 +168,7 @@ class BNN(L.LightningModule):
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
         #mse = rmse(loc, y, batch[14])
         mse = F.mse_loss(loc, y)
-        rmse = get_rmse(loc, y, batch[14])
+        rmse = get_rmse_atom(loc, y, batch[14])
         self.log("nll/test", nll, batch_size=len(y))
         self.log("mse/test", mse, batch_size=len(y))
         self.log("rmse/test", rmse, batch_size=len(y))
@@ -182,13 +182,19 @@ class BNN(L.LightningModule):
         x = batch[10], batch[12]
         y = batch[11]
         pred = dict()
-        pred["true"] = batch[11].cpu().numpy()
-        loc, scale = self.bnn.predict(
+        
+        output = self.bnn.predict(
             x[0], x[1],
-            num_predictions=self.hparams.mc_samples_eval
+            num_predictions=self.hparams.mc_samples_eval,
+            aggregate=False
         )
-        pred["preds"] = loc.cpu().numpy()
-        pred["stds"] = scale.cpu().numpy()
+        true = batch[11]/self.net.e_scaling + self.net.e_shift*batch[14]
+        preds = output/self.net.e_scaling + self.net.e_shift*batch[14]
+        
+        pred["true"] = true.cpu().numpy()
+        pred["preds"] = preds.mean(axis=0).cpu().numpy()
+        pred["stds"] = preds.std(axis=0).cpu().numpy()
+        pred["n_atoms"] = batch[14].cpu().numpy()
         return pred
 
     def configure_optimizers(self):
@@ -241,60 +247,71 @@ class NN(L.LightningModule):
     VIBnnWrapper then loads the weights and starts the Bayesian training
     """
 
-    def __init__(self, net: torch.nn.Module, optimizer: torch.optim.Optimizer):
+    def __init__(self,
+                 net: torch.nn.Module,
+                 optimizer: torch.optim.Optimizer):
         super().__init__()
         self.save_hyperparameters(logger=False, ignore=["net"])
         self.net = net
         self.net.apply(weights_init)
 
-    def forward(self, batch):
-        grp_descrp, grp_energy, logic_reduce, grp_N_atom = batch[10], batch[11], batch[12], batch[14]
-        for x in grp_descrp:
-            x = x.float()
-        for x in logic_reduce:
-            x = x.float()
-        grp_energy = batch[11].float()
+    def forward(self, grp_descrp, logic_reduce):
         return self.net.forward(grp_descrp, logic_reduce)
 
     def step(self, batch):
-        grp_descrp, grp_energy, logic_reduce, grp_N_atom = batch[10], batch[11], batch[12], batch[14]
-        for x in grp_descrp:
-            x = x.float()
-        for x in logic_reduce:
-            x = x.float()
-        grp_energy = batch[11].float()
-        y_hat = self.net.forward(grp_descrp, logic_reduce)
-        return get_rmse(y_hat, grp_energy, grp_N_atom)
+        grp_descrp  = batch[10]
+        grp_energy  = batch[11]
+        logic_reduce = batch[12]
+        grp_N_atom = batch[14]
+        
+        list_E_ann = self.forward(grp_descrp, logic_reduce)   
+        return get_rmse_atom(list_E_ann, grp_energy, grp_N_atom)
 
     def training_step(self, batch, batch_idx):
         mse = self.step(batch)
-        self.log("rmse/train", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        self.log("rmse/train", 
+                 mse, 
+                 on_step=False, 
+                 on_epoch=True, 
+                 prog_bar=True,
+                 batch_size=len(batch[11]))
         return mse
 
     def validation_step(self, batch, batch_idx):
         mse = self.step(batch)
-        self.log("rmse/val", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        self.log("rmse/val",
+                 mse,
+                 on_step=False,
+                 on_epoch=True,
+                 prog_bar=True,
+                 batch_size=len(batch[11]))
 
     def test_step(self, batch, batch_idx):
         mse = self.step(batch)
-        self.log("rmse/test", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        self.log("rmse/test", mse,  on_step=False, on_epoch=True, batch_size=len(batch[11]))
 
     def predict_step(self, batch, batch_idx, dataloader_idx=0):
-        grp_descrp, grp_energy, logic_reduce, grp_N_atom = batch[10], batch[11], batch[12], batch[14]
-        for x in grp_descrp:
-            x = x.float()
-        for x in logic_reduce:
-            x = x.float()
+        grp_descrp  = batch[10]
+        grp_energy  = batch[11]
+        logic_reduce = batch[12]
+        grp_N_atom = batch[14]
+        
         pred = dict()
-        pred["true"] = grp_energy.cpu().numpy()
-        pred["preds"] = self.net.forward(grp_descrp, logic_reduce).cpu().numpy()
+        
+        true = grp_energy/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        list_E_ann = self.net.forward(grp_descrp, logic_reduce)
+        preds = list_E_ann/self.net.e_scaling + self.net.e_shift*grp_N_atom
+
+        pred["true"] = true.cpu().numpy()
+        pred["preds"] = preds.cpu().numpy()
+        pred["n_atoms"] = batch[14].cpu().numpy()
         return pred
     
     def configure_optimizers(self):
         return self.hparams.optimizer(params=self.parameters())
     
 
-def get_rmse(list_E_ann, grp_energy, grp_N_atom):
-    differences = (list_E_ann - grp_energy)
-    l2 = torch.sum( differences**2/grp_N_atom**2 )
-    return l2
+def get_rmse_atom(list_E_ann, grp_energy, grp_N_atom):
+    mse_atom = (list_E_ann - grp_energy) ** 2 / grp_N_atom
+    rmse_atom = torch.sqrt(mse_atom)
+    return torch.mean(rmse_atom)*1000

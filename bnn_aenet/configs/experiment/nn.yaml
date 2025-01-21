@@ -9,8 +9,8 @@ defaults:
 seed: 12345
 
 trainer:
-  min_epochs: 1
-  max_epochs: 5
+  min_epochs: 20000
+  max_epochs: 50000
 
 callbacks:
   model_checkpoint:

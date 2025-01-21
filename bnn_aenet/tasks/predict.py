@@ -79,6 +79,8 @@ def predict(cfg: DictConfig):
         model.net.species = datamodule.species
         model.net.active_names = datamodule.active_names
         model.net.alpha = datamodule.alpha
+        model.net.e_scaling = datamodule.e_scaling
+        model.net.e_shift = datamodule.e_shift
         if OmegaConf.is_missing(model, "dataset_size"):
             model.dataset_size = datamodule.train_size
         model: LightningModule = hydra.utils.instantiate(

@@ -11,8 +11,8 @@ tags: ["bayesian", "lrt"]
 seed: 12345
 
 trainer:
-  min_epochs: 1
-  max_epochs: 10000
+  min_epochs: 20000
+  max_epochs: 50000
 
 model:
   mc_samples_eval: 20

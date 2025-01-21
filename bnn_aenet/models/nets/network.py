@@ -13,7 +13,7 @@ class NetAtom(nn.Module):
 		functions   :: List of functions that are applied in the ANN. A series of
 						Linear + Activation + Linear + Activation + ... + Linear
 	"""
-	def __init__(self, input_size, hidden_size, species, active_names, alpha, device):
+	def __init__(self, input_size, hidden_size, species, active_names, alpha, device, e_scaling, e_shift):
 		super(NetAtom, self).__init__()
 		self.input_size = input_size
 		self.hidden_size = hidden_size
@@ -21,6 +21,8 @@ class NetAtom(nn.Module):
 		self.active_names = active_names
 		self.alpha = torch.tensor(alpha)
 		self.device = device
+		self.e_scaling = e_scaling
+		self.e_shift = e_shift
 
 		N_fun = [len(hidden_size[i])+1 for i in range(len(species)) ]
 	

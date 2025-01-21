@@ -30,6 +30,7 @@ class AenetDataModule(L.LightningDataModule):
         self.species = self.tin.sys_species
         self.active_names = self.tin.networks_param["activations"]
         self.alpha = self.tin.alpha
+        self.e_scaling, self.e_shift = self.tin.trainset_params.get_E_normalization()
         #override
     
     def load_db(self):
@@ -41,7 +42,10 @@ class AenetDataModule(L.LightningDataModule):
         # np.random.seed(self.tin.numpy_seed)
         self.tin.device = self.device
         self.list_structures_energy, self.list_structures_forces, self.list_removed, self.max_nnb, self.tin = read_list_structures(self.tin)
-
+        sfval_avg = self.tin.setup_params.sfval_avg, 
+        sfval_cov = self.tin.setup_params.sfval_cov
+        print(self.tin.trainset_params.get_E_normalization())
+        
         N_removed = len(self.list_removed)
         N_struc_E = len(self.list_structures_energy)
         N_struc_F = len(self.list_structures_forces)

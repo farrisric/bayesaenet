@@ -43,7 +43,7 @@ class StructureDataset(object):
 
 		for struc in self.list_struc:
 			struc.energy = (struc.energy - struc.N_atom*E_shift)*E_scaling
-
+        
 
 	def normalize_F(self, E_scaling, E_shift):
 

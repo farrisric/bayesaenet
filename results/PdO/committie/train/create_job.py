@@ -36,8 +36,8 @@ python bnn_aenet/tasks/train.py \
 task_name=train_nn_commitie_{}perc \
 experiment=nn \
 datamodule=PdO \
-trainer.min_epochs=10000 \
-trainer.max_epochs=20000 \
+trainer.min_epochs=30000 \
+trainer.max_epochs=50000 \
 datamodule.test_split={} \
 datamodule.valid_split=0.1 \
 datamodule.batch_size=32 \

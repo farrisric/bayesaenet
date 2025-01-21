@@ -79,10 +79,12 @@ def analyze_uncertainty(y_true, y_pred, y_std, train_percentage, output_dir):
     plt.savefig(output_path, dpi=300)
     plt.close(fig)
 
-    print(f"Saved plot for {train_percentage}% train data: {output_path}")
+    #print(f"Saved plot for {train_percentage}% train data: {output_path}")
 
 # Main loop
 if __name__ == "__main__":
+    import csv
+    
     output_dir = '/home/g15farris/bin/bayesaenet/results/PdO/committie/plots'
     
     tran_percentages = glob.glob('/home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_commitie_*perc/runs/')
@@ -95,11 +97,23 @@ if __name__ == "__main__":
             y_true = rs['true'].to_numpy()
             y_pred_i = rs['preds'].to_numpy()
             y_pred.append(y_pred_i)
-            
+        
         y_std = np.std(y_pred, axis=0)
+        y_pred = np.array(y_pred)
+        
+        with open('results.csv', 'w', newline='') as myfile:
+            wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+            for i in range(len(y_true)):
+                row = [float(y_true[i]), float(y_std[i])]
+                row += [float(x) for x in y_pred[:,i]]
+                wr.writerow(row)
+        
         y_pred = np.mean(y_pred, axis=0)
         
+        mae = np.abs(y_pred - y_true)
         test_percentage = int(100 / 15336 * len(y_true))
         train_percentage = 90 - test_percentage
 
         analyze_uncertainty(y_true, y_pred, y_std, train_percentage, output_dir)
+        
+        print('{}, MAE {}, MAX {}'.format(train_percentage, mae.sum()/len(mae), max(mae)))

@@ -79,7 +79,7 @@ def analyze_uncertainty(y_true, y_pred, y_std, train_percentage, output_dir):
     plt.savefig(output_path, dpi=300)
     plt.close(fig)
 
-    print(f"Saved plot for {train_percentage}% train data: {output_path}")
+    #print(f"Saved plot for {train_percentage}% train data: {output_path}")
 
 # Main loop
 if __name__ == "__main__":
@@ -96,5 +96,9 @@ if __name__ == "__main__":
         # Compute train percentage
         test_percentage = int(100 / 15336 * len(y_true))
         train_percentage = 90 - test_percentage
-
+        
+        mae = np.abs(y_pred - y_true)
+        
+        print('{}, MAE {}, MAX {}'.format(train_percentage, mae.sum()/len(mae), max(mae)))
+        
         analyze_uncertainty(y_true, y_pred, y_std, train_percentage, output_dir)

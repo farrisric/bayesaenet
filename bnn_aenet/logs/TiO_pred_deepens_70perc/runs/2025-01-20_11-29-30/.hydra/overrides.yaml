@@ -1,0 +1,5 @@
+- task_name=TiO_pred_deepens_70perc
+- prediction=TiO
+- ckpt_path=all
+- +method=NN
+- runs_dir=bnn_aenet/logs/TiO_train_deepens_70perc

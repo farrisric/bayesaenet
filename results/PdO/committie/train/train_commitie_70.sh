@@ -24,4 +24,4 @@ conda activate bnn
 export PYTHONPATH="${PYTHONPATH}:/home/g15farris/bin/bayesaenet/bnn_aenet"
 export OMP_NUM_THREADS=1
 cd /home/g15farris/bin/bayesaenet
-python bnn_aenet/tasks/train.py task_name=train_nn_commitie_70perc experiment=nn datamodule=PdO trainer.min_epochs=10000 trainer.max_epochs=20000 datamodule.test_split=0.2 datamodule.valid_split=0.1 datamodule.batch_size=32 model.optimizer.lr=0.0005640905763748237 seed=1,2,3,4,5,6,7,8,9,10 --multirun
+python bnn_aenet/tasks/train.py task_name=train_nn_commitie_70perc experiment=nn datamodule=PdO trainer.min_epochs=30000 trainer.max_epochs=50000 datamodule.test_split=0.2 datamodule.valid_split=0.1 datamodule.batch_size=32 model.optimizer.lr=0.0005640905763748237 seed=1,2,3,4,5,6,7,8,9,10 --multirun

@@ -44,13 +44,16 @@ def train(cfg: DictConfig, trial: Optional[optuna.trial.Trial] = None):
 
     log.info(f"Instantiating datamodule <{cfg.datamodule._target_}>")
     datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
-
+    print(datamodule.e_scaling, datamodule.e_shift)
     log.info(f"Instantiating model <{cfg.model._target_}>")
     cfg.model.net.input_size = datamodule.input_size
     cfg.model.net.hidden_size = datamodule.hidden_size
     cfg.model.net.species = datamodule.species
     cfg.model.net.active_names = datamodule.active_names
     cfg.model.net.alpha = datamodule.alpha
+    cfg.model.net.e_scaling = datamodule.e_scaling
+    cfg.model.net.e_shift = datamodule.e_shift
+    #print(cfg.model.e_scaling, cfg.model.e_shift)
     if OmegaConf.is_missing(cfg.model, "dataset_size"):
         cfg.model.dataset_size = datamodule.train_size
     model: LightningModule = hydra.utils.instantiate(

@@ -1,0 +1,10 @@
+- task_name=TiO_train_deepens_80perc
+- experiment=nn
+- datamodule=TiO
+- trainer.min_epochs=10000
+- trainer.max_epochs=50000
+- datamodule.test_split=0.1
+- datamodule.valid_split=0.1
+- datamodule.batch_size=32
+- model.optimizer.lr=0.0005640905763748237
+- seed=5
