@@ -16,6 +16,7 @@ lib/
 lib64/
 parts/
 sdist/
+bnn_aenet/logs/
 var/
 *.egg-info/
 .installed.cfg

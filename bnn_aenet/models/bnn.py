@@ -7,8 +7,10 @@ from torch import nn
 import torch.nn.functional as F
 import tyxe
 from tyxe import guides, priors, likelihoods, VariationalBNN
-from tyxe.guides import AutoNormal 
+
+from ..results.metrics import rms_calibration_error, sharpness
 from .guides.radial import AutoRadial
+
 import lightning.pytorch as L
 from functools import partial
 import copy
@@ -79,9 +81,8 @@ class BNN(L.LightningModule):
             ] = tyxe.guides.PretrainedInitializer.from_net(self.net)
         guide = partial(guide_base, **guide_kwargs)
 
-        likelihood = tyxe.likelihoods.HomoskedasticGaussian(
-            self.hparams.dataset_size,
-            scale=self.hparams.obs_scale,
+        likelihood = tyxe.likelihoods.HeteroskedasticGaussian(
+            self.hparams.dataset_size, positive_scale=True,
         )
 
         self.bnn = VariationalBNN(
@@ -120,7 +121,8 @@ class BNN(L.LightningModule):
 
         with self.fit_ctxt():
             elbo = self.svi.step(x,y)
-            loc, scale = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_train)
+            output = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_train)
+            loc, scale = output.chunk(2, dim=-1) 
             kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
@@ -144,7 +146,8 @@ class BNN(L.LightningModule):
         )
         elbo = self.svi.evaluate_loss(x, y.squeeze())
         # Aggregate = False if num_prediction = 1, else nans in sd
-        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
+        output = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
+        loc, scale = output.chunk(2, dim=-1) 
         kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         #mse = rmse(loc, y, batch[14])
@@ -163,8 +166,9 @@ class BNN(L.LightningModule):
     def test_step(self, batch, batch_idx):
         x = batch[10], batch[12]
         y = batch[11]
-        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
-
+        output = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
+        loc, scale = output.chunk(2, dim=-1) 
+        
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
         #mse = rmse(loc, y, batch[14])
         mse = F.mse_loss(loc, y)
@@ -182,19 +186,25 @@ class BNN(L.LightningModule):
         x = batch[10], batch[12]
         y = batch[11]
         pred = dict()
-        
+
         output = self.bnn.predict(
             x[0], x[1],
             num_predictions=self.hparams.mc_samples_eval,
             aggregate=False
         )
-        true = batch[11]/self.net.e_scaling + self.net.e_shift*batch[14]
-        preds = output/self.net.e_scaling + self.net.e_shift*batch[14]
         
-        pred["true"] = true.cpu().numpy()
-        pred["preds"] = preds.mean(axis=0).cpu().numpy()
-        pred["stds"] = preds.std(axis=0).cpu().numpy()
-        pred["n_atoms"] = batch[14].cpu().numpy()
+        loc, scale = output[:, :len(y)], output[:, len(y):]
+
+        ep_var = loc.var(0)
+        al_var = (scale**2).mean(0)
+        pred["ep_vars"] = ep_var.cpu().numpy()
+        pred["al_vars"] = al_var.cpu().numpy()
+        
+        scale = al_var.add(ep_var).sqrt()
+        loc = loc.mean(axis=0)
+        pred["preds"] = loc.cpu().numpy()
+        pred["stds"] = scale.cpu().numpy()
+        pred["true"] = batch[11].cpu().numpy()
         return pred
 
     def configure_optimizers(self):
@@ -298,12 +308,12 @@ class NN(L.LightningModule):
         
         pred = dict()
         
-        true = grp_energy/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        #true = grp_energy/self.net.e_scaling + self.net.e_shift*grp_N_atom
         list_E_ann = self.net.forward(grp_descrp, logic_reduce)
-        preds = list_E_ann/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        #preds = list_E_ann/self.net.e_scaling + self.net.e_shift*grp_N_atom
 
-        pred["true"] = true.cpu().numpy()
-        pred["preds"] = preds.cpu().numpy()
+        pred["true"] = grp_energy.cpu().numpy()
+        pred["preds"] = list_E_ann.cpu().numpy()
         pred["n_atoms"] = batch[14].cpu().numpy()
         return pred
     

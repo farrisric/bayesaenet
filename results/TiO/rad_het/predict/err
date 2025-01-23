@@ -1,0 +1,135 @@
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_rad_40perc/runs/2025-01-22_16-52-28/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_rad_40/runs/2025-01-22_11-14-29/checkpoints/epoch_1362-step_133574.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_rad_40/runs/2025-01-22_11-14-29/checkpoints/epoch_1362-step_133574.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_rad_50perc/runs/2025-01-22_16-52-45/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_rad_50/runs/2025-01-22_11-14-29/checkpoints/epoch_636-step_77714.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_rad_50/runs/2025-01-22_11-14-29/checkpoints/epoch_636-step_77714.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_rad_80perc/runs/2025-01-22_16-53-10/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_rad_80/runs/2025-01-22_11-14-55/checkpoints/epoch_649-step_126750.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_rad_80/runs/2025-01-22_11-14-55/checkpoints/epoch_649-step_126750.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_rad_40perc/runs/2025-01-22_16-57-46/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_rad_40/runs/2025-01-22_11-14-29/checkpoints/epoch_1362-step_133574.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_rad_40/runs/2025-01-22_11-14-29/checkpoints/epoch_1362-step_133574.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_rad_50perc/runs/2025-01-22_16-58-03/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_rad_50/runs/2025-01-22_11-14-29/checkpoints/epoch_636-step_77714.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_rad_50/runs/2025-01-22_11-14-29/checkpoints/epoch_636-step_77714.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_rad_80perc/runs/2025-01-22_16-58-27/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_rad_80/runs/2025-01-22_11-14-55/checkpoints/epoch_649-step_126750.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_rad_80/runs/2025-01-22_11-14-55/checkpoints/epoch_649-step_126750.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/rad.predict_rad_40perc/runs/2025-01-22_17-01-44/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_rad_40/runs/2025-01-22_11-14-29/checkpoints/epoch_1362-step_133574.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_rad_40/runs/2025-01-22_11-14-29/checkpoints/epoch_1362-step_133574.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/rad.predict_rad_50perc/runs/2025-01-22_17-01-59/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_rad_50/runs/2025-01-22_11-14-29/checkpoints/epoch_636-step_77714.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_rad_50/runs/2025-01-22_11-14-29/checkpoints/epoch_636-step_77714.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/rad.predict_rad_80perc/runs/2025-01-22_17-02-20/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_rad_80/runs/2025-01-22_11-14-55/checkpoints/epoch_649-step_126750.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_rad_80/runs/2025-01-22_11-14-55/checkpoints/epoch_649-step_126750.ckpt

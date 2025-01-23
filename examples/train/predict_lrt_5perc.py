@@ -3,8 +3,8 @@ sys.path.append('/home/g15farris/bin/forks/bayesaenet/')
 
 import os
 import pyro
-from bnn_aenet.models.bnn import BNN, NN
-from bnn_aenet.models.nets.network import NetAtom
+from bnn_aenet.models.bnn_h import BNN, NN
+from bnn_aenet.models.nets.network_old import NetAtom
 import torch
 import pytorch_lightning as L
 import torch.utils.data as data
