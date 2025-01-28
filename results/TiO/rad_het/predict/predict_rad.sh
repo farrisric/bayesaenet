@@ -7,7 +7,7 @@
 #$ -o out
 #$ -e err
 #$ -m e
-#$ -M farrisric@outlook.com
+##$ -M farrisric@outlook.com
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
@@ -28,7 +28,7 @@ cd /home/g15farris/bin/bayesaenet
 for perc in 5 10 20 30 40 50 60 70 80;
 do
     python bnn_aenet/tasks/predict.py \
-           task_name=rad.predict_rad_${perc}perc \
+           task_name=predict_rad_${perc}perc \
            prediction=TiO \
            ckpt_path=all \
            +method=RAD \

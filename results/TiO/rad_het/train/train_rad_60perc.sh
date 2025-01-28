@@ -7,7 +7,7 @@
 #$ -o train_rad.out
 #$ -e train_rad.err
 #$ -m e
-#$ -M farrisric@outlook.com
+##$ -M farrisric@outlook.com
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
