@@ -95,7 +95,7 @@ class NetAtom(nn.Module):
             structure_means += torch.einsum("ij,ki->k", means[i], logic_reduce[i])
             structure_log_vars += torch.einsum("ij,ki->k", log_vars[i], logic_reduce[i])
         structure_log_vars = torch.nn.functional.softplus(structure_log_vars)
-        return torch.cat([structure_means, structure_log_vars], dim=-1) 
+        return torch.cat([structure_means, structure_log_vars], dim=-1)
 
     def get_loss_heteroskedastic(self, descriptors, energies, logic_reduce):
         """
