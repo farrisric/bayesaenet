@@ -1,0 +1,6 @@
+defaults:
+  - net
+
+_target_: bnn_aenet.models.hnn.HNN
+p_dropout: 0
+mc_samples: 0

@@ -5,10 +5,12 @@ from collections import OrderedDict
 
 class NetAtom(nn.Module):
     """
-    A neural network for predicting atomic energies and forces, with support for heteroskedastic Gaussian likelihood.
+    A neural network for predicting atomic energies and forces, with support for heteroskedastic
+    Gaussian likelihood.
     """
 
-    def __init__(self, input_size, hidden_size, species, active_names, alpha, device, e_scaling, e_shift):
+    def __init__(self, input_size, hidden_size, species, active_names, alpha, device,
+                 e_scaling, e_shift):
         """
         Initialize the network.
 
@@ -94,8 +96,7 @@ class NetAtom(nn.Module):
             structure_log_vars += torch.einsum("ij,ki->k", log_vars[i], logic_reduce[i])
         structure_log_vars = torch.nn.functional.softplus(structure_log_vars)
         return torch.cat([structure_means, structure_log_vars], dim=-1) 
-        
-        
+
     def get_loss_heteroskedastic(self, descriptors, energies, logic_reduce):
         """
         Compute the negative log likelihood under a heteroskedastic Gaussian distribution.
