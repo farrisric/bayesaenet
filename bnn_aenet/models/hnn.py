@@ -26,6 +26,9 @@ class HNN(pl.LightningModule):
         self.save_hyperparameters(logger=False, ignore=["net"])
         self.net = net
         self.net.apply(weights_init)
+        self.net.dropout = p_dropout
+        self.net.mc_samples = mc_samples
+        self.validation_step_outputs = []
 
     def forward(self, grp_descrp, logic_reduce):
         return self.net.forward(grp_descrp, logic_reduce)
@@ -41,13 +44,13 @@ class HNN(pl.LightningModule):
         grp_energy = batch[11]
         logic_reduce = batch[12]
         grp_N_atom = batch[14]
-
-        loc, scale = self.forward(grp_descrp, logic_reduce)
+        output = self.forward(grp_descrp, logic_reduce)
+        loc, scale = output.chunk(2, dim=-1) 
 
         if phase == "predict":
             return loc, scale
         loss = F.gaussian_nll_loss(loc, grp_energy, torch.square(scale))
-        self.log(f"nll/{phase}", loss, on_step=False, on_epoch=True)
+        self.log(f"nll/{phase}", loss, on_step=False, on_epoch=True, batch_size=len(batch[11]))
         return loss, loc, scale
 
     def training_step(self, batch, batch_idx):
@@ -55,9 +58,9 @@ class HNN(pl.LightningModule):
         mse = F.mse_loss(loc, batch[11])
         rmsce = rms_calibration_error(loc, scale, batch[11])
         sharp = sharpness(scale)
-        self.log("mse/train", mse, on_step=False, on_epoch=True)
-        self.log("rmsce/train", rmsce, on_step=False, on_epoch=True)
-        self.log("sharp/train", sharp, on_step=False, on_epoch=True)
+        self.log("mse/train", mse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        self.log("rmsce/train", rmsce, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        self.log("sharp/train", sharp, on_step=False, on_epoch=True, batch_size=len(batch[11]))
         return loss
 
     def mc_sampling(self, batch, mc_samples: int, phase: str, agg: bool = True):
@@ -92,10 +95,11 @@ class HNN(pl.LightningModule):
             )
         else:
             loss, loc, scale = self.step(batch, phase)
+        self.validation_step_outputs.append({"loss": loss, "label": batch[11], "pred": loc, "std": scale})
         return {"loss": loss, "label": batch[11], "pred": loc, "std": scale}
 
-    def validation_epoch_end(self, outputs) -> None:
-        for i, output in enumerate(outputs):
+    def on_validation_epoch_end(self) -> None:
+        for i, output in enumerate(self.validation_step_outputs):
             if i == 0:
                 preds = output["pred"].detach()
                 labels = output["label"].detach()
@@ -108,9 +112,9 @@ class HNN(pl.LightningModule):
         mse = F.mse_loss(preds, labels)
         rmsce = rms_calibration_error(preds, stds, labels)
         sharp = sharpness(stds)
-        self.log("mse/val", mse)
-        self.log("rmsce/val", rmsce)
-        self.log("sharp/val", sharp)
+        self.log("mse/val", mse, batch_size=len(labels))
+        self.log("rmsce/val", rmsce, batch_size=len(labels))
+        self.log("sharp/val", sharp, batch_size=len(labels))
 
     def test_step(self, batch, batch_idx):
         y = batch[11]
@@ -127,10 +131,10 @@ class HNN(pl.LightningModule):
         else:
             loss, loc, scale = self.step(batch, phase)
 
-        self.log("nll/test", loss)
-        self.log("mse/test", F.mse_loss(loc, y))
-        self.log("rmsce/test", rms_calibration_error(loc, scale, y))
-        self.log("sharp/test", sharpness(scale))
+        self.log("nll/test", loss, batch_size=len(y))
+        self.log("mse/test", F.mse_loss(loc, y), batch_size=len(y))
+        self.log("rmsce/test", rms_calibration_error(loc, scale, y), batch_size=len(y))
+        self.log("sharp/test", sharpness(scale), batch_size=len(y))
 
     def predict_step(self, batch, batch_idx, dataloader_idx=0):
         pred = dict()
@@ -154,4 +158,5 @@ class HNN(pl.LightningModule):
         return pred
 
     def configure_optimizers(self):
-        return self.hparams.optimizer(params=self.parameters())
+        # return self.hparams.optimizer(params=self.parameters())
+        pass
