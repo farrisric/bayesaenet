@@ -1,5 +1,0 @@
-- task_name=predict_lrt_80perc
-- prediction=PdO
-- ckpt_path=all
-- +method=LRT
-- runs_dir=bnn_aenet/logs/train_lrt_80

@@ -8,7 +8,7 @@ defaults:
 
 tags: ["bayesian", "lrt"]
 
-seed: 12345
+seed: 31294495
 
 trainer:
   min_epochs: 20000

@@ -1,0 +1,11 @@
+net:
+  _target_: bnn_aenet.models.nets.network_var.NetAtom
+  input_size: ???  
+  hidden_size: ???  
+  species: ???  
+  active_names: ???  
+  alpha: ???
+  device: 'cpu'
+  e_scaling: ???
+  e_shift: ???
+

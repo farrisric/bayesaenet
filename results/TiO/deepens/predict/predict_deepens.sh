@@ -1,13 +1,11 @@
 #!/bin/bash
-#$ -N pred_commitie_5perc
+#$ -N pred_deepens
 #$ -pe smp* 1
-#$ -q iqtc12.q
+#$ -q iqtc08.q
 #$ -S /bin/bash
 #$ -cwd
 #$ -o out
 #$ -e err
-#$ -m e
-#$ -M farrisric@outlook.com
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
@@ -20,16 +18,16 @@ export PATH="/aplic/anaconda/2020.02/bin:$PATH"
 fi
 fi
 unset __conda_setup
-conda activate bnn
+conda activate bayesian
 export HYDRA_FULL_ERROR=1
-export PYTHONPATH="${PYTHONPATH}:/home/g15farris/bin/bayesaenet/bnn_aenet"
+export PYTHONPATH="${PYTHONPATH}:/home/g15telari/TiO/bayesaenet/bnn_aenet"
 export OMP_NUM_THREADS=1
-cd /home/g15farris/bin/bayesaenet
+cd /home/g15telari/TiO/bayesaenet
 
-for perc in 5 10 20 30 40 50 60 70 80;
+for perc in 80;
 do
     python bnn_aenet/tasks/predict.py \
-           task_name=TiO_pred_deepens_${perc}perc \
+           task_name=TiO_pred_deepens_${perc}perc_final \
            prediction=TiO \
            ckpt_path=all \
            +method=NN \

@@ -180,6 +180,10 @@ class TrainSetParameter(object):
 		self.E_max_norm = (self.E_max - E_shift)*E_scaling
 		self.E_avg_norm = (self.E_avg - E_shift)*E_scaling
 
+		np.savetxt('/home/g15telari/TiO/bayesaenet/bnn_aenet/logs/Normalization/norm_E_min_max_avg.dat',np.array([self.E_min_norm,self.E_max_norm,self.E_avg_norm]))
+		np.savetxt('/home/g15telari/TiO/bayesaenet/bnn_aenet/logs/Normalization/E_min_max_avg.dat',np.array([self.E_min,self.E_max,self.E_avg]))
+		np.savetxt('/home/g15telari/TiO/bayesaenet/bnn_aenet/logs/Normalization/E_scaling_shift.dat',np.array([E_scaling,E_shift]))
+
 		self.E_scaling  = E_scaling
 		self.E_shift    = E_shift
 		self.normalized = True

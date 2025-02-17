@@ -1,0 +1,5 @@
+- task_name=TiO_train_lrt_80_256batch
+- prediction=TiO
+- ckpt_path=all
+- +method=LRT
+- runs_dir=bnn_aenet/logs/TiO_train_lrt_80_256batch

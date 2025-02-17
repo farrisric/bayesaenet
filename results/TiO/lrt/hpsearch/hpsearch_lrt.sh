@@ -1,13 +1,11 @@
 #!/bin/bash
-#$ -N train_lrt
+#$ -N free_optuna_lrt
 #$ -pe smp* 1
 #$ -q iqtc09.q
 #$ -S /bin/bash
 #$ -cwd
 #$ -o out
 #$ -e err
-#$ -m e
-#$ -M farrisric@outlook.com
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
@@ -20,15 +18,16 @@ export PATH="/aplic/anaconda/2020.02/bin:$PATH"
 fi
 fi
 unset __conda_setup
-conda activate bnn
-export PYTHONPATH="${PYTHONPATH}:/home/g15farris/bin/bayesaenet/bnn_aenet"
+conda activate bayesian
+export PYTHONPATH="${PYTHONPATH}:/home/g15telari/TiO/bayesaenet/bnn_aenet"
 export OMP_NUM_THREADS=1
-cd /home/g15farris/bin/bayesaenet
+export HYDRA_FULL_ERROR=1
+cd /home/g15telari/TiO/bayesaenet
 python bnn_aenet/tasks/hpsearch.py \
     model=bnn_lrt \
     datamodule=TiO \
     hpsearch=bnn_lrt \
-    task_name=TiO_hps_lrt \
+    task_name=TiO_hps_lrt_optuna_free \
     tags=["TiO"] \
-    datamodule.test_split=0.85 \
+    datamodule.test_split=0.1 \
     datamodule.valid_split=0.1 \

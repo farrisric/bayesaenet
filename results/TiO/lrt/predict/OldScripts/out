@@ -1,0 +1,67 @@
+[2025-02-11 14:00:29,190][__main__][INFO] - Instantiating trainer <lightning.pytorch.trainer.Trainer>
+bnn_aenet/logs/TiO_train_lrt_80
+[2025-02-11 14:00:29,875][__main__][INFO] - Overriding hyperparameter test_split with value 0.1
+[2025-02-11 14:00:29,876][__main__][INFO] - Overriding hyperparameter valid_split with value 0.1
+[2025-02-11 14:00:29,876][__main__][INFO] - Overriding hyperparameter batch_size with value 64
+[2025-02-11 14:00:29,876][__main__][INFO] - Overriding hyperparameter lr with value 0.0008779137387293351
+[2025-02-11 14:00:29,877][__main__][INFO] - Overriding hyperparameter pretrain_epochs with value 5
+[2025-02-11 14:00:29,877][__main__][INFO] - Overriding hyperparameter mc_samples_train with value 1
+[2025-02-11 14:00:29,877][__main__][INFO] - Overriding hyperparameter prior_loc with value 0
+[2025-02-11 14:00:29,877][__main__][INFO] - Overriding hyperparameter prior_scale with value 1.008803295762472
+[2025-02-11 14:00:29,877][__main__][INFO] - Overriding hyperparameter q_scale with value 0.0027213223793395823
+[2025-02-11 14:00:29,878][__main__][INFO] - Overriding hyperparameter obs_scale with value 0.9239752071949993
+[2025-02-11 14:00:29,879][__main__][INFO] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[2025-02-11 14:00:38,556][__main__][INFO] - Instantiating model <bnn_aenet.models.bnn.BNN>
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:02,  4.94it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:01,  6.63it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:01,  7.57it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00,  8.16it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00,  8.55it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00,  8.84it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00,  9.06it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00,  8.71it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:01<00:00,  8.78it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:01<00:00,  8.92it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:01<00:00,  9.04it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:01<00:00,  9.14it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:01<00:00,  9.13it/s]
+[2025-02-11 14:00:45,816][__main__][INFO] - Saving predicions: /home/g15telari/TiO/bayesaenet/bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-11_14-00-28
+[2025-02-11 14:21:58,231][__main__][INFO] - Instantiating trainer <lightning.pytorch.trainer.Trainer>
+bnn_aenet/logs/TiO_train_lrt_80_sigmaprior10
+[2025-02-11 14:21:58,338][__main__][INFO] - Overriding hyperparameter test_split with value 0.1
+[2025-02-11 14:21:58,338][__main__][INFO] - Overriding hyperparameter valid_split with value 0.1
+[2025-02-11 14:21:58,338][__main__][INFO] - Overriding hyperparameter batch_size with value 64
+[2025-02-11 14:21:58,339][__main__][INFO] - Overriding hyperparameter lr with value 0.0008779137387293351
+[2025-02-11 14:21:58,339][__main__][INFO] - Overriding hyperparameter pretrain_epochs with value 5
+[2025-02-11 14:21:58,339][__main__][INFO] - Overriding hyperparameter mc_samples_train with value 1
+[2025-02-11 14:21:58,339][__main__][INFO] - Overriding hyperparameter prior_loc with value 0
+[2025-02-11 14:21:58,339][__main__][INFO] - Overriding hyperparameter prior_scale with value 10.00
+[2025-02-11 14:21:58,339][__main__][INFO] - Overriding hyperparameter q_scale with value 0.0027213223793395823
+[2025-02-11 14:21:58,340][__ain__][INFO] - Overriding hyperparameter obs_scale with value 0.9239752071949993
+[2025-02-11 14:21:58,297][__main__][INFO] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[2025-02-11 14:22:08,800][__main__][INFO] - Instantiating model <bnn_aenet.models.bnn.BNN>
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:09,  1.14it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:04,  2.03it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:01<00:03,  2.77it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:01<00:02,  3.31it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:01<00:01,  3.82it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:01<00:01,  4.26it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:01<00:01,  4.61it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:01<00:00,  4.94it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:01<00:00,  5.23it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:01<00:00,  5.45it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:01<00:00,  5.69it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:02<00:00,  5.91it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:02<00:00,  5.91it/s]
+[2025-02-11 14:22:30,300][__main__][INFO] - Saving predicions: /home/g15telari/TiO/bayesaenet/bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-11_14-21-57
+-11_14-21-57
+[2025-02-11 14:59:28,099][__main__][INFO] - Instantiating trainer <lightning.pytorch.trainer.Trainer>
+bnn_aenet/logs/TiO_train_lrt_80_sigmaprior10
+[2025-02-11 14:59:28,599][__main__][INFO] - Overriding hyperparameter test_split with value 0.1
+[2025-02-11 14:59:28,599][__main__][INFO] - Overriding hyperparameter valid_split with value 0.1
+[2025-02-11 14:59:28,600][__main__][INFO] - Overriding hyperparameter batch_size with value 64
+[2025-02-11 14:59:28,600][__main__][INFO] - Overriding hyperparameter lr with value 0.0008779137387293351
+[2025-02-11 14:59:28,600][__main__][INFO] - Overriding hyperparameter pretrain_epochs with value 5
+[2025-02-11 14:59:28,601][__main__][INFO] - Overriding hyperparameter mc_samples_train with value 1
+[2025-02-11 14:59:28,601][__main__][INFO] - Overriding hyperparameter prior_loc with value 0
+[2025-02-11 14:59:28,601][__main__][INFO] - Overriding hyperparameter prior_scale with value 10.00
+[2025-02-11 14:59:28,601][__main__][INFO] - Overriding hyperparameter q_scale with value 0.0027213223793395823
+[2025-02-11 14:59:28,601][__main__][INFO] - Overriding hyperparameter obs_scale with value 0.9239752071949993
+[2025-02-11 14:59:28,602][__main__][INFO] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[2025-02-11 14:59:37,511][__main__][INFO] - Instantiating model <bnn_aenet.models.bnn.BNN>
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:01,  7.00it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:01,  8.28it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:01,  8.85it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00,  9.18it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00,  9.38it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00,  9.53it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00,  9.64it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00,  9.73it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00,  9.89it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 10.17it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:01<00:00, 10.40it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:01<00:00, 10.61it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:01<00:00, 10.61it/s]
+[2025-02-11 14:59:42,077][__main__][INFO] - Saving predicions: /home/g15telari/TiO/bayesaenet/bnn_aenet/logs/TiO_pred_lrt_80_sigmaprior10/runs/2025-02-11_14-59-27

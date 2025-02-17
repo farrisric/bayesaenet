@@ -1,5 +1,5 @@
 defaults:
-  - net
+  - net_var
 
 _target_: bnn_aenet.models.bnn.BNN
 

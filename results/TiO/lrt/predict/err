@@ -1,213 +1,132 @@
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used: False
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-11_11-06-45/checkpoints/epoch_27787-step_2723224.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}", "ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-11_11-06-45/checkpoints/epoch_27787-step_2723224.ckpt
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-IPU available: False, using: 0 IPUs
-TPU available: False, using: 0 TPU cores
-HPU available: False, using: 0 HPUs
-HPU available: False, using: 0 HPUs
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used: False
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80_sigmaprior10/runs/2025-02-11_14-04-56/checkpoints/epoch_16733-step_1639932.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}", "ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80_sigmaprior10/runs/2025-02-11_14-04-56/checkpoints/epoch_16733-step_1639932.ckpt
 GPU available: False, used: False
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
 TPU available: False, using: 0 TPU cores
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_10perc/runs/2025-01-09_10-53-39/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-09_10-53-39/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_20perc/runs/2025-01-09_10-53-39/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_50perc/runs/2025-01-09_10-53-39/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_40perc/runs/2025-01-09_10-53-39/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-08_15-17-28/checkpoints/epoch_9484-step_227640.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-08_15-17-44/checkpoints/epoch_9124-step_666125.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-08_15-17-45/checkpoints/epoch_5227-step_256172.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-08_15-17-44/checkpoints/epoch_4245-step_518012.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-08_15-17-28/checkpoints/epoch_9484-step_227640.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-08_15-17-44/checkpoints/epoch_4245-step_518012.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-08_15-17-45/checkpoints/epoch_5227-step_256172.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-08_15-17-44/checkpoints/epoch_6663-step_653072.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-08_15-17-44/checkpoints/epoch_9124-step_666125.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-08_15-17-44/checkpoints/epoch_6663-step_653072.ckpt
-vailable: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_5perc/runs/2025-01-09_10-53-54/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_70perc/runs/2025-01-09_10-53-54/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-01-09_10-53-54/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_60perc/runs/2025-01-09_10-53-54/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-08_15-17-48/checkpoints/epoch_6119-step_899640.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-08_15-17-48/checkpoints/epoch_8957-step_1531818.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-08_15-17-44/checkpoints/epoch_7301-step_87624.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-08_15-17-48/checkpoints/epoch_6119-step_899640.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-08_15-17-48/checkpoints/epoch_8957-step_1531818.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-08_15-17-44/checkpoints/epoch_7301-step_87624.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-08_15-20-26/checkpoints/epoch_1205-step_235170.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-08_15-20-26/checkpoints/epoch_1205-step_235170.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior1/runs/2025-02-13_20-17-21/checkpoints/epoch_1626-step_317265.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}", "EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior1/runs/2025-02-13_20-17-21/checkpoints/epoch_1626-step_317265.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior10/runs/2025-02-13_20-15-48/checkpoints/epoch_2511-step_489840.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}", "EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior10/runs/2025-02-13_20-15-48/checkpoints/epoch_2511-step_489840.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaoptuna/runs/2025-02-13_20-24-38/checkpoints/epoch_1737-step_338910.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}", "EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaoptuna/runs/2025-02-13_20-24-38/checkpoints/epoch_1737-step_338910.ckpt
 GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior10/runs/2025-02-13_20-15-48/checkpoints/epoch_16817-step_3279510.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}", "EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior10/runs/2025-02-13_20-15-48/checkpoints/epoch_16817-step_3279510.ckpt
 GPU available: False, used: False
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
 TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-GPU available: False, used: False
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_20perc/runs/2025-01-09_10-59-39/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_50perc/runs/2025-01-09_10-59-39/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-09_10-59-39/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_5perc/runs/2025-01-09_10-59-39/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_40perc/runs/2025-01-09_10-59-39/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_10perc/runs/2025-01-09_10-59-39/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-08_15-17-44/checkpoints/epoch_6663-step_653072.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-08_15-17-28/checkpoints/epoch_9484-step_227640.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-08_15-17-45/checkpoints/epoch_5227-step_256172.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-08_15-17-44/checkpoints/epoch_9124-step_666125.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-08_15-17-44/checkpoints/epoch_7301-step_87624.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-08_15-17-44/checkpoints/epoch_6663-step_653072.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-08_15-17-28/checkpoints/epoch_9484-step_227640.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-08_15-17-45/checkpoints/epoch_5227-step_256172.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-08_15-17-44/checkpoints/epoch_7301-step_87624.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-08_15-17-44/checkpoints/epoch_9124-step_666125.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-08_15-17-44/checkpoints/epoch_4245-step_518012.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-08_15-17-44/checkpoints/epoch_4245-step_518012.ckpt
-GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_60perc/runs/2025-01-09_10-59-58/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-01-09_10-59-58/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_70perc/runs/2025-01-09_10-59-58/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-08_15-17-48/checkpoints/epoch_6119-step_899640.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-08_15-17-48/checkpoints/epoch_8957-step_1531818.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-08_15-20-26/checkpoints/epoch_1205-step_235170.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-08_15-20-26/checkpoints/epoch_1205-step_235170.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-08_15-17-48/checkpoints/epoch_8957-step_1531818.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-08_15-17-48/checkpoints/epoch_6119-step_899640.ckpt
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_10perc/runs/2025-01-20_11-37-16/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-14_13-58-13/checkpoints/epoch_33511-step_804288.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-14_13-58-13/checkpoints/epoch_33511-step_804288.ckpt
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-                                                                                                                                                                                                                                                                                                      Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_40perc/runs/2025-01-20_11-37-34/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_20perc/runs/2025-01-20_11-37-34/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-20_11-37-34/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-14_13-58-28/checkpoints/epoch_6069-step_443110.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-14_13-58-13/checkpoints/epoch_19431-step_952168.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-14_13-58-28/checkpoints/epoch_38767-step_3799264.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-14_13-58-28/checkpoints/epoch_6069-step_443110.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-14_13-58-13/checkpoints/epoch_19431-step_952168.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-14_13-58-28/checkpoints/epoch_38767-step_3799264.ckpt
-folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_5perc/runs/2025-01-20_11-37-45/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-14_13-58-42/checkpoints/epoch_33019-step_4028440.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-14_13-58-42/checkpoints/epoch_49894-step_598740.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-14_13-58-42/checkpoints/epoch_33019-step_4028440.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-14_13-58-42/checkpoints/epoch_49894-step_598740.ckpt
-PUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_60perc/runs/2025-01-20_11-38-00/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_70perc/runs/2025-01-20_11-38-00/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-14_13-58-42/checkpoints/epoch_8877-step_1305066.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-14_13-58-57/checkpoints/epoch_19345-step_3308166.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-14_13-58-57/checkpoints/epoch_19345-step_3308166.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-14_13-58-42/checkpoints/epoch_8877-step_1305066.ckpt
+U available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior10/runs/2025-02-13_20-15-48/checkpoints/epoch_17379-step_3389100.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior1/runs/2025-02-13_20-17-21/checkpoints/epoch_9500-step_1852695.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}", "EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}"].
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}", "EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior1/runs/2025-02-13_20-17-21/checkpoints/epoch_9500-step_1852695.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaoptuna/runs/2025-02-13_20-24-38/checkpoints/epoch_11245-step_2192970.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}", "ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaoptuna/runs/2025-02-13_20-24-38/checkpoints/epoch_11245-step_2192970.ckpt
+Error executing job with overrides: ['task_name=final_TiO_pred_lrt_80_sigmaoptuna', 'prediction=TiO', 'ckpt_path=all', '+method=LRT', 'runs_dir=bnn_aenet/logs/final_TiO_train_lrt_80_sigmaoptuna']
+Traceback (most recent call last):
+  File "/home/g15telari/TiO/bayesaenet/bnn_aenet/tasks/predict.py", line 112, in <module>
+    main()
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15telari/TiO/bayesaenet/bnn_aenet/tasks/predict.py", line 108, in main
+    predict(cfg)
+  File "/home/g15telari/TiO/bayesaenet/bnn_aenet/tasks/predict.py", line 97, in predict
+    predictions = predictions.explode(
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/pandas/core/frame.py", line 9852, in explode
+    raise ValueError("columns must have matching element counts")
+ValueError: columns must have matching element counts
+e 260, in return_value
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+    raise self._return_value
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/core/utils.py", line 186, in run_job
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15telari/TiO/bayesaenet/bnn_aenet/tasks/predict.py", line 108, in main
+  File "/home/g15telari/TiO/bayesaenet/bnn_aenet/tasks/predict.py", line 108, in main
+    predict(cfg)
+    predict(cfg)
+  File "/home/g15telari/TiO/bayesaenet/bnn_aenet/tasks/predict.py", line 97, in predict
+  File "/home/g15telari/TiO/bayesaenet/bnn_aenet/tasks/predict.py", line 97, in predict
+    predictions = predictions.explode(
+    predictions = predictions.explode(
+                  ^^^^^^^^^^^^^^^^^^^^
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/pandas/core/frame.py", line 9852, in explode
+  File "/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/pandas/core/frame.py", line 9852, in explode
+    raise ValueError("columns must have matching element counts")
+ValueError: columns must have matching element counts
+    raise ValueError("columns must have matching element counts")
+ValueError: columns must have matching element counts
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-01-20_11-38-16/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-14_13-58-57/checkpoints/epoch_7488-step_1460355.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-14_13-58-57/checkpoints/epoch_7488-step_1460355.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaoptuna/runs/2025-02-13_20-24-38/checkpoints/epoch_11245-step_2192970.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}", "EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaoptuna/runs/2025-02-13_20-24-38/checkpoints/epoch_11245-step_2192970.ckpt
+
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}", "ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior1/runs/2025-02-13_20-17-21/checkpoints/epoch_9500-step_1852695.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior10/runs/2025-02-13_20-15-48/checkpoints/epoch_17379-step_3389100.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior1/runs/2025-02-13_20-17-21/checkpoints/epoch_9500-step_1852695.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}", "EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior1/runs/2025-02-13_20-17-21/checkpoints/epoch_9500-step_1852695.ckpt
+t
+t

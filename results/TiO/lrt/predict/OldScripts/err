@@ -1,0 +1,19 @@
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-11_11-06-45/checkpoints/epoch_1544-step_151410.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}", "ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-11_11-06-45/checkpoints/epoch_1544-step_151410.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-11_11-06-45/checkpoints/epoch_1698-step_166502.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}", "EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-11_11-06-45/checkpoints/epoch_1698-step_166502.ckpt
+83-step_8232.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80_sigmaprior10/runs/2025-02-11_14-04-56/checkpoints/epoch_418-step_41062.ckpt
+/home/g15telari/.conda/envs/bayesian/lib/python3.11/site-packages/lightning/pytorch/trainer/call.py:277: Be aware that when using `ckpt_path`, callbacks used to create the checkpoint need to be provided during `Trainer` instantiation. Please add the following callbacks: ["EarlyStopping{'monitor': 'elbo/val', 'mode': 'min'}", "ModelCheckpoint{'monitor': 'elbo/val', 'mode': 'min', 'every_n_train_steps': 0, 'every_n_epochs': 1, 'train_time_interval': None}"].
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80_sigmaprior10/runs/2025-02-11_14-04-56/checkpoints/epoch_418-step_41062.ckpt

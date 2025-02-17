@@ -1,4 +1,4 @@
-TRAININGSET /work/g15farris/database/TiO/data.train.ascii
+TRAININGSET /home/g15telari/TiO/bayesaenet/data/TiO/data.train.ascii
 TESTPERCENT 10
 VALIDPERCENT 10
 ITERATIONS 20

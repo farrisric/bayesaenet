@@ -7,10 +7,8 @@ from torch import nn
 import torch.nn.functional as F
 import tyxe
 from tyxe import guides, priors, likelihoods, VariationalBNN
-
-from ..results.metrics import rms_calibration_error, sharpness
+from tyxe.guides import AutoNormal 
 from .guides.radial import AutoRadial
-
 import lightning.pytorch as L
 from functools import partial
 import copy
@@ -81,8 +79,9 @@ class BNN(L.LightningModule):
             ] = tyxe.guides.PretrainedInitializer.from_net(self.net)
         guide = partial(guide_base, **guide_kwargs)
 
-        likelihood = tyxe.likelihoods.HeteroskedasticGaussian(
-            self.hparams.dataset_size, positive_scale=True,
+        likelihood = tyxe.likelihoods.HomoskedasticGaussian(
+            self.hparams.dataset_size,
+            scale=self.hparams.obs_scale,
         )
 
         self.bnn = VariationalBNN(
@@ -113,6 +112,7 @@ class BNN(L.LightningModule):
     def training_step(self, batch, batch_idx):
         x = batch[10], batch[12]
         y = batch[11]
+        grp_N_atom = batch[14]
         self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
         self.svi_no_obs = SVI(
             self.bnn_no_obs, self.bnn.guide, self.optimizer, self.loss
@@ -121,17 +121,24 @@ class BNN(L.LightningModule):
 
         with self.fit_ctxt():
             elbo = self.svi.step(x,y)
-            output = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_train)
-            loc, scale = output.chunk(2, dim=-1) 
+            loc, scale = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_train)
             kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
+
+        # scale back outputs to original units (per atom and global)
+        rescaled_y = y/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        rescaled_loc = loc/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        mse = F.mse_loss(loc,y)
+        rmse = torch.sqrt(mse)
+        mse_rescaled = F.mse_loss(rescaled_loc, rescaled_y)
+        rmse_rescaled = torch.sqrt(mse_rescaled)
+
+        self.log("mse/test", mse, batch_size=len(y))
+        self.log("rmse/test", rmse, batch_size=len(y))
+        self.log("real units mse/test", mse_rescaled, batch_size=len(y))
+        self.log("real units rmse/test", rmse_rescaled, batch_size=len(y))     
         
-        #mse = rmse(loc, y, batch[14])
-        rmse = get_rmse_atom(loc, y, batch[14])
-        mse = F.mse_loss(loc, y)
-        self.log("mse/train", mse, on_step=False, on_epoch=True, batch_size=len(y) )
-        self.log("rmse/train", rmse, on_step=False, prog_bar=True, on_epoch=True, batch_size=len(y) )
         self.log("elbo/train", elbo, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("kl/train", kl, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("likelihood/train", elbo - kl, on_step=False, on_epoch=True, batch_size=len(y))
@@ -139,6 +146,7 @@ class BNN(L.LightningModule):
     def validation_step(self, batch, batch_idx):
         x = batch[10], batch[12]
         y = batch[11]
+        grp_N_atom = batch[14]
 
         self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
         self.svi_no_obs = SVI(
@@ -146,36 +154,54 @@ class BNN(L.LightningModule):
         )
         elbo = self.svi.evaluate_loss(x, y.squeeze())
         # Aggregate = False if num_prediction = 1, else nans in sd
-        output = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
-        loc, scale = output.chunk(2, dim=-1) 
+        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
         kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         #mse = rmse(loc, y, batch[14])
-        mse = F.mse_loss(loc, y)
-        rmse = get_rmse_atom(loc, y, batch[14])
-        self.log("rmse/val", rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y))
+        rescaled_y = y/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        rescaled_loc = loc/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        mse = F.mse_loss(loc,y)
+        rmse = torch.sqrt(mse)
+        mse_rescaled = F.mse_loss(rescaled_loc, rescaled_y)
+        rmse_rescaled = torch.sqrt(mse_rescaled)
+
+        self.log("mse/test", mse, batch_size=len(y))
+        self.log("rmse/test", rmse, batch_size=len(y))
+        self.log("real units mse/test", mse_rescaled, batch_size=len(y))
+        self.log("real units rmse/test", rmse_rescaled, batch_size=len(y))        
+        
         self.log("elbo/val", elbo, on_step=False, on_epoch=True, batch_size=len(y))
-        self.log("mse/val", mse, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("kl/val", kl, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("likelihood/val", elbo - kl, on_step=False, on_epoch=True, batch_size=len(y))
 
     def on_test_start(self) -> None:
         self.define_bnn()
-        param_store_to(self.device)
+        param_store_to(self.device) 
 
     def test_step(self, batch, batch_idx):
         x = batch[10], batch[12]
         y = batch[11]
-        output = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
-        loc, scale = output.chunk(2, dim=-1) 
-        
+        grp_N_atom = batch[14]
+
+        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
+
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
         #mse = rmse(loc, y, batch[14])
-        mse = F.mse_loss(loc, y)
-        rmse = get_rmse_atom(loc, y, batch[14])
+        # scale back target values to original units
+        rescaled_y = y/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        rescaled_loc = loc/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        mse = F.mse_loss(loc,y)
+        rmse = torch.sqrt(mse)
+        mse_rescaled = F.mse_loss(rescaled_loc, rescaled_y)
+        rmse_rescaled = torch.sqrt(mse_rescaled)
+
+
         self.log("nll/test", nll, batch_size=len(y))
         self.log("mse/test", mse, batch_size=len(y))
         self.log("rmse/test", rmse, batch_size=len(y))
+        self.log("real units mse/test", mse_rescaled, batch_size=len(y))
+        self.log("real units rmse/test", rmse_rescaled, batch_size=len(y))
+                       
         return nll
     
     def on_predict_start(self) -> None:
@@ -186,25 +212,34 @@ class BNN(L.LightningModule):
         x = batch[10], batch[12]
         y = batch[11]
         pred = dict()
-
-        output = self.bnn.predict(
+        
+        loc, scale = self.bnn.predict(
             x[0], x[1],
-            num_predictions=self.hparams.mc_samples_eval,
-            aggregate=False
+            num_predictions=100, #self.hparams.mc_samples_eval,
+            aggregate=True
         )
-        
-        loc, scale = output[:, :len(y)], output[:, len(y):]
+        true = batch[11]
+        true_rescale = batch[11]/self.net.e_scaling + self.net.e_shift*batch[14]
+        preds = loc
+        preds_rescale = loc/self.net.e_scaling + self.net.e_shift*batch[14]
+        scale_rescale = scale/self.net.e_scaling
+        shift = np.ones(len(true.cpu().numpy()))*self.net.e_shift
+        scaling = np.ones(len(true.cpu().numpy()))*self.net.e_scaling
 
-        ep_var = loc.var(0)
-        al_var = (scale**2).mean(0)
-        pred["ep_vars"] = ep_var.cpu().numpy()
-        pred["al_vars"] = al_var.cpu().numpy()
-        
-        scale = al_var.add(ep_var).sqrt()
-        loc = loc.mean(axis=0)
-        pred["preds"] = loc.cpu().numpy()
+        pred["true"] = true.cpu().numpy()
+        pred["preds"] = preds.cpu().numpy()
+        #pred["preds"] = preds.mean(axis=0).cpu().numpy()
+        #pred["stds"] = preds.std(axis=0).cpu().numpy()
         pred["stds"] = scale.cpu().numpy()
-        pred["true"] = batch[11].cpu().numpy()
+        pred["true_rescale"] = true_rescale.cpu().numpy()
+        #pred["preds_rescale"] = preds_rescale.mean(axis=0).cpu().numpy()
+        pred["preds_rescale"] = preds_rescale.cpu().numpy()
+        pred["stds_rescale"] = scale.cpu().numpy()
+        pred["n_atoms"] = batch[14].cpu().numpy()
+        pred["E_shift"] = shift 
+        pred["E_scaling"] = scaling
+
+
         return pred
 
     def configure_optimizers(self):
@@ -307,13 +342,15 @@ class NN(L.LightningModule):
         grp_N_atom = batch[14]
         
         pred = dict()
-        
-        #true = grp_energy/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        true = grp_energy
+        true_rescale = grp_energy/self.net.e_scaling + self.net.e_shift*grp_N_atom
         list_E_ann = self.net.forward(grp_descrp, logic_reduce)
-        #preds = list_E_ann/self.net.e_scaling + self.net.e_shift*grp_N_atom
-
-        pred["true"] = grp_energy.cpu().numpy()
+        preds = list_E_ann/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        print('Shift: {}, Scale: {}'.format(self.net.e_shift,self.net.e_scaling*grp_N_atom ))
+        pred["true"] = true.cpu().numpy()
+        pred["true_rescale"] = true_rescale.cpu().numpy()
         pred["preds"] = list_E_ann.cpu().numpy()
+        pred["preds_rescale"] = preds.cpu().numpy()
         pred["n_atoms"] = batch[14].cpu().numpy()
         return pred
     
@@ -325,3 +362,5 @@ def get_rmse_atom(list_E_ann, grp_energy, grp_N_atom):
     mse_atom = (list_E_ann - grp_energy) ** 2 / grp_N_atom
     rmse_atom = torch.sqrt(mse_atom)
     return torch.mean(rmse_atom)*1000
+
+

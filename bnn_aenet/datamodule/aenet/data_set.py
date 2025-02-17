@@ -42,9 +42,9 @@ class StructureDataset(object):
 	def normalize_E(self, E_scaling, E_shift):
 
 		for struc in self.list_struc:
-			struc.energy = (struc.energy - struc.N_atom*E_shift)*E_scaling
-        
+			struc.energy = (struc.energy - struc.N_atom*E_shift)*E_scaling					
 
+        
 	def normalize_F(self, E_scaling, E_shift):
 
 		with torch.no_grad():

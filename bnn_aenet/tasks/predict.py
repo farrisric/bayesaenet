@@ -97,9 +97,10 @@ def predict(cfg: DictConfig):
             predictions = predictions.explode(
                 predictions.columns.tolist()
             ).reset_index(drop=True)
+            predictions.to_csv(f'{cfg.paths.output_dir}/{filename}.csv')
             log.info(f"Saving predicions: {cfg.paths.output_dir}")
-            results = ResultSaver(f"{cfg.paths.output_dir}", f"{filename}") 
-            results.save(predictions)
+            #results = ResultSaver(f"{cfg.paths.output_dir}", f"{filename}") 
+            #results.save(predictions)
 
 
 @hydra.main(version_base=None, config_path="../configs", config_name="predict")

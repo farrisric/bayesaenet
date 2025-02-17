@@ -1,13 +1,11 @@
 #!/bin/bash
-#$ -N train_lrt_20perc_TiO
+#$ -N newnewnorm_s5_train_lrt_80perc_TiO
 #$ -pe smp* 1
-#$ -q iqtc12.q
+#$ -q iqtc09.q
 #$ -S /bin/bash
 #$ -cwd
 #$ -o train_lrt.out
 #$ -e train_lrt.err
-#$ -m e
-#$ -M farrisric@outlook.com
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
@@ -21,26 +19,26 @@ fi
 fi
 unset __conda_setup
 export CUDA_VISIBLE_DEVICES=`cat $TMPDIR/.gpus`
-conda activate bnn
-export PYTHONPATH="${PYTHONPATH}:/home/g15farris/bin/bayesaenet/bnn_aenet"
+conda activate bayesian
+export PYTHONPATH="${PYTHONPATH}:/home/g15telari/TiO/bayesaenet/bnn_aenet"
 export OMP_NUM_THREADS=1
-cd /home/g15farris/bin/bayesaenet
+cd /home/g15telari/TiO/bayesaenet
 python bnn_aenet/tasks/train.py \
     trainer.min_epochs=20000 \
     trainer.min_epochs=50000 \
     experiment=bnn_lrt \
-    seed=15 \
+    seed=249152917 \
     trainer.deterministic=False \
-    task_name=TiO_train_lrt_80 \
+    task_name=TiO_train_lrt_80_newnewnorm_sigmaprior5 \
     datamodule=TiO \
     datamodule.test_split=0.1 \
     datamodule.valid_split=0.1 \
-    datamodule.batch_size=32 \
-    model.lr=0.0009731621477063434 \
+    datamodule.batch_size=64 \
+    model.lr=0.0008779137387293351 \
     model.pretrain_epochs=5 \
     model.mc_samples_train=1 \
     model.mc_samples_eval=20 \
     model.prior_loc=0 \
-    model.prior_scale=0.11314053370703914 \
-    model.q_scale=0.00026256928685157666 \
-    model.obs_scale=0.9731611260603764 
+    model.prior_scale=5.00 \
+    model.q_scale=0.0027213223793395823 \
+    model.obs_scale=0.9239752071949993

@@ -1,0 +1,14 @@
+- trainer.min_epochs=20000
+- trainer.min_epochs=50000
+- experiment=bnn_lrt
+- seed=38136957
+- trainer.deterministic=False
+- task_name=TiO_train_lrt_80_256batch
+- datamodule=TiO
+- datamodule.test_split=0.1
+- datamodule.valid_split=0.1
+- datamodule.batch_size=256
+- model.lr=0.0004892606819863511
+- model.mc_samples_train=1
+- model.prior_scale=0.06753350752446152
+- model.q_scale=0.0005855051866323676

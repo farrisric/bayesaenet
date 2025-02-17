@@ -38,26 +38,31 @@ def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
         "pretrain_epochs", [0]
     )
     log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs")
+    
     cfg.model.lr = trial.suggest_float(
         "lr", 1e-5, 1e-3, log=True
     )
     log.info(f"{cfg.model.lr}, lr")
+    
     cfg.model.mc_samples_train = trial.suggest_categorical(
-        "mc_samples_train", [1, 2]
+        "mc_samples_train", [1,2]
     )
     log.info(f"{cfg.model.mc_samples_train} mc_samples_train")
+    
     cfg.model.prior_scale = trial.suggest_float(
-        "prior_scale", 1e-2, 0.5, log=True
+        "prior_scale", 0.001, 1, log=True
     )
     log.info(f"{cfg.model.prior_scale} prior_scale")
+    
     cfg.model.q_scale = trial.suggest_float(
         "q_scale", 1e-4, 1e-2, log=True
         )
     log.info(f"{cfg.model.q_scale} q_scale")
-    # cfg.model.obs_scale = trial.suggest_float(
-    #     "obs_scale", 0.1, 2, log=True
-    #     )
-    # log.info(f"{cfg.model.obs_scale} obs_scale")
+    
+    cfg.model.obs_scale = trial.suggest_float(
+         "obs_scale", 0.1, 2, log=True
+         )
+    log.info(f"{cfg.model.obs_scale} obs_scale")
     return objective(trial, cfg, output_dir)
 
 
@@ -70,7 +75,7 @@ def main(cfg: DictConfig) -> Optional[float]:
     log.info(f"Results will be stored in sqlite:///{path.as_posix()}/{cfg.tags[0]}/{cfg.hpsearch.study.study_name}.db")
     study: Study = hydra.utils.instantiate(
         cfg.hpsearch.study,
-        storage=f"sqlite:///{path.as_posix()}/{cfg.tags[0]}/{cfg.hpsearch.study.study_name}.db",
+        storage=f"sqlite:///{path.as_posix()}/{cfg.tags[0]}/{cfg.hpsearch.study.study_name}_free.db",
     )
     log.info(f"Instantiating objective <{cfg.hpsearch.objective._target_}>")
     objective = hydra.utils.instantiate(cfg.hpsearch.objective, _partial_=True)

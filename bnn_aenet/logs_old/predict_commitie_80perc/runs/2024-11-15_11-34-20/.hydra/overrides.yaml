@@ -1,5 +1,0 @@
-- task_name=predict_commitie_80perc
-- prediction=PdO
-- ckpt_path=all
-- +method=NN
-- runs_dir=bnn_aenet/logs/train_nn_commitie_80perc

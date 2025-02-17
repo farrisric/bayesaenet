@@ -1,13 +1,11 @@
 #!/bin/bash
 #$ -N pred_lrt_80perc
 #$ -pe smp* 1
-#$ -q iqtc12.q
+#$ -q iqtc09.q
 #$ -S /bin/bash
 #$ -cwd
 #$ -o out
 #$ -e err
-#$ -m e
-#$ -M farrisric@outlook.com
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
@@ -20,8 +18,12 @@ export PATH="/aplic/anaconda/2020.02/bin:$PATH"
 fi
 fi
 unset __conda_setup
-conda activate bnn
-export PYTHONPATH="${PYTHONPATH}:/home/g15farris/bin/bayesaenet/bnn_aenet"
+conda activate bayesian
+export PYTHONPATH="${PYTHONPATH}:/home/g15telari/TiO/bayesaenet/bnn_aenet"
 export OMP_NUM_THREADS=1
-cd /home/g15farris/bin/bayesaenet
-python bnn_aenet/tasks/predict.py task_name=predict_lrt_80perc prediction=TiO ckpt_path=all +method=LRT runs_dir=bnn_aenet/logs/TiO_train_lrt_80 
+export HYDRA_FULL_ERROR=1
+cd /home/g15telari/TiO/bayesaenet
+#python bnn_aenet/tasks/predict.py task_name=TiO_pred_lrt_80_sigmaprior1 prediction=TiO ckpt_path=all +method=LRT runs_dir=bnn_aenet/logs/TiO_train_lrt_80
+python bnn_aenet/tasks/predict.py task_name=final_TiO_pred_lrt_80_sigmaoptuna prediction=TiO ckpt_path=all +method=LRT runs_dir=bnn_aenet/logs/final_TiO_train_lrt_80_sigmaoptuna
+#python bnn_aenet/tasks/predict.py task_name=final_TiO_pred_lrt_80_sigmaprior1 prediction=TiO ckpt_path=all +method=LRT runs_dir=bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior1
+#python bnn_aenet/tasks/predict.py task_name=final_TiO_pred_lrt_80_sigmaprior10 prediction=TiO ckpt_path=all +method=LRT runs_dir=bnn_aenet/logs/final_TiO_train_lrt_80_sigmaprior10
