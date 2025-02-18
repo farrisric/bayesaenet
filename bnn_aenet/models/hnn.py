@@ -43,7 +43,7 @@ class HNN(pl.LightningModule):
         grp_descrp = batch[10]
         grp_energy = batch[11]
         logic_reduce = batch[12]
-        grp_N_atom = batch[14]
+        # grp_N_atom = batch[14]
         output = self.forward(grp_descrp, logic_reduce)
         loc, scale = output.chunk(2, dim=-1) 
 
@@ -158,5 +158,5 @@ class HNN(pl.LightningModule):
         return pred
 
     def configure_optimizers(self):
-        # return self.hparams.optimizer(params=self.parameters())
-        pass
+        return self.hparams.optimizer(params=self.parameters())
+

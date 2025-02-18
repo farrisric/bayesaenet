@@ -1,0 +1,41 @@
+[[36m2025-02-18 10:34:46,743[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 10:34:46,744[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 10:34:58,047[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.hnn.HNN>[0m
+[[36m2025-02-18 10:36:20,434[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 10:36:20,448[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 10:36:20,464[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.EarlyStopping>[0m
+[[36m2025-02-18 10:36:20,466[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 10:36:20,467[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 10:36:20,468[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 10:36:20,468[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 10:36:20,822[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 10:36:22,252[0m][[34m__main__[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 10:36:31,435[0m][[34m__main__[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       

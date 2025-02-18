@@ -7,6 +7,7 @@ defaults:
   - /model@FO: bnn_fo
   - /model@RAD: bnn_rad
   - /model@NN: nn
+  - /model@HNN: hnn
   
 dataset: TiO
 runs_dir: ${paths.results_dir}/${dataset}/runs

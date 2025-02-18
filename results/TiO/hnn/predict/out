@@ -1,0 +1,15 @@
+[[36m2025-02-18 11:32:07,644[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/TiO_train_hnn_80perc
+[[36m2025-02-18 11:43:13,149[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/TiO_train_hnn_80perc
+[[36m2025-02-18 11:43:19,275[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-02-18 11:43:19,277[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-02-18 11:43:29,464[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.hnn.HNN>[0m

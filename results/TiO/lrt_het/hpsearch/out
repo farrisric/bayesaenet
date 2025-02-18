@@ -10374,3 +10374,730 @@ Epoch 19/19 ━━━━━━━━━━━━━━━━ 12/12 0:00:00 • 0
 [[36m2025-01-22 12:09:30,986[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2025-01-22 12:09:30,988[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-01-22_11-27-26/059[0m
 [[36m2025-01-22 12:09:31,078[0m][[34m__main__[0m][[32mINFO[0m] - Number of finished trials: 60[0m
+{'_target_': 'lightning.pytorch.trainer.Trainer', 'default_root_dir': '${paths.output_dir}', 'min_epochs': 20000, 'max_epochs': 20, 'accelerator': 'cpu', 'devices': 1, 'check_val_every_n_epoch': 1, 'deterministic': False}
+[[36m2025-02-18 11:05:25,049[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating study <optuna.create_study>[0m
+[[36m2025-02-18 11:05:25,051[0m][[34m__main__[0m][[32mINFO[0m] - Results will be stored in sqlite:////home/g15farris/bin/bayesaenet/bnn_aenet/results/TiO/bnn_lrt.db[0m
+[[36m2025-02-18 11:05:44,421[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating objective <bnn_aenet.tasks.hpsearch.objective_bnn>[0m
+[[36m2025-02-18 11:05:44,898[0m][[34m__main__[0m][[32mINFO[0m] - Starting hyperparameter search ...[0m
+[[36m2025-02-18 11:05:45,337[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:05:45,414[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0003176853554973664, lr[0m
+[[36m2025-02-18 11:05:45,470[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
+[[36m2025-02-18 11:05:45,492[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.04378425470850225 prior_scale[0m
+[[36m2025-02-18 11:05:45,697[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0003986964463968848 q_scale[0m
+[[36m2025-02-18 11:05:45,836[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 32 batch_size[0m
+[[36m2025-02-18 11:05:45,836[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 060 __________________[0m
+[[36m2025-02-18 11:05:45,837[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:05:45,837[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:05:56,361[0m][[34mutils.utils[0m][[31mERROR[0m] - [0m
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/utils/utils.py", line 39, in wrap
+    metric_dict, object_dict = task_func(cfg=cfg, trial=trial)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/train.py", line 48, in train
+    log.info(f"Instantiating model <{cfg.model._target_}>")
+                                     ^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key '_target_' is not in struct
+    full_key: model._target_
+    object_type=dict
+{'_target_': 'lightning.pytorch.trainer.Trainer', 'default_root_dir': '${paths.output_dir}', 'min_epochs': 20000, 'max_epochs': 20, 'accelerator': 'cpu', 'devices': 1, 'check_val_every_n_epoch': 1, 'deterministic': False}
+[[36m2025-02-18 11:08:09,867[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating study <optuna.create_study>[0m
+[[36m2025-02-18 11:08:09,869[0m][[34m__main__[0m][[32mINFO[0m] - Results will be stored in sqlite:////home/g15farris/bin/bayesaenet/bnn_aenet/results/TiO/bnn_lrt.db[0m
+[[36m2025-02-18 11:08:11,623[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating objective <bnn_aenet.tasks.hpsearch.objective_bnn>[0m
+[[36m2025-02-18 11:08:11,629[0m][[34m__main__[0m][[32mINFO[0m] - Starting hyperparameter search ...[0m
+[[36m2025-02-18 11:08:11,781[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:08:11,892[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2.4156772025296228e-05, lr[0m
+[[36m2025-02-18 11:08:11,906[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2025-02-18 11:08:11,922[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.21592388039429916 prior_scale[0m
+[[36m2025-02-18 11:08:12,004[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0036303760732131728 q_scale[0m
+[[36m2025-02-18 11:08:12,017[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 256 batch_size[0m
+[[36m2025-02-18 11:08:12,018[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 000 __________________[0m
+[[36m2025-02-18 11:08:12,018[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:08:12,018[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:08:23,584[0m][[34mutils.utils[0m][[31mERROR[0m] - [0m
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/utils/utils.py", line 39, in wrap
+    metric_dict, object_dict = task_func(cfg=cfg, trial=trial)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/train.py", line 48, in train
+    log.info(f"Instantiating model <{cfg.model._target_}>")
+                                     ^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key '_target_' is not in struct
+    full_key: model._target_
+    object_type=dict
+{'_target_': 'lightning.pytorch.trainer.Trainer', 'default_root_dir': '${paths.output_dir}', 'min_epochs': 20000, 'max_epochs': 20, 'accelerator': 'cpu', 'devices': 1, 'check_val_every_n_epoch': 1, 'deterministic': False}
+[[36m2025-02-18 11:26:09,950[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating study <optuna.create_study>[0m
+[[36m2025-02-18 11:26:09,980[0m][[34m__main__[0m][[32mINFO[0m] - Results will be stored in sqlite:////home/g15farris/bin/bayesaenet/bnn_aenet/results/TiO/bnn_lrt.db[0m
+[[36m2025-02-18 11:27:25,961[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating objective <bnn_aenet.tasks.hpsearch.objective_bnn>[0m
+[[36m2025-02-18 11:27:26,358[0m][[34m__main__[0m][[32mINFO[0m] - Starting hyperparameter search ...[0m
+[[36m2025-02-18 11:27:31,486[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:27:35,114[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2.4156772025296228e-05, lr[0m
+[[36m2025-02-18 11:27:36,396[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2025-02-18 11:27:38,996[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.21592388039429916 prior_scale[0m
+[[36m2025-02-18 11:27:41,173[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0036303760732131728 q_scale[0m
+[[36m2025-02-18 11:27:43,303[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 256 batch_size[0m
+[[36m2025-02-18 11:27:43,303[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 001 __________________[0m
+[[36m2025-02-18 11:27:43,304[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:27:43,304[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:28:09,570[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:31:26,208[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:31:26,242[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:31:26,439[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:31:26,440[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:31:26,441[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:31:27,632[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:31:27,632[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:31:29,906[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:31:36,250[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:31:57,256[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 19/19 ━━━━━━━━━━━━━━━━ 24/24 0:00:01 • 0:00:00 14.99it/s v_num: 0.000     
+                                                               rmse/val:        
+                                                               4162.525         
+                                                               rmse/train:      
+                                                               4259.734         
+[[36m2025-02-18 11:34:25,638[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2025-02-18 11:34:25,924[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-02-18_11-26-09/001[0m
+[[36m2025-02-18 11:34:38,940[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:34:42,484[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 5.195586024325663e-05, lr[0m
+[[36m2025-02-18 11:34:43,597[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
+[[36m2025-02-18 11:34:44,749[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.16250224524496343 prior_scale[0m
+[[36m2025-02-18 11:34:45,809[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0005501758328845987 q_scale[0m
+[[36m2025-02-18 11:34:46,695[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 512 batch_size[0m
+[[36m2025-02-18 11:34:46,695[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 002 __________________[0m
+[[36m2025-02-18 11:34:46,696[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:34:46,697[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:34:58,257[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:34:58,936[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:34:58,937[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:35:02,000[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:35:02,258[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:35:02,259[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:35:02,261[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:35:02,261[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:35:02,263[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:35:06,974[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:35:07,632[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 19/19 ━━━━━━━━━━━━━━━━━ 12/12 0:00:02 • 0:00:00 5.54it/s v_num: 0.000     
+                                                               rmse/val:        
+                                                               3729.286         
+                                                               rmse/train:      
+                                                               3815.289         
+[[36m2025-02-18 11:37:04,500[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2025-02-18 11:37:04,627[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-02-18_11-26-09/002[0m
+[[36m2025-02-18 11:37:15,647[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:37:17,591[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 5.367498945698204e-05, lr[0m
+[[36m2025-02-18 11:37:18,348[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2025-02-18 11:37:22,667[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.04232733477101895 prior_scale[0m
+[[36m2025-02-18 11:37:27,111[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0073498792462323385 q_scale[0m
+[[36m2025-02-18 11:37:27,690[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 128 batch_size[0m
+[[36m2025-02-18 11:37:27,691[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 003 __________________[0m
+[[36m2025-02-18 11:37:27,692[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:37:27,692[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:37:37,701[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:37:37,709[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:37:37,709[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:37:37,852[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:37:37,884[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:37:37,885[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:37:37,886[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:37:37,886[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:37:37,888[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:37:41,121[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:37:42,046[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 19/19 ━━━━━━━━━━━━━━━━ 49/49 0:00:02 • 0:00:00 20.82it/s v_num: 0.000     
+                                                               rmse/val:        
+                                                               2811.079         
+                                                               rmse/train:      
+                                                               2929.647         
+[[36m2025-02-18 11:39:44,669[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2025-02-18 11:39:44,708[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-02-18_11-26-09/003[0m
+[[36m2025-02-18 11:39:47,960[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:39:48,304[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0005473369642905611, lr[0m
+[[36m2025-02-18 11:39:48,575[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
+[[36m2025-02-18 11:39:49,112[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.017549127225111354 prior_scale[0m
+[[36m2025-02-18 11:39:49,160[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.002561662685923485 q_scale[0m
+[[36m2025-02-18 11:39:49,204[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 128 batch_size[0m
+[[36m2025-02-18 11:39:49,204[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 004 __________________[0m
+[[36m2025-02-18 11:39:49,205[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:39:49,205[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:39:58,911[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:39:58,942[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:39:58,943[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:39:59,043[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:39:59,056[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:39:59,057[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:39:59,059[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:39:59,060[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:39:59,062[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:39:59,683[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:40:00,119[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 19/19 ━━━━━━━━━━━━━━━━ 49/49 0:00:03 • 0:00:00 12.52it/s v_num: 0.000     
+                                                               rmse/val: 63.583 
+                                                               rmse/train:      
+                                                               48.504           
+[[36m2025-02-18 11:42:37,859[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2025-02-18 11:42:37,922[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-02-18_11-26-09/004[0m
+[[36m2025-02-18 11:42:42,502[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:42:43,234[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1.3170990774640101e-05, lr[0m
+[[36m2025-02-18 11:42:43,603[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2025-02-18 11:42:43,924[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.14015302623589543 prior_scale[0m
+[[36m2025-02-18 11:42:44,198[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.001546142648648774 q_scale[0m
+[[36m2025-02-18 11:42:44,505[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 128 batch_size[0m
+[[36m2025-02-18 11:42:44,505[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 005 __________________[0m
+[[36m2025-02-18 11:42:44,506[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:42:44,506[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:42:54,659[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:42:54,667[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:42:54,667[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:42:54,713[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:42:54,713[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:42:54,714[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:42:54,715[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:42:54,715[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:42:54,716[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:42:55,865[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:42:56,478[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 19/19 ━━━━━━━━━━━━━━━━ 49/49 0:00:02 • 0:00:00 19.07it/s v_num: 0.000     
+                                                               rmse/val:        
+                                                               3965.830         
+                                                               rmse/train:      
+                                                               4056.939         
+[[36m2025-02-18 11:44:23,924[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2025-02-18 11:44:23,927[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-02-18_11-26-09/005[0m
+[[36m2025-02-18 11:44:26,954[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:44:27,543[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1.674127903856e-05, lr[0m
+[[36m2025-02-18 11:44:27,836[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2025-02-18 11:44:28,197[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.01026814371296241 prior_scale[0m
+[[36m2025-02-18 11:44:28,562[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0017174472922154307 q_scale[0m
+[[36m2025-02-18 11:44:28,840[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 128 batch_size[0m
+[[36m2025-02-18 11:44:28,840[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 006 __________________[0m
+[[36m2025-02-18 11:44:28,841[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:44:28,842[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:44:39,384[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:44:39,413[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:44:39,414[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:44:39,430[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:44:39,431[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:44:39,432[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:44:39,433[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:44:39,433[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:44:39,434[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:44:40,223[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:44:40,383[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 19/19 ━━━━━━━━━━━━━━━━ 49/49 0:00:03 • 0:00:00 16.25it/s v_num: 0.000     
+                                                               rmse/val:        
+                                                               3993.060         
+                                                               rmse/train:      
+                                                               4084.651         
+[[36m2025-02-18 11:46:04,501[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2025-02-18 11:46:04,538[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-02-18_11-26-09/006[0m
+[[36m2025-02-18 11:46:07,391[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:46:08,359[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 3.71964865643354e-05, lr[0m
+[[36m2025-02-18 11:46:08,848[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2025-02-18 11:46:09,271[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.021500386108909676 prior_scale[0m
+[[36m2025-02-18 11:46:09,640[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0005816140699158816 q_scale[0m
+[[36m2025-02-18 11:46:10,044[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 128 batch_size[0m
+[[36m2025-02-18 11:46:10,044[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 007 __________________[0m
+[[36m2025-02-18 11:46:10,045[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:46:10,045[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:46:20,471[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:46:20,496[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:46:20,497[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:46:21,747[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:46:21,748[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:46:21,749[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:46:21,749[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:46:21,750[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:46:21,751[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:46:23,434[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:46:23,785[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 19/19 ━━━━━━━━━━━━━━━━ 49/49 0:00:03 • 0:00:00 15.99it/s v_num: 0.000     
+                                                               rmse/val:        
+                                                               3531.509         
+                                                               rmse/train:      
+                                                               3629.905         
+[[36m2025-02-18 11:47:42,782[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2025-02-18 11:47:42,785[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-02-18_11-26-09/007[0m
+[[36m2025-02-18 11:47:44,020[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:47:44,548[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.00029994809793642315, lr[0m
+[[36m2025-02-18 11:47:44,640[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2025-02-18 11:47:45,401[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.015205659078436342 prior_scale[0m
+[[36m2025-02-18 11:47:46,030[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0002873671566774025 q_scale[0m
+[[36m2025-02-18 11:47:46,182[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 32 batch_size[0m
+[[36m2025-02-18 11:47:46,182[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 008 __________________[0m
+[[36m2025-02-18 11:47:46,183[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:47:46,183[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:47:55,964[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:47:55,977[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:47:55,978[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:47:55,984[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:47:55,984[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:47:55,985[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:47:55,986[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:47:55,986[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:47:55,987[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:47:56,325[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:47:57,916[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 19/19 ━━━━━━━━━━━━━━━━ 195/195 0:00:07 •       25.49it/s v_num: 0.000     
+                                     0:00:00                   rmse/val: 54.443 
+                                                               rmse/train:      
+                                                               44.870           
+[[36m2025-02-18 11:51:27,678[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2025-02-18 11:51:27,682[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-02-18_11-26-09/008[0m
+[[36m2025-02-18 11:51:28,503[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:51:28,803[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 7.478015213333154e-05, lr[0m
+[[36m2025-02-18 11:51:28,925[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
+[[36m2025-02-18 11:51:29,060[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.1156399334005538 prior_scale[0m
+[[36m2025-02-18 11:51:29,165[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.002582231235363856 q_scale[0m
+[[36m2025-02-18 11:51:29,219[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 128 batch_size[0m
+[[36m2025-02-18 11:51:29,219[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 009 __________________[0m
+[[36m2025-02-18 11:51:29,220[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:51:29,220[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:51:39,879[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:51:40,001[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:51:40,002[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:51:40,169[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:51:40,170[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:51:40,171[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:51:40,172[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:51:40,172[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:51:40,173[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:51:41,374[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:51:41,434[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 19/19 ━━━━━━━━━━━━━━━━ 49/49 0:00:03 • 0:00:00 13.97it/s v_num: 0.000     
+                                                               rmse/val:        
+                                                               1425.444         
+                                                               rmse/train:      
+                                                               1577.783         
+[[36m2025-02-18 11:53:40,405[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2025-02-18 11:53:40,408[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-02-18_11-26-09/009[0m
+[[36m2025-02-18 11:53:40,946[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:53:41,011[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2.01904291186572e-05, lr[0m
+[[36m2025-02-18 11:53:41,059[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 1 mc_samples_train[0m
+[[36m2025-02-18 11:53:41,094[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.41347469058863023 prior_scale[0m
+[[36m2025-02-18 11:53:41,136[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0009135206248796449 q_scale[0m
+[[36m2025-02-18 11:53:41,189[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 128 batch_size[0m
+[[36m2025-02-18 11:53:41,189[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 010 __________________[0m
+[[36m2025-02-18 11:53:41,190[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:53:41,190[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:53:50,831[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:53:50,841[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:53:50,841[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:53:50,863[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:53:50,864[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:53:50,864[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:53:50,865[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:53:50,865[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:53:50,866[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:53:50,953[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:53:51,000[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       
+Epoch 19/19 ━━━━━━━━━━━━━━━━ 49/49 0:00:02 • 0:00:00 21.34it/s v_num: 0.000     
+                                                               rmse/val:        
+                                                               2627.015         
+                                                               rmse/train:      
+                                                               2709.120         
+[[36m2025-02-18 11:54:55,279[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
+[[36m2025-02-18 11:54:55,291[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_lrt/runs/2025-02-18_11-26-09/010[0m
+[[36m2025-02-18 11:54:55,745[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-02-18 11:54:55,941[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0002686321798731397, lr[0m
+[[36m2025-02-18 11:54:55,999[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 2 mc_samples_train[0m
+[[36m2025-02-18 11:54:56,026[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.03921865256229128 prior_scale[0m
+[[36m2025-02-18 11:54:56,117[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.00011667005469831107 q_scale[0m
+[[36m2025-02-18 11:54:56,148[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 32 batch_size[0m
+[[36m2025-02-18 11:54:56,148[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - _________________ Starting trial 011 __________________[0m
+[[36m2025-02-18 11:54:56,149[0m][[34mutils.utils[0m][[33mWARNING[0m] - Extras config not found! <cfg.extras=null>[0m
+[[36m2025-02-18 11:54:56,149[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Train indices: 6253 [5757, 588, 2127, 6217, 1585]
+Valid indices: 781 [5719, 2261, 1413, 2713, 5799]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+0.06565926932648217 6.6588702845000975
+[[36m2025-02-18 11:55:05,727[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+[[36m2025-02-18 11:55:05,738[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating callbacks...[0m
+[[36m2025-02-18 11:55:05,738[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.ModelCheckpoint>[0m
+[[36m2025-02-18 11:55:05,741[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichProgressBar>[0m
+[[36m2025-02-18 11:55:05,741[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <lightning.pytorch.callbacks.RichModelSummary>[0m
+[[36m2025-02-18 11:55:05,742[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating callback <optuna.integration.PyTorchLightningPruningCallback>[0m
+[[36m2025-02-18 11:55:05,742[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating loggers...[0m
+[[36m2025-02-18 11:55:05,743[0m][[34mutils.utils[0m][[32mINFO[0m] - Instantiating logger <lightning.pytorch.loggers.tensorboard.TensorBoardLogger>[0m
+[[36m2025-02-18 11:55:05,743[0m][[34mtrain[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+[[36m2025-02-18 11:55:06,072[0m][[34mtrain[0m][[32mINFO[0m] - Logging hyperparameters![0m
+[[36m2025-02-18 11:55:06,184[0m][[34mtrain[0m][[32mINFO[0m] - Starting training![0m
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┓
+┃    ┃ Name                              ┃ Type       ┃ Params ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0  │ net                               │ NetAtom    │  2.7 K │
+│ 1  │ net.networks                      │ ModuleList │  2.7 K │
+│ 2  │ net.networks.0                    │ Sequential │  1.3 K │
+│ 3  │ net.networks.0.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 4  │ net.networks.0.Activation_Layer_1 │ Tanh       │      0 │
+│ 5  │ net.networks.0.Linear_Layer_2     │ Linear     │    240 │
+│ 6  │ net.networks.0.Output_Layer       │ Linear     │     32 │
+│ 7  │ net.networks.1                    │ Sequential │  1.3 K │
+│ 8  │ net.networks.1.Linear_Layer_1     │ Linear     │  1.1 K │
+│ 9  │ net.networks.1.Linear_Layer_2     │ Linear     │    240 │
+│ 10 │ net.networks.1.Output_Layer       │ Linear     │     32 │
+└────┴───────────────────────────────────┴────────────┴────────┘
+Trainable params: 2.7 K                                                         
+Non-trainable params: 0                                                         
+Total params: 2.7 K                                                             
+Total estimated model params size (MB): 0                                       

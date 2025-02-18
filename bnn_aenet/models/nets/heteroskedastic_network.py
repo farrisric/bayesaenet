@@ -80,21 +80,18 @@ class NetAtom(nn.Module):
         means, log_vars = [], []
         for i in range(len(self.species)):
             output = self.networks[i](descriptors[i].float())
-            means.append(output[:, 0].unsqueeze(-1))  # Shape: [num_atoms, 1]
-            log_vars.append(output[:, 1].unsqueeze(-1))  # Shape: [num_atoms, 1]
-
-        # Gather means and log variances into structure-level predictions
+            means.append(output[:, 0].unsqueeze(-1))
+            log_vars.append(torch.nn.functional.softplus(output[:, 1].unsqueeze(-1)))
+        
         structure_means = torch.zeros(len(logic_reduce[0]), device=self.device)
         structure_log_vars = torch.zeros(len(logic_reduce[0]), device=self.device)
         for i in range(len(self.species)):
-            # Ensure logic_reduce[i] has shape [num_structures, num_atoms]
             if len(logic_reduce[i].shape) == 1:
-                logic_reduce[i] = logic_reduce[i].unsqueeze(0)  # Add batch dimension if missing
+                logic_reduce[i] = logic_reduce[i].unsqueeze(0)
 
-            # Perform einsum operation
             structure_means += torch.einsum("ij,ki->k", means[i], logic_reduce[i])
             structure_log_vars += torch.einsum("ij,ki->k", log_vars[i], logic_reduce[i])
-        structure_log_vars = torch.nn.functional.softplus(structure_log_vars)
+        # structure_log_vars = torch.nn.functional.softplus(structure_log_vars)
         return torch.cat([structure_means, structure_log_vars], dim=-1)
 
     def get_loss_heteroskedastic(self, descriptors, energies, logic_reduce):
