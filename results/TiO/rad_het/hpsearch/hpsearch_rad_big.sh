@@ -30,5 +30,3 @@ python bnn_aenet/tasks/hpsearch.py \
     hpsearch=bnn_rad \
     task_name=TiO_hps_rad \
     tags=["TiO"] \
-    datamodule.test_split=0.1\
-    datamodule.valid_split=0.1 \

@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N commitie_80perc
+#$ -N train_hnn
 #$ -pe smp* 1
 #$ -q iqtc09.q
 #$ -S /bin/bash
@@ -24,4 +24,4 @@ conda activate bnn
 export PYTHONPATH="${PYTHONPATH}:/home/g15farris/bin/bayesaenet/bnn_aenet"
 export OMP_NUM_THREADS=1
 cd /home/g15farris/bin/bayesaenet
-python bnn_aenet/tasks/train.py task_name=TiO_train_hnn_80perc experiment=hnn datamodule=TiO model.optimizer.lr=0.002799265517437967 datamodule.batch_size=64
+python bnn_aenet/tasks/train.py task_name=TiO_train_hnn_80perc experiment=hnn datamodule=TiO model.optimizer.lr=0.0013422359776024458 datamodule.batch_size=32

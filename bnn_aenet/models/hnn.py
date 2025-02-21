@@ -27,7 +27,7 @@ class HNN(pl.LightningModule):
         self.net = net
         self.net.apply(weights_init)
         self.net.dropout = p_dropout
-        self.net.mc_samples = mc_samples
+        self.net.mc_samples = int(mc_samples)
         self.validation_step_outputs = []
 
     def forward(self, grp_descrp, logic_reduce):
@@ -67,7 +67,7 @@ class HNN(pl.LightningModule):
         losses = []
         locs = []
         scales = []
-        for _ in range(mc_samples):
+        for _ in range(int(mc_samples)):
             if phase == "predict":
                 loc, scale = self.step(batch, phase)
             else:
@@ -153,8 +153,9 @@ class HNN(pl.LightningModule):
             pred["al_vars"] = al_var.cpu().numpy()
         else:
             loc, scale = self.step(batch, phase)
-        pred["preds"] = loc.cpu().numpy()
-        pred["stds"] = scale.cpu().numpy()
+        pred["preds"] = loc.cpu().numpy().astype(float)
+        pred["stds"] = scale.cpu().numpy().astype(float)
+        pred["n_atoms"] = batch[14].cpu().numpy().astype(float)
         return pred
 
     def configure_optimizers(self):

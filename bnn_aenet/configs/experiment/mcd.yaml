@@ -1,0 +1,32 @@
+# @package _global_
+
+defaults:
+#  - override /datamodule: datamodule
+  - override /model: mcd
+  - override /callbacks: default
+  - override /trainer: default
+
+tags: ["TiO", "net", "mcd"]
+
+seed: 12345
+
+trainer:
+  min_epochs: 20000
+  max_epochs: 50000
+
+model:
+  net:
+      dropout: ${model.p_dropout}
+  optimizer:
+    lr: 0.001574 
+    weight_decay: 0.001
+  p_dropout: 0.1
+  mc_samples: 10
+
+callbacks:
+  model_checkpoint:
+    monitor: nll/val
+
+  early_stopping:
+    monitor: nll/val
+    patience: 50

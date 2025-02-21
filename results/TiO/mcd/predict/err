@@ -1,0 +1,126 @@
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_mcd_80perc/runs/2025-02-19_21-53-26/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Error executing job with overrides: ['task_name=TiO_pred_mcd_80perc', 'prediction=TiO', 'ckpt_path=all', '+method=MCD', 'runs_dir=bnn_aenet/logs/TiO_train_mcd_80perc']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 93, in predict
+    predictions = trainer.predict(
+                  ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 864, in predict
+    return call._call_and_handle_interrupt(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 44, in _call_and_handle_interrupt
+    return trainer_fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 903, in _predict_impl
+    results = self._run(model, ckpt_path=ckpt_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 987, in _run
+    results = self._run_stage()
+              ^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1028, in _run_stage
+    return self.predict_loop.run()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/utilities.py", line 182, in _decorator
+    return loop_run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/prediction_loop.py", line 124, in run
+    self._predict_step(batch, batch_idx, dataloader_idx, dataloader_iter)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/prediction_loop.py", line 253, in _predict_step
+    predictions = call._call_strategy_hook(trainer, "predict_step", *step_args)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 309, in _call_strategy_hook
+    output = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 438, in predict_step
+    return self.lightning_module.predict_step(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/models/hnn.py", line 145, in predict_step
+    locs, scales = self.mc_sampling(
+                   ^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/models/hnn.py", line 70, in mc_sampling
+    for _ in range(mc_samples):
+             ^^^^^^^^^^^^^^^^^
+TypeError: 'float' object cannot be interpreted as an integer
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_mcd_80perc/runs/2025-02-19_21-55-55/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_mcd_80perc/runs/2025-02-20_10-55-20/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_mcd_80perc/runs/2025-02-20_11-10-17/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_mcd_80perc/runs/2025-02-20_12-06-36/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-20_11-23-16/checkpoints/epoch_475-step_46648.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-20_11-23-16/checkpoints/epoch_475-step_46648.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_mcd_80perc/runs/2025-02-20_15-30-21/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-20_11-23-16/checkpoints/epoch_862-step_84574.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-20_11-23-16/checkpoints/epoch_862-step_84574.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_mcd_80perc/runs/2025-02-21_11-37-44/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-19_17-51-59/checkpoints/epoch_2551-step_250096.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-20_11-23-16/checkpoints/epoch_862-step_84574.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_mcd_80perc/runs/2025-02-20_11-23-16/checkpoints/epoch_862-step_84574.ckpt

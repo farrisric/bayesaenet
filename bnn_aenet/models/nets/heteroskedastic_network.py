@@ -10,7 +10,7 @@ class NetAtom(nn.Module):
     """
 
     def __init__(self, input_size, hidden_size, species, active_names, alpha, device,
-                 e_scaling, e_shift):
+                 e_scaling, e_shift, dropout=0):
         """
         Initialize the network.
 
@@ -33,6 +33,7 @@ class NetAtom(nn.Module):
         self.device = device
         self.e_scaling = e_scaling
         self.e_shift = e_shift
+        self.dropout = dropout
 
         # Define activation functions
         self.activations = {
@@ -42,6 +43,7 @@ class NetAtom(nn.Module):
         }
 
         # Build the network for each species
+        
         self.networks = nn.ModuleList([
             self._build_network(input_size, hidden_size, active_names[i])
             for i, (input_size, hidden_size) in enumerate(zip(input_size, hidden_size))
@@ -62,6 +64,9 @@ class NetAtom(nn.Module):
         layers = OrderedDict()
         for i, (n_in, n_out) in enumerate(zip([input_size] + hidden_size[:-1], hidden_size)):
             layers[f"Linear_Layer_{i+1}"] = nn.Linear(n_in, n_out)
+            if self.dropout > 0:
+                layers[f"Dropout_Layer_{i+1}"] = nn.Dropout(p=self.dropout)
+                print(f"Dropout layer {i+1} added with p={self.dropout}")
             layers[f"Activation_Layer_{i+1}"] = self.activations[active_names[i]]
         layers["Output_Layer"] = nn.Linear(hidden_size[-1], 2)  # Output mean and log variance
         return nn.Sequential(layers)

@@ -15,6 +15,8 @@ from bnn_aenet.results.metrics import (rms_calibration_error,
 import torch
 
 
+e_scaling, e_shift = 0.06565926932648217, 6.6588702845000975
+
 def get_metrics(y_true, y_pred, std):
     mse = ((y_true - y_pred) ** 2).mean().item()
     rmse = torch.sqrt(((y_true - y_pred) ** 2).mean()).item()
@@ -26,23 +28,23 @@ def get_metrics(y_true, y_pred, std):
     return {'mse': mse, 'rmse': rmse, 'rmsce': rmsce, 'sharp': sharp, 'ece': ece, 'nll': nll}
 
 
-def process_deepens_results(results):
-    for train_percentage_path in sorted(glob.glob('/home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_deepens_*perc/')):
+def process_de_results(results):
+    for train_percentage_path in sorted(glob.glob('/home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_de_*perc/')):
         parquets = glob.glob(f'{train_percentage_path}/**/*parquet', recursive=True)
         y_preds = []
-
         for parquet in parquets:
-            rs = pd.read_parquet(parquet)
-            y_true = torch.tensor(rs['true'], device='cpu')
-            y_pred = rs['preds'].to_list()
+            rs = pd.read_csv(parquet)
+
+            y_true = (rs['true'].to_numpy()/e_scaling + rs['n_atoms'].to_numpy()*e_shift)/rs['n_atoms'].to_numpy()
+            y_pred = (rs['preds'].to_numpy()/e_scaling + rs['n_atoms'].to_numpy()*e_shift)/rs['n_atoms'].to_numpy()
+            
             y_preds.append(y_pred)
+            
+        y_std = np.std(y_preds, axis=0)
+        y_pred = y_preds.mean(axis=0)
 
-        y_pred = torch.tensor(y_preds, device='cpu')
-        std = torch.std(y_pred, axis=0)
-        y_pred = y_pred.mean(axis=0)
-
-        train_percentage = int(train_percentage_path.split('/')[-2].split('_')[-1].replace('perc', ''))
-        results['deepens'][train_percentage] = get_metrics(y_true, y_pred, std)
+        print(y_true.shape, y_pred.shape, y_std.shape)
+        results['de'][train_percentage] = get_metrics(torch.tensor(y_true), torch.tensor(y_pred), torch.tensor(y_std))
 
 
 def process_other_results(results, bnn):
@@ -50,8 +52,11 @@ def process_other_results(results, bnn):
 
     for parquet in parquets:
         train_percentage = int(parquet.split('/')[-4].split('_')[-1].replace('perc', ''))
-        rs = pd.read_parquet(parquet)
-        y_true = torch.tensor(rs['true'], device='cpu')
+        rs = pd.read_csv(parquet)
+        try:
+            y_true = torch.tensor(rs['labels'], device='cpu')
+        except:
+            y_true = torch.tensor(rs['true'], device='cpu')
         y_pred = torch.tensor(rs['preds'], device='cpu')
         std = torch.tensor(rs['stds'], device='cpu')
         results[bnn][train_percentage] = get_metrics(y_true, y_pred, std)
@@ -80,11 +85,11 @@ def plot_results(results):
 
 
 def main():
-    results = {bnn: {} for bnn in ['deepens', 'lrt', 'fo', 'rad']}
+    results = {bnn: {} for bnn in ['de', 'mcd', 'hnn', 'lrt', 'fo', 'rad']}
 
-    process_deepens_results(results)
+    process_de_results(results)
 
-    for bnn in ['lrt', 'fo', 'rad']:
+    for bnn in ['lrt', 'fo', 'rad', 'mcd', 'hnn']:
         process_other_results(results, bnn)
 
     plot_results(results)

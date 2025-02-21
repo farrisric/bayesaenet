@@ -63,17 +63,13 @@ def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
     )
     log.info(f"{cfg.model.mc_samples_train} mc_samples_train")
     cfg.model.prior_scale = trial.suggest_float(
-        "prior_scale", 1e-2, 0.5, log=True
+        "prior_scale", 0.001, 1, log=True
     )
     log.info(f"{cfg.model.prior_scale} prior_scale")
     cfg.model.q_scale = trial.suggest_float(
-        "q_scale", 1e-4, 1e-2, log=True
+        "q_scale", 1e-4, 1, log=True
         )
     log.info(f"{cfg.model.q_scale} q_scale")
-    # cfg.model.obs_scale = trial.suggest_float(
-    #     "obs_scale", 0.1, 2, log=True
-    #     )
-    # log.info(f"{cfg.model.obs_scale} obs_scale")
     return objective(trial, cfg, output_dir)
 
 

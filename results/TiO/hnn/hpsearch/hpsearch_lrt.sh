@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N train_lrt
+#$ -N hps_hnn
 #$ -pe smp* 1
 #$ -q iqtc09.q
 #$ -S /bin/bash
@@ -30,5 +30,5 @@ python bnn_aenet/tasks/hpsearch.py \
     hpsearch=hnn \
     task_name=TiO_hps_hnn \
     tags=["TiO"] \
-    datamodule.test_split=0.8 \
+    datamodule.test_split=0.1 \
     datamodule.valid_split=0.1 \

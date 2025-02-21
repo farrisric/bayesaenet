@@ -204,7 +204,8 @@ class BNN(L.LightningModule):
         loc = loc.mean(axis=0)
         pred["preds"] = loc.cpu().numpy()
         pred["stds"] = scale.cpu().numpy()
-        pred["true"] = batch[11].cpu().numpy()
+        pred["labels"] = batch[11].cpu().numpy()
+        pred["n_atoms"] = batch[14].cpu().numpy()
         return pred
 
     def configure_optimizers(self):
