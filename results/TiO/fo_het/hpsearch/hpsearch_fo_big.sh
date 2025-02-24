@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N hpsearch_fo_big
+#$ -N hpsearch_fo
 #$ -pe smp* 1
 #$ -q iqtc09.q
 #$ -S /bin/bash
@@ -30,5 +30,3 @@ python bnn_aenet/tasks/hpsearch.py \
     hpsearch=bnn_fo \
     task_name=TiO_hps_fo \
     tags=["TiO"] \
-    datamodule.test_split=0.10 \
-    datamodule.valid_split=0.1 \

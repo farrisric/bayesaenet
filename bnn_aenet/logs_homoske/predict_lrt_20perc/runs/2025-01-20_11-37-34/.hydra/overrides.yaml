@@ -1,5 +1,0 @@
-- task_name=predict_lrt_20perc
-- prediction=TiO
-- ckpt_path=all
-- +method=LRT
-- runs_dir=bnn_aenet/logs/TiO_train_lrt_20

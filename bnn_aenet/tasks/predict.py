@@ -8,7 +8,7 @@ from lightning.pytorch import LightningDataModule, LightningModule, Trainer
 
 import pandas as pd
 from pathlib import Path
-
+import os
 
 from utils import get_pylogger
 import sys
@@ -99,7 +99,9 @@ def predict(cfg: DictConfig):
             ).reset_index(drop=True)
             log.info(f"Saving predicions: {cfg.paths.output_dir}")
             results = ResultSaver(f"{cfg.paths.output_dir}", f"{filename}") 
-            results.save(predictions)
+            predictions.to_csv(os.path.join(cfg.paths.output_dir, filename), index=False)
+            # print(predictions)
+            # results.save(predictions)
 
 
 @hydra.main(version_base=None, config_path="../configs", config_name="predict")

@@ -1,0 +1,80 @@
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_de_80perc/runs/2025-02-19_14-16-24/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/0/checkpoints/epoch_6537-step_1274910.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/0/checkpoints/epoch_6537-step_1274910.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_de_80perc/runs/2025-02-20_10-55-38/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/0/checkpoints/epoch_6537-step_1274910.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/0/checkpoints/epoch_6537-step_1274910.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/1/checkpoints/epoch_6033-step_1176630.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/1/checkpoints/epoch_6033-step_1176630.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/0/checkpoints/epoch_8954-step_1746225.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/0/checkpoints/epoch_8954-step_1746225.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/1/checkpoints/epoch_8097-step_1579110.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/1/checkpoints/epoch_8097-step_1579110.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/2/checkpoints/epoch_9505-step_1853670.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/2/checkpoints/epoch_9505-step_1853670.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/3/checkpoints/epoch_8625-step_1682070.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/3/checkpoints/epoch_8625-step_1682070.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_de_80perc/runs/2025-02-20_15-29-44/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/0/checkpoints/epoch_6537-step_1274910.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/0/checkpoints/epoch_6537-step_1274910.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/1/checkpoints/epoch_6033-step_1176630.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/1/checkpoints/epoch_6033-step_1176630.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/0/checkpoints/epoch_8954-step_1746225.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/0/checkpoints/epoch_8954-step_1746225.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/1/checkpoints/epoch_8097-step_1579110.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/1/checkpoints/epoch_8097-step_1579110.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/2/checkpoints/epoch_9505-step_1853670.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/2/checkpoints/epoch_9505-step_1853670.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/3/checkpoints/epoch_8625-step_1682070.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/3/checkpoints/epoch_8625-step_1682070.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/4/checkpoints/epoch_7497-step_1462110.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/4/checkpoints/epoch_7497-step_1462110.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/5/checkpoints/epoch_3256-step_635115.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/5/checkpoints/epoch_3256-step_635115.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_pred_de_80perc/runs/2025-02-21_11-37-44/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/0/checkpoints/epoch_6537-step_1274910.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/0/checkpoints/epoch_6537-step_1274910.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/1/checkpoints/epoch_6033-step_1176630.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_12-24-27/1/checkpoints/epoch_6033-step_1176630.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/0/checkpoints/epoch_8954-step_1746225.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/0/checkpoints/epoch_8954-step_1746225.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/1/checkpoints/epoch_8097-step_1579110.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/1/checkpoints/epoch_8097-step_1579110.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/2/checkpoints/epoch_9505-step_1853670.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/2/checkpoints/epoch_9505-step_1853670.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/3/checkpoints/epoch_8625-step_1682070.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/3/checkpoints/epoch_8625-step_1682070.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/4/checkpoints/epoch_7497-step_1462110.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/4/checkpoints/epoch_7497-step_1462110.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/5/checkpoints/epoch_9978-step_1945905.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/5/checkpoints/epoch_9978-step_1945905.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/6/checkpoints/epoch_4618-step_900705.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_de/multiruns/2025-02-19_21-40-15/6/checkpoints/epoch_4618-step_900705.ckpt

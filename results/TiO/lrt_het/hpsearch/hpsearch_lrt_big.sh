@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N train_lrt
+#$ -N hps_lrt
 #$ -pe smp* 1
 #$ -q iqtc09.q
 #$ -S /bin/bash

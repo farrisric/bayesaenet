@@ -2,472 +2,379 @@ GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_10perc/runs/2025-01-22_12-15-14/lightning_logs
-Restoring states frGPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-the checkpoint at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-22_11-23-12/checkpoints/epoch_734-step_17640.ckpt
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_40perc/runs/2025-01-22_12-15-28/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-22_12-15-28/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-22_11-23-26/checkpoints/epoch_34-step_3430.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-22_11-23-26/checkpoints/epoch_45-step_3358.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-22_11-23-26/checkpoints/epoch_34-step_3430.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-22_11-23-26/checkpoints/epoch_45-step_3358.ckpt
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_50perc/runs/2025-01-22_12-15-44/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_5perc/runs/2025-01-22_12-15-44/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-22_11-23-42/checkpoints/epoch_26-step_3294.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-22_11-23-42/checkpoints/epoch_297-step_3576.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-22_11-23-42/checkpoints/epoch_297-step_3576.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-22_11-23-42/checkpoints/epoch_26-step_3294.ckpt
- 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_70perc/runs/2025-01-22_12-15-57/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_60perc/runs/2025-01-22_12-15-57/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-22_11-23-57/checkpoints/epoch_19-step_3420.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-22_11-23-57/checkpoints/epoch_23-step_3528.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-22_11-23-57/checkpoints/epoch_23-step_3528.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-22_11-23-57/checkpoints/epoch_19-step_3420.ckpt
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_40perc/runs/2025-01-22_14-54-42/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-22_11-23-26/checkpoints/epoch_34-step_3430.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-22_11-23-26/checkpoints/epoch_34-step_3430.ckpt
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_50perc/runs/2025-01-22_14-54-42/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-22_11-23-42/checkpoints/epoch_1306-step_159454.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-22_11-23-42/checkpoints/epoch_1306-step_159454.ckpt
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_5perc/runs/2025-01-22_14-54-56/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-22_11-23-42/checkpoints/epoch_297-step_3576.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-22_11-23-42/checkpoints/epoch_297-step_3576.ckpt
-
-GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-22_14-55-21/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_10perc/runs/2025-01-22_14-55-21/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_20perc/runs/2025-01-22_14-55-21/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-22_11-23-26/checkpoints/epoch_651-step_31948.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-22_11-23-12/checkpoints/epoch_734-step_17640.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-22_11-23-26/checkpoints/epoch_45-step_3358.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-22_11-23-26/checkpoints/epoch_651-step_31948.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-22_11-23-12/checkpoints/epoch_734-step_17640.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-22_11-23-26/checkpoints/epoch_45-step_3358.ckpt
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_70perc/runs/2025-01-22_14-56-14/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-01-22_14-56-14/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-22_11-23-57/checkpoints/epoch_547-step_93708.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-22_11-24-13/checkpoints/epoch_798-step_155805.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-22_11-24-13/checkpoints/epoch_798-step_155805.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-22_11-23-57/checkpoints/epoch_547-step_93708.ckpt
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used: False
-GPU available: False, used:: 0 TPU cores
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-                                                                                                                                                                                                                                                                Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_20perc/runs/2025-01-23_11-52-27/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_40perc/runs/2025-01-23_11-52-27/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-23_11-52-27/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_60perc/runs/2025-01-23_11-52-27/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_50perc/runs/2025-01-23_11-52-27/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_5perc/runs/2025-01-23_11-52-27/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_10perc/runs/2025-01-23_11-52-27/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-23_11-29-56/checkpoints/epoch_1293-step_3882.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-23_11-29-56/checkpoints/epoch_1023-step_6144.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-23_11-30-22/checkpoints/epoch_273-step_4932.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-23_11-29-56/checkpoints/epoch_1736-step_3474.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_532-step_7995.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_565-step_6792.ckpt
-Error executing job with overrides: ['task_name=predict_lrt_5perc', 'prediction=TiO', 'ckpt_path=all', '+method=LRT', 'runs_dir=bnn_aenet/logs/TiO_train_lrt_5']
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-23_11-30-22/checkpoints/epoch_273-step_4932.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-23_11-29-56/checkpoints/epoch_1023-step_6144.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_532-step_7995.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_565-step_6792.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_732-step_6597.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_732-step_6597.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-23_11-29-56/checkpoints/epoch_1293-step_3882.ckpt
-Traceback (most recent call last):
-  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 107, in main
-    predict(cfg)
-  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 93, in predict
-    predictions = trainer.predict(
-                  ^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 864, in predict
-    return call._call_and_handle_interrupt(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 44, in _call_and_handle_interrupt
-    return trainer_fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 903, in _predict_impl
-    results = self._run(model, ckpt_path=ckpt_path)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 956, in _run
-    self._checkpoint_connector._restore_modules_and_callbacks(ckpt_path)
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/checkpoint_connector.py", line 397, in _restore_modules_and_callbacks
-    self.resume_start(checkpoint_path)
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/checkpoint_connector.py", line 79, in resume_start
-    loaded_checkpoint = self.trainer.strategy.load_checkpoint(checkpoint_path)
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 368, in load_checkpoint
-    return self.checkpoint_io.load_checkpoint(checkpoint_path)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/fabric/plugins/io/torch_io.py", line 81, in load_checkpoint
-    raise FileNotFoundError(f"Checkpoint file not found: {path}")
-FileNotFoundError: Checkpoint file not found: bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-23_11-29-56/checkpoints/epoch_1736-step_3474.ckpt
-
-Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_20perc/runs/2025-01-23_12-07-56/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-23_12-07-56/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_1372-step_12357.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-23_11-29-56/checkpoints/epoch_1815-step_10896.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_1372-step_12357.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-23_11-29-56/checkpoints/epoch_1815-step_10896.ckpt
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_40perc/runs/2025-01-23_12-08-16/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_50perc/runs/2025-01-23_12-08-16/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_992-step_14895.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_1127-step_13536.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_992-step_14895.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_1127-step_13536.ckpt
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_5perc/runs/2025-01-23_12-08-32/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_60perc/runs/2025-01-23_12-08-32/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-23_11-29-56/checkpoints/epoch_2649-step_5300.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-23_11-30-22/checkpoints/epoch_273-step_4932.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-23_11-30-22/checkpoints/epoch_273-step_4932.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-23_11-29-56/checkpoints/epoch_2649-step_5300.ckpt
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-01-23_12-09-19/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_70perc/runs/2025-01-23_12-09-19/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-23_11-30-22/checkpoints/epoch_880-step_18501.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-23_11-30-22/checkpoints/epoch_724-step_17400.ckpt
 Error executing job with overrides: ['task_name=predict_lrt_80perc', 'prediction=TiO', 'ckpt_path=all', '+method=LRT', 'runs_dir=bnn_aenet/logs/TiO_train_lrt_80']
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-23_11-30-22/checkpoints/epoch_880-step_18501.ckpt
-Traceback (most recent call last):
-  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 107, in main
-    predict(cfg)
-  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 93, in predict
-    predictions = trainer.predict(
-                  ^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 864, in predict
-    return call._call_and_handle_interrupt(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 44, in _call_and_handle_interrupt
-    return trainer_fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 903, in _predict_impl
-    results = self._run(model, ckpt_path=ckpt_path)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 956, in _run
-    self._checkpoint_connector._restore_modules_and_callbacks(ckpt_path)
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/checkpoint_connector.py", line 397, in _restore_modules_and_callbacks
-    self.resume_start(checkpoint_path)
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/checkpoint_connector.py", line 79, in resume_start
-    loaded_checkpoint = self.trainer.strategy.load_checkpoint(checkpoint_path)
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 368, in load_checkpoint
-    return self.checkpoint_io.load_checkpoint(checkpoint_path)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/fabric/plugins/io/torch_io.py", line 81, in load_checkpoint
-    raise FileNotFoundError(f"Checkpoint file not found: {path}")
-FileNotFoundError: Checkpoint file not found: bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-23_11-30-22/checkpoints/epoch_724-step_17400.ckpt
+Error in call to target 'bnn_aenet.datamodule.aenet_datamodule.AenetDataModule':
+FileNotFoundError(2, 'No such file or directory')
+full_key: datamodule
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+/sge/default/spool/g4noder18/job_scripts/3346942: line 23: conda: command not found
+  File "bnn_aenet/tasks/predict.py", line 40
+    log.info(f"Overriding hyperparameter {key} with value {value}")
+                                                                 ^
+SyntaxError: invalid syntax
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=predict_lrt_80perc', 'prediction=TiO', 'ckpt_path=all', '+method=LRT', 'runs_dir=bnn_aenet/logs/TiO_train_lrt_80']
+Error in call to target 'bnn_aenet.datamodule.aenet_datamodule.AenetDataModule':
+FileNotFoundError(2, 'No such file or directory')
+full_key: datamodule
 
 Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
 GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=predict_lrt_80perc', 'prediction=TiO', 'ckpt_path=all', '+method=LRT', 'runs_dir=bnn_aenet/logs/TiO_train_lrt_80']
+Traceback (most recent call last):
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 92, in _call_target
+    return _target_(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/datamodule/aenet_datamodule.py", line 27, in __init__
+    self.load_db()
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/datamodule/aenet_datamodule.py", line 44, in load_db
+    self.list_structures_energy, self.list_structures_forces, self.list_removed, self.max_nnb, self.tin = read_list_structures(self.tin)
+                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/datamodule/aenet/prepare_batches.py", line 15, in read_list_structures
+    list_structures_energy, list_removed, max_nnb, tin = read_train(tin)
+                                                         ^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/datamodule/aenet/read_trainset.py", line 104, in read_train
+    with open (trainfile, "r") as tf:
+         ^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/work/g15farris/database/TiO/data.train.ascii'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 75, in predict
+    datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 226, in instantiate
+    return instantiate_node(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 347, in instantiate_node
+    return _call_target(_target_, partial, args, kwargs, full_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 97, in _call_target
+    raise InstantiationException(msg) from e
+hydra.errors.InstantiationException: Error in call to target 'bnn_aenet.datamodule.aenet_datamodule.AenetDataModule':
+FileNotFoundError(2, 'No such file or directory')
+full_key: datamodule
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-23_14-59-21/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenetTPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-ath at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_2634-step_31620.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_4438-step_39951.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_2634-step_31620.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_4438-step_39951.ckpt
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_10perc/runs/2025-01-23_14-59-31/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_20perc/runs/2025-01-23_14-59-31/lightning_logs
-estoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_5486-step_82305.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-23_11-29-56/checkpoints/epoch_2649-step_5300.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_5486-step_82305.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-23_11-29-56/checkpoints/epoch_2649-step_5300.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-23_11-29-56/checkpoints/epoch_6412-step_19239.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-23_11-29-56/checkpoints/epoch_5230-step_31386.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-23_11-29-56/checkpoints/epoch_6412-step_19239.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-23_11-29-56/checkpoints/epoch_5230-step_31386.ckpt
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-01-23_15-00-07/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-23_11-30-22/checkpoints/epoch_4196-step_100728.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-23_11-30-22/checkpoints/epoch_4196-step_100728.ckpt
-s from the checkpoint at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-23_11-30-22/checkpoints/epoch_4804-step_100905.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-23_11-30-22/checkpoints/epoch_5503-step_99072.ckpt
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_60perc/runs/2025-01-24_10-23-06/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_10perc/runs/2025-01-24_10-22-58/lightning_logs
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_70perc/runs/2025-01-24_10-23-23/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-01-24_10-23-23/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-23_11-30-22/checkpoints/epoch_23635-step_567264.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-23_11-30-22/checkpoints/epoch_30575-step_642096.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-23_11-30-22/checkpoints/epoch_23635-step_567264.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-23_11-30-22/checkpoints/epoch_30575-step_642096.ckpt
-GPU available: False, used: False
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-02-19_12-24-38/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_1994-step_195510.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_1994-step_195510.ckpt
+Traceback (most recent call last):
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/config_loader_impl.py", line 390, in _apply_overrides_to_config
+    OmegaConf.update(cfg, key, value, merge=True)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/omegaconf.py", line 741, in update
+    root.__setattr__(last_key, value)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 337, in __setattr__
+    raise e
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 334, in __setattr__
+    self.__set_impl(key, value)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 318, in __set_impl
+    self._set_item_impl(key, value)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 549, in _set_item_impl
+    self._validate_set(key, value)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 180, in _validate_set
+    target = self._get_node(key) if key is not None else self
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'mc_sample_eval' is not in struct
+    full_key: datamodule.mc_sample_eval
+    object_type=dict
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 105, in run
+    cfg = self.compose_config(
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 594, in compose_config
+    cfg = self.config_loader.load_configuration(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/config_loader_impl.py", line 142, in load_configuration
+    return self._load_configuration_impl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/config_loader_impl.py", line 276, in _load_configuration_impl
+    ConfigLoaderImpl._apply_overrides_to_config(config_overrides, cfg)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/config_loader_impl.py", line 392, in _apply_overrides_to_config
+    raise ConfigCompositionException(
+hydra.errors.ConfigCompositionException: Could not override 'datamodule.mc_sample_eval'.
+To append to your config use +datamodule.mc_sample_eval=100
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=predict_lrt_80perc', 'prediction=TiO', 'ckpt_path=all', '+method=LRT', 'runs_dir=bnn_aenet/logs/TiO_train_lrt_80', '+datamodule.mc_sample_eval=100']
+Traceback (most recent call last):
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 92, in _call_target
+    return _target_(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: AenetDataModule.__init__() got an unexpected keyword argument 'mc_sample_eval'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 75, in predict
+    datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 226, in instantiate
+    return instantiate_node(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 347, in instantiate_node
+    return _call_target(_target_, partial, args, kwargs, full_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 97, in _call_target
+    raise InstantiationException(msg) from e
+hydra.errors.InstantiationException: Error in call to target 'bnn_aenet.datamodule.aenet_datamodule.AenetDataModule':
+TypeError("AenetDataModule.__init__() got an unexpected keyword argument 'mc_sample_eval'")
+full_key: datamodule
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_50perc/runs/2025-01-24_10-23-54/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-24_10-23-54/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_40perc/runs/2025-01-24_10-23-54/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_43052-step_516636.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_37932-step_568995.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_4438-step_39951.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_37932-step_568995.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_4438-step_39951.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_43052-step_516636.ckpt
+Error executing job with overrides: ['task_name=predict_lrt_80perc', 'prediction=TiO', 'ckpt_path=all', '+method=LRT', 'runs_dir=bnn_aenet/logs/TiO_train_lrt_80', '+datamodule.mc_samples_eval=100']
+Traceback (most recent call last):
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 92, in _call_target
+    return _target_(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: AenetDataModule.__init__() got an unexpected keyword argument 'mc_samples_eval'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 75, in predict
+    datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 226, in instantiate
+    return instantiate_node(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 347, in instantiate_node
+    return _call_target(_target_, partial, args, kwargs, full_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 97, in _call_target
+    raise InstantiationException(msg) from e
+hydra.errors.InstantiationException: Error in call to target 'bnn_aenet.datamodule.aenet_datamodule.AenetDataModule':
+TypeError("AenetDataModule.__init__() got an unexpected keyword argument 'mc_samples_eval'")
+full_key: datamodule
+Traceback (most recent call last):
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/config_loader_impl.py", line 390, in _apply_overrides_to_config
+    OmegaConf.update(cfg, key, value, merge=True)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/omegaconf.py", line 741, in update
+    root.__setattr__(last_key, value)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 337, in __setattr__
+    raise e
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 334, in __setattr__
+    self.__set_impl(key, value)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 318, in __set_impl
+    self._set_item_impl(key, value)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 549, in _set_item_impl
+    self._validate_set(key, value)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 180, in _validate_set
+    target = self._get_node(key) if key is not None else self
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'mc_samples_eval' is not in struct
+    full_key: datamodule.mc_samples_eval
+    object_type=dict
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 105, in run
+    cfg = self.compose_config(
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 594, in compose_config
+    cfg = self.config_loader.load_configuration(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/config_loader_impl.py", line 142, in load_configuration
+    return self._load_configuration_impl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/config_loader_impl.py", line 276, in _load_configuration_impl
+    ConfigLoaderImpl._apply_overrides_to_config(config_overrides, cfg)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/config_loader_impl.py", line 392, in _apply_overrides_to_config
+    raise ConfigCompositionException(
+hydra.errors.ConfigCompositionException: Could not override 'datamodule.mc_samples_eval'.
+To append to your config use +datamodule.mc_samples_eval=100
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_10perc/runs/2025-01-24_10-30-36/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-23_11-29-56/checkpoints/epoch_19514-step_58545.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-23_11-29-56/checkpoints/epoch_19514-step_58545.ckpt
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-02-19_13-37-54/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_1994-step_195510.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_1994-step_195510.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-19_13-25-30/checkpoints/epoch_105-step_10388.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-19_13-25-30/checkpoints/epoch_105-step_10388.ckpt
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-02-19_21-47-42/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_1994-step_195510.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_1994-step_195510.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-19_13-25-30/checkpoints/epoch_3577-step_350644.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-19_13-25-30/checkpoints/epoch_3577-step_350644.ckpt
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_20perc/runs/2025-01-24_10-30-52/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-24_10-30-52/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-23_11-29-56/checkpoints/epoch_39117-step_234708.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_20/runs/2025-01-23_11-29-56/checkpoints/epoch_39117-step_234708.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_4438-step_39951.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_4438-step_39951.ckpt
-GPU available: False, used: False
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-02-20_10-55-20/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_1994-step_195510.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_1994-step_195510.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-19_13-25-30/checkpoints/epoch_3577-step_350644.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-19_13-25-30/checkpoints/epoch_3577-step_350644.ckpt
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-02-20_15-30-21/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_1994-step_195510.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_1994-step_195510.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-19_13-25-30/checkpoints/epoch_14305-step_1401988.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-19_13-25-30/checkpoints/epoch_14305-step_1401988.ckpt
 GPU available: False, used: False
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_5perc/runs/2025-01-24_10-31-07/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_50perc/runs/2025-01-24_10-31-07/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_40perc/runs/2025-01-24_10-31-07/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_43052-step_516636.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_37932-step_568995.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_43052-step_516636.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_37932-step_568995.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-23_11-29-56/checkpoints/epoch_2649-step_5300.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-23_11-29-56/checkpoints/epoch_2649-step_5300.ckpt
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_70perc/runs/2025-01-24_10-31-22/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_60perc/runs/2025-01-24_10-31-22/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-23_11-30-22/checkpoints/epoch_30575-step_642096.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-23_11-30-22/checkpoints/epoch_31143-step_560592.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-23_11-30-22/checkpoints/epoch_30575-step_642096.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-23_11-30-22/checkpoints/epoch_31143-step_560592.ckpt
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-01-24_10-31-38/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-23_11-30-22/checkpoints/epoch_23635-step_567264.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-01-23_11-30-22/checkpoints/epoch_23635-step_567264.ckpt
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-ilable: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-IPU available: False, using: 0 IPUs
-GPU available: False, used: False
-HPU available: False, using: 0 HPUs
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-GPU available: False, used: False
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_20perc/runs/2025-01-27_11-44-14/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_40perc/runs/2025-01-27_11-44-14/lightning_logs
-Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_5perc/runs/2025-01-27_11-44-14/lightning_logs
-MMissing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_30perc/runs/2025-01-27_11-44-14/lightning_logs
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_43052-step_516636.ckpt
- from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_5/runs/2025-01-23_11-29-56/checkpoints/epoch_2649-step_5300.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_46083-step_691260.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-23_11-30-22/checkpoints/epoch_48427-step_1016988.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_10/runs/2025-01-23_11-29-56/checkpoints/epoch_19514-step_58545.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_40/runs/2025-01-23_11-29-56/checkpoints/epoch_43052-step_516636.ckpt
-pt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_trin_lrt_5/runs/2025-01-23_11-29-56/checkpoints/epoch_2649-step_5300.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_70/runs/2025-01-23_11-30-22/checkpoints/epoch_48427-step_1016988.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_50/runs/2025-01-23_11-29-56/checkpoints/epoch_46083-step_691260.ckpt
-Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-23_11-30-22/checkpoints/epoch_31143-step_560592.ckpt
-Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_60/runs/2025-01-23_11-30-22/checkpoints/epoch_31143-step_560592.ckpt
-aded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_30/runs/2025-01-23_11-29-56/checkpoints/epoch_4438-step_39951.ckpt
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/predict_lrt_80perc/runs/2025-02-21_11-37-44/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_27736-step_2718226.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-18_16-05-15/checkpoints/epoch_27736-step_2718226.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-19_13-25-30/checkpoints/epoch_14305-step_1401988.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/TiO_train_lrt_80/runs/2025-02-19_13-25-30/checkpoints/epoch_14305-step_1401988.ckpt

@@ -1,0 +1,848 @@
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py:92: ExperimentalWarning: PatientPruner is experimental (supported from v2.8.0). The interface can change in the future.
+  return _target_(*args, **kwargs)
+[I 2025-02-18 10:02:11,268] Using an existing study with name 'hnn' instead of creating a new one.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:298: The number of training batches (2) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:04:41,973] Trial 74 finished with value: 1.7398071784723885 and parameters: {'lr': 0.003655732368605816, 'batch_size': 512}. Best is trial 75 with value: 0.9548178033260255.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:05:00,088] Trial 83 finished with value: 1.7197086724771597 and parameters: {'lr': 0.0049753653982777014, 'batch_size': 512}. Best is trial 75 with value: 0.9548178033260255.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:05:12,651] Trial 84 finished with value: 1.3775209518773788 and parameters: {'lr': 0.0049177907636811305, 'batch_size': 512}. Best is trial 75 with value: 0.9548178033260255.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:05:25,573] Trial 85 finished with value: 1.2968366433840148 and parameters: {'lr': 0.004998225441004059, 'batch_size': 512}. Best is trial 75 with value: 0.9548178033260255.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:05:40,875] Trial 87 finished with value: 1.6141245229439964 and parameters: {'lr': 0.004324797124958337, 'batch_size': 512}. Best is trial 75 with value: 0.9548178033260255.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:05:57,926] Trial 88 finished with value: 1.8059007732889614 and parameters: {'lr': 0.0032836758268710246, 'batch_size': 512}. Best is trial 86 with value: 0.9003032941341309.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:06:16,062] Trial 90 finished with value: 1.6405812741533443 and parameters: {'lr': 0.004415321143048175, 'batch_size': 512}. Best is trial 86 with value: 0.9003032941341309.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:298: The number of training batches (6) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:06:29,871] Trial 92 finished with value: 0.1633711654081424 and parameters: {'lr': 0.0033211759137216352, 'batch_size': 128}. Best is trial 92 with value: 0.1633711654081424.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:06:43,158] Trial 94 finished with value: -0.09019240859220379 and parameters: {'lr': 0.0033734124863066565, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:07:01,675] Trial 96 finished with value: 0.34624294025305624 and parameters: {'lr': 0.003009294296697903, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:07:19,841] Trial 97 finished with value: 0.06792420520306801 and parameters: {'lr': 0.0031908818237214656, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:07:36,093] Trial 99 finished with value: 0.9550469360313807 and parameters: {'lr': 0.002533283465932684, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:07:53,427] Trial 101 finished with value: 0.8365204836804434 and parameters: {'lr': 0.002682429797562552, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:08:08,999] Trial 103 finished with value: -0.10167850723063035 and parameters: {'lr': 0.002357663772748823, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:08:27,036] Trial 105 finished with value: 0.7122235108172205 and parameters: {'lr': 0.0024272585540501632, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:08:51,483] Trial 107 finished with value: -0.049826405018517435 and parameters: {'lr': 0.003154800126049887, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:09:17,692] Trial 109 finished with value: 0.3108720921790461 and parameters: {'lr': 0.003295422150174482, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:09:38,373] Trial 111 finished with value: 0.1133524522430658 and parameters: {'lr': 0.0019683570225012713, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:09:54,364] Trial 112 finished with value: 1.0755493461343573 and parameters: {'lr': 0.0019320707165386651, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:10:13,355] Trial 114 finished with value: 0.007300762823952209 and parameters: {'lr': 0.0033613121829765306, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:10:28,264] Trial 115 finished with value: 0.5681267940380701 and parameters: {'lr': 0.0027977673449214456, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:10:44,017] Trial 116 finished with value: -0.02537769826394048 and parameters: {'lr': 0.0022354483380787184, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:11:01,580] Trial 118 finished with value: 0.048872263644199096 and parameters: {'lr': 0.0022678655284748715, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:11:18,370] Trial 120 finished with value: 0.6448298032278676 and parameters: {'lr': 0.0017365509619937064, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:11:35,047] Trial 122 finished with value: 0.22275674810046825 and parameters: {'lr': 0.002254653466697671, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:11:53,368] Trial 123 finished with value: 0.5798160433913196 and parameters: {'lr': 0.0029000640243886655, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:12:13,788] Trial 125 finished with value: 0.21219675964129933 and parameters: {'lr': 0.0034760253245858176, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:12:32,041] Trial 127 finished with value: 0.28994241595523634 and parameters: {'lr': 0.0030853421855419052, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:12:55,540] Trial 129 finished with value: 0.7834722724146492 and parameters: {'lr': 0.002308651076712279, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:13:17,689] Trial 131 finished with value: 0.015068560333553901 and parameters: {'lr': 0.0027263486826510155, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:13:41,897] Trial 133 finished with value: 1.3079299438334915 and parameters: {'lr': 0.0025924294616583845, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:14:00,083] Trial 135 finished with value: 0.7897055802774361 and parameters: {'lr': 0.003083949268189477, 'batch_size': 128}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:298: The number of training batches (12) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:14:20,183] Trial 137 finished with value: -0.24517063159983535 and parameters: {'lr': 0.002799265517437967, 'batch_size': 64}. Best is trial 93 with value: -0.31805715173199517.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:14:37,949] Trial 139 finished with value: -0.7838877477535541 and parameters: {'lr': 0.00246137432523996, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:15:08,407] Trial 141 finished with value: -0.305182190631476 and parameters: {'lr': 0.0028300072423471877, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:15:23,983] Trial 142 finished with value: -0.6060946734700825 and parameters: {'lr': 0.0024521738595443235, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:15:42,288] Trial 143 finished with value: -0.5125244445152809 and parameters: {'lr': 0.0024179382429515644, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:15:58,843] Trial 144 finished with value: -0.015570787513088533 and parameters: {'lr': 0.0024514769009982844, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:16:13,955] Trial 145 finished with value: -0.2808873414047854 and parameters: {'lr': 0.0024010418851277224, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:16:33,169] Trial 147 finished with value: 0.09196744686351882 and parameters: {'lr': 0.002454681156307347, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:16:49,997] Trial 148 finished with value: -0.3375582217514245 and parameters: {'lr': 0.0014897529257272058, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:17:28,608] Trial 151 finished with value: -0.43965667764963934 and parameters: {'lr': 0.0029148569569376792, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:17:45,195] Trial 152 finished with value: 0.008492322523708599 and parameters: {'lr': 0.002874229411748782, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:18:03,938] Trial 154 finished with value: -0.4119311314763891 and parameters: {'lr': 0.002601708621674192, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:18:21,594] Trial 156 finished with value: -0.3420788482798263 and parameters: {'lr': 0.0026348547675695143, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:18:38,899] Trial 158 finished with value: -0.7561803136477677 and parameters: {'lr': 0.0026298816743936734, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:18:55,530] Trial 160 finished with value: -0.47078903452114435 and parameters: {'lr': 0.002586314578564104, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:19:11,352] Trial 161 finished with value: -0.027345411551029274 and parameters: {'lr': 0.0026683681518847578, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:19:27,200] Trial 163 finished with value: 0.25552197597112936 and parameters: {'lr': 0.0021491737390067793, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:19:44,766] Trial 165 finished with value: -0.17014256993779817 and parameters: {'lr': 0.0014586460159809523, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:19:59,908] Trial 167 finished with value: -0.0023761472877955785 and parameters: {'lr': 0.0025682843416768093, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:20:18,234] Trial 170 finished with value: 0.2900965940829637 and parameters: {'lr': 0.00111628224451933, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:20:38,461] Trial 172 finished with value: -0.6292597460794986 and parameters: {'lr': 0.0029417778207941774, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:21:01,818] Trial 173 finished with value: -0.2585969943592629 and parameters: {'lr': 0.0029225761537001425, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:21:46,230] Trial 174 finished with value: -0.4748699522145562 and parameters: {'lr': 0.003038851140264783, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:22:04,616] Trial 176 finished with value: -0.3678496728408807 and parameters: {'lr': 0.002984709895351543, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:22:23,642] Trial 178 finished with value: -0.044228183704017196 and parameters: {'lr': 0.003598433222664228, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:22:57,843] Trial 179 finished with value: 0.1450743040527711 and parameters: {'lr': 0.0030097245500392373, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:23:37,351] Trial 181 finished with value: -0.038993237377089 and parameters: {'lr': 0.002662672542970215, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 10:23:55,573] Trial 183 finished with value: -0.3910858709235031 and parameters: {'lr': 0.002238008218080981, 'batch_size': 64}. Best is trial 139 with value: -0.7838877477535541.
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py:92: ExperimentalWarning: PatientPruner is experimental (supported from v2.8.0). The interface can change in the future.
+  return _target_(*args, **kwargs)
+[I 2025-02-18 15:44:31,960] A new study created in RDB with name: hnn
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:298: The number of training batches (49) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 15:52:52,363] Trial 0 finished with value: 0.07718659479751806 and parameters: {'lr': 0.00021153673722318394, 'batch_size': 128}. Best is trial 0 with value: 0.07718659479751806.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 15:54:50,380] Trial 1 finished with value: -1.0341903858564212 and parameters: {'lr': 0.0002949201708073891, 'batch_size': 64}. Best is trial 1 with value: -1.0341903858564212.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 15:56:54,311] Trial 2 finished with value: -1.3723760680002477 and parameters: {'lr': 0.0014493825421745437, 'batch_size': 32}. Best is trial 2 with value: -1.3723760680002477.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 15:59:00,357] Trial 3 finished with value: -1.6535044135844192 and parameters: {'lr': 0.0020559343783957663, 'batch_size': 32}. Best is trial 3 with value: -1.6535044135844192.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:00:42,324] Trial 4 finished with value: -0.9254334134464526 and parameters: {'lr': 0.0038492581955287116, 'batch_size': 128}. Best is trial 3 with value: -1.6535044135844192.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:02:15,277] Trial 5 finished with value: -0.7372143506367715 and parameters: {'lr': 0.002996548869421276, 'batch_size': 64}. Best is trial 3 with value: -1.6535044135844192.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:03:56,547] Trial 6 finished with value: -1.4846201606355303 and parameters: {'lr': 0.0002353538053917445, 'batch_size': 32}. Best is trial 3 with value: -1.6535044135844192.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:05:12,464] Trial 7 finished with value: -0.6002848943738935 and parameters: {'lr': 0.00012035252278617201, 'batch_size': 32}. Best is trial 3 with value: -1.6535044135844192.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:06:07,692] Trial 8 finished with value: -0.6018521304601121 and parameters: {'lr': 0.00036315899074972665, 'batch_size': 128}. Best is trial 3 with value: -1.6535044135844192.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:06:57,303] Trial 9 finished with value: -1.4237985534397026 and parameters: {'lr': 0.001119476400407963, 'batch_size': 128}. Best is trial 3 with value: -1.6535044135844192.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:298: The number of training batches (12) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+[I 2025-02-18 16:07:42,757] Trial 10 pruned. Trial was pruned at epoch 14.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:08:48,803] Trial 11 finished with value: -1.9794435533972359 and parameters: {'lr': 0.0006487878389547674, 'batch_size': 32}. Best is trial 11 with value: -1.9794435533972359.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py:298: The number of training batches (24) is smaller than the logging interval Trainer(log_every_n_steps=50). Set a lower value for log_every_n_steps if you want to see logs for the training epoch.
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:09:39,213] Trial 12 finished with value: -1.00340238819991 and parameters: {'lr': 0.0005534360814307639, 'batch_size': 256}. Best is trial 11 with value: -1.9794435533972359.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:10:50,239] Trial 13 finished with value: -1.9947309506073885 and parameters: {'lr': 0.0008116260978756384, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:12:39,355] Trial 14 finished with value: -1.6281256585126016 and parameters: {'lr': 0.0007655516618843977, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:13:37,516] Trial 15 finished with value: 1.3381057874159115 and parameters: {'lr': 0.000636444812344129, 'batch_size': 512}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:14:25,018] Trial 16 finished with value: -0.9928078857934232 and parameters: {'lr': 0.0009774399797893543, 'batch_size': 256}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:16:12,781] Trial 17 finished with value: -1.3655865737569635 and parameters: {'lr': 0.00038217516406368544, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:18:12,942] Trial 18 finished with value: -0.6849770050461679 and parameters: {'lr': 0.00015054182878898074, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:19:59,810] Trial 19 finished with value: -1.6558822676678124 and parameters: {'lr': 0.0005033690549580847, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:21:13,825] Trial 20 finished with value: 0.36221609591689485 and parameters: {'lr': 0.0008984870310503699, 'batch_size': 512}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:23:01,515] Trial 21 finished with value: -1.8054908301934574 and parameters: {'lr': 0.0004604912087275508, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:25:02,003] Trial 22 finished with value: -1.80217441005763 and parameters: {'lr': 0.0005215009225566659, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:26:48,164] Trial 23 finished with value: -1.6255883917438234 and parameters: {'lr': 0.0012618562456224024, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:28:16,804] Trial 24 finished with value: -1.7972723179300272 and parameters: {'lr': 0.000426011623531081, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:29:28,168] Trial 25 finished with value: -0.2542006374896278 and parameters: {'lr': 0.0007397568831405336, 'batch_size': 256}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:30:43,583] Trial 26 finished with value: -0.21753676053841797 and parameters: {'lr': 0.0002469059533150303, 'batch_size': 64}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:32:14,080] Trial 27 finished with value: -1.2847563760229277 and parameters: {'lr': 0.002308201625059043, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:33:39,811] Trial 28 finished with value: -0.7758872963210328 and parameters: {'lr': 0.00016853144688226373, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:35:07,088] Trial 29 finished with value: -1.1981194499357317 and parameters: {'lr': 0.00031284268817360775, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:36:14,023] Trial 30 finished with value: -0.4282260244132762 and parameters: {'lr': 0.000758994516748174, 'batch_size': 256}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:37:53,383] Trial 31 finished with value: -1.8569654762630392 and parameters: {'lr': 0.0005064479562796861, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:39:36,629] Trial 32 finished with value: -1.4531080794029976 and parameters: {'lr': 0.0006007080854251743, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:40:48,073] Trial 33 finished with value: -1.4066148860675693 and parameters: {'lr': 0.00044186101778241355, 'batch_size': 64}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:42:37,474] Trial 34 finished with value: -1.0725678560743075 and parameters: {'lr': 0.00030501435997871106, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:44:10,723] Trial 35 finished with value: -1.9757529880520837 and parameters: {'lr': 0.001501478100346681, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:45:26,006] Trial 36 finished with value: -1.397994954105345 and parameters: {'lr': 0.0015463724575724767, 'batch_size': 128}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:46:56,285] Trial 37 finished with value: -1.8694544290698913 and parameters: {'lr': 0.0024919334538441537, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:48:21,955] Trial 38 finished with value: -0.9634320182486159 and parameters: {'lr': 0.004616938802211679, 'batch_size': 64}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:49:47,329] Trial 39 finished with value: -0.8190626723023312 and parameters: {'lr': 0.002645149401604244, 'batch_size': 32}. Best is trial 13 with value: -1.9947309506073885.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+[I 2025-02-18 16:50:42,326] Trial 40 pruned. Trial was pruned at epoch 17.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:51:39,164] Trial 41 finished with value: -2.0318252321446195 and parameters: {'lr': 0.001835581098511726, 'batch_size': 32}. Best is trial 41 with value: -2.0318252321446195.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:52:37,391] Trial 42 finished with value: -1.3561017770618993 and parameters: {'lr': 0.0018807041204848456, 'batch_size': 32}. Best is trial 41 with value: -2.0318252321446195.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:53:43,678] Trial 43 finished with value: -1.2193714730828324 and parameters: {'lr': 0.001421381015854891, 'batch_size': 32}. Best is trial 41 with value: -2.0318252321446195.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+[I 2025-02-18 16:54:17,152] Trial 44 pruned. Trial was pruned at epoch 17.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:55:05,531] Trial 45 finished with value: -1.6353716862675356 and parameters: {'lr': 0.001101221954632785, 'batch_size': 32}. Best is trial 41 with value: -2.0318252321446195.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:56:19,865] Trial 46 finished with value: -2.1418546908186347 and parameters: {'lr': 0.0016494379050422643, 'batch_size': 32}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:57:21,919] Trial 47 finished with value: -1.0975613371875874 and parameters: {'lr': 0.00150830494203306, 'batch_size': 32}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 16:58:53,803] Trial 48 finished with value: -2.106693175504117 and parameters: {'lr': 0.0008943154716685022, 'batch_size': 32}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+[I 2025-02-18 17:00:02,016] Trial 49 pruned. Trial was pruned at epoch 16.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 17:01:20,625] Trial 50 finished with value: 0.22454461148546404 and parameters: {'lr': 0.0011047663990476166, 'batch_size': 512}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 17:03:06,237] Trial 51 finished with value: -2.0105132065933726 and parameters: {'lr': 0.0016987897343162743, 'batch_size': 32}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 17:04:53,499] Trial 52 finished with value: -1.6540185809602814 and parameters: {'lr': 0.0018204995222127565, 'batch_size': 32}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 17:06:50,276] Trial 53 finished with value: -2.0100070789931093 and parameters: {'lr': 0.001222872248509944, 'batch_size': 32}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 17:08:23,355] Trial 54 finished with value: -1.9028341738560972 and parameters: {'lr': 0.0011892495419401463, 'batch_size': 32}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 17:10:02,325] Trial 55 finished with value: -1.7841485033185014 and parameters: {'lr': 0.0020094113093920714, 'batch_size': 32}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 17:11:06,975] Trial 56 finished with value: -1.7706679691768783 and parameters: {'lr': 0.0009701448776603962, 'batch_size': 32}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 17:11:32,792] Trial 57 finished with value: -0.039281222222469374 and parameters: {'lr': 0.002977367546873335, 'batch_size': 256}. Best is trial 46 with value: -2.1418546908186347.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 17:12:23,437] Trial 58 finished with value: -2.1686149321331856 and parameters: {'lr': 0.0013422359776024458, 'batch_size': 32}. Best is trial 58 with value: -2.1686149321331856.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[I 2025-02-18 17:13:05,712] Trial 59 finished with value: -0.05063375547214434 and parameters: {'lr': 0.0017035266383308146, 'batch_size': 64}. Best is trial 58 with value: -2.1686149321331856.

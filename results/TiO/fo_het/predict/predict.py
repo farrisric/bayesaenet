@@ -13,15 +13,17 @@ parquets = sorted(glob.glob('/home/g15farris/bin/bayesaenet/bnn_aenet/logs/predi
 
 fig, ax = plt.subplots(9, 2, figsize=(16, 9*6))
 fig.tight_layout(pad=4.0)
+e_scaling, e_shift = 0.06565926932648217, 6.6588702845000975
 
 for i, parquet in enumerate(parquets):
-    rs = pd.read_parquet(parquet)
-    y_true = rs['true'].to_numpy()
-    y_pred = rs['preds'].to_numpy()
-    y_std = rs['stds'].to_numpy() #- 0.973161126060376
+    rs = pd.read_csv(parquet)
+    y_true = (rs['labels'].to_numpy()/e_scaling + rs['n_atoms'].to_numpy()*e_shift)/rs['n_atoms'].to_numpy()
+    y_pred = (rs['preds'].to_numpy()/e_scaling + rs['n_atoms'].to_numpy()*e_shift)/rs['n_atoms'].to_numpy()
+    y_std = (rs['stds'].to_numpy()/e_scaling)/rs['n_atoms'].to_numpy()
     train_percentage = int(parquet.split('/')[-4].split('_')[-1].replace('perc', ''))
     test_percentage = 90 - train_percentage
-    name = f"BNN fo - Train Perc: {train_percentage}%"
+    name = f"BNN LRT - Train Perc: {train_percentage}%"
+    name_file = parquet.split('/')[-1].split('.')[0]
     
     regr = LinearRegression()
     
@@ -106,5 +108,15 @@ for i, parquet in enumerate(parquets):
     
     fig.subplots_adjust(top=0.85)
     fig.suptitle('Commitee Prediction Analysis', fontsize=20)
-    plt.savefig(f'/home/g15farris/bin/bayesaenet/results/TiO/fo_het/predict/fo_{train_percentage}.png', dpi=300)
+    plt.savefig(f'/home/g15farris/bin/bayesaenet/results/TiO/fo_het/predict/{name_file}_{train_percentage}.png', dpi=300)
     plt.close(fig)
+
+    fig, ax = plt.subplots(2, 3, figsize=(15, 9))
+    ax = ax.flat
+    uct.plot_intervals(y_pred, y_std, y_true, ax=ax[0])
+    uct.plot_intervals_ordered(y_pred, y_std, y_true, ax=ax[1])
+    uct.plot_calibration(y_pred, y_std, y_true, ax=ax[2])
+    uct.plot_adversarial_group_calibration(y_pred, y_std, y_true, ax=ax[3])
+    uct.plot_sharpness(y_std, ax=ax[4])
+    uct.plot_residuals_vs_stds(y_pred, y_std, y_true, ax=ax[5])
+    plt.savefig(f'/home/g15farris/bin/bayesaenet/results/TiO/fo_het/predict/{name_file}_{train_percentage}_uct.png', dpi=300)

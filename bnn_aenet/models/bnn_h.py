@@ -15,6 +15,7 @@ import copy
 import contextlib
 import numpy as np
 
+
 class BNN(L.LightningModule):
     def __init__(
             self,
