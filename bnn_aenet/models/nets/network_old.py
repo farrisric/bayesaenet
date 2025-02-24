@@ -57,7 +57,7 @@ class NetAtom(nn.Module):
 			name1 = "Linear_Sp"+str(i+1)+"_F"+str(N_fun[i])
 			function_i[name1] = nn.Linear(hidden_size[i][-1], 1)
 
-			self.functions.append( nn.Sequential(function_i) ) 
+			self.functions.append(nn.Sequential(function_i)) 
 		self.functions = nn.ModuleList(self.functions)
 
 
@@ -84,9 +84,8 @@ class NetAtom(nn.Module):
 
 		return list_E_ann
 
-
 	def forward_F(self, group_descrp, group_sfderiv_i, group_sfderiv_j, group_indices_F,
-				  grp_indices_F_i, logic_reduce, input_size, max_nnb):
+               grp_indices_F_i, logic_reduce, input_size, max_nnb):
 		"""
 		[Force training] Compute atomic energy and forces for each atom in the current batch.
 		"""

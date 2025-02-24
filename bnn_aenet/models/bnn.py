@@ -204,7 +204,8 @@ class BNN(L.LightningModule):
         loc = loc.mean(axis=0)
         pred["preds"] = loc.cpu().numpy()
         pred["stds"] = scale.cpu().numpy()
-        pred["true"] = batch[11].cpu().numpy()
+        pred["labels"] = batch[11].cpu().numpy()
+        pred["n_atoms"] = batch[14].cpu().numpy()
         return pred
 
     def configure_optimizers(self):
@@ -274,7 +275,7 @@ class NN(L.LightningModule):
         logic_reduce = batch[12]
         grp_N_atom = batch[14]
         
-        list_E_ann = self.forward(grp_descrp, logic_reduce)   
+        list_E_ann = self.forward(grp_descrp, logic_reduce)
         return get_rmse_atom(list_E_ann, grp_energy, grp_N_atom)
 
     def training_step(self, batch, batch_idx):

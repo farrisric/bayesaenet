@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N train_lrt_20perc_TiO
+#$ -N train_lrt_80
 #$ -pe smp* 1
 #$ -q iqtc09.q
 #$ -S /bin/bash
@@ -29,14 +29,14 @@ python bnn_aenet/tasks/train.py \
     trainer.min_epochs=20000 \
     trainer.min_epochs=50000 \
     experiment=bnn_lrt \
-    seed=15 \
+    seed=249152917 \
     trainer.deterministic=False \
     task_name=TiO_train_lrt_80 \
     datamodule=TiO \
     datamodule.test_split=0.1 \
     datamodule.valid_split=0.1 \
-    datamodule.batch_size=256 \
-    model.lr=0.00008142328235860698 \
-    model.mc_samples_train=2 \
-    model.prior_scale=0.020676708101278182 \
-    model.q_scale=0.00016666027828979754
+    datamodule.batch_size=64 \
+    model.lr=0.0009583073914151103 \
+    model.mc_samples_train=1 \
+    model.prior_scale=0.3479039454213993\
+    model.q_scale=0.0006360325989803395

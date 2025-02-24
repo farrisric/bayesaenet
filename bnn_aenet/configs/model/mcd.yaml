@@ -1,0 +1,5 @@
+defaults:
+  - hnn
+
+p_dropout: ???
+mc_samples: 10
