@@ -1,0 +1,5 @@
+- model=mcd
+- datamodule=TiO
+- hpsearch=mcd
+- task_name=TiO_hps_mcd
+- tags=[TiO]

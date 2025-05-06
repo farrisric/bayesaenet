@@ -1,0 +1,5 @@
+- task_name=TiO_pred_mcd_80perc
+- prediction=TiO
+- ckpt_path=all
+- +method=MCD
+- runs_dir=bnn_aenet/logs/TiO_train_mcd_80perc

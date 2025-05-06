@@ -50,11 +50,10 @@ class AenetDataModule(L.LightningDataModule):
         N_struc_E = len(self.list_structures_energy)
         N_struc_F = len(self.list_structures_forces)
 
-        self.train_size = int(len(self.list_structures_energy)*(1-self.tin.test_split-self.tin.valid_split))
-
-        N_batch_train, N_batch_valid, N_batch_test = select_batch_size(self.tin, 
+        train_set_size, N_batch_train, N_batch_valid, N_batch_test = select_batch_size(self.tin, 
                                                          self.list_structures_energy, 
                                                          self.list_structures_forces)
+        self.train_size = train_set_size
         # Join datasets with forces and only energies in a single torch dataset AND prepare batches
         train_forces_data, valid_forces_data, test_forces_data, train_energy_data, valid_energy_data, test_energy_data = select_batches(
             self.tin, self.tin.trainset_params, self.device, 
@@ -67,7 +66,7 @@ class AenetDataModule(L.LightningDataModule):
 									 memory_mode=self.tin.memory_mode, device=self.device, dataname="valid")
         self.grouped_test_data = GroupedDataset(test_energy_data, test_forces_data,
 									 memory_mode=self.tin.memory_mode, device=self.device, dataname="test")
-
+            
     def setup(self, stage: str):
         pass
 

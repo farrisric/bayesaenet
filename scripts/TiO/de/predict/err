@@ -1,0 +1,1136 @@
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=de_pred_100_1', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=100', '+method=DE', 'runs_dir=bnn_aenet/logs/de_train_80perc_1']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 71, in predict
+    model = cfg[cfg.method]
+            ~~~^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 371, in __getitem__
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 369, in __getitem__
+    return self._get_impl(key=key, default_value=_DEFAULT_MARKER_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigKeyError: Key 'DE' is not in struct
+    full_key: DE
+    object_type=dict
+Error executing job with overrides: ['task_name=de_pred_20_1', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=20', '+method=DE', 'runs_dir=bnn_aenet/logs/de_train_20perc_1']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 71, in predict
+    model = cfg[cfg.method]
+            ~~~^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 371, in __getitem__
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 369, in __getitem__
+    return self._get_impl(key=key, default_value=_DEFAULT_MARKER_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigKeyError: Key 'DE' is not in struct
+    full_key: DE
+    object_type=dict
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=de_pred_100_2', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=100', '+method=DE', 'runs_dir=bnn_aenet/logs/de_train_80perc_2']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 71, in predict
+    model = cfg[cfg.method]
+            ~~~^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 371, in __getitem__
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 369, in __getitem__
+    return self._get_impl(key=key, default_value=_DEFAULT_MARKER_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigKeyError: Key 'DE' is not in struct
+    full_key: DE
+    object_type=dict
+Error executing job with overrides: ['task_name=de_pred_20_2', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=20', '+method=DE', 'runs_dir=bnn_aenet/logs/de_train_20perc_2']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 71, in predict
+    model = cfg[cfg.method]
+            ~~~^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 371, in __getitem__
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 369, in __getitem__
+    return self._get_impl(key=key, default_value=_DEFAULT_MARKER_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigKeyError: Key 'DE' is not in struct
+    full_key: DE
+    object_type=dict
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=de_pred_100_3', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=100', '+method=DE', 'runs_dir=bnn_aenet/logs/de_train_80perc_3']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 71, in predict
+    model = cfg[cfg.method]
+            ~~~^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 371, in __getitem__
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 369, in __getitem__
+    return self._get_impl(key=key, default_value=_DEFAULT_MARKER_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigKeyError: Key 'DE' is not in struct
+    full_key: DE
+    object_type=dict
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=de_pred_20_3', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=20', '+method=DE', 'runs_dir=bnn_aenet/logs/de_train_20perc_3']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 71, in predict
+    model = cfg[cfg.method]
+            ~~~^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 371, in __getitem__
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 369, in __getitem__
+    return self._get_impl(key=key, default_value=_DEFAULT_MARKER_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigKeyError: Key 'DE' is not in struct
+    full_key: DE
+    object_type=dict
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=de_pred_100_4', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=100', '+method=DE', 'runs_dir=bnn_aenet/logs/de_train_80perc_4']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 71, in predict
+    model = cfg[cfg.method]
+            ~~~^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 371, in __getitem__
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 369, in __getitem__
+    return self._get_impl(key=key, default_value=_DEFAULT_MARKER_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigKeyError: Key 'DE' is not in struct
+    full_key: DE
+    object_type=dict
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=de_pred_20_4', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=20', '+method=DE', 'runs_dir=bnn_aenet/logs/de_train_20perc_4']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 71, in predict
+    model = cfg[cfg.method]
+            ~~~^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 371, in __getitem__
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 369, in __getitem__
+    return self._get_impl(key=key, default_value=_DEFAULT_MARKER_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigKeyError: Key 'DE' is not in struct
+    full_key: DE
+    object_type=dict
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=de_pred_100_5', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=100', '+method=DE', 'runs_dir=bnn_aenet/logs/de_train_80perc_5']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 71, in predict
+    model = cfg[cfg.method]
+            ~~~^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 371, in __getitem__
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 369, in __getitem__
+    return self._get_impl(key=key, default_value=_DEFAULT_MARKER_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigKeyError: Key 'DE' is not in struct
+    full_key: DE
+    object_type=dict
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Error executing job with overrides: ['task_name=de_pred_20_5', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=20', '+method=DE', 'runs_dir=bnn_aenet/logs/de_train_20perc_5']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 71, in predict
+    model = cfg[cfg.method]
+            ~~~^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 371, in __getitem__
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 369, in __getitem__
+    return self._get_impl(key=key, default_value=_DEFAULT_MARKER_)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+           ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+            ^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigKeyError: Key 'DE' is not in struct
+    full_key: DE
+    object_type=dict
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_1/runs/2025-03-10_16-48-19/lightning_logs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_20_1/runs/2025-03-10_16-48-19/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_6502-step_1287594.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_6502-step_1287594.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/0/checkpoints/epoch_1590-step_63640.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/0/checkpoints/epoch_1590-step_63640.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/1/checkpoints/epoch_711-step_28480.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/1/checkpoints/epoch_711-step_28480.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_7308-step_1447182.ckpt
+Error executing job with overrides: ['task_name=de_pred_100_1', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=100', '+method=NN', 'runs_dir=bnn_aenet/logs/de_train_80perc_1']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 93, in predict
+    predictions = trainer.predict(
+                  ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 864, in predict
+    return call._call_and_handle_interrupt(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 44, in _call_and_handle_interrupt
+    return trainer_fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 903, in _predict_impl
+    results = self._run(model, ckpt_path=ckpt_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 956, in _run
+    self._checkpoint_connector._restore_modules_and_callbacks(ckpt_path)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/checkpoint_connector.py", line 397, in _restore_modules_and_callbacks
+    self.resume_start(checkpoint_path)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/checkpoint_connector.py", line 79, in resume_start
+    loaded_checkpoint = self.trainer.strategy.load_checkpoint(checkpoint_path)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 368, in load_checkpoint
+    return self.checkpoint_io.load_checkpoint(checkpoint_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/fabric/plugins/io/torch_io.py", line 81, in load_checkpoint
+    raise FileNotFoundError(f"Checkpoint file not found: {path}")
+FileNotFoundError: Checkpoint file not found: bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_7308-step_1447182.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/2/checkpoints/epoch_733-step_29360.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/2/checkpoints/epoch_733-step_29360.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/3/checkpoints/epoch_9452-step_378120.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/3/checkpoints/epoch_9452-step_378120.ckpt
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_2/runs/2025-03-10_16-49-12/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_9933-step_1966932.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_9933-step_1966932.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/4/checkpoints/epoch_9737-step_389520.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/4/checkpoints/epoch_9737-step_389520.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_7655-step_1515888.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_7655-step_1515888.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/5/checkpoints/epoch_6584-step_263400.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/5/checkpoints/epoch_6584-step_263400.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/6/checkpoints/epoch_3800-step_152040.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/6/checkpoints/epoch_3800-step_152040.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/7/checkpoints/epoch_2619-step_104800.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/7/checkpoints/epoch_2619-step_104800.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/8/checkpoints/epoch_2706-step_108280.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/8/checkpoints/epoch_2706-step_108280.ckpt
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_3/runs/2025-03-10_16-49-43/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_8754-step_1733490.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_8754-step_1733490.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_6512-step_1289574.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_6512-step_1289574.ckpt
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_20_2/runs/2025-03-10_16-49-55/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/0/checkpoints/epoch_3272-step_130920.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/0/checkpoints/epoch_3272-step_130920.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/1/checkpoints/epoch_5636-step_225480.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/1/checkpoints/epoch_5636-step_225480.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/2/checkpoints/epoch_4886-step_195480.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/2/checkpoints/epoch_4886-step_195480.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/3/checkpoints/epoch_5840-step_233640.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/3/checkpoints/epoch_5840-step_233640.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/4/checkpoints/epoch_1665-step_66640.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/4/checkpoints/epoch_1665-step_66640.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/5/checkpoints/epoch_2797-step_111920.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/5/checkpoints/epoch_2797-step_111920.ckpt
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_4/runs/2025-03-10_16-50-08/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_7534-step_1491930.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_7534-step_1491930.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/6/checkpoints/epoch_9279-step_371200.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/6/checkpoints/epoch_9279-step_371200.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_8505-step_1684188.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_8505-step_1684188.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/7/checkpoints/epoch_2470-step_98840.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/7/checkpoints/epoch_2470-step_98840.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/8/checkpoints/epoch_626-step_25080.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/8/checkpoints/epoch_626-step_25080.ckpt
+GPU available: False, used: False
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_5/runs/2025-03-10_16-54-02/lightning_logs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_20_3/runs/2025-03-10_16-54-02/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_9827-step_1945944.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_1706-step_68280.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_9827-step_1945944.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_1706-step_68280.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_1339-step_53600.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_6839-step_1354320.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_1339-step_53600.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_6839-step_1354320.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_2289-step_91600.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_2289-step_91600.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_1759-step_70400.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_1759-step_70400.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9119-step_364800.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9119-step_364800.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_8522-step_340920.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_8522-step_340920.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_1492-step_59720.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_1492-step_59720.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_3801-step_152080.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_3801-step_152080.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_20_4/runs/2025-03-10_16-57-34/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_1695-step_67840.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_1695-step_67840.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_2989-step_119600.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_2989-step_119600.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_5548-step_221960.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_5548-step_221960.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_969-step_38800.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_969-step_38800.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_5278-step_211160.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_5278-step_211160.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_3274-step_131000.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_3274-step_131000.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_1115-step_44640.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_1115-step_44640.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_1907-step_76320.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_1907-step_76320.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_20_5/runs/2025-03-10_16-58-35/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_1563-step_62560.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_1563-step_62560.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_6158-step_246360.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_6158-step_246360.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_4316-step_172680.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_4316-step_172680.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_9908-step_396360.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_9908-step_396360.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_3940-step_157640.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_3940-step_157640.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_1656-step_66280.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_1656-step_66280.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_5420-step_216840.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_5420-step_216840.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_648-step_25960.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_648-step_25960.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_412-step_16520.ckpt
+Error executing job with overrides: ['task_name=de_pred_20_5', 'prediction=TiO', 'ckpt_path=all', 'datamodule.valid_split=20', '+method=NN', 'runs_dir=bnn_aenet/logs/de_train_20perc_5']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 113, in <module>
+    main()
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+        ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 109, in main
+    predict(cfg)
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/predict.py", line 93, in predict
+    predictions = trainer.predict(
+                  ^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 864, in predict
+    return call._call_and_handle_interrupt(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 44, in _call_and_handle_interrupt
+    return trainer_fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 903, in _predict_impl
+    results = self._run(model, ckpt_path=ckpt_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 956, in _run
+    self._checkpoint_connector._restore_modules_and_callbacks(ckpt_path)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/checkpoint_connector.py", line 397, in _restore_modules_and_callbacks
+    self.resume_start(checkpoint_path)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/checkpoint_connector.py", line 79, in resume_start
+    loaded_checkpoint = self.trainer.strategy.load_checkpoint(checkpoint_path)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/pytorch/strategies/strategy.py", line 368, in load_checkpoint
+    return self.checkpoint_io.load_checkpoint(checkpoint_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/lightning/fabric/plugins/io/torch_io.py", line 81, in load_checkpoint
+    raise FileNotFoundError(f"Checkpoint file not found: {path}")
+FileNotFoundError: Checkpoint file not found: bnn_aenet/logs/de_train_20perc_5/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_412-step_16520.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_20_1/runs/2025-03-11_10-21-55/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/0/checkpoints/epoch_1590-step_63640.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/0/checkpoints/epoch_1590-step_63640.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/1/checkpoints/epoch_711-step_28480.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/1/checkpoints/epoch_711-step_28480.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/2/checkpoints/epoch_733-step_29360.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/2/checkpoints/epoch_733-step_29360.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/3/checkpoints/epoch_9452-step_378120.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/3/checkpoints/epoch_9452-step_378120.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/4/checkpoints/epoch_9737-step_389520.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/4/checkpoints/epoch_9737-step_389520.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/5/checkpoints/epoch_6584-step_263400.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/5/checkpoints/epoch_6584-step_263400.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/6/checkpoints/epoch_3800-step_152040.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/6/checkpoints/epoch_3800-step_152040.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/7/checkpoints/epoch_2619-step_104800.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/7/checkpoints/epoch_2619-step_104800.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/8/checkpoints/epoch_2706-step_108280.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/8/checkpoints/epoch_2706-step_108280.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/9/checkpoints/epoch_4588-step_183560.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_1/multiruns/2025-03-10_13-53-42/9/checkpoints/epoch_4588-step_183560.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_20_2/runs/2025-03-11_10-23-07/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/0/checkpoints/epoch_3272-step_130920.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/0/checkpoints/epoch_3272-step_130920.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/1/checkpoints/epoch_5636-step_225480.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/1/checkpoints/epoch_5636-step_225480.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/2/checkpoints/epoch_4886-step_195480.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/2/checkpoints/epoch_4886-step_195480.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/3/checkpoints/epoch_5840-step_233640.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/3/checkpoints/epoch_5840-step_233640.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/4/checkpoints/epoch_1665-step_66640.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/4/checkpoints/epoch_1665-step_66640.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/5/checkpoints/epoch_2797-step_111920.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/5/checkpoints/epoch_2797-step_111920.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/6/checkpoints/epoch_9279-step_371200.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/6/checkpoints/epoch_9279-step_371200.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/7/checkpoints/epoch_2470-step_98840.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/7/checkpoints/epoch_2470-step_98840.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/8/checkpoints/epoch_626-step_25080.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/8/checkpoints/epoch_626-step_25080.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/9/checkpoints/epoch_1104-step_44200.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_2/multiruns/2025-03-10_13-53-42/9/checkpoints/epoch_1104-step_44200.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_20_3/runs/2025-03-11_10-24-10/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_1706-step_68280.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_1706-step_68280.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_1339-step_53600.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_1339-step_53600.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_2289-step_91600.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_2289-step_91600.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_1759-step_70400.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_1759-step_70400.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9119-step_364800.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9119-step_364800.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_8522-step_340920.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_8522-step_340920.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_1492-step_59720.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_1492-step_59720.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_3801-step_152080.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_3801-step_152080.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_2404-step_96200.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_2404-step_96200.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_1442-step_57720.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_3/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_1442-step_57720.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_20_4/runs/2025-03-11_10-25-15/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_1695-step_67840.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_1695-step_67840.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_2989-step_119600.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_2989-step_119600.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_5548-step_221960.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_5548-step_221960.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_969-step_38800.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_969-step_38800.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_5278-step_211160.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_5278-step_211160.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_3274-step_131000.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_3274-step_131000.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_1115-step_44640.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_1115-step_44640.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_1907-step_76320.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_1907-step_76320.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_5871-step_234880.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_20perc_4/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_5871-step_234880.ckpt
+Restoring states from ttoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_6992-step_1384614.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_6992-step_1384614.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_6633-step_1313532.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_6633-step_1313532.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_9265-step_1834668.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_9265-step_1834668.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_7018-step_1389762.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_7018-step_1389762.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+                                                                                                                                                                                                                                                                                                                                                                                                                             Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_2/runs/2025-03-11_10-27-02/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_9933-step_1966932.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_9933-step_1966932.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_7655-step_1515888.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_7655-step_1515888.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_7322-step_1449954.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_7322-step_1449954.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_4893-step_969012.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_4893-step_969012.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9254-step_1832490.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9254-step_1832490.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_9626-step_1906146.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_9626-step_1906146.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_7229-step_1431540.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_7229-step_1431540.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_9055-step_1793088.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_9055-step_1793088.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_6415-step_1270368.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_6415-step_1270368.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_8609-step_1704780.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_8609-step_1704780.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_3/runs/2025-03-11_10-28-09/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_8754-step_1733490.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_8754-step_1733490.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_6512-step_1289574.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_6512-step_1289574.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_3917-step_775764.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_3917-step_775764.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_4032-step_798534.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_4032-step_798534.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9765-step_1933668.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9765-step_1933668.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_9790-step_1938618.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_9790-step_1938618.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_8850-step_1752498.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_8850-step_1752498.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_6775-step_1341648.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_6775-step_1341648.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_8817-step_1745964.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_8817-step_1745964.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_8136-step_1611126.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_8136-step_1611126.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_4/runs/2025-03-11_10-29-26/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_7534-step_1491930.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_7534-step_1491930.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_8505-step_1684188.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_8505-step_1684188.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/2/checkpoints/epoch_7491-step_1483416.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/2/checkpoints/epoch_7491-step_1483416.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/3/checkpoints/epoch_8916-step_1765566.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/3/checkpoints/epoch_8916-step_1765566.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/4/checkpoints/epoch_9251-step_1831896.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/4/checkpoints/epoch_9251-step_1831896.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/5/checkpoints/epoch_9956-step_1971486.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/5/checkpoints/epoch_9956-step_1971486.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/6/checkpoints/epoch_8744-step_1731510.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/6/checkpoints/epoch_8744-step_1731510.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/7/checkpoints/epoch_9207-step_1823184.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/7/checkpoints/epoch_9207-step_1823184.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/8/checkpoints/epoch_9623-step_1905552.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/8/checkpoints/epoch_9623-step_1905552.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/9/checkpoints/epoch_9948-step_1969902.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/9/checkpoints/epoch_9948-step_1969902.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_5/runs/2025-03-11_10-30-34/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_9827-step_1945944.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_9827-step_1945944.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_6839-step_1354320.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_6839-step_1354320.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/2/checkpoints/epoch_9326-step_1846746.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/2/checkpoints/epoch_9326-step_1846746.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/3/checkpoints/epoch_9458-step_1872882.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/3/checkpoints/epoch_9458-step_1872882.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/4/checkpoints/epoch_8998-step_1781802.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/4/checkpoints/epoch_8998-step_1781802.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/5/checkpoints/epoch_9984-step_1977030.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/5/checkpoints/epoch_9984-step_1977030.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/6/checkpoints/epoch_9260-step_1833678.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/6/checkpoints/epoch_9260-step_1833678.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/7/checkpoints/epoch_9874-step_1955250.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/7/checkpoints/epoch_9874-step_1955250.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/8/checkpoints/epoch_9089-step_1799820.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/8/checkpoints/epoch_9089-step_1799820.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/9/checkpoints/epoch_6383-step_1264032.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/9/checkpoints/epoch_6383-step_1264032.ckpt

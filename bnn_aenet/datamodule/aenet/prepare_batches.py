@@ -47,12 +47,10 @@ def split_database(dataset_size, valid_split, test_split, seed=42):
 	
 	if len(indices) == 0:
 		return [], [], []
-	train_split = float(1 - test_split - valid_split)
-	train_indices, valid_indices, test_indices = random_split(
-		indices, [train_split, valid_split, test_split],
-		generator=torch.Generator().manual_seed(seed)
-		)
-	print('Train indices:', len(train_indices), list(train_indices)[:5])
+	path_indices = f'/home/g15telari/TiO/Indices/Data{int(valid_split)}/'	
+	train_indices = np.genfromtxt(path_indices+'train_set_idxes.txt').astype(int)
+	valid_indices = np.genfromtxt(path_indices+'valid_set_idxes.txt').astype(int)
+	test_indices = np.genfromtxt(path_indices+'test_set_idxes.txt').astype(int)
 	print('Valid indices:', len(valid_indices), list(valid_indices)[:5])
 	print('Test indices:', len(test_indices), list(test_indices)[:5])
 	return list(train_indices), list(valid_indices), list(test_indices)
@@ -98,8 +96,9 @@ def select_batch_size(tin, list_structures_energy, list_structures_forces):
 	if N_data_F!= 0 and N_batch_test > N_data_F:
 		N_batch_test = N_data_F
 	
-
-	return N_batch_train, N_batch_valid, N_batch_test
+	train_set_size = len(train_sampler_E)
+ 
+	return train_set_size, N_batch_train, N_batch_valid, N_batch_test
 
 
 def select_batches(tin, trainset_params, device, list_structures_energy, list_structures_forces,

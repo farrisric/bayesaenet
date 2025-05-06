@@ -1,0 +1,82 @@
+model:
+  net:
+    _target_: bnn_aenet.models.nets.heteroskedastic_network.NetAtom
+    input_size:
+    - 70
+    - 70
+    hidden_size:
+    - - 15
+      - 15
+    - - 15
+      - 15
+    species:
+    - Ti
+    - O
+    active_names:
+    - - tanh
+      - tanh
+    - - tanh
+      - tanh
+    alpha: 0.0
+    device: cpu
+    e_scaling: 0.06565926932648217
+    e_shift: 6.6588702845000975
+  _target_: bnn_aenet.models.hnn.HNN
+  p_dropout: 0.678157514996044
+  mc_samples: 100
+  optimizer:
+    _target_: torch.optim.Adam
+    _partial_: true
+    lr: 0.0007842866131197311
+    weight_decay: 0.001
+model/params/total: 2674
+model/params/trainable: 2674
+model/params/non_trainable: 0
+datamodule:
+  _target_: bnn_aenet.datamodule.aenet_datamodule.AenetDataModule
+  data_dir: /home/g15farris/bin/bayesaenet/data//TiO/train.in
+  device: cpu
+  batch_size: 32
+  test_split: 0.1
+  valid_split: 0.1
+trainer:
+  _target_: lightning.pytorch.trainer.Trainer
+  default_root_dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_mcd/runs/2025-02-19_16-18-38/023
+  min_epochs: 20000
+  max_epochs: 20
+  accelerator: cpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  deterministic: false
+callbacks:
+  model_checkpoint:
+    _target_: lightning.pytorch.callbacks.ModelCheckpoint
+    dirpath: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/TiO_hps_mcd/runs/2025-02-19_16-18-38/023/checkpoints
+    filename: epoch_{epoch}-step_{step}
+    monitor: nll/val
+    verbose: false
+    save_last: true
+    save_top_k: 1
+    mode: min
+    auto_insert_metric_name: false
+    save_weights_only: false
+    every_n_train_steps: null
+    train_time_interval: null
+    every_n_epochs: null
+    save_on_train_epoch_end: null
+  rich_progress_bar:
+    _target_: lightning.pytorch.callbacks.RichProgressBar
+  model_summary:
+    _target_: lightning.pytorch.callbacks.RichModelSummary
+    max_depth: -1
+  optuna_pruner:
+    _target_: optuna.integration.PyTorchLightningPruningCallback
+  early_stopping:
+    monitor: nll/val
+    patience: 50
+extras: null
+task_name: TiO_hps_mcd
+tags:
+- TiO
+ckpt_path: null
+seed: 12345

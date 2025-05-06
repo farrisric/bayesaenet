@@ -1,0 +1,5 @@
+- task_name=predict_fo_80perc
+- prediction=TiO
+- ckpt_path=all
+- +method=FO
+- runs_dir=bnn_aenet/logs/TiO_train_fo_80

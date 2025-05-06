@@ -1,0 +1,280 @@
+[[36m2025-03-10 16:46:08,172[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_80perc_47930842
+[[36m2025-03-10 16:46:37,706[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_80perc_53573597
+[[36m2025-03-10 16:46:48,259[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_80perc_42381641
+[[36m2025-03-10 16:46:56,534[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_80perc_72235434
+[[36m2025-03-10 16:47:04,147[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_80perc_86694012
+[[36m2025-03-10 17:04:03,723[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_47930842
+[[36m2025-03-10 17:04:03,977[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-10 17:04:03,977[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-10 17:04:03,977[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-10 17:04:03,977[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-10 17:04:03,977[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-10 17:04:03,977[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-10 17:04:03,977[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-10 17:04:09,348[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 25.92it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.65it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 28.16it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 28.45it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.58it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.74it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.94it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 29.06it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 29.12it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 29.19it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 29.23it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.27it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.25it/s]
+[[36m2025-03-10 17:04:11,568[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_47930842/runs/2025-03-10_17-04-02[0m
+[[36m2025-03-10 17:04:15,005[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_53573597
+[[36m2025-03-10 17:04:15,332[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-10 17:04:15,332[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-10 17:04:15,333[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-10 17:04:15,333[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-10 17:04:15,333[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-10 17:04:15,333[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-10 17:04:15,333[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-10 17:04:20,626[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 26.47it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.51it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 27.96it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 28.27it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.45it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.60it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.79it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 28.90it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 28.95it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 29.01it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 29.05it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.09it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.07it/s]
+[[36m2025-03-10 17:04:22,039[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_53573597/runs/2025-03-10_17-04-14[0m
+[[36m2025-03-10 17:04:25,955[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_42381641
+[[36m2025-03-10 17:04:26,426[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-10 17:04:26,426[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-10 17:04:26,426[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-10 17:04:26,426[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-10 17:04:26,427[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-10 17:04:26,427[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-10 17:04:26,427[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-10 17:04:31,703[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 26.26it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.72it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 28.15it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 28.36it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.45it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.58it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.75it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 28.87it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 28.90it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 28.96it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 29.00it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.03it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.01it/s]
+[[36m2025-03-10 17:04:33,139[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_42381641/runs/2025-03-10_17-04-25[0m
+[[36m2025-03-10 17:04:36,669[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_72235434
+[[36m2025-03-10 17:04:36,930[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-10 17:04:36,931[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-10 17:04:36,931[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-10 17:04:36,931[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-10 17:04:36,931[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-10 17:04:36,931[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-10 17:04:36,931[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-10 17:04:42,295[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 26.21it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.66it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 28.02it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 28.24it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.33it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.50it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.71it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 28.80it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 28.82it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 28.90it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 28.92it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.94it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.93it/s]
+[[36m2025-03-10 17:04:43,741[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_72235434/runs/2025-03-10_17-04-36[0m
+[[36m2025-03-10 17:04:47,264[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_86694012
+[[36m2025-03-10 17:04:47,552[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-10 17:04:47,552[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-10 17:04:47,552[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-10 17:04:47,552[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-10 17:04:47,552[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-10 17:04:47,552[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-10 17:04:47,553[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-10 17:04:52,849[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 25.59it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.27it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 27.80it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 28.16it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.33it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.50it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.68it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 28.82it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 28.88it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 28.95it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 29.00it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.04it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.02it/s]
+[[36m2025-03-10 17:04:54,234[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_86694012/runs/2025-03-10_17-04-47[0m
+[[36m2025-03-11 12:14:00,028[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_47930842
+[[36m2025-03-11 12:14:00,279[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-11 12:14:00,280[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-11 12:14:00,280[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-11 12:14:00,280[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-11 12:14:00,280[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-11 12:14:00,280[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-11 12:14:00,280[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-11 12:14:05,667[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 26.16it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.81it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 28.21it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 28.45it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.59it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.76it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.93it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 29.05it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 29.08it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 29.13it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 29.16it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.18it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.16it/s]
+[[36m2025-03-11 12:14:20,970[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_47930842/runs/2025-03-11_12-13-59[0m
+[[36m2025-03-11 12:14:24,425[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_53573597
+[[36m2025-03-11 12:14:24,721[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-11 12:14:24,721[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-11 12:14:24,722[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-11 12:14:24,722[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-11 12:14:24,722[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-11 12:14:24,722[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-11 12:14:24,722[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-11 12:14:30,015[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 26.97it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 28.55it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 28.96it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 29.20it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 29.30it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 29.45it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 29.64it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 29.73it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 29.58it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 29.63it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 29.69it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.72it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.70it/s]
+[[36m2025-03-11 12:14:31,676[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_53573597/runs/2025-03-11_12-14-24[0m
+[[36m2025-03-11 12:14:35,660[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_42381641
+[[36m2025-03-11 12:14:35,912[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-11 12:14:35,912[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-11 12:14:35,912[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-11 12:14:35,912[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-11 12:14:35,912[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-11 12:14:35,912[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-11 12:14:35,913[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-11 12:14:41,260[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 26.14it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.66it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 28.07it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 28.33it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.43it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.58it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.74it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 28.85it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 28.89it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 28.94it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 28.98it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.99it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.97it/s]
+[[36m2025-03-11 12:14:46,653[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_42381641/runs/2025-03-11_12-14-34[0m
+[[36m2025-03-11 12:14:50,966[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_72235434
+[[36m2025-03-11 12:14:51,220[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-11 12:14:51,220[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-11 12:14:51,220[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-11 12:14:51,220[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-11 12:14:51,220[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-11 12:14:51,220[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-11 12:14:51,221[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-11 12:14:56,708[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 26.66it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 28.07it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 28.42it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 28.64it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.73it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.88it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 29.05it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 29.14it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 29.16it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 29.21it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 29.23it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.26it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.24it/s]
+[[36m2025-03-11 12:14:59,886[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_72235434/runs/2025-03-11_12-14-49[0m
+[[36m2025-03-11 12:15:05,297[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_86694012
+[[36m2025-03-11 12:15:05,546[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-11 12:15:05,546[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-11 12:15:05,546[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-11 12:15:05,546[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-11 12:15:05,546[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-11 12:15:05,546[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-11 12:15:05,547[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-11 12:15:10,891[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 26.51it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 28.05it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 28.44it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 28.67it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.76it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.91it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 29.09it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 29.19it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 29.24it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 29.30it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 29.20it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.23it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 29.21it/s]
+[[36m2025-03-11 12:15:12,385[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_86694012/runs/2025-03-11_12-15-03[0m
+[[36m2025-03-12 10:45:15,021[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_47930842
+[[36m2025-03-12 10:45:15,235[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-12 10:45:15,235[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-12 10:45:15,235[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-12 10:45:15,236[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-12 10:45:15,236[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-12 10:45:15,236[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-12 10:45:15,236[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-12 10:45:20,515[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 25.65it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.25it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 27.68it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 27.95it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.07it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.22it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.40it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 28.52it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 28.57it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 28.64it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 28.68it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.70it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.68it/s]
+[[36m2025-03-12 10:45:33,385[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_47930842/runs/2025-03-12_10-45-14[0m
+[[36m2025-03-12 10:45:36,529[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_53573597
+[[36m2025-03-12 10:45:36,749[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-12 10:45:36,750[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-12 10:45:36,750[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-12 10:45:36,750[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-12 10:45:36,750[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-12 10:45:36,751[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-12 10:45:36,751[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-12 10:45:41,864[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 25.85it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.39it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 27.77it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 28.00it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.11it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.25it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.43it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 28.52it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 28.54it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 28.59it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 28.61it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.64it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.62it/s]
+[[36m2025-03-12 10:45:43,319[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_53573597/runs/2025-03-12_10-45-36[0m
+[[36m2025-03-12 10:45:46,808[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_42381641
+[[36m2025-03-12 10:45:47,204[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-12 10:45:47,205[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-12 10:45:47,205[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-12 10:45:47,205[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-12 10:45:47,205[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-12 10:45:47,205[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-12 10:45:47,205[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-12 10:45:52,594[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 24.96it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 26.71it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 27.17it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 27.48it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 27.62it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 27.77it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 27.95it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 28.06it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 28.08it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 28.14it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 28.19it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.22it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.20it/s]
+[[36m2025-03-12 10:45:54,127[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_42381641/runs/2025-03-12_10-45-46[0m
+[[36m2025-03-12 10:45:57,585[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_72235434
+[[36m2025-03-12 10:45:57,797[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-12 10:45:57,797[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-12 10:45:57,797[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-12 10:45:57,798[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-12 10:45:57,798[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-12 10:45:57,798[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-12 10:45:57,798[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-12 10:46:02,904[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 25.89it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.33it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 27.68it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 27.85it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 27.92it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.05it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.19it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 28.29it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 28.32it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 28.27it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 28.31it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.34it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.33it/s]
+[[36m2025-03-12 10:46:04,433[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_72235434/runs/2025-03-12_10-45-57[0m
+[[36m2025-03-12 10:46:07,424[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating trainer <lightning.pytorch.trainer.Trainer>[0m
+bnn_aenet/logs/lrt_train_100perc_86694012
+[[36m2025-03-12 10:46:07,630[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter valid_split with value 100[0m
+[[36m2025-03-12 10:46:07,630[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter batch_size with value 64[0m
+[[36m2025-03-12 10:46:07,630[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter lr with value 0.0006112237319911698[0m
+[[36m2025-03-12 10:46:07,630[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter mc_samples_train with value 2[0m
+[[36m2025-03-12 10:46:07,630[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter prior_scale with value 0.22656050867842187[0m
+[[36m2025-03-12 10:46:07,630[0m][[34m__main__[0m][[32mINFO[0m] - Overriding hyperparameter q_scale with value 0.000444594528183239[0m
+[[36m2025-03-12 10:46:07,631[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating datamodule <bnn_aenet.datamodule.aenet_datamodule.AenetDataModule>[0m
+0.1
+(0.06565926932648217, 6.6588702845000975)
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+Valid indices: 704 [2735, 6889, 4459, 3205, 707]
+Test indices: 781 [2496, 6248, 7331, 3091, 4123]
+[[36m2025-03-12 10:46:12,748[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating model <bnn_aenet.models.bnn.BNN>[0m
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/12 [00:00<?, ?it/s]Predicting DataLoader 0:   8%|▊         | 1/12 [00:00<00:00, 25.83it/s]Predicting DataLoader 0:  17%|█▋        | 2/12 [00:00<00:00, 27.35it/s]Predicting DataLoader 0:  25%|██▌       | 3/12 [00:00<00:00, 27.76it/s]Predicting DataLoader 0:  33%|███▎      | 4/12 [00:00<00:00, 27.97it/s]Predicting DataLoader 0:  42%|████▏     | 5/12 [00:00<00:00, 28.07it/s]Predicting DataLoader 0:  50%|█████     | 6/12 [00:00<00:00, 28.20it/s]Predicting DataLoader 0:  58%|█████▊    | 7/12 [00:00<00:00, 28.35it/s]Predicting DataLoader 0:  67%|██████▋   | 8/12 [00:00<00:00, 28.47it/s]Predicting DataLoader 0:  75%|███████▌  | 9/12 [00:00<00:00, 28.50it/s]Predicting DataLoader 0:  83%|████████▎ | 10/12 [00:00<00:00, 28.55it/s]Predicting DataLoader 0:  92%|█████████▏| 11/12 [00:00<00:00, 28.57it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.60it/s]Predicting DataLoader 0: 100%|██████████| 12/12 [00:00<00:00, 28.58it/s]
+[[36m2025-03-12 10:46:14,067[0m][[34m__main__[0m][[32mINFO[0m] - Saving predicions: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/lrt_pred_100_86694012/runs/2025-03-12_10-46-07[0m

@@ -1,0 +1,7 @@
+- model=hnn
+- datamodule=TiO
+- hpsearch=hnn
+- task_name=TiO_hps_hnn
+- tags=[TiO]
+- datamodule.test_split=0.8
+- datamodule.valid_split=0.1
