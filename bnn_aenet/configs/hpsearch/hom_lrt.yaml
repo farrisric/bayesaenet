@@ -1,0 +1,17 @@
+# @package _global_
+
+defaults:
+  - /hpsearch/study: study
+  - /hpsearch/objective: bnn
+  - override /experiment: hom_lrt
+
+hpsearch:
+  monitor: mse/val
+  study:
+    study_name: hom_lrt
+
+trainer:
+  max_epochs: 500
+
+callbacks:
+  early_stopping: null

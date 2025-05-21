@@ -45,11 +45,13 @@ class HNN(pl.LightningModule):
         logic_reduce = batch[12]
         # grp_N_atom = batch[14]
         output = self.forward(grp_descrp, logic_reduce)
-        loc, scale = output.chunk(2, dim=-1) 
+        loc, log_var = output.chunk(2, dim=-1) 
+        var = torch.exp(log_var)
+        scale = torch.sqrt(var)
 
         if phase == "predict":
             return loc, scale
-        loss = F.gaussian_nll_loss(loc, grp_energy, torch.square(scale))
+        loss = F.gaussian_nll_loss(loc, grp_energy, var)
         self.log(f"nll/{phase}", loss, on_step=False, on_epoch=True, batch_size=len(batch[11]))
         return loss, loc, scale
 
@@ -160,4 +162,3 @@ class HNN(pl.LightningModule):
 
     def configure_optimizers(self):
         return self.hparams.optimizer(params=self.parameters())
-

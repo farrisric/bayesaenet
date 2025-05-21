@@ -126,7 +126,9 @@ def select_batches(tin, trainset_params, device, list_structures_energy, list_st
 		                               sampler=valid_sampler_E, memory_mode=tin.memory_mode, device=device, dataname="valid_energy")
 		test_energy_data = PrepDataloader(dataset=dataset_energy, train_forces=False, N_batch=N_batch_test,
 		                               sampler=test_sampler_E, memory_mode=tin.memory_mode, device=device, dataname="test_energy")
-
+		all_energy_data = PrepDataloader(dataset=dataset_energy, train_forces=False, N_batch=len(dataset_energy),
+		                               sampler=range(len(dataset_energy)), memory_mode=tin.memory_mode, device=device, dataname="all_energy")
+  
 	else:
 		dataset_energy = None
 		train_energy_data, valid_energy_data, test_energy_data = None, None, None
@@ -152,12 +154,12 @@ def select_batches(tin, trainset_params, device, list_structures_energy, list_st
 		                               sampler=valid_sampler_F, memory_mode=tin.memory_mode, device=device, dataname="valid_forces")
 		test_forces_data = PrepDataloader(dataset=dataset_forces, train_forces=True, N_batch=N_batch_test,
 		                               sampler=test_sampler_F, memory_mode=tin.memory_mode, device=device, dataname="test_forces")
-
+		
 	else:
 		dataset_forces = None
 		train_forces_data, valid_forces_data, test_forces_data = None, None, None
 
-	return train_forces_data, valid_forces_data, test_forces_data, train_energy_data, valid_energy_data, test_energy_data
+	return train_forces_data, valid_forces_data, test_forces_data, train_energy_data, valid_energy_data, test_energy_data, all_energy_data
 
 
 def save_datsets(save, train_forces_data, valid_forces_data, train_energy_data, valid_energy_data):

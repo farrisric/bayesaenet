@@ -1134,3 +1134,128 @@ Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/mu
 Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/8/checkpoints/epoch_9089-step_1799820.ckpt
 Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/9/checkpoints/epoch_6383-step_1264032.ckpt
 Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/9/checkpoints/epoch_6383-step_1264032.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_1/runs/2025-05-09_11-48-34/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_6502-step_1287594.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_6502-step_1287594.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_9426-step_1866546.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_9426-step_1866546.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_7208-step_1427382.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_7208-step_1427382.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_8371-step_1657656.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_8371-step_1657656.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_7647-step_1514304.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_7647-step_1514304.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_7295-step_1444608.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_7295-step_1444608.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_6992-step_1384614.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_6992-step_1384614.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_6633-step_1313532.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_6633-step_1313532.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_9265-step_1834668.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_9265-step_1834668.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_7018-step_1389762.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_1/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_7018-step_1389762.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_2/runs/2025-05-09_11-50-33/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_9933-step_1966932.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_9933-step_1966932.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_7655-step_1515888.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_7655-step_1515888.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_7322-step_1449954.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_7322-step_1449954.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_4893-step_969012.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_4893-step_969012.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9254-step_1832490.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9254-step_1832490.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_9626-step_1906146.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_9626-step_1906146.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_7229-step_1431540.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_7229-step_1431540.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_9055-step_1793088.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_9055-step_1793088.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_6415-step_1270368.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_6415-step_1270368.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_8609-step_1704780.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_2/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_8609-step_1704780.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_3/runs/2025-05-09_11-53-02/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_8754-step_1733490.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/0/checkpoints/epoch_8754-step_1733490.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_6512-step_1289574.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/1/checkpoints/epoch_6512-step_1289574.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_3917-step_775764.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/2/checkpoints/epoch_3917-step_775764.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_4032-step_798534.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/3/checkpoints/epoch_4032-step_798534.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9765-step_1933668.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/4/checkpoints/epoch_9765-step_1933668.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_9790-step_1938618.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/5/checkpoints/epoch_9790-step_1938618.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_8850-step_1752498.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/6/checkpoints/epoch_8850-step_1752498.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_6775-step_1341648.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/7/checkpoints/epoch_6775-step_1341648.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_8817-step_1745964.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/8/checkpoints/epoch_8817-step_1745964.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_8136-step_1611126.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_3/multiruns/2025-03-10_13-53-59/9/checkpoints/epoch_8136-step_1611126.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_4/runs/2025-05-09_11-55-00/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_7534-step_1491930.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_7534-step_1491930.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_8505-step_1684188.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_8505-step_1684188.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/2/checkpoints/epoch_7491-step_1483416.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/2/checkpoints/epoch_7491-step_1483416.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/3/checkpoints/epoch_8916-step_1765566.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/3/checkpoints/epoch_8916-step_1765566.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/4/checkpoints/epoch_9251-step_1831896.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/4/checkpoints/epoch_9251-step_1831896.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/5/checkpoints/epoch_9956-step_1971486.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/5/checkpoints/epoch_9956-step_1971486.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/6/checkpoints/epoch_8744-step_1731510.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/6/checkpoints/epoch_8744-step_1731510.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/7/checkpoints/epoch_9207-step_1823184.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/7/checkpoints/epoch_9207-step_1823184.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/8/checkpoints/epoch_9623-step_1905552.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/8/checkpoints/epoch_9623-step_1905552.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/9/checkpoints/epoch_9948-step_1969902.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_4/multiruns/2025-03-10_13-53-50/9/checkpoints/epoch_9948-step_1969902.ckpt
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/de_pred_100_5/runs/2025-05-09_11-56-58/lightning_logs
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_9827-step_1945944.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/0/checkpoints/epoch_9827-step_1945944.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_6839-step_1354320.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/1/checkpoints/epoch_6839-step_1354320.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/2/checkpoints/epoch_9326-step_1846746.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/2/checkpoints/epoch_9326-step_1846746.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/3/checkpoints/epoch_9458-step_1872882.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/3/checkpoints/epoch_9458-step_1872882.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/4/checkpoints/epoch_8998-step_1781802.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/4/checkpoints/epoch_8998-step_1781802.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/5/checkpoints/epoch_9984-step_1977030.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/5/checkpoints/epoch_9984-step_1977030.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/6/checkpoints/epoch_9260-step_1833678.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/6/checkpoints/epoch_9260-step_1833678.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/7/checkpoints/epoch_9874-step_1955250.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/7/checkpoints/epoch_9874-step_1955250.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/8/checkpoints/epoch_9089-step_1799820.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/8/checkpoints/epoch_9089-step_1799820.ckpt
+Restoring states from the checkpoint path at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/9/checkpoints/epoch_6383-step_1264032.ckpt
+Loaded model weights from the checkpoint at bnn_aenet/logs/de_train_80perc_5/multiruns/2025-03-10_13-53-50/9/checkpoints/epoch_6383-step_1264032.ckpt

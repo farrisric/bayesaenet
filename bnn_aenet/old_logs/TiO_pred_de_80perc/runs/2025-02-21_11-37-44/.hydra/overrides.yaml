@@ -1,5 +1,0 @@
-- task_name=TiO_pred_de_80perc
-- prediction=TiO
-- ckpt_path=all
-- +method=NN
-- runs_dir=bnn_aenet/logs/TiO_train_de

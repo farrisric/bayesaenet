@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -N rad_hps_100perc
 #$ -pe smp* 1
-#$ -q iqtc09.q
+#$ -q iqtc12.q
 #$ -S /bin/bash
 #$ -cwd
 #$ -o out

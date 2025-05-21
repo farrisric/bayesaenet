@@ -29,6 +29,7 @@ def load_model_hyperparams(model, datamodule, hp_path):
         hp_override = yaml.safe_load(file)
     for x in hp_override:
         if x[:5] == 'model':
+            print(x)
             key, value = x[6:].split('=')
             if len(key.split('.')) == 2:
                 key, subkey = key.split('.')

@@ -32,7 +32,8 @@ do
            task_name=rad_pred_100_${seed} \
            prediction=TiO \
            ckpt_path=all \
-	   datamodule.valid_split=100 \
+           datamodule.valid_split=100 \
            +method=RAD \
-           runs_dir=bnn_aenet/logs/rad_train_100perc_${seed}
+           runs_dir=bnn_aenet/logs/rad_train_100perc_${seed}\
+           +model.mc_samples_eval=100
 done

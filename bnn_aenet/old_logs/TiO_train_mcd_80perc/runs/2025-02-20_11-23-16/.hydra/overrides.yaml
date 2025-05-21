@@ -1,7 +1,0 @@
-- task_name=TiO_train_mcd_80perc
-- experiment=mcd
-- datamodule=TiO
-- model.optimizer.lr=0.0038485028892962167
-- datamodule.batch_size=64
-- model.p_dropout=0.2027662556391587
-- model.mc_samples=20

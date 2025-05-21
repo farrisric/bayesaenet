@@ -1,5 +1,0 @@
-- model=bnn_fo
-- datamodule=TiO
-- hpsearch=bnn_fo
-- task_name=TiO_hps_fo
-- tags=[TiO]

@@ -1,0 +1,17 @@
+# @package _global_
+
+defaults:
+  - /hpsearch/study: study
+  - /hpsearch/objective: bnn
+  - override /experiment: hom_fo
+
+hpsearch:
+  monitor: elbo/val
+  study:
+    study_name: hom_fo
+
+trainer:
+  max_epochs: 20
+
+callbacks:
+  early_stopping: null

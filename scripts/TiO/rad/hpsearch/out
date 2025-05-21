@@ -9077,3 +9077,23 @@ Epoch 19/19 ━━━━━━━━━━━━━━━━ 12/12 0:00:00 • 0
 [[36m2025-02-25 12:02:37,051[0m][[34mutils.utils[0m][[32mINFO[0m] - Closing loggers...[0m
 [[36m2025-02-25 12:02:37,051[0m][[34mutils.utils[0m][[32mINFO[0m] - Output dir: /home/g15farris/bin/bayesaenet/bnn_aenet/logs/rad_hps_100perc/runs/2025-02-25_11-01-19/108[0m
 [[36m2025-02-25 12:02:37,166[0m][[34m__main__[0m][[32mINFO[0m] - Number of finished trials: 109[0m
+{'_target_': 'lightning.pytorch.trainer.Trainer', 'default_root_dir': '${paths.output_dir}', 'min_epochs': 20000, 'max_epochs': 20, 'accelerator': 'cpu', 'devices': 1, 'check_val_every_n_epoch': 1, 'deterministic': False}
+[[36m2025-05-07 14:04:53,921[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating study <optuna.create_study>[0m
+[[36m2025-05-07 14:04:53,923[0m][[34m__main__[0m][[32mINFO[0m] - Results will be stored in sqlite:////home/g15farris/bin/bayesaenet/bnn_aenet/results/TiO/rad_100perc.db[0m
+[[36m2025-05-07 14:05:09,993[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating objective <bnn_aenet.tasks.hpsearch.objective_bnn>[0m
+[[36m2025-05-07 14:05:10,424[0m][[34m__main__[0m][[32mINFO[0m] - Starting hyperparameter search ...[0m
+[[36m2025-05-07 14:05:12,080[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+{'_target_': 'lightning.pytorch.trainer.Trainer', 'default_root_dir': '${paths.output_dir}', 'min_epochs': 20000, 'max_epochs': 20, 'accelerator': 'cpu', 'devices': 1, 'check_val_every_n_epoch': 1, 'deterministic': False}
+[[36m2025-05-07 14:14:54,205[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating study <optuna.create_study>[0m
+[[36m2025-05-07 14:14:54,213[0m][[34m__main__[0m][[32mINFO[0m] - Results will be stored in sqlite:////home/g15farris/bin/bayesaenet/bnn_aenet/results/TiO/rad_100perc.db[0m
+[[36m2025-05-07 14:15:28,750[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating objective <bnn_aenet.tasks.hpsearch.objective_bnn>[0m
+[[36m2025-05-07 14:15:29,304[0m][[34m__main__[0m][[32mINFO[0m] - Starting hyperparameter search ...[0m
+[[36m2025-05-07 14:15:30,764[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-05-07 14:15:31,191[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0008903010137610581, lr[0m
+{'_target_': 'lightning.pytorch.trainer.Trainer', 'default_root_dir': '${paths.output_dir}', 'min_epochs': 20000, 'max_epochs': 20, 'accelerator': 'cpu', 'devices': 1, 'check_val_every_n_epoch': 1, 'deterministic': False}
+[[36m2025-05-07 14:56:32,916[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating study <optuna.create_study>[0m
+[[36m2025-05-07 14:56:33,009[0m][[34m__main__[0m][[32mINFO[0m] - Results will be stored in sqlite:////home/g15farris/bin/bayesaenet/bnn_aenet/results/TiO/rad_100perc.db[0m
+[[36m2025-05-07 14:57:31,044[0m][[34m__main__[0m][[32mINFO[0m] - Instantiating objective <bnn_aenet.tasks.hpsearch.objective_bnn>[0m
+[[36m2025-05-07 14:57:32,813[0m][[34m__main__[0m][[32mINFO[0m] - Starting hyperparameter search ...[0m
+[[36m2025-05-07 14:57:35,087[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0 pretrain_epochs[0m
+[[36m2025-05-07 14:57:35,517[0m][[34mbnn_aenet.tasks.hpsearch[0m][[32mINFO[0m] - 0.0008903010137610581, lr[0m

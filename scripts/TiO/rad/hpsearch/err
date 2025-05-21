@@ -1484,3 +1484,156 @@ IPU available: False, using: 0 IPUs
 HPU available: False, using: 0 HPUs
 `Trainer.fit` stopped: `max_epochs=20` reached.
 [I 2025-02-25 12:02:37,124] Trial 108 finished with value: 1681.7698974609375 and parameters: {'pretrain_epochs': 0, 'lr': 0.0008821922776024473, 'mc_samples_train': 1, 'prior_scale': 0.15353728247268095, 'q_scale': 0.00012981513969001702, 'batch_size': 512}. Best is trial 89 with value: -210.18203735351562.
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py:92: ExperimentalWarning: PatientPruner is experimental (supported from v2.8.0). The interface can change in the future.
+  return _target_(*args, **kwargs)
+[I 2025-05-07 14:05:09,507] Using an existing study with name 'rad_100perc' instead of creating a new one.
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py:92: ExperimentalWarning: PatientPruner is experimental (supported from v2.8.0). The interface can change in the future.
+  return _target_(*args, **kwargs)
+[I 2025-05-07 14:15:28,693] Using an existing study with name 'rad_100perc' instead of creating a new one.
+[W 2025-05-07 14:15:31,711] Trial 110 failed with parameters: {'pretrain_epochs': 0, 'lr': 0.0008903010137610581} because of the following error: ValueError('CategoricalDistribution does not support dynamic value space.').
+Traceback (most recent call last):
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/_optimize.py", line 196, in _run_trial
+    value_or_values = func(trial)
+                      ^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/hpsearch.py", line 93, in <lambda>
+    lambda trial: objective(trial, cfg, output_dir),
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/hpsearch.py", line 61, in objective_bnn
+    cfg.model.mc_samples_train = trial.suggest_categorical(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/trial/_trial.py", line 404, in suggest_categorical
+    return self._suggest(name, CategoricalDistribution(choices=choices))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/trial/_trial.py", line 635, in _suggest
+    storage.set_trial_param(trial_id, name, param_value_in_internal_repr, distribution)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_cached_storage.py", line 171, in set_trial_param
+    self._backend.set_trial_param(trial_id, param_name, param_value_internal, distribution)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/storage.py", line 568, in set_trial_param
+    self._set_trial_param_without_commit(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/storage.py", line 603, in _set_trial_param_without_commit
+    trial_param.check_and_add(session)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/models.py", line 360, in check_and_add
+    self._check_compatibility_with_previous_trial_param_distributions(session)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/models.py", line 376, in _check_compatibility_with_previous_trial_param_distributions
+    distributions.check_distribution_compatibility(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/distributions.py", line 670, in check_distribution_compatibility
+    raise ValueError(
+ValueError: CategoricalDistribution does not support dynamic value space.
+[W 2025-05-07 14:15:32,621] Trial 110 failed with value None.
+Error executing job with overrides: ['model=bnn_rad', 'datamodule=TiO', 'hpsearch=bnn_rad', 'task_name=rad_hps_100perc', 'tags=[TiO]', 'datamodule.valid_split=100', 'hpsearch.study.study_name=rad_100perc']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/hpsearch.py", line 92, in main
+    study.optimize(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/study.py", line 451, in optimize
+    _optimize(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/_optimize.py", line 62, in _optimize
+    _optimize_sequential(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/_optimize.py", line 159, in _optimize_sequential
+    frozen_trial = _run_trial(study, func, catch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/_optimize.py", line 247, in _run_trial
+    raise func_err
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/_optimize.py", line 196, in _run_trial
+    value_or_values = func(trial)
+                      ^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/hpsearch.py", line 93, in <lambda>
+    lambda trial: objective(trial, cfg, output_dir),
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/hpsearch.py", line 61, in objective_bnn
+    cfg.model.mc_samples_train = trial.suggest_categorical(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/trial/_trial.py", line 404, in suggest_categorical
+    return self._suggest(name, CategoricalDistribution(choices=choices))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/trial/_trial.py", line 635, in _suggest
+    storage.set_trial_param(trial_id, name, param_value_in_internal_repr, distribution)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_cached_storage.py", line 171, in set_trial_param
+    self._backend.set_trial_param(trial_id, param_name, param_value_internal, distribution)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/storage.py", line 568, in set_trial_param
+    self._set_trial_param_without_commit(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/storage.py", line 603, in _set_trial_param_without_commit
+    trial_param.check_and_add(session)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/models.py", line 360, in check_and_add
+    self._check_compatibility_with_previous_trial_param_distributions(session)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/models.py", line 376, in _check_compatibility_with_previous_trial_param_distributions
+    distributions.check_distribution_compatibility(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/distributions.py", line 670, in check_distribution_compatibility
+    raise ValueError(
+ValueError: CategoricalDistribution does not support dynamic value space.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/hydra/_internal/instantiate/_instantiate2.py:92: ExperimentalWarning: PatientPruner is experimental (supported from v2.8.0). The interface can change in the future.
+  return _target_(*args, **kwargs)
+[I 2025-05-07 14:57:30,812] Using an existing study with name 'rad_100perc' instead of creating a new one.
+[W 2025-05-07 14:57:36,167] Trial 111 failed with parameters: {'pretrain_epochs': 0, 'lr': 0.0008903010137610581} because of the following error: ValueError('CategoricalDistribution does not support dynamic value space.').
+Traceback (most recent call last):
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/_optimize.py", line 196, in _run_trial
+    value_or_values = func(trial)
+                      ^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/hpsearch.py", line 93, in <lambda>
+    lambda trial: objective(trial, cfg, output_dir),
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/hpsearch.py", line 61, in objective_bnn
+    cfg.model.mc_samples_train = trial.suggest_categorical(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/trial/_trial.py", line 404, in suggest_categorical
+    return self._suggest(name, CategoricalDistribution(choices=choices))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/trial/_trial.py", line 635, in _suggest
+    storage.set_trial_param(trial_id, name, param_value_in_internal_repr, distribution)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_cached_storage.py", line 171, in set_trial_param
+    self._backend.set_trial_param(trial_id, param_name, param_value_internal, distribution)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/storage.py", line 568, in set_trial_param
+    self._set_trial_param_without_commit(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/storage.py", line 603, in _set_trial_param_without_commit
+    trial_param.check_and_add(session)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/models.py", line 360, in check_and_add
+    self._check_compatibility_with_previous_trial_param_distributions(session)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/models.py", line 376, in _check_compatibility_with_previous_trial_param_distributions
+    distributions.check_distribution_compatibility(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/distributions.py", line 670, in check_distribution_compatibility
+    raise ValueError(
+ValueError: CategoricalDistribution does not support dynamic value space.
+[W 2025-05-07 14:57:37,377] Trial 111 failed with value None.
+Error executing job with overrides: ['model=bnn_rad', 'datamodule=TiO', 'hpsearch=bnn_rad', 'task_name=rad_hps_100perc', 'tags=[TiO]', 'datamodule.valid_split=100', 'hpsearch.study.study_name=rad_100perc']
+Traceback (most recent call last):
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/hpsearch.py", line 92, in main
+    study.optimize(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/study.py", line 451, in optimize
+    _optimize(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/_optimize.py", line 62, in _optimize
+    _optimize_sequential(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/_optimize.py", line 159, in _optimize_sequential
+    frozen_trial = _run_trial(study, func, catch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/_optimize.py", line 247, in _run_trial
+    raise func_err
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/study/_optimize.py", line 196, in _run_trial
+    value_or_values = func(trial)
+                      ^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/hpsearch.py", line 93, in <lambda>
+    lambda trial: objective(trial, cfg, output_dir),
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/bin/bayesaenet/bnn_aenet/tasks/hpsearch.py", line 61, in objective_bnn
+    cfg.model.mc_samples_train = trial.suggest_categorical(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/trial/_trial.py", line 404, in suggest_categorical
+    return self._suggest(name, CategoricalDistribution(choices=choices))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/trial/_trial.py", line 635, in _suggest
+    storage.set_trial_param(trial_id, name, param_value_in_internal_repr, distribution)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_cached_storage.py", line 171, in set_trial_param
+    self._backend.set_trial_param(trial_id, param_name, param_value_internal, distribution)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/storage.py", line 568, in set_trial_param
+    self._set_trial_param_without_commit(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/storage.py", line 603, in _set_trial_param_without_commit
+    trial_param.check_and_add(session)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/models.py", line 360, in check_and_add
+    self._check_compatibility_with_previous_trial_param_distributions(session)
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/storages/_rdb/models.py", line 376, in _check_compatibility_with_previous_trial_param_distributions
+    distributions.check_distribution_compatibility(
+  File "/home/g15farris/.conda/envs/bnn/lib/python3.12/site-packages/optuna/distributions.py", line 670, in check_distribution_compatibility
+    raise ValueError(
+ValueError: CategoricalDistribution does not support dynamic value space.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
