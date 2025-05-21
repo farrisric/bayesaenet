@@ -62,3 +62,5 @@ docs/_build/
 *.db
 *.out
 *.err
+out
+err
