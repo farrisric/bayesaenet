@@ -62,5 +62,7 @@ docs/_build/
 *.db
 *.out
 *.err
-out
+*out
 err
+*.png
+scripts/TiO/hom_lrt/qscale_priorscale/grid_pred/out
