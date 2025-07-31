@@ -1,99 +1,30 @@
-# BNN-AENET
+# bayesian-aenet
 
-BNN-AENET is a library designed for training neural networks to predict atomic energies and forces, primarily in the context of materials science or computational chemistry. The library leverages PyTorch for neural network operations and includes specific modules for handling atomic structures, descriptors, and their derivatives. It supports both energy and force training, normalizing and batching data for efficient neural network training.
+**bayesian-aenet** is a research-focused extension of the [aenet-PyTorch](https://pubs.aip.org/aip/jcp/article/158/16/164105/2885330/anet-PyTorch-A-GPU-supported-implementation-for) framework, designed for benchmarking **uncertainty quantification (UQ)** methods in **machine learning interatomic potentials (MLIPs)**. It enables the systematic comparison of two widely used strategies:
 
-## Table of Contents
+- **Deep Ensembles (DE)**
+- **Variational Bayesian Neural Networks (VBNNs)**
 
-- Installation
-- Usage
-- Project Structure
-- Key Components
-- Configuration
-- Examples
-- Contributing
-- License
+---
 
-## Installation
+## 🎯 Purpose
 
-To install the required dependencies, run:
+Traditional ML interatomic potentials provide point estimates but lack a principled assessment of uncertainty, limiting their reliability in out-of-distribution scenarios and their utility in active learning pipelines. This library addresses these challenges by:
 
-```sh
-pip install -r requirements.txt
+- Implementing **Bayesian neural networks** using **variational inference**, leveraging [Pyro](https://pyro.ai/) and [TyXe](https://github.com/TyXe-BDL/TyXe.git)
+- Benchmarking against **deep ensembles**, a widely used method for epistemic UQ
+- Evaluating **predictive accuracy**, **uncertainty calibration**, and **robustness** across data regimes
+
+The models are tested on a dataset of [7,815 DFT-computed TiO₂ structures](https://www.sciencedirect.com/science/article/abs/pii/S0927025615007806?via%3Dihub), originally developed for validating atom-centered neural network potentials.
+
+For a full methodological description, implementation details, and performance results, refer to the accompanying preprint:
+
+```bibtex
+@article{farris2025uncertainty,
+  title={To be Published: Uncertainty Quantification for Machine Learning Interatomic Potentials},
+  author={Farris, Riccardo and Telari, Emanuele and Bruix, Albert and Artrith, Nongnuch},
+  journal={arXiv preprint},
+  year={2025},
+  url={https://github.com/farrisric/bayesaenet}
+}
 ```
-
-## Usage
-
-To train a model, you need to prepare the input files and configure the training parameters. The main entry point for training is through the `train.py` script. Here is an example command to start training:
-
-```sh
-python train.py --config config.yaml
-```
-
-Make sure to replace `config.yaml` with your actual configuration file.
-
-## Project Structure
-
-The project is organized as follows:
-
-```
-/home/g15farris/bin/bayesaenet/
-├── data/               # Directory for storing datasets
-├── models/             # Pre-trained models and model checkpoints
-├── scripts/            # Utility scripts for data processing and analysis
-├── src/                # Source code for the library
-│   ├── descriptors/    # Code for generating atomic descriptors
-│   ├── models/         # Neural network architectures
-│   ├── trainers/       # Training routines and utilities
-│   └── utils/          # Helper functions and utilities
-└── train.py            # Main script for training models
-```
-
-## Key Components
-
-- **Descriptors**: Functions and classes for generating atomic descriptors.
-- **Models**: Neural network architectures for energy and force prediction.
-- **Trainers**: Utilities for training models, including data loading, normalization, and batching.
-- **Utils**: Helper functions for various tasks such as logging and configuration management.
-
-## Configuration
-
-The training process is configured using YAML files. Here is an example configuration:
-
-```yaml
-model:
-    type: BNN
-    layers: [128, 128, 64]
-
-training:
-    epochs: 100
-    batch_size: 32
-    learning_rate: 0.001
-
-data:
-    train_path: data/train.csv
-    val_path: data/val.csv
-```
-
-## Examples
-
-Here are some example commands to get you started:
-
-- Train a model:
-
-    ```sh
-    python train.py --config config.yaml
-    ```
-
-- Evaluate a model:
-
-    ```sh
-    python evaluate.py --model models/checkpoint.pth --data data/test.csv
-    ```
-
-## Contributing
-
-Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to contribute to this project.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
