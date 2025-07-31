@@ -25,8 +25,8 @@ model:
 
 callbacks:
   model_checkpoint:
-    monitor: elbo/val
+    monitor: mse/val
 
   early_stopping:
-    monitor: elbo/val
-    patience: 20
+    monitor: mse/val
+    patience: 100

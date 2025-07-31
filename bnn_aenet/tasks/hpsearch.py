@@ -33,22 +33,6 @@ def objective(trial: Trial, cfg: DictConfig, output_dir: str):
     return metric_dict[cfg.hpsearch.monitor]
 
 
-def objective_hnn(trial: Trial, cfg: DictConfig, output_dir: str):
-    cfg.model.optimizer.lr = trial.suggest_float("lr", 1e-4, 5e-3, log=True)
-    log.info(f"{cfg.model.optimizer.lr} lr")
-    return objective(trial, cfg, output_dir)
-
-
-def objective_mcd(trial: Trial, cfg: DictConfig, output_dir: str):
-    cfg.model.mc_samples = trial.suggest_categorical(
-        "mc_samples", [20, 50, 100]
-    )
-    log.info(f"{cfg.model.mc_samples} mc_samples")
-    cfg.model.p_dropout = trial.suggest_float("p_dropout", 0.20, 0.85)
-    log.info(f"{cfg.model.p_dropout} p_dropout")
-    return objective_hnn(trial, cfg, output_dir)
-
-
 def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
     cfg.model.pretrain_epochs = trial.suggest_categorical(
         "pretrain_epochs", [0]
@@ -63,7 +47,7 @@ def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
     )
     log.info(f"{cfg.model.mc_samples_train} mc_samples_train")
     cfg.model.prior_scale = trial.suggest_float(
-        "prior_scale", 1, 10, log=True
+        "prior_scale", 0.1, 1.5, log=True
     )
     log.info(f"{cfg.model.prior_scale} prior_scale")
     cfg.model.q_scale = trial.suggest_float(
@@ -71,7 +55,7 @@ def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
         )
     log.info(f"{cfg.model.q_scale} q_scale")
     cfg.model.obs_scale = trial.suggest_float(
-        "obs_scale", 1e-4, 10, log=True
+        "obs_scale", 0.1, 2, log=True
         )
     log.info(f"{cfg.model.obs_scale} obs_scale")
     return objective(trial, cfg, output_dir)

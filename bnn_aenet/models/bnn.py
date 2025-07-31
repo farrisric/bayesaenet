@@ -7,15 +7,14 @@ from torch import nn
 import torch.nn.functional as F
 import tyxe
 from tyxe import guides, priors, likelihoods, VariationalBNN
-
-from ..results.metrics import rms_calibration_error, sharpness
+from tyxe.guides import AutoNormal 
 from .guides.radial import AutoRadial
-
 import lightning.pytorch as L
 from functools import partial
 import copy
 import contextlib
 import numpy as np
+
 
 class BNN(L.LightningModule):
     def __init__(
@@ -81,8 +80,9 @@ class BNN(L.LightningModule):
             ] = tyxe.guides.PretrainedInitializer.from_net(self.net)
         guide = partial(guide_base, **guide_kwargs)
 
-        likelihood = tyxe.likelihoods.HeteroskedasticGaussian(
-            self.hparams.dataset_size, positive_scale=True,
+        likelihood = tyxe.likelihoods.HomoskedasticGaussian(
+            self.hparams.dataset_size,
+            scale=self.hparams.obs_scale,
         )
 
         self.bnn = VariationalBNN(
@@ -121,8 +121,7 @@ class BNN(L.LightningModule):
 
         with self.fit_ctxt():
             elbo = self.svi.step(x,y)
-            output = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_train)
-            loc, scale = output.chunk(2, dim=-1) 
+            loc, scale = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_train)
             kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
@@ -146,11 +145,9 @@ class BNN(L.LightningModule):
         )
         elbo = self.svi.evaluate_loss(x, y.squeeze())
         # Aggregate = False if num_prediction = 1, else nans in sd
-        output = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
-        loc, scale = output.chunk(2, dim=-1) 
+        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
         kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
-        #mse = rmse(loc, y, batch[14])
         mse = F.mse_loss(loc, y)
         rmse = get_rmse_atom(loc, y, batch[14])
         self.log("rmse/val", rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y))
@@ -166,11 +163,10 @@ class BNN(L.LightningModule):
     def test_step(self, batch, batch_idx):
         x = batch[10], batch[12]
         y = batch[11]
-        output = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
-        loc, scale = output.chunk(2, dim=-1) 
-        
+        loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
+
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
-        #mse = rmse(loc, y, batch[14])
+
         mse = F.mse_loss(loc, y)
         rmse = get_rmse_atom(loc, y, batch[14])
         self.log("nll/test", nll, batch_size=len(y))
@@ -186,25 +182,19 @@ class BNN(L.LightningModule):
         x = batch[10], batch[12]
         y = batch[11]
         pred = dict()
-
+        
         output = self.bnn.predict(
             x[0], x[1],
             num_predictions=self.hparams.mc_samples_eval,
             aggregate=False
         )
+        preds = output.mean(axis=0)
+        stds = output.std(axis=0)        
+        true = batch[11]
         
-        loc, scale = output[:, :len(y)], output[:, len(y):]
-
-        ep_var = loc.var(0)
-        al_var = (scale**2).mean(0)
-        pred["ep_vars"] = ep_var.cpu().numpy()
-        pred["al_vars"] = al_var.cpu().numpy()
-        
-        scale = al_var.add(ep_var).sqrt()
-        loc = loc.mean(axis=0)
-        pred["preds"] = loc.cpu().numpy()
-        pred["stds"] = scale.cpu().numpy()
-        pred["labels"] = batch[11].cpu().numpy()
+        pred["true"] = true.cpu().numpy()
+        pred["preds"] = preds.cpu().numpy()
+        pred["stds"] = stds.cpu().numpy()
         pred["n_atoms"] = batch[14].cpu().numpy()
         return pred
 
@@ -275,7 +265,7 @@ class NN(L.LightningModule):
         logic_reduce = batch[12]
         grp_N_atom = batch[14]
         
-        list_E_ann = self.forward(grp_descrp, logic_reduce)
+        list_E_ann = self.forward(grp_descrp, logic_reduce)   
         return get_rmse_atom(list_E_ann, grp_energy, grp_N_atom)
 
     def training_step(self, batch, batch_idx):
@@ -309,12 +299,12 @@ class NN(L.LightningModule):
         
         pred = dict()
         
-        #true = grp_energy/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        true = grp_energy/self.net.e_scaling + self.net.e_shift*grp_N_atom
         list_E_ann = self.net.forward(grp_descrp, logic_reduce)
-        #preds = list_E_ann/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        preds = list_E_ann/self.net.e_scaling + self.net.e_shift*grp_N_atom
 
-        pred["true"] = grp_energy.cpu().numpy()
-        pred["preds"] = list_E_ann.cpu().numpy()
+        pred["true"] = true.cpu().numpy()
+        pred["preds"] = preds.cpu().numpy()
         pred["n_atoms"] = batch[14].cpu().numpy()
         return pred
     

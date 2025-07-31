@@ -1,5 +1,0 @@
-defaults:
-  - hom_bnn
-
-fit_context: fo
-guide: normal

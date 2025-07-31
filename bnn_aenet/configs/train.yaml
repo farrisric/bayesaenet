@@ -20,6 +20,7 @@ defaults:
   - debug: null
 
 task_name: train
+run_name: default
 tags: ["dev"]
 
 # set False to skip model training

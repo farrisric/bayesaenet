@@ -14,8 +14,8 @@ trainer:
 
 callbacks:
   model_checkpoint:
-    monitor: rmse/val
+    monitor: mse/val
 
   early_stopping:
-    monitor: rmse/val
+    monitor: mse/val
     patience: 20

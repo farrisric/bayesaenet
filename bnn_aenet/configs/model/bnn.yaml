@@ -1,5 +1,5 @@
 net:
-  _target_: bnn_aenet.models.nets.heteroskedastic_network.NetAtom
+  _target_: bnn_aenet.models.nets.network.NetAtom
   input_size: ???
   hidden_size: ???
   species: ???

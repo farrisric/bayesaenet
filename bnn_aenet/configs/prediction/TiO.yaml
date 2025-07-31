@@ -4,13 +4,9 @@ defaults:
   - _self_
   - /datamodule: TiO
   - /model@LRT: bnn_lrt
-  - /model@HLRT: hom_lrt
   - /model@FO: bnn_fo
-  - /model@HFO: hom_fo
   - /model@RAD: bnn_rad
   - /model@NN: nn
-  - /model@HNN: hnn
-  - /model@MCD: mcd
   
 dataset: TiO
 runs_dir: ${paths.results_dir}/${dataset}/runs

@@ -3,7 +3,7 @@ sys.path.append('../')
 
 import os
 import pyro
-from bnn_aenet.models.hom_bnn import BNN, NN
+from bnn_aenet.models.bnn import BNN, NN
 from bnn_aenet.models.nets.network_old import NetAtom
 import torch
 import pytorch_lightning as L

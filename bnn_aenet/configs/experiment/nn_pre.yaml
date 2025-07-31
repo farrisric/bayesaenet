@@ -15,7 +15,7 @@ trainer:
 callbacks:
   model_checkpoint:
     filename: "pretrained"
-    monitor: "rmse/val"
+    monitor: "mse/val"
     mode: "min"
     save_last: False
     auto_insert_metric_name: False

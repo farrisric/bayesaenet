@@ -8,6 +8,7 @@ defaults:
   - hydra: default
 
 task_name: predict
+run_name: default
 tags: ["dev"]
 subsets: ["val"]
 ckpt_path: all

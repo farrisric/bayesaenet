@@ -1,1 +1,1 @@
-from .nets.network_old import NetAtom
+from .nets.network import NetAtom
