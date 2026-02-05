@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - /datamodule: QM7
+  - /model@LRT: bnn_lrt
+  - /model@NN: nn
+  
+dataset: QM7
+runs_dir: ${paths.results_dir}/${dataset}/runs

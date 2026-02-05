@@ -1,0 +1,14 @@
+- trainer.min_epochs=50000
+- trainer.max_epochs=50000
+- experiment=bnn_lrt
+- trainer.deterministic=False
+- task_name=lrt_train
+- run_name=training_0.0022
+- datamodule=TiO
+- datamodule.valid_split=100
+- datamodule.batch_size=64
+- model.lr=2.7337603911610372e-05
+- model.mc_samples_train=1
+- model.prior_scale=0.26752125266324683
+- model.q_scale=0.00016352029904680303
+- model.obs_scale=0.9301006149179629

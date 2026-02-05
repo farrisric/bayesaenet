@@ -78,7 +78,7 @@ class NetAtom(nn.Module):
 			partial_E_ann[iesp] = self.functions[iesp](grp_descrp[iesp].float())
 
 		# Gather back all atoms corresponding to the same strucuture from partial_E_ann
-		list_E_ann = torch.zeros( (len(logic_reduce[0])), device=self.device)
+		list_E_ann = torch.zeros( (len(logic_reduce[0])), device=partial_E_ann[0].device)
 		for iesp in range(len(self.species)):
 			list_E_ann = list_E_ann + torch.einsum( "ij,ki->k", partial_E_ann[iesp], logic_reduce[iesp])
 
@@ -91,18 +91,18 @@ class NetAtom(nn.Module):
 		"""
 
 		E_atomic_ann = [0 for i in range(len(self.species))] #torch.empty((0,1), requires_grad=True)  
-		aux_F_i      = torch.empty((0, 3 ), requires_grad=True, device=self.device)  
-		aux_F_j      = torch.empty((0, max_nnb, 3), device=self.device , requires_grad=True)  
+		device = group_descrp[0].device
+		aux_F_i      = torch.empty((0, 3 ), requires_grad=True, device=device)  
+		aux_F_j      = torch.empty((0, max_nnb, 3), device=device , requires_grad=True)  
 
 		for iesp in range( len(self.species) ):
-
 			group_descrp[iesp].requires_grad_(True)
 
 			partial_E_ann = self.functions[iesp]( group_descrp[iesp] )
 
 			aux_dE_dG, = torch.autograd.grad(partial_E_ann, group_descrp[iesp],
-                                    grad_outputs=partial_E_ann.data.new(partial_E_ann.shape).fill_(1),
-                                    create_graph=True)#, retain_graph = True)
+	                                grad_outputs=partial_E_ann.data.new(partial_E_ann.shape).fill_(1),
+	                                create_graph=True)#, retain_graph = True)
 
 			E_atomic_ann[iesp] = partial_E_ann
 
@@ -111,7 +111,7 @@ class NetAtom(nn.Module):
 
 
 
-		aux_F_j    = torch.cat( ( aux_F_j, torch.zeros(1, aux_F_j.shape[1], 3, device=self.device) ) )
+		aux_F_j    = torch.cat( ( aux_F_j, torch.zeros(1, aux_F_j.shape[1], 3, device=device) ) )
 		aux_F_flat = aux_F_j.reshape( (aux_F_j.shape[0]*aux_F_j.shape[1],3) )
 		
 		aux_shape =  (group_indices_F.shape[0], group_indices_F.shape[1], 3)
@@ -122,7 +122,7 @@ class NetAtom(nn.Module):
 		        -torch.sum( torch.index_select(aux_F_flat,0,flatt_indices).reshape(aux_shape), dim=1 )
 
 
-		list_E_ann = torch.zeros( (len(logic_reduce[0])), device=self.device )  
+		list_E_ann = torch.zeros( (len(logic_reduce[0])), device=device )  
 		for iesp in range(len(self.species)):
 			list_E_ann = list_E_ann + torch.einsum( "ij,ki->k", E_atomic_ann[iesp], logic_reduce[iesp] )
 

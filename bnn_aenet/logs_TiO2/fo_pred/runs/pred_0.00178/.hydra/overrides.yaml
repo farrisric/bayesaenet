@@ -1,0 +1,7 @@
+- task_name=fo_pred
+- run_name=pred_0.00178
+- prediction=TiO
+- ckpt_path=all
+- datamodule.valid_split=100
+- +method=FO
+- runs_dir=bnn_aenet/logs/fo_train/runs/training_0.00178

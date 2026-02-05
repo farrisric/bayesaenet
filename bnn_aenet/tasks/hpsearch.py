@@ -33,6 +33,19 @@ def objective(trial: Trial, cfg: DictConfig, output_dir: str):
     return metric_dict[cfg.hpsearch.monitor]
 
 
+def objective_nn(trial: Trial, cfg: DictConfig, output_dir: str):
+    """Objective function for Deep Ensemble (NN) hyperparameter search."""
+    cfg.model.optimizer.lr = trial.suggest_float(
+        "lr", 1e-5, 1e-2, log=True
+    )
+    log.info(f"{cfg.model.optimizer.lr} lr")
+    cfg.model.optimizer.weight_decay = trial.suggest_float(
+        "weight_decay", 1e-6, 1e-2, log=True
+    )
+    log.info(f"{cfg.model.optimizer.weight_decay} weight_decay")
+    return objective(trial, cfg, output_dir)
+
+
 def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
     cfg.model.pretrain_epochs = trial.suggest_categorical(
         "pretrain_epochs", [0]

@@ -1,0 +1,6 @@
+- task_name=de_pred_100_2
+- prediction=TiO
+- ckpt_path=all
+- datamodule.valid_split=100
+- +method=NN
+- runs_dir=bnn_aenet/logs/de_train_80perc_2

@@ -1,0 +1,7 @@
+- model=bnn_fo
+- datamodule=TiO
+- hpsearch=bnn_fo
+- task_name=fo_hps
+- tags=[TiO]
+- datamodule.valid_split=100
+- hpsearch.study.study_name=bnn_fo

@@ -19,7 +19,11 @@ class AenetDataModule(L.LightningDataModule):
         ):
         super().__init__()
         self.data_dir = data_dir
-        self.device = device
+        # Ensure device is a string, handle both "cuda" and torch.device objects
+        if hasattr(device, 'type'):
+            self.device = device.type
+        else:
+            self.device = str(device)
         self.batch_size = batch_size
         self.valid_split = valid_split
         self.test_split = test_split

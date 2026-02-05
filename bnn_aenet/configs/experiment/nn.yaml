@@ -6,6 +6,8 @@ defaults:
   - override /callbacks: default
   - override /trainer: default
 
+tags: ["nn", "deep_ensemble"]
+
 seed: 12345
 
 trainer:
@@ -14,8 +16,8 @@ trainer:
 
 callbacks:
   model_checkpoint:
-    monitor: mse/val
+    monitor: rmse/val
 
   early_stopping:
-    monitor: mse/val
+    monitor: rmse/val
     patience: 20

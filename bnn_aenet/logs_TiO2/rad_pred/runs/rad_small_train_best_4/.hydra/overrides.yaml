@@ -1,0 +1,7 @@
+- task_name=rad_pred
+- run_name=rad_small_train_best_4
+- prediction=TiO
+- ckpt_path=all
+- datamodule.valid_split=100
+- +method=RAD
+- runs_dir=bnn_aenet/logs/rad_train/runs/rad_small_train_best_4

@@ -11,7 +11,9 @@ hpsearch:
     study_name: bnn_lrt
 
 trainer:
-  max_epochs: 500
+  max_epochs: 5000
 
 callbacks:
-  early_stopping: null
+  early_stopping:
+    monitor: mse/val
+    patience: 50

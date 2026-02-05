@@ -137,7 +137,10 @@ class GroupedDataset(object):
 
 			data = data_F + data_E
 
-		if self.device == "cuda:0":
+		# Move to GPU if device is cuda (handles both "cuda" and "cuda:0")
+		# Check device type - works for both string and torch.device objects
+		device_str = str(self.device).lower()
+		if "cuda" in device_str or self.memory_mode == "gpu":
 			data = self.batch_data_cpu_to_gpu(data)
 
 		return data

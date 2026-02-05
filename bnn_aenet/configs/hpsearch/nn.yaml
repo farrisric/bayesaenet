@@ -1,0 +1,19 @@
+# @package _global_
+
+defaults:
+  - /hpsearch/study: study
+  - /hpsearch/objective: nn
+  - override /experiment: nn
+
+hpsearch:
+  monitor: rmse/val
+  study:
+    study_name: nn_hps
+
+trainer:
+  max_epochs: 3000
+
+callbacks:
+  early_stopping:
+    monitor: rmse/val
+    patience: 50

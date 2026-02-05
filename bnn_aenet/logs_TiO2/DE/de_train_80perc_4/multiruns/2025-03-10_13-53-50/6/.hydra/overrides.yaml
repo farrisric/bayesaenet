@@ -1,0 +1,9 @@
+- task_name=de_train_80perc_4
+- experiment=nn
+- datamodule=TiO
+- trainer.min_epochs=10000
+- trainer.max_epochs=50000
+- datamodule.valid_split=100
+- datamodule.batch_size=32
+- model.optimizer.lr=0.0005486825664406678
+- seed=69010628

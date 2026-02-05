@@ -1,0 +1,25 @@
+TRAININGSET /work/g15farris/database/QM7/QM7.train.ascii
+TESTPERCENT 10
+VALIDPERCENT 10
+ITERATIONS 200000
+ITERWRITE 1
+BATCHSIZE 64
+NPSEED 1
+PHSEED 2
+
+MEMORY_MODE gpu
+SAVE_ENERGIES
+
+METHOD
+method=adamw   lr=0.0001
+
+REGULARIZATION 0.001
+
+NETWORKS
+! atom   network         hidden
+! types  file-name       layers  nodes:activation
+  C     C.pytorch.nn    2    15:tanh    15:tanh
+  H     H.pytorch.nn    2    15:tanh    15:tanh
+  S     S.pytorch.nn    2    15:tanh    15:tanh
+  O     O.pytorch.nn    2    15:tanh    15:tanh
+  N     N.pytorch.nn    2    15:tanh    15:tanh

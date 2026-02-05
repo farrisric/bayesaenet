@@ -47,7 +47,8 @@ def split_database(dataset_size, valid_split, test_split, seed=42):
 	
 	if len(indices) == 0:
 		return [], [], []
-	path_indices = f'/home/g15telari/TiO/Indices/Data{int(valid_split)}/'	
+	path_indices = f'/home/g15telari/TiO/Indices/Data{int(valid_split)}/'
+	path_indices = f'/work/g15farris/database/QM7/Indices/Data{int(valid_split)}/'	
 	train_indices = np.genfromtxt(path_indices+'train_set_idxes.txt').astype(int)
 	valid_indices = np.genfromtxt(path_indices+'valid_set_idxes.txt').astype(int)
 	test_indices = np.genfromtxt(path_indices+'test_set_idxes.txt').astype(int)
