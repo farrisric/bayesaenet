@@ -1,4 +1,4 @@
-from read_trainset import *
+from .read_trainset import *
 import torch
 import os
 

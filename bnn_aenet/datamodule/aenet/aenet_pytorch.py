@@ -15,17 +15,17 @@ import sys
 import resource
 from torch.utils.data import DataLoader
 
-from data_classes import *
-from read_input import *
-from read_trainset import *
-from network import *
-from prepare_batches import *
-from traininit import *
-from data_set import *
-from data_loader import *
-from optimization_step import *
-from output_nn import *
-from py_aeio import *
+from .data_classes import *
+from .read_input import *
+from .read_trainset import *
+from .network import *
+from .prepare_batches import *
+from .traininit import *
+from .data_set import *
+from .data_loader import *
+from .optimization_step import *
+from .output_nn import *
+from .py_aeio import *
 
 
 
@@ -80,11 +80,11 @@ else:
 
 	if tin.verbose : io_prepare_batches()
 
-	N_batch_train, N_batch_valid = select_batch_size(tin, list_structures_energy, list_structures_forces)
+	train_set_size, N_batch_train, N_batch_valid, N_batch_test = select_batch_size(tin, list_structures_energy, list_structures_forces)
 	# Join datasets with forces and only energies in a single torch dataset AND prepare batches
-	train_forces_data, valid_forces_data, train_energy_data, valid_energy_data = select_batches(tin, tin.trainset_params,
-                                                                                             device, list_structures_energy, list_structures_forces,
-																							max_nnb, N_batch_train, N_batch_valid)
+	train_forces_data, valid_forces_data, test_forces_data, train_energy_data, valid_energy_data, test_energy_data, all_energy_data = select_batches(tin, tin.trainset_params,
+                                                                                            device, list_structures_energy, list_structures_forces,
+																							max_nnb, N_batch_train, N_batch_valid, N_batch_test)
 
 	del list_structures_energy
 	del list_structures_forces

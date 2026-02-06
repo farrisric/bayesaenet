@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-from read_trainset import *
+from .read_trainset import *
 
 def save_network_iesp(model, iesp, f):
 	"""

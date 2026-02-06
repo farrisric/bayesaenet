@@ -355,7 +355,7 @@ class PrepDataloader(object):
 
 				aux_iesp.append(aux)
 
-			aux_iesp = torch.tensor( np.array(aux_iesp) )  
+			aux_iesp = torch.tensor( np.array(aux_iesp), dtype=torch.float32 )  
 			logic_tensor_reduce.append(aux_iesp)
 
 

@@ -1,4 +1,4 @@
-from network import *
+from .network import *
 
 
 def step_train_any(net, train_data, E_scaling, input_size, max_nnb):
