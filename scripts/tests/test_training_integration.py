@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 import torch
 import lightning as L
 from lightning.pytorch.callbacks import ModelCheckpoint
+from functools import partial
 
 
 def create_net_from_datamodule(dm):
@@ -54,7 +55,8 @@ def test_nn_training_loop():
     net = create_net_from_datamodule(dm)
     net.alpha = torch.tensor(0.1)
     
-    optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
+    # NN expects a callable optimizer (partial)
+    optimizer = partial(torch.optim.Adam, lr=1e-3)
     model = NN(net=net, optimizer=optimizer)
     
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -99,7 +101,7 @@ def test_nn_forces_training_loop():
     net = create_net_from_datamodule(dm)
     net.alpha = torch.tensor(0.1)
     
-    optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
+    optimizer = partial(torch.optim.Adam, lr=1e-3)
     model = NN_Forces(net=net, optimizer=optimizer, force_weight=1.0)
     
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -312,7 +314,8 @@ def test_checkpoint_save_load():
     net = create_net_from_datamodule(dm)
     net.alpha = torch.tensor(0.1)
     
-    optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
+    # NN expects a callable optimizer (partial)
+    optimizer = partial(torch.optim.Adam, lr=1e-3)
     model = NN(net=net, optimizer=optimizer)
     
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -342,7 +345,7 @@ def test_checkpoint_save_load():
         loaded = NN.load_from_checkpoint(
             ckpt_path,
             net=net_loaded,
-            optimizer=torch.optim.Adam(net_loaded.parameters(), lr=1e-3)
+            optimizer=partial(torch.optim.Adam, lr=1e-3)
         )
         
         print(f"  Checkpoint saved: {ckpt_path.name}")

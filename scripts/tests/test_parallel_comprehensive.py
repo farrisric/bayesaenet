@@ -108,6 +108,7 @@ def test_nn_init():
     from bnn_aenet.models.bnn import NN
     from bnn_aenet.models.nets.network import NetAtom
     import torch
+    from functools import partial
     
     net = NetAtom(
         input_size=[70, 70],
@@ -118,7 +119,7 @@ def test_nn_init():
     )
     
     try:
-        optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
+        optimizer = partial(torch.optim.Adam, lr=1e-3)
         model = NN(net=net, optimizer=optimizer)
         return {"test": "nn_init", "status": "success", "params": 2642}
     except Exception as e:
@@ -130,6 +131,7 @@ def test_nn_forces_init():
     from bnn_aenet.models.bnn import NN_Forces
     from bnn_aenet.models.nets.network import NetAtom
     import torch
+    from functools import partial
     
     net = NetAtom(
         input_size=[70, 70],
@@ -140,7 +142,7 @@ def test_nn_forces_init():
     )
     
     try:
-        optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
+        optimizer = partial(torch.optim.Adam, lr=1e-3)
         model = NN_Forces(net=net, optimizer=optimizer, force_weight=1.0)
         return {"test": "nn_forces_init", "status": "success", "params": 2642}
     except Exception as e:
@@ -402,6 +404,7 @@ def test_different_lr():
     from bnn_aenet.models.bnn import NN
     from bnn_aenet.models.nets.network import NetAtom
     import torch
+    from functools import partial
     
     lrs = [1e-5, 1e-4, 1e-3, 1e-2, 1e-1]
     results = {}
@@ -415,7 +418,7 @@ def test_different_lr():
                 active_names=[["tanh", "tanh"], ["tanh", "tanh"]],
                 alpha=0.1, device="cpu", e_scaling=1.0, e_shift=0.0
             )
-            optimizer = torch.optim.Adam(net.parameters(), lr=lr)
+            optimizer = partial(torch.optim.Adam, lr=lr)
             model = NN(net=net, optimizer=optimizer)
             results[str(lr)] = "success"
         except Exception as e:
