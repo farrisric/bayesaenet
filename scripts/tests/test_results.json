@@ -58,68 +58,9 @@
     }
   },
   {
-    "test": "nn_forces_init",
-    "status": "failed",
-    "error": "NN_Forces.__init__() got an unexpected keyword argument 'lr'"
-  },
-  {
-    "test": "prior_scales",
-    "results": {
-      "0.01": "success",
-      "0.1": "success",
-      "0.3": "success",
-      "0.5": "success",
-      "1.0": "success"
-    }
-  },
-  {
     "test": "bnn_lrt_init",
     "status": "success",
     "params": 2642
-  },
-  {
-    "test": "activation_functions",
-    "results": {
-      "tanh": "success",
-      "sigmoid": "success",
-      "relu": "failed: list index out of range",
-      "softplus": "failed: list index out of range"
-    }
-  },
-  {
-    "test": "nn_init",
-    "status": "failed",
-    "error": "NN.__init__() got an unexpected keyword argument 'lr'"
-  },
-  {
-    "test": "bnn_forces_aux_init",
-    "status": "success",
-    "params": 2642
-  },
-  {
-    "test": "bnn_flipout_init",
-    "status": "success",
-    "params": 2642
-  },
-  {
-    "test": "different_lr",
-    "results": {
-      "1e-05": "failed: NN.__init__() got an unexpected keyword argument '",
-      "0.0001": "failed: NN.__init__() got an unexpected keyword argument '",
-      "0.001": "failed: NN.__init__() got an unexpected keyword argument '",
-      "0.01": "failed: NN.__init__() got an unexpected keyword argument '",
-      "0.1": "failed: NN.__init__() got an unexpected keyword argument '"
-    }
-  },
-  {
-    "test": "q_scales",
-    "results": {
-      "1e-05": "success",
-      "0.0001": "success",
-      "0.001": "success",
-      "0.005": "success",
-      "0.01": "success"
-    }
   },
   {
     "test": "architecture_params",
@@ -135,6 +76,48 @@
       "64:32": 13314,
       "64:32:16": 14338,
       "100:50:25": 26902
+    }
+  },
+  {
+    "test": "q_scales",
+    "results": {
+      "1e-05": "success",
+      "0.0001": "success",
+      "0.001": "success",
+      "0.005": "success",
+      "0.01": "success"
+    }
+  },
+  {
+    "test": "prior_scales",
+    "results": {
+      "0.01": "success",
+      "0.1": "success",
+      "0.3": "success",
+      "0.5": "success",
+      "1.0": "success"
+    }
+  },
+  {
+    "test": "bnn_forces_aux_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
+    "test": "bnn_flipout_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
+    "test": "activation_functions",
+    "results": {
+      "tanh": "success",
+      "sigmoid": "success",
+      "relu": "success",
+      "softplus": "success",
+      "elu": "success",
+      "gelu": "success",
+      "silu": "success"
     }
   },
   {
@@ -155,16 +138,29 @@
     }
   },
   {
+    "test": "nn_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
+    "test": "different_lr",
+    "results": {
+      "1e-05": "success",
+      "0.0001": "success",
+      "0.001": "success",
+      "0.01": "success",
+      "0.1": "success"
+    }
+  },
+  {
+    "test": "nn_forces_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
     "test": "datamodule_tio_data20",
     "status": "success",
     "train_batches": 20
-  },
-  {
-    "test": "datamodule_tio",
-    "status": "success",
-    "train_batches": 99,
-    "val_batches": 11,
-    "test_batches": 12
   },
   {
     "test": "batch_structure_tio",
@@ -172,8 +168,15 @@
     "batch_length": 15,
     "has_forces": false,
     "energy_shape": [
-      32
+      31
     ]
+  },
+  {
+    "test": "datamodule_tio",
+    "status": "success",
+    "train_batches": 99,
+    "val_batches": 11,
+    "test_batches": 12
   },
   {
     "test": "datamodule_qm7",
