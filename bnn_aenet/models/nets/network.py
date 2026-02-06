@@ -29,16 +29,35 @@ class NetAtom(nn.Module):
 		self.linear  = nn.Identity()
 		self.tanh    = nn.Tanh()
 		self.sigmoid = nn.Sigmoid()
+		self.relu    = nn.ReLU()
+		self.softplus = nn.Softplus()
+		self.elu     = nn.ELU()
+		self.gelu    = nn.GELU()
+		self.silu    = nn.SiLU()  # Swish activation
+		
 		self.activations = []
 		for i in range(len(species)):
 			aux = []
 			for j in range(len(hidden_size[i])):
-				if self.active_names[i][j] == "linear":
+				act_name = self.active_names[i][j].lower()
+				if act_name == "linear":
 					aux.append(self.linear)
-				if self.active_names[i][j] == "tanh":
+				elif act_name == "tanh":
 					aux.append(self.tanh)
-				if self.active_names[i][j] == "sigmoid":
+				elif act_name == "sigmoid":
 					aux.append(self.sigmoid)
+				elif act_name == "relu":
+					aux.append(self.relu)
+				elif act_name == "softplus":
+					aux.append(self.softplus)
+				elif act_name == "elu":
+					aux.append(self.elu)
+				elif act_name == "gelu":
+					aux.append(self.gelu)
+				elif act_name == "silu" or act_name == "swish":
+					aux.append(self.silu)
+				else:
+					raise ValueError(f"Unknown activation: {act_name}. Supported: linear, tanh, sigmoid, relu, softplus, elu, gelu, silu/swish")
 			self.activations.append(aux)
 
 		self.functions = []

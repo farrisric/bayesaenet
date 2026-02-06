@@ -1,0 +1,183 @@
+[
+  {
+    "test": "hydra_configs",
+    "results": {
+      "experiment/nn_forces": "failed: In 'experiment/nn_forces': Could not override 'mod",
+      "experiment/bnn_lrt_forces_aux": "failed: In 'experiment/bnn_lrt_forces_aux': Could not over",
+      "experiment/bnn_fo_forces_aux": "failed: In 'experiment/bnn_fo_forces_aux': Could not overr",
+      "experiment/bnn_rad_forces_aux": "failed: In 'experiment/bnn_rad_forces_aux': Could not over",
+      "datamodule/TiO": "success",
+      "datamodule/TiO_Data20": "success",
+      "datamodule/QM7": "success"
+    }
+  },
+  {
+    "test": "force_metrics",
+    "status": "success",
+    "metrics": {
+      "mae": 0.007814487137923211,
+      "rmse": 0.009832004145531105,
+      "max_err": 0.039262377064363266,
+      "r2": 0.9901347638900457,
+      "mean_error": -0.00014952124590025177,
+      "std_error": 0.009830867149685488,
+      "mag_mae": 0.00776846051157991,
+      "mag_rmse": 0.00986871123208578,
+      "mean_angle_error": 5.78881983949092,
+      "max_angle_error": 61.906945659648486
+    }
+  },
+  {
+    "test": "energy_metrics",
+    "status": "success",
+    "metrics": {
+      "mae": 0.03898771315157237,
+      "rmse": 0.04887684672906,
+      "max_err": 0.13484433214707858,
+      "r2": 0.9900557142429791,
+      "mean_error": -0.001591305852800171,
+      "std_error": 0.04885093542460438,
+      "nll": 4.738740012144043,
+      "mean_std": 53.38,
+      "calib_68": 1.0,
+      "calib_95": 1.0,
+      "calib_99": 1.0
+    }
+  },
+  {
+    "test": "uncertainty_metrics",
+    "status": "success",
+    "metrics": {
+      "nll": 2094.211995108603,
+      "ece": 0.03240000000000001,
+      "sharpness": 0.0037527464277614863,
+      "mean_std": 0.05420136222066512,
+      "error_std_corr": -0.003898624500581164,
+      "picp_95": 0.85,
+      "mpiw_95": 0.2124654357310271
+    }
+  },
+  {
+    "test": "nn_forces_init",
+    "status": "failed",
+    "error": "NN_Forces.__init__() got an unexpected keyword argument 'lr'"
+  },
+  {
+    "test": "prior_scales",
+    "results": {
+      "0.01": "success",
+      "0.1": "success",
+      "0.3": "success",
+      "0.5": "success",
+      "1.0": "success"
+    }
+  },
+  {
+    "test": "bnn_lrt_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
+    "test": "activation_functions",
+    "results": {
+      "tanh": "success",
+      "sigmoid": "success",
+      "relu": "failed: list index out of range",
+      "softplus": "failed: list index out of range"
+    }
+  },
+  {
+    "test": "nn_init",
+    "status": "failed",
+    "error": "NN.__init__() got an unexpected keyword argument 'lr'"
+  },
+  {
+    "test": "bnn_forces_aux_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
+    "test": "bnn_flipout_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
+    "test": "different_lr",
+    "results": {
+      "1e-05": "failed: NN.__init__() got an unexpected keyword argument '",
+      "0.0001": "failed: NN.__init__() got an unexpected keyword argument '",
+      "0.001": "failed: NN.__init__() got an unexpected keyword argument '",
+      "0.01": "failed: NN.__init__() got an unexpected keyword argument '",
+      "0.1": "failed: NN.__init__() got an unexpected keyword argument '"
+    }
+  },
+  {
+    "test": "q_scales",
+    "results": {
+      "1e-05": "success",
+      "0.0001": "success",
+      "0.001": "success",
+      "0.005": "success",
+      "0.01": "success"
+    }
+  },
+  {
+    "test": "architecture_params",
+    "results": {
+      "10:10": 1662,
+      "15:15": 2642,
+      "20:20": 3722,
+      "25:25": 4902,
+      "30:30": 6182,
+      "40:40": 9042,
+      "50:50": 12302,
+      "50:25": 9702,
+      "64:32": 13314,
+      "64:32:16": 14338,
+      "100:50:25": 26902
+    }
+  },
+  {
+    "test": "imports",
+    "results": {
+      "bnn_aenet.models.bnn.BNN": "success",
+      "bnn_aenet.models.bnn.NN": "success",
+      "bnn_aenet.models.bnn.BNN_Forces_Aux": "success",
+      "bnn_aenet.models.bnn.NN_Forces": "success",
+      "bnn_aenet.models.nets.network.NetAtom": "success",
+      "bnn_aenet.datamodule.aenet_datamodule.AenetDataModule": "success",
+      "bnn_aenet.analysis.metrics.compute_energy_metrics": "success",
+      "bnn_aenet.analysis.metrics.compute_force_metrics": "success",
+      "bnn_aenet.analysis.metrics.compute_uncertainty_metrics": "success",
+      "bnn_aenet.datamodule.aenet.batch_constants.BatchIdx": "success",
+      "bnn_aenet.tasks.train.train": "success",
+      "bnn_aenet.tasks.hpsearch.hpsearch": "failed: cannot import name 'hpsearch' from 'bnn_aenet.task"
+    }
+  },
+  {
+    "test": "datamodule_tio_data20",
+    "status": "success",
+    "train_batches": 20
+  },
+  {
+    "test": "datamodule_tio",
+    "status": "success",
+    "train_batches": 99,
+    "val_batches": 11,
+    "test_batches": 12
+  },
+  {
+    "test": "batch_structure_tio",
+    "status": "success",
+    "batch_length": 15,
+    "has_forces": false,
+    "energy_shape": [
+      32
+    ]
+  },
+  {
+    "test": "datamodule_qm7",
+    "status": "success",
+    "train_batches": 90
+  }
+]
