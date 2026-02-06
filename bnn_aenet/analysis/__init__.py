@@ -11,7 +11,7 @@ from .metrics import (
     compute_force_metrics,
     compute_uncertainty_metrics,
 )
-from .plotting import (
+from .plots import (
     plot_parity,
     plot_residuals,
     plot_uncertainty_calibration,

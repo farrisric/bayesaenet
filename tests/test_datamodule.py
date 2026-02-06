@@ -42,7 +42,12 @@ class TestDataModuleImport:
 class TestTrainInParsing:
     """Tests for train.in file parsing."""
     
-    def test_train_in_class_import(self):
-        """Test TrainIn class can be imported."""
-        from bnn_aenet.datamodule.aenet.aenet_pytorch import TrainIn
-        assert TrainIn is not None
+    def test_input_parameters_import(self):
+        """Test InputParameters class can be imported."""
+        from bnn_aenet.datamodule.aenet.data_classes import InputParameters
+        assert InputParameters is not None
+    
+    def test_read_train_in_import(self):
+        """Test read_train_in function can be imported."""
+        from bnn_aenet.datamodule.aenet.read_input import read_train_in
+        assert read_train_in is not None
