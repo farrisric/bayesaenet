@@ -80,7 +80,10 @@ def train(cfg: DictConfig, trial: Optional[optuna.trial.Trial] = None):
     cfg.model.net.hidden_size = datamodule.hidden_size
     cfg.model.net.species = datamodule.species
     cfg.model.net.active_names = datamodule.active_names
-    cfg.model.net.alpha = datamodule.alpha
+    # Only use datamodule.alpha if config alpha is missing (placeholder ???)
+    # This allows experiment configs to override alpha for force training
+    if OmegaConf.is_missing(cfg.model.net, "alpha"):
+        cfg.model.net.alpha = datamodule.alpha
     cfg.model.net.e_scaling = datamodule.e_scaling
     cfg.model.net.e_shift = datamodule.e_shift
     #print(cfg.model.e_scaling, cfg.model.e_shift)
