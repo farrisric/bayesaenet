@@ -159,6 +159,36 @@ cd /home/g15farris/bin/bayesaenet
 python bnn_aenet/tasks/hpsearch.py hpsearch=partial_rad_last_forces datamodule=TiO trainer.accelerator=cpu
 EOF5
 
+# Job 6: Partial Radial First+Last
+qsub << 'EOF6'
+#!/bin/bash
+#$ -N hps_prad_fl
+#$ -q iqtc12.q
+#$ -pe smp 8
+#$ -cwd
+#$ -o logs/hps/hps_partial_rad_first_last.out
+#$ -e logs/hps/hps_partial_rad_first_last.err
+
+. /etc/profile
+
+__conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/aplic/anaconda/2024.10/etc/profile.d/conda.sh" ]; then
+        . "/aplic/anaconda/2024.10/etc/profile.d/conda.sh"
+    else
+        export PATH="/aplic/anaconda/2024.10/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+conda activate bnn
+
+cd /home/g15farris/bin/bayesaenet
+python bnn_aenet/tasks/hpsearch.py hpsearch=partial_rad_first_last_forces datamodule=TiO trainer.accelerator=cpu
+EOF6
+
 echo "All HPS jobs submitted to iqtc12 (CPU)!"
 echo "Check status with: qstat"
 echo "View logs in: logs/hps/"
