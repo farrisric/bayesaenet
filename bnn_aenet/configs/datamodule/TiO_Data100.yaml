@@ -1,0 +1,6 @@
+defaults:
+  - TiO
+
+# Use 100% training data split
+split_config: Data100
+name: TiO2_100pct

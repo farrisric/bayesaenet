@@ -1,19 +1,29 @@
-"""Analysis module for BNN-AENET results.
+"""Analysis and plotting utilities for BNN-AENET.
 
-This module provides utilities for:
-- Loading predictions from log directories
-- Computing UQ and performance metrics
+This module provides functions for:
+- Loading and analyzing predictions
+- Computing uncertainty metrics
 - Creating publication-quality plots
 """
 
-from .config import TIO2_CONFIG, QM7_CONFIG
-from .data_loader import PredictionLoader
-from .metrics import compute_all_metrics, compute_overlap_metric
+from .metrics import (
+    compute_energy_metrics,
+    compute_force_metrics,
+    compute_uncertainty_metrics,
+)
+from .plotting import (
+    plot_parity,
+    plot_residuals,
+    plot_uncertainty_calibration,
+    plot_training_curves,
+)
 
 __all__ = [
-    'TIO2_CONFIG',
-    'QM7_CONFIG',
-    'PredictionLoader',
-    'compute_all_metrics',
-    'compute_overlap_metric',
+    "compute_energy_metrics",
+    "compute_force_metrics",
+    "compute_uncertainty_metrics",
+    "plot_parity",
+    "plot_residuals",
+    "plot_uncertainty_calibration",
+    "plot_training_curves",
 ]

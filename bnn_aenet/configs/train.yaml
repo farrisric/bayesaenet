@@ -20,7 +20,7 @@ defaults:
   - debug: null
 
 task_name: train
-run_name: default
+run_name: ${now:%Y-%m-%d_%H-%M-%S}  # Auto-timestamp for unique runs
 tags: ["dev"]
 
 # set False to skip model training

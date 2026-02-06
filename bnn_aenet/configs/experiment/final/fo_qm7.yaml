@@ -1,0 +1,42 @@
+# @package _global_
+# Final training configuration for Flipout BNN on QM7 dataset
+# Optimized hyperparameters from HPS
+
+defaults:
+  - override /model: bnn_fo
+  - override /datamodule: QM7
+  - override /callbacks: default
+  - override /trainer: gpu
+
+tags: ["final", "bayesian", "flipout", "qm7"]
+
+# Reproducibility
+seed: 42
+
+trainer:
+  min_epochs: 5000
+  max_epochs: 50000
+  accelerator: gpu
+  devices: 1
+  deterministic: false
+
+model:
+  lr: 0.0008278920233005766
+  prior_scale: 0.044452153824433085
+  q_scale: 0.00045412875836353276
+  obs_scale: 0.6127231816537825
+  mc_samples_train: 1
+  mc_samples_eval: 50
+  pretrain_epochs: 0
+
+callbacks:
+  model_checkpoint:
+    monitor: mse/val
+    mode: min
+    save_top_k: 3
+    save_last: true
+
+  early_stopping:
+    monitor: mse/val
+    patience: 200
+    mode: min

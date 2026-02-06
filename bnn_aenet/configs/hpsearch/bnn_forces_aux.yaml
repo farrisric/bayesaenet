@@ -1,0 +1,30 @@
+# @package _global_
+# Hyperparameter search configuration for BNN_Forces_Aux model
+
+defaults:
+  - /hpsearch/study: study
+  - /hpsearch/objective: bnn_forces
+  - override /experiment: bnn_lrt_forces_aux
+
+hpsearch:
+  monitor: rmse/val  # Can also use force_rmse/val for force-focused optimization
+  n_trials: 50  # Number of trials to run
+  study:
+    study_name: bnn_forces_aux
+
+# Training parameters for HPS (shorter than full training)
+trainer:
+  max_epochs: 3000  # Shorter for HPS
+  min_epochs: 100
+
+callbacks:
+  early_stopping:
+    monitor: rmse/val
+    patience: 50  # Shorter patience for faster HPS
+    mode: min
+
+# Use smaller batch size range for faster iteration
+datamodule:
+  batch_size: 32
+
+tags: ["bayesian", "forces", "hps"]

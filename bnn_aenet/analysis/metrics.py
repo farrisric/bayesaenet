@@ -1,154 +1,255 @@
-"""Compute performance and uncertainty quantification metrics."""
+"""Metrics computation for energy and force predictions.
+
+Provides functions to compute:
+- Energy metrics: MAE, RMSE, R², MaxErr
+- Force metrics: MAE, RMSE, magnitude error, angular error
+- Uncertainty metrics: NLL, calibration error, sharpness
+"""
+
 import numpy as np
-import torch
-import torch.nn.functional as F
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from typing import Dict, Optional
-import warnings
-
-# Try to import uncertainty_toolbox, but make it optional
-try:
-    import uncertainty_toolbox as uct
-    HAS_UCT = True
-except ImportError:
-    HAS_UCT = False
-    warnings.warn(
-        "uncertainty_toolbox not installed. "
-        "Some advanced calibration metrics will not be available. "
-        "Install with: pip install uncertainty-toolbox"
-    )
+from scipy import stats
+from typing import Dict, Tuple, Optional
 
 
-def compute_overlap_metric(y_true: np.ndarray, y_pred: np.ndarray, y_std: np.ndarray) -> float:
-    """Compute overlap between high-uncertainty and high-error quartiles.
-    
-    This is a custom metric that measures how well uncertainty estimates
-    align with prediction errors. Higher values indicate better calibration.
+def compute_energy_metrics(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    y_std: Optional[np.ndarray] = None,
+) -> Dict[str, float]:
+    """Compute energy prediction metrics.
     
     Args:
-        y_true: True values
-        y_pred: Predicted values
-        y_std: Prediction uncertainties (standard deviations)
-        
+        y_true: Ground truth energies
+        y_pred: Predicted energies
+        y_std: Predicted standard deviations (optional)
+    
     Returns:
-        Percentage of high-uncertainty points falling in top error quartile
+        Dictionary with metrics
     """
-    errors = np.abs(y_true - y_pred)
+    y_true = np.asarray(y_true).flatten()
+    y_pred = np.asarray(y_pred).flatten()
     
-    # Compute quartile thresholds
-    q3_error = np.percentile(errors, 75)
-    q3_uncertainty = np.percentile(y_std, 75)
+    # Basic metrics
+    errors = y_true - y_pred
+    mae = np.mean(np.abs(errors))
+    rmse = np.sqrt(np.mean(errors**2))
+    max_err = np.max(np.abs(errors))
     
-    # Boolean masks
-    high_error = errors > q3_error
-    high_uncertainty = y_std > q3_uncertainty
-    high_both = high_error & high_uncertainty
+    # R-squared
+    ss_res = np.sum(errors**2)
+    ss_tot = np.sum((y_true - np.mean(y_true))**2)
+    r2 = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0.0
     
-    n_overlap = np.sum(high_both)
-    n_high_uncertainty = np.sum(high_uncertainty)
-    
-    if n_high_uncertainty == 0:
-        return 0.0
-    
-    return 100 * n_overlap / n_high_uncertainty
-
-
-def compute_nll(y_true: np.ndarray, y_pred: np.ndarray, y_std: np.ndarray) -> float:
-    """Compute negative log-likelihood assuming Gaussian distribution.
-    
-    Args:
-        y_true: True values
-        y_pred: Predicted mean values
-        y_std: Predicted standard deviations
-        
-    Returns:
-        Negative log-likelihood
-    """
-    # Ensure std is positive
-    y_std = np.maximum(y_std, 1e-8)
-    
-    nll = F.gaussian_nll_loss(
-        torch.tensor(y_pred, dtype=torch.float32),
-        torch.tensor(y_true, dtype=torch.float32),
-        torch.square(torch.tensor(y_std, dtype=torch.float32))
-    ).item()
-    
-    return nll
-
-
-def compute_performance_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
-    """Compute standard performance metrics.
-    
-    Args:
-        y_true: True values
-        y_pred: Predicted values
-        
-    Returns:
-        Dictionary of metric names and values
-    """
     metrics = {
-        'mae': mean_absolute_error(y_true, y_pred),
-        'rmse': np.sqrt(mean_squared_error(y_true, y_pred)),
-        'maxerr': np.max(np.abs(y_true - y_pred)),
-        'r2score': r2_score(y_true, y_pred),
+        "mae": mae,
+        "rmse": rmse,
+        "max_err": max_err,
+        "r2": r2,
+        "mean_error": np.mean(errors),
+        "std_error": np.std(errors),
     }
+    
+    # Uncertainty metrics if std provided
+    if y_std is not None:
+        y_std = np.asarray(y_std).flatten()
+        y_std = np.clip(y_std, 1e-6, None)  # Avoid division by zero
+        
+        # Negative log-likelihood (Gaussian)
+        nll = 0.5 * np.mean(np.log(2 * np.pi * y_std**2) + (errors / y_std)**2)
+        metrics["nll"] = nll
+        
+        # Mean predicted uncertainty
+        metrics["mean_std"] = np.mean(y_std)
+        
+        # Calibration: fraction of true values within predicted intervals
+        for confidence in [0.68, 0.95, 0.99]:
+            z = stats.norm.ppf((1 + confidence) / 2)
+            within = np.mean(np.abs(errors) < z * y_std)
+            metrics[f"calib_{int(confidence*100)}"] = within
     
     return metrics
 
 
-def compute_uq_metrics(y_true: np.ndarray, y_pred: np.ndarray, y_std: np.ndarray) -> Dict[str, float]:
+def compute_force_metrics(
+    f_true: np.ndarray,
+    f_pred: np.ndarray,
+    f_std: Optional[np.ndarray] = None,
+) -> Dict[str, float]:
+    """Compute force prediction metrics.
+    
+    Args:
+        f_true: Ground truth forces (N_atoms, 3) or flattened
+        f_pred: Predicted forces
+        f_std: Predicted standard deviations (optional)
+    
+    Returns:
+        Dictionary with metrics
+    """
+    f_true = np.asarray(f_true)
+    f_pred = np.asarray(f_pred)
+    
+    # Flatten if needed
+    if f_true.ndim > 1:
+        f_true = f_true.flatten()
+        f_pred = f_pred.flatten()
+    
+    # Component-wise metrics
+    errors = f_true - f_pred
+    mae = np.mean(np.abs(errors))
+    rmse = np.sqrt(np.mean(errors**2))
+    max_err = np.max(np.abs(errors))
+    
+    # R-squared
+    ss_res = np.sum(errors**2)
+    ss_tot = np.sum((f_true - np.mean(f_true))**2)
+    r2 = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0.0
+    
+    metrics = {
+        "mae": mae,
+        "rmse": rmse,
+        "max_err": max_err,
+        "r2": r2,
+        "mean_error": np.mean(errors),
+        "std_error": np.std(errors),
+    }
+    
+    # If we can compute magnitude errors (3D vectors)
+    if f_true.shape[0] % 3 == 0:
+        n_atoms = f_true.shape[0] // 3
+        f_true_3d = f_true.reshape(n_atoms, 3)
+        f_pred_3d = f_pred.reshape(n_atoms, 3)
+        
+        # Magnitude errors
+        mag_true = np.linalg.norm(f_true_3d, axis=1)
+        mag_pred = np.linalg.norm(f_pred_3d, axis=1)
+        mag_errors = mag_true - mag_pred
+        
+        metrics["mag_mae"] = np.mean(np.abs(mag_errors))
+        metrics["mag_rmse"] = np.sqrt(np.mean(mag_errors**2))
+        
+        # Angular errors (for non-zero vectors)
+        mask = (mag_true > 1e-6) & (mag_pred > 1e-6)
+        if np.sum(mask) > 0:
+            dot_products = np.sum(f_true_3d[mask] * f_pred_3d[mask], axis=1)
+            cos_angles = dot_products / (mag_true[mask] * mag_pred[mask])
+            cos_angles = np.clip(cos_angles, -1, 1)
+            angles = np.arccos(cos_angles) * 180 / np.pi  # degrees
+            metrics["mean_angle_error"] = np.mean(angles)
+            metrics["max_angle_error"] = np.max(angles)
+    
+    # Uncertainty metrics
+    if f_std is not None:
+        f_std = np.asarray(f_std).flatten()
+        f_std = np.clip(f_std, 1e-6, None)
+        
+        nll = 0.5 * np.mean(np.log(2 * np.pi * f_std**2) + (errors / f_std)**2)
+        metrics["nll"] = nll
+        metrics["mean_std"] = np.mean(f_std)
+    
+    return metrics
+
+
+def compute_uncertainty_metrics(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    y_std: np.ndarray,
+) -> Dict[str, float]:
     """Compute uncertainty quantification metrics.
     
     Args:
-        y_true: True values
-        y_pred: Predicted mean values
+        y_true: Ground truth values
+        y_pred: Predicted values
         y_std: Predicted standard deviations
-        
-    Returns:
-        Dictionary of UQ metric names and values
-    """
-    metrics = {
-        'sharp': np.mean(y_std),  # Average uncertainty (sharpness)
-        'overlap': compute_overlap_metric(y_true, y_pred, y_std),
-        'nll': compute_nll(y_true, y_pred, y_std),
-    }
     
-    # Add uncertainty_toolbox metrics if available
-    if HAS_UCT:
-        try:
-            uct_metrics = uct.metrics.get_all_metrics(y_pred, y_std, y_true)
-            
-            # Add selected UCT metrics
-            for key in ['ece', 'rmsce', 'ma', 'rms_cal', 'miscal_area']:
-                if key in uct_metrics:
-                    metrics[key] = uct_metrics[key]
-        except Exception as e:
-            warnings.warn(f"Failed to compute uncertainty_toolbox metrics: {e}")
+    Returns:
+        Dictionary with UQ metrics
+    """
+    y_true = np.asarray(y_true).flatten()
+    y_pred = np.asarray(y_pred).flatten()
+    y_std = np.asarray(y_std).flatten()
+    y_std = np.clip(y_std, 1e-8, None)
+    
+    errors = y_true - y_pred
+    abs_errors = np.abs(errors)
+    
+    metrics = {}
+    
+    # Negative Log-Likelihood
+    nll = 0.5 * np.mean(np.log(2 * np.pi * y_std**2) + (errors / y_std)**2)
+    metrics["nll"] = nll
+    
+    # Calibration error (Expected Calibration Error)
+    n_bins = 10
+    bin_edges = np.linspace(0, 1, n_bins + 1)
+    ece = 0.0
+    
+    for i in range(n_bins):
+        confidence = (bin_edges[i] + bin_edges[i + 1]) / 2
+        z = stats.norm.ppf((1 + confidence) / 2)
+        
+        # Expected fraction within confidence interval
+        expected_frac = confidence
+        
+        # Actual fraction
+        actual_frac = np.mean(abs_errors < z * y_std)
+        
+        ece += np.abs(expected_frac - actual_frac) / n_bins
+    
+    metrics["ece"] = ece
+    
+    # Sharpness (average predicted variance)
+    metrics["sharpness"] = np.mean(y_std**2)
+    metrics["mean_std"] = np.mean(y_std)
+    
+    # Correlation between error and uncertainty
+    if np.std(y_std) > 0:
+        corr, _ = stats.pearsonr(abs_errors, y_std)
+        metrics["error_std_corr"] = corr
+    else:
+        metrics["error_std_corr"] = 0.0
+    
+    # PICP (Prediction Interval Coverage Probability) at 95%
+    z_95 = stats.norm.ppf(0.975)
+    picp_95 = np.mean(abs_errors < z_95 * y_std)
+    metrics["picp_95"] = picp_95
+    
+    # MPIW (Mean Prediction Interval Width) at 95%
+    metrics["mpiw_95"] = np.mean(2 * z_95 * y_std)
     
     return metrics
 
 
-def compute_all_metrics(
-    y_true: np.ndarray, 
-    y_pred: np.ndarray, 
-    y_std: Optional[np.ndarray] = None
-) -> Dict[str, float]:
-    """Compute all performance and UQ metrics.
+def compute_calibration_curve(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    y_std: np.ndarray,
+    n_bins: int = 20,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """Compute calibration curve data.
     
     Args:
-        y_true: True values
-        y_pred: Predicted values
-        y_std: Prediction uncertainties (optional, for UQ metrics)
-        
+        y_true: Ground truth values
+        y_pred: Predicted values  
+        y_std: Predicted standard deviations
+        n_bins: Number of confidence levels
+    
     Returns:
-        Dictionary of all metric names and values
+        expected_freq: Expected frequencies (confidence levels)
+        observed_freq: Observed frequencies
     """
-    # Performance metrics (always computed)
-    metrics = compute_performance_metrics(y_true, y_pred)
+    y_true = np.asarray(y_true).flatten()
+    y_pred = np.asarray(y_pred).flatten()
+    y_std = np.asarray(y_std).flatten()
+    y_std = np.clip(y_std, 1e-8, None)
     
-    # UQ metrics (only if uncertainties provided)
-    if y_std is not None:
-        uq_metrics = compute_uq_metrics(y_true, y_pred, y_std)
-        metrics.update(uq_metrics)
+    errors = y_true - y_pred
+    abs_errors = np.abs(errors)
     
-    return metrics
+    expected_freq = np.linspace(0.05, 0.95, n_bins)
+    observed_freq = np.zeros(n_bins)
+    
+    for i, conf in enumerate(expected_freq):
+        z = stats.norm.ppf((1 + conf) / 2)
+        observed_freq[i] = np.mean(abs_errors < z * y_std)
+    
+    return expected_freq, observed_freq

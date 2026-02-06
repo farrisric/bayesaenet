@@ -2,7 +2,7 @@
 
 defaults:
   - _self_
-  - /datamodule: QM7
+  - override /datamodule: QM7
   - /model@LRT: bnn_lrt
   - /model@NN: nn
   

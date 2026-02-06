@@ -1,0 +1,6 @@
+defaults:
+  - TiO
+
+# Use 20% training data split
+split_config: Data20
+name: TiO2_20pct

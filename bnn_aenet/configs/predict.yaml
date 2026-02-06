@@ -2,13 +2,15 @@
 
 defaults:
   - _self_
+  - datamodule: datamodule  # Needed for path resolution
+  - model: nn               # Default model for path resolution
   - prediction: dataset
   - trainer: cpu
   - paths: default
   - hydra: default
 
 task_name: predict
-run_name: default
+run_name: ${now:%Y-%m-%d_%H-%M-%S}
 tags: ["dev"]
 subsets: ["val"]
 ckpt_path: all

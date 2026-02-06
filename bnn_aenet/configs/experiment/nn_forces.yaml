@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - override /model: nn_forces
+  - override /callbacks: default
+  - override /trainer: default
+
+tags: ["nn", "deep_ensemble", "forces"]
+
+seed: 12345
+
+trainer:
+  min_epochs: 5000
+  max_epochs: 50000
+
+callbacks:
+  model_checkpoint:
+    monitor: rmse/val
+  
+  early_stopping:
+    monitor: rmse/val
+    patience: 100
+
+model:
+  name: nn_forces  # Used for log directory organization
+  force_weight: 1.0
+  alpha: 0.1  # FIXED at 0.1 (not optimized to avoid Optuna bias)

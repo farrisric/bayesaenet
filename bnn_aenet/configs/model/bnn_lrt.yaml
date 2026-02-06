@@ -1,5 +1,6 @@
 defaults:
   - bnn
 
+name: LRT
 fit_context: lrt
 guide: normal

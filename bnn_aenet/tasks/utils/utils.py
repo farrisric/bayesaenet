@@ -90,6 +90,8 @@ def extras(cfg: DictConfig) -> None:
 @rank_zero_only
 def save_file(path: str, content: str) -> None:
     """Save file in rank zero mode (only on one process in multi-GPU setup)."""
+    from pathlib import Path
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w+") as file:
         file.write(content)
 

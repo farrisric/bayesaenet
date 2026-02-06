@@ -1,6 +1,15 @@
 _target_: bnn_aenet.datamodule.aenet_datamodule.AenetDataModule
+
+# Dataset name (used for organizing logs)
+name: default
+
 data_dir: ${paths.data_dir}/train.in
 device: 'cpu'
 batch_size: 100
 test_split: 0.1
 valid_split: 0.1
+
+# Split configuration name (e.g., "Data20", "Data100")
+# If set, loads indices from bnn_aenet/data/{dataset}/indices/{split_config}/
+# If null, uses default split from data_dir/splits/ or generates random
+split_config: null

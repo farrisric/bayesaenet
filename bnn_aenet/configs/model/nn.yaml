@@ -3,6 +3,9 @@ defaults:
 
 _target_: bnn_aenet.models.bnn.NN
 
+# Model name (used for organizing logs)
+name: NN
+
 optimizer:
   _target_: torch.optim.Adam
   _partial_: true

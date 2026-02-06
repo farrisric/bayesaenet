@@ -100,10 +100,15 @@ def read_keyword_networks(lines):
 
 
 def read_train_in(infile):
+	import os
+	
 	with open(infile, "r") as f:
 
 		# Initiialize InputParameters with default values
 		tin = InputParameters()
+		
+		# Store the data directory for split indices
+		tin.data_dir = os.path.dirname(os.path.abspath(infile))
 
 		# Remove comments from input file:
 		lines = f.readlines()

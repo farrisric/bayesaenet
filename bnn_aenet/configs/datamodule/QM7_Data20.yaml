@@ -1,0 +1,6 @@
+defaults:
+  - QM7
+
+# Use Data20 split (70/10/20)
+split_config: Data20
+name: QM7_20pct_test

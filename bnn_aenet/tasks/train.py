@@ -1,3 +1,13 @@
+"""Training script for BNN-AENET models.
+
+This module provides the main training functionality for Bayesian Neural Networks
+and standard Neural Networks for atomic energy and force prediction.
+
+Usage:
+    python bnn_aenet/tasks/train.py experiment=bnn_lrt datamodule=QM7
+
+For more options, see the configuration files in bnn_aenet/configs/
+"""
 from typing import Any, Dict, List, Optional, Tuple
 from pathlib import Path
 import hydra
@@ -12,7 +22,7 @@ import pyrootutils
 from bnn_aenet.models.bnn import NN
 
 
-from utils import (
+from bnn_aenet.tasks.utils import (
     get_pylogger,
     instantiate_callbacks,
     instantiate_loggers,
@@ -27,8 +37,22 @@ root = pyrootutils.setup_root(
     dotenv=True,
 )
 
-#log = RankedLogger(__name__, rank_zero_only=True)
 log = get_pylogger(__name__)
+
+
+def setup_seed(cfg: DictConfig) -> None:
+    """Set up random seeds for reproducibility.
+    
+    Args:
+        cfg: Hydra configuration containing seed parameter.
+    """
+    seed = cfg.get("seed")
+    if seed is not None:
+        log.info(f"Setting random seed: {seed}")
+        L.seed_everything(seed, workers=True)
+    else:
+        log.warning("No seed specified. Results may not be reproducible.")
+
 
 @task_wrapper
 def train(cfg: DictConfig, trial: Optional[optuna.trial.Trial] = None):
@@ -38,9 +62,15 @@ def train(cfg: DictConfig, trial: Optional[optuna.trial.Trial] = None):
     This method is wrapped in optional @task_wrapper decorator, that controls the behavior during
     failure. Useful for multiruns, saving info about the crash, etc.
 
-    :param cfg: A DictConfig configuration composed by Hydra.
-    :return: A tuple with metrics and dict with all instantiated objects.
+    Args:
+        cfg: A DictConfig configuration composed by Hydra.
+        trial: Optional Optuna trial for hyperparameter search.
+        
+    Returns:
+        A tuple with metrics dict and dict with all instantiated objects.
     """
+    # Set up reproducibility FIRST before any other operations
+    setup_seed(cfg)
 
     log.info(f"Instantiating datamodule <{cfg.datamodule._target_}>")
     datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
@@ -119,8 +149,22 @@ def train(cfg: DictConfig, trial: Optional[optuna.trial.Trial] = None):
     return metric_dict, object_dict
 
 def load_pretrained_net(cfg, model):
-    ckpt_path_dir = Path(f"{cfg.paths.results_dir}/{cfg.tags[0]}/pretrained")
-    if ckpt_path_dir is not None:
+    """Load pretrained network weights for BNN or NN initialization.
+    
+    Looks for pretrained checkpoints at:
+        {results_dir}/{tags[0]}/pretrained/{epochs-1}/checkpoints/pretrained.ckpt
+    
+    Args:
+        cfg: Hydra configuration
+        model: The model whose net weights should be initialized
+        
+    Returns:
+        The network with pretrained weights loaded, or a fresh network if not found
+    """
+    tag = cfg.tags[0] if cfg.get("tags") else "bayesian"
+    ckpt_path_dir = Path(f"{cfg.paths.results_dir}/{tag}/pretrained")
+    
+    if ckpt_path_dir.exists():
         ckpt_path = None
         for d in ckpt_path_dir.glob("*"):
             try:
@@ -130,20 +174,37 @@ def load_pretrained_net(cfg, model):
             if i + 1 == cfg.model.pretrain_epochs:
                 ckpt_path = Path(d, "checkpoints", "pretrained.ckpt")
                 break
-        if ckpt_path is not None:
+        
+        if ckpt_path is not None and ckpt_path.exists():
             log.info(f"Restoring pretrained net from: {ckpt_path}")
-            return NN.load_from_checkpoint(
-                ckpt_path,
-                net=model.net,
-            ).net
+            # Load checkpoint and extract net weights
+            checkpoint = torch.load(ckpt_path, map_location='cpu')
+            
+            # Extract net state dict from checkpoint
+            state_dict = checkpoint.get('state_dict', checkpoint)
+            net_state_dict = {}
+            for k, v in state_dict.items():
+                # Remove 'net.' prefix if present
+                if k.startswith('net.'):
+                    net_state_dict[k[4:]] = v
+                else:
+                    net_state_dict[k] = v
+            
+            # Load weights into model's net
+            model.net.load_state_dict(net_state_dict, strict=False)
+            log.info(f"Loaded {len(net_state_dict)} parameters from pretrained checkpoint")
+            return model.net
+        
         log.info(
-            f"No pretrained net found in {ckpt_path_dir} for {cfg.model.pretrain_epochs}"
+            f"No pretrained net found in {ckpt_path_dir} for {cfg.model.pretrain_epochs} epochs"
         )
     else:
         log.info(
-            f"No pretrained nets found in {cfg.paths.results_dir}/{cfg.tags[0]}/pretrained"
+            f"Pretrained directory not found: {ckpt_path_dir}"
         )
-    return hydra.utils.instantiate(cfg.model.net)
+    
+    # Return the existing net (not pretrained)
+    return model.net
 
 @hydra.main(version_base=None, config_path="../configs", config_name="train")
 def main(cfg: DictConfig) -> Optional[float]:

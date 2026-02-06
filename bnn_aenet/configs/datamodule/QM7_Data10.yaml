@@ -1,0 +1,6 @@
+defaults:
+  - QM7
+
+# Use Data10 split (80/10/10)
+split_config: Data10
+name: QM7_10pct_test

@@ -7,6 +7,7 @@ from .aenet.prepare_batches import select_batch_size, select_batches, read_list_
 from .aenet.data_set import GroupedDataset
 
 import numpy as np
+import os
 
 class AenetDataModule(L.LightningDataModule):
     def __init__(
@@ -16,9 +17,13 @@ class AenetDataModule(L.LightningDataModule):
             batch_size: int = 128,
             test_split: float = 0.60,
             valid_split: float = 0.10,
+            name: str = 'default',  # Dataset name for organizing logs
+            split_config: str = None,  # Split configuration name (e.g., "Data20", "Data100")
         ):
         super().__init__()
+        self.name = name
         self.data_dir = data_dir
+        self.split_config = split_config  # e.g., "Data20", "Data100", or None for default
         # Ensure device is a string, handle both "cuda" and torch.device objects
         if hasattr(device, 'type'):
             self.device = device.type
@@ -42,6 +47,7 @@ class AenetDataModule(L.LightningDataModule):
         self.tin.batch_size = self.batch_size
         self.tin.test_split = self.test_split
         self.tin.valid_split = self.valid_split
+        self.tin.split_config = self.split_config  # Pass split config (e.g., "Data20", "Data100")
         # torch.manual_seed(self.tin.pytorch_seed)
         # np.random.seed(self.tin.numpy_seed)
         self.tin.device = self.device
@@ -70,7 +76,9 @@ class AenetDataModule(L.LightningDataModule):
 									 memory_mode=self.tin.memory_mode, device=self.device, dataname="valid")
         self.grouped_test_data = GroupedDataset(test_energy_data, test_forces_data,
 									 memory_mode=self.tin.memory_mode, device=self.device, dataname="test")
-        self.grouped_all_data = GroupedDataset(all_energy_data, test_forces_data,
+        # Note: all_energy_data has N_batch=len(dataset_energy), which doesn't match test_forces_data
+        # For prediction on all data, we don't include force data since it would require matching N_batch
+        self.grouped_all_data = GroupedDataset(all_energy_data, None,
 									 memory_mode=self.tin.memory_mode, device=self.device, dataname="all")
             
     def setup(self, stage: str):

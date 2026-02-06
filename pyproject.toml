@@ -1,0 +1,132 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bnn-aenet"
+version = "1.0.0"
+description = "Bayesian Neural Networks for Atomic Energy and Force Prediction"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "G. Farris", email = "g15farris@example.com"}
+]
+keywords = [
+    "bayesian neural networks",
+    "machine learning potentials",
+    "atomic simulations",
+    "uncertainty quantification",
+    "deep ensemble",
+    "variational inference"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "torch>=2.0.0",
+    "lightning>=2.0.0",
+    "pytorch-lightning>=2.0.0",
+    "pyro-ppl>=1.8.0",
+    "hydra-core>=1.3.0",
+    "hydra-colorlog>=1.2.0",
+    "hydra-optuna-sweeper>=1.2.0",
+    "optuna>=3.0.0",
+    "optuna-integration>=3.0.0",
+    "numpy>=1.20.0",
+    "pandas>=1.3.0",
+    "matplotlib>=3.5.0",
+    "scikit-learn>=1.0.0",
+    "scipy>=1.7.0",
+    "tensorboard>=2.10.0",
+    "torchmetrics>=0.11.0",
+    "omegaconf>=2.3.0",
+    "pyrootutils>=1.0.0",
+    "rootutils>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "rich>=13.0.0",
+    "fastparquet>=2024.0.0",
+    "pyarrow>=10.0.0",
+    "tqdm>=4.60.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pre-commit>=3.0.0",
+    "flake8>=6.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+]
+uq = [
+    "uncertainty-toolbox>=0.1.0",
+]
+all = [
+    "bnn-aenet[dev,uq]",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/bnn-aenet"
+Documentation = "https://github.com/yourusername/bnn-aenet#readme"
+Repository = "https://github.com/yourusername/bnn-aenet"
+Issues = "https://github.com/yourusername/bnn-aenet/issues"
+
+[project.scripts]
+bnn-train = "bnn_aenet.tasks.train:main"
+bnn-predict = "bnn_aenet.tasks.predict:main"
+bnn-hpsearch = "bnn_aenet.tasks.hpsearch:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["bnn_aenet*"]
+exclude = ["tests*", "scripts*", "data*", "logs*"]
+
+[tool.setuptools.package-data]
+bnn_aenet = ["configs/**/*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.black]
+line-length = 88
+target-version = ["py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | logs
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+skip = [".git", ".venv", "logs", "data"]
+
+[tool.flake8]
+max-line-length = 100
+extend-ignore = ["E203", "W503"]
+exclude = [".git", "__pycache__", "logs", "data", ".venv"]

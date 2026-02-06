@@ -1,0 +1,22 @@
+defaults:
+  - net
+
+_target_: bnn_aenet.models.bnn.BNN_Forces_Aux
+
+# Model name (used for organizing logs)
+name: BNN_Forces
+
+lr: 0.0001
+pretrain_epochs: 0
+mc_samples_train: 2
+mc_samples_eval: 20
+dataset_size: ??? # Set by datamodule
+fit_context: lrt
+guide: normal
+prior_loc: 0
+prior_scale: 0.1
+q_scale: 0.001
+obs_scale: 0.5
+force_weight: 1.0  # Additional multiplier for force loss (actual weight = alpha * force_weight)
+force_lr_scale: 0.1  # Learning rate scale for force updates relative to main lr
+scale_lr_factor: 0.5  # Learning rate factor for scale (uncertainty) parameter updates

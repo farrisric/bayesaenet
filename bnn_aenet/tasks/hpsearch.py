@@ -12,17 +12,17 @@ root = pyrootutils.setup_root(
     dotenv=True,
 )
 
-from train import train
+from bnn_aenet.tasks.train import train
 from optuna import Study
 from optuna.trial import Trial
 
-from utils import get_pylogger
+from bnn_aenet.tasks.utils import get_pylogger
 log = get_pylogger(__name__)
 
 
 def objective(trial: Trial, cfg: DictConfig, output_dir: str):
     cfg.datamodule.batch_size = trial.suggest_categorical(
-        "batch_size", [32, 64, 128, 256, 512]
+        "batch_size", [128, 256, 512, 1024]  # Removed 32/64 for stability, added 1024 for speed
     )
     log.info(f"{cfg.datamodule.batch_size} batch_size")
     log.info(
@@ -46,9 +46,42 @@ def objective_nn(trial: Trial, cfg: DictConfig, output_dir: str):
     return objective(trial, cfg, output_dir)
 
 
+def objective_nn_forces(trial: Trial, cfg: DictConfig, output_dir: str):
+    """Objective function for NN_Forces (Deep Ensemble with forces) hyperparameter search.
+    
+    Optimizes:
+    - lr: Learning rate
+    - weight_decay: L2 regularization
+    - force_weight: Weight for force loss term
+    
+    Note: alpha is FIXED at 0.1 (from config) to avoid biasing Optuna toward lower values.
+    No pretraining for NN models - they train from scratch.
+    """
+    cfg.model.optimizer.lr = trial.suggest_float(
+        "lr", 1e-5, 1e-2, log=True
+    )
+    log.info(f"{cfg.model.optimizer.lr} lr")
+    
+    cfg.model.optimizer.weight_decay = trial.suggest_float(
+        "weight_decay", 1e-6, 1e-2, log=True
+    )
+    log.info(f"{cfg.model.optimizer.weight_decay} weight_decay")
+    
+    # Force-specific hyperparameters
+    cfg.model.force_weight = trial.suggest_float(
+        "force_weight", 0.1, 10.0, log=True
+    )
+    log.info(f"{cfg.model.force_weight} force_weight")
+    
+    # alpha is fixed at 0.1 in config (not optimized to avoid bias)
+    log.info(f"{cfg.model.alpha} alpha (fixed)")
+    
+    return objective(trial, cfg, output_dir)
+
+
 def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
     cfg.model.pretrain_epochs = trial.suggest_categorical(
-        "pretrain_epochs", [0]
+        "pretrain_epochs", [0, 5]
     )
     log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs")
     cfg.model.lr = trial.suggest_float(
@@ -71,6 +104,64 @@ def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
         "obs_scale", 0.1, 2, log=True
         )
     log.info(f"{cfg.model.obs_scale} obs_scale")
+    return objective(trial, cfg, output_dir)
+
+
+def objective_bnn_forces(trial: Trial, cfg: DictConfig, output_dir: str):
+    """Objective function for BNN_Forces_Aux hyperparameter search.
+    
+    Optimizes both standard BNN hyperparameters and force-specific ones:
+    - pretrain_epochs: Number of pretraining epochs (0 or 5)
+    - lr: Learning rate
+    - prior_scale: Prior distribution scale (affects regularization)
+    - q_scale: Initial variational parameter scale (affects uncertainty)
+    - obs_scale: Observation noise scale (affects likelihood)
+    - force_weight: Additional weight multiplier for force loss
+    - force_lr_scale: Learning rate scale for force updates vs energy
+    - scale_lr_factor: Learning rate factor for updating scale (uncertainty) params
+    """
+    # Standard BNN hyperparameters
+    # Pretraining disabled for now - requires proper checkpoint setup first
+    cfg.model.pretrain_epochs = 0
+    log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs (fixed at 0)")
+    
+    cfg.model.lr = trial.suggest_float(
+        "lr", 1e-5, 1e-3, log=True
+    )
+    log.info(f"{cfg.model.lr} lr")
+    
+    cfg.model.mc_samples_train = trial.suggest_categorical(
+        "mc_samples_train", [1, 2]
+    )
+    log.info(f"{cfg.model.mc_samples_train} mc_samples_train")
+    
+    cfg.model.prior_scale = trial.suggest_float(
+        "prior_scale", 0.1, 0.5, log=True  # Narrowed range for numerical stability
+    )
+    log.info(f"{cfg.model.prior_scale} prior_scale")
+    
+    cfg.model.q_scale = trial.suggest_float(
+        "q_scale", 1e-5, 0.005, log=True  # Narrowed range for numerical stability
+    )
+    log.info(f"{cfg.model.q_scale} q_scale")
+    
+    cfg.model.obs_scale = trial.suggest_float(
+        "obs_scale", 0.1, 2.0, log=True
+    )
+    log.info(f"{cfg.model.obs_scale} obs_scale")
+    
+    # Force-specific hyperparameters
+    cfg.model.force_weight = trial.suggest_float(
+        "force_weight", 0.1, 10.0, log=True
+    )
+    log.info(f"{cfg.model.force_weight} force_weight")
+    
+    # Simplified: removed force_lr_scale and scale_lr_factor to reduce complexity
+    # force_weight alone controls force emphasis, single lr for all params
+    
+    # alpha is fixed at 0.1 in net config (not optimized to avoid bias toward lower values)
+    log.info(f"{cfg.model.net.alpha} alpha (fixed)")
+    
     return objective(trial, cfg, output_dir)
 
 

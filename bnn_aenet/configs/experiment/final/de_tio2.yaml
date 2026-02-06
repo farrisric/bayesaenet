@@ -1,0 +1,38 @@
+# @package _global_
+# Final training configuration for Deep Ensemble on TiO2 dataset
+# This config is for a single ensemble member
+# Run with different seeds to create the ensemble
+
+defaults:
+  - override /model: nn
+  - override /datamodule: TiO
+  - override /callbacks: default
+  - override /trainer: gpu
+
+tags: ["final", "deep_ensemble", "nn", "tio2"]
+
+# Reproducibility - override this for each ensemble member
+seed: 42
+
+trainer:
+  min_epochs: 5000
+  max_epochs: 50000
+  accelerator: gpu
+  devices: 1
+  deterministic: false
+
+model:
+  lr: 0.001
+  weight_decay: 0.0001
+
+callbacks:
+  model_checkpoint:
+    monitor: rmse/val
+    mode: min
+    save_top_k: 1
+    save_last: true
+
+  early_stopping:
+    monitor: rmse/val
+    patience: 100
+    mode: min

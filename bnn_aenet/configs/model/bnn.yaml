@@ -11,6 +11,9 @@ net:
 
 _target_: bnn_aenet.models.bnn.BNN
 
+# Model name (used for organizing logs)
+name: BNN
+
 lr: 0.0009824656143295528
 pretrain_epochs: 5
 mc_samples_train: 1
