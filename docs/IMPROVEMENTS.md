@@ -2,68 +2,94 @@
 
 This document outlines identified issues and suggested improvements for the BNN-AENET library.
 
-## High Priority Fixes
+## Implemented Fixes
 
 ### 1. Duplicate Assignment (FIXED)
-**Location:** `bnn_aenet/models/bnn.py:112`
+**Location:** `bnn_aenet/models/bnn.py`
 **Issue:** `self.svi = self.svi = SVI(...)`
-**Status:** Fixed
+**Status:** ✅ Fixed
 
-### 2. Magic Numbers in Batch Indices
+### 2. Magic Numbers in Batch Indices (FIXED)
 **Location:** Throughout `bnn_aenet/models/bnn.py`
-**Issue:** Hard-coded indices make code hard to understand:
+**Issue:** Hard-coded indices like `batch[10]`, `batch[11]` were hard to understand.
+**Status:** ✅ Fixed - Now using `BatchIdx` constants from `bnn_aenet/datamodule/aenet/batch_constants.py`:
 ```python
-x = batch[10], batch[12]  # What do these mean?
+# Before
+x = batch[10], batch[12]
 y = batch[11]
+
+# After  
+x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
+y = batch[BatchIdx.E_ENERGY]
 ```
 
-**Suggestion:** Create batch index constants:
-```python
-# In bnn_aenet/datamodule/aenet/batch_constants.py
-class BatchIdx:
-    # Force data indices (when forces enabled)
-    F_DESCRP = 0
-    F_ENERGY = 1
-    F_LOGIC_REDUCE = 2
-    F_DB_INDEX = 3
-    F_N_ATOM = 4
-    F_FORCES = 5
-    F_SFDERIV_I = 6
-    F_SFDERIV_J = 7
-    F_INDICES = 8
-    F_INDICES_I = 9
-    
-    # Energy data indices
-    E_DESCRP = 10
-    E_ENERGY = 11
-    E_LOGIC_REDUCE = 12
-    E_DB_INDEX = 13
-    E_N_ATOM = 14
-```
-
-### 3. Redundant SVI Creation per Step
-**Location:** `bnn_aenet/models/bnn.py:121-124, 161-164`
-**Issue:** `svi_no_obs` is recreated in every training/validation step:
-```python
-self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
-self.svi_no_obs = SVI(...)  # Created every step
-```
-
-**Suggestion:** Create once in `on_fit_start()` and cache:
+### 3. Redundant SVI Creation per Step (FIXED)
+**Location:** `bnn_aenet/models/bnn.py`
+**Issue:** `svi_no_obs` was recreated in every training/validation step.
+**Status:** ✅ Fixed - Now cached in `on_fit_start()`:
 ```python
 def on_fit_start(self):
     # ... existing code ...
+    # Cache svi_no_obs for performance
     self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
     self.svi_no_obs = SVI(
         self.bnn_no_obs, self.bnn.guide, self.optimizer, self.loss
     )
-
-def training_step(self, batch, batch_idx):
-    # ... use self.svi_no_obs directly ...
 ```
 
+### 4. Mixed Precision Warning for LRT (FIXED)
+**Location:** `bnn_aenet/models/bnn.py`
+**Issue:** LRT causes NaN with mixed precision, but no warning was shown.
+**Status:** ✅ Fixed - Now warns in `on_fit_start()` if LRT is used with `16-mixed` precision.
+
+### 5. Type Hints Added (FIXED)
+**Location:** `bnn_aenet/models/bnn.py`
+**Status:** ✅ Fixed - Added type hints to all key methods.
+
+### 6. Exception Handling Improved (FIXED)
+**Location:** `bnn_aenet/models/bnn.py`
+**Issue:** Bare `except Exception: pass` could hide bugs.
+**Status:** ✅ Fixed - Changed to `except (ValueError, RuntimeError):`
+
+## Configuration Recommendations
+
+### Network Architecture: 15:15 vs 25:25
+
+The current default architecture uses **15:15** (two hidden layers with 15 nodes each).
+For datasets with more complex energy surfaces, consider using **25:25**:
+
+**Current (data/TiO/train.in):**
+```
+NETWORKS
+  Ti     Ti.pytorch.nn    2    15:tanh    15:tanh
+  O       O.pytorch.nn    2    15:tanh    15:tanh
+```
+
+**Recommended for complex datasets:**
+```
+NETWORKS
+  Ti     Ti.pytorch.nn    2    25:tanh    25:tanh
+  O       O.pytorch.nn    2    25:tanh    25:tanh
+```
+
+**Trade-offs:**
+- **15:15**: ~2,000 parameters per atom type, faster training, less prone to overfitting
+- **25:25**: ~5,000 parameters per atom type, more capacity, better for complex energy surfaces
+- **Larger networks (50:50)**: Consider only if you have >100k training samples
+
+### Mixed Precision Guidelines
+
+| Model Type | Mixed Precision | Recommended Setting |
+|------------|-----------------|---------------------|
+| NN         | ✅ Safe         | `precision=16-mixed` |
+| Flipout    | ✅ Safe         | `precision=16-mixed` |
+| Radial     | ✅ Safe         | `precision=16-mixed` |
+| LRT        | ❌ Causes NaN   | `precision=32-true` or omit |
+
+## Medium Priority (Future Work)
+
 ### 4. Standardize Alpha Access Pattern
-**Location:** `bnn_aenet/models/bnn.py:639, 753, 798`
+**Location:** `bnn_aenet/models/bnn.py`
 **Issue:** Inconsistent access:
 ```python
 alpha = self.net.alpha.item() if hasattr(self.net, 'alpha') else 0.5  # Line 639
@@ -81,19 +107,10 @@ def alpha(self):
     return 0.5
 ```
 
-## Medium Priority
+## Low Priority (Future Work)
 
-### 5. Exception Handling Too Broad
-**Location:** `bnn_aenet/models/bnn.py:141-148, 177-184`
-**Issue:** Bare `except Exception: pass` swallows all errors:
-```python
-try:
-    if scale.min() > 0:
-        rmsce = rms_calibration_error(...)
-except Exception:
-    pass  # Could hide bugs
-```
-
+### Add Logging for Skipped Calibration Metrics
+**Location:** `bnn_aenet/models/bnn.py`
 **Suggestion:**
 ```python
 except (ValueError, RuntimeError) as e:

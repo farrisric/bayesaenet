@@ -1,3 +1,25 @@
+"""
+BNN-AENET Model Implementations.
+
+This module contains the core model classes for Bayesian Neural Networks
+and standard Neural Networks for atomic energy and force prediction.
+
+Models:
+    - BNN: Base Bayesian Neural Network with variational inference
+    - BNN_Forces_Aux: BNN with auxiliary force training
+    - NN: Deterministic Neural Network (also used for BNN pretraining)
+    - NN_Forces: NN with force training for Deep Ensemble
+
+Note on Mixed Precision:
+    - NN, Flipout, and Radial methods work with mixed precision (16-mixed)
+    - LRT (Local Reparameterization Trick) should NOT use mixed precision
+      as it causes NaN values in variational parameters. Use full precision
+      (precision=32-true or no precision override) for LRT models.
+"""
+
+from typing import Any, Dict, List, Optional, Tuple, Union
+import warnings
+
 import pyro
 import pyro.distributions as dist
 from pyro.infer import SVI, Trace_ELBO, TraceMeanField_ELBO
@@ -17,6 +39,9 @@ import numpy as np
 
 # Import calibration metrics from results module
 from ..results.metrics import sharpness, rms_calibration_error
+
+# Import batch index constants for readable code
+from ..datamodule.aenet.batch_constants import BatchIdx
 
 
 class BNN(L.LightningModule):
@@ -97,12 +122,35 @@ class BNN(L.LightningModule):
             guide,
         )
          
-    def on_fit_start(self):
+    def on_fit_start(self) -> None:
+        """Initialize BNN components at the start of training.
+        
+        Sets up the variational BNN, optimizer, loss function, and SVI objects.
+        Caches svi_no_obs to avoid recreating it every step.
+        
+        Warning:
+            For LRT (Local Reparameterization Trick), do NOT use mixed precision
+            (trainer.precision='16-mixed') as it causes NaN in variational parameters.
+        """
+        # Warn about LRT and mixed precision
+        if self.hparams.fit_context == "lrt":
+            if hasattr(self.trainer, 'precision') and '16' in str(self.trainer.precision):
+                warnings.warn(
+                    "LRT (Local Reparameterization Trick) is incompatible with mixed precision. "
+                    "This may cause NaN values in variational parameters. "
+                    "Consider using precision='32-true' or removing precision override.",
+                    UserWarning
+                )
+        
         self.define_bnn()
         param_store_to(self.device)
         self.configure_optimizers()
 
-        self.optimizer = pyro.optim.ClippedAdam({'lr': self.hparams.lr, 'betas': [0.95, 0.999], 'clip_norm': 15})
+        self.optimizer = pyro.optim.ClippedAdam({
+            'lr': self.hparams.lr, 
+            'betas': [0.95, 0.999], 
+            'clip_norm': 15
+        })
         self.loss = (
             TraceMeanField_ELBO(self.hparams.mc_samples_train)
             if self.hparams.guide != "radial"
@@ -110,28 +158,42 @@ class BNN(L.LightningModule):
         )
 
         self.svi = SVI(
-            pyro.poutine.scale(self.bnn.model,scale=1.0/self.hparams.dataset_size,),
-            pyro.poutine.scale(self.bnn.guide,scale=1.0/self.hparams.dataset_size,),
+            pyro.poutine.scale(self.bnn.model, scale=1.0/self.hparams.dataset_size),
+            pyro.poutine.scale(self.bnn.guide, scale=1.0/self.hparams.dataset_size),
             self.optimizer,
-            self.loss,)
-
-    def training_step(self, batch, batch_idx):
-        x = batch[10], batch[12]
-        y = batch[11]
+            self.loss,
+        )
+        
+        # Cache svi_no_obs to avoid recreation every step (performance optimization)
         self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
         self.svi_no_obs = SVI(
             self.bnn_no_obs, self.bnn.guide, self.optimizer, self.loss
         )
+
+    def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
+        """Execute one training step.
+        
+        Args:
+            batch: List of tensors containing energy and optionally force data.
+                   Energy data at indices BatchIdx.E_* (10-14).
+            batch_idx: Index of the current batch.
+        """
+        # Extract energy data using BatchIdx constants
+        x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
+        y = batch[BatchIdx.E_ENERGY]
+        n_atoms = batch[BatchIdx.E_N_ATOM]
+        
+        # Note: svi_no_obs is cached in on_fit_start() for performance
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
 
         with self.fit_ctxt():
-            elbo = self.svi.step(x,y)
-            loc, scale = self.bnn.predict(x[0], x[1],num_predictions=self.hparams.mc_samples_train)
+            elbo = self.svi.step(x, y)
+            loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_train)
             kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
         
-        rmse = get_rmse_atom(loc, y, batch[14])
+        rmse = get_rmse_atom(loc, y, n_atoms)
         mse = F.mse_loss(loc, y)
         
         # NLL for training monitoring
@@ -144,7 +206,7 @@ class BNN(L.LightningModule):
                 sharp = sharpness(scale.squeeze())
                 self.log("rmsce/train", rmsce, on_step=False, on_epoch=True, batch_size=len(y))
                 self.log("sharp/train", sharp, on_step=False, on_epoch=True, batch_size=len(y))
-        except Exception:
+        except (ValueError, RuntimeError):
             pass  # Skip calibration metrics if computation fails
         
         self.log("mse/train", mse, on_step=False, on_epoch=True, batch_size=len(y))
@@ -154,21 +216,26 @@ class BNN(L.LightningModule):
         self.log("kl/train", kl, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("likelihood/train", elbo - kl, on_step=False, on_epoch=True, batch_size=len(y))
 
-    def validation_step(self, batch, batch_idx):
-        x = batch[10], batch[12]
-        y = batch[11]
+    def validation_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
+        """Execute one validation step.
+        
+        Args:
+            batch: List of tensors containing energy data at BatchIdx.E_* indices.
+            batch_idx: Index of the current batch.
+        """
+        # Extract energy data using BatchIdx constants
+        x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
+        y = batch[BatchIdx.E_ENERGY]
+        n_atoms = batch[BatchIdx.E_N_ATOM]
 
-        self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
-        self.svi_no_obs = SVI(
-            self.bnn_no_obs, self.bnn.guide, self.optimizer, self.loss
-        )
+        # Note: svi_no_obs is cached in on_fit_start() for performance
         elbo = self.svi.evaluate_loss(x, y.squeeze())
         # Aggregate = False if num_prediction = 1, else nans in sd
         loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
         kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         mse = F.mse_loss(loc, y)
-        rmse = get_rmse_atom(loc, y, batch[14])
+        rmse = get_rmse_atom(loc, y, n_atoms)
         
         # NLL (Negative Log-Likelihood) for proper Bayesian evaluation
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
@@ -180,7 +247,7 @@ class BNN(L.LightningModule):
                 sharp = sharpness(scale.squeeze())
                 self.log("rmsce/val", rmsce, on_step=False, on_epoch=True, batch_size=len(y))
                 self.log("sharp/val", sharp, on_step=False, on_epoch=True, batch_size=len(y))
-        except Exception:
+        except (ValueError, RuntimeError):
             pass  # Skip calibration metrics if computation fails
         
         self.log("rmse/val", rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y))
@@ -191,18 +258,30 @@ class BNN(L.LightningModule):
         self.log("likelihood/val", elbo - kl, on_step=False, on_epoch=True, batch_size=len(y))
 
     def on_test_start(self) -> None:
+        """Initialize BNN for testing."""
         self.define_bnn()
         param_store_to(self.device)
 
-    def test_step(self, batch, batch_idx):
-        x = batch[10], batch[12]
-        y = batch[11]
+    def test_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
+        """Execute one test step.
+        
+        Args:
+            batch: List of tensors containing energy data.
+            batch_idx: Index of the current batch.
+            
+        Returns:
+            NLL loss value.
+        """
+        x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
+        y = batch[BatchIdx.E_ENERGY]
+        n_atoms = batch[BatchIdx.E_N_ATOM]
+        
         loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
 
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
 
         mse = F.mse_loss(loc, y)
-        rmse = get_rmse_atom(loc, y, batch[14])
+        rmse = get_rmse_atom(loc, y, n_atoms)
         
         # Calibration metrics
         try:
@@ -220,13 +299,31 @@ class BNN(L.LightningModule):
         return nll
     
     def on_predict_start(self) -> None:
+        """Initialize BNN for prediction."""
         self.define_bnn()
         param_store_to(self.device)
 
-    def predict_step(self, batch, batch_idx, dataloader_idx=0):
-        x = batch[10], batch[12]
-        y = batch[11]
-        pred = dict()
+    def predict_step(
+        self, 
+        batch: List[torch.Tensor], 
+        batch_idx: int, 
+        dataloader_idx: int = 0
+    ) -> Dict[str, np.ndarray]:
+        """Execute one prediction step with uncertainty estimation.
+        
+        Args:
+            batch: List of tensors with energy data.
+            batch_idx: Batch index.
+            dataloader_idx: Dataloader index.
+            
+        Returns:
+            Dictionary with 'true', 'preds', 'stds', and 'n_atoms' arrays.
+        """
+        x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
+        y = batch[BatchIdx.E_ENERGY]
+        n_atoms = batch[BatchIdx.E_N_ATOM]
+        
+        pred = {}
         
         output = self.bnn.predict(
             x[0], x[1],
@@ -235,12 +332,11 @@ class BNN(L.LightningModule):
         )
         preds = output.mean(axis=0)
         stds = output.std(axis=0)        
-        true = batch[11]
         
-        pred["true"] = true.cpu().numpy()
+        pred["true"] = y.cpu().numpy()
         pred["preds"] = preds.cpu().numpy()
         pred["stds"] = stds.cpu().numpy()
-        pred["n_atoms"] = batch[14].cpu().numpy()
+        pred["n_atoms"] = n_atoms.cpu().numpy()
         return pred
 
     def configure_optimizers(self):
@@ -306,53 +402,80 @@ class NN(L.LightningModule):
     def forward(self, grp_descrp, logic_reduce):
         return self.net.forward(grp_descrp, logic_reduce)
 
-    def step(self, batch):
-        grp_descrp  = batch[10]
-        grp_energy  = batch[11]
-        logic_reduce = batch[12]
-        grp_N_atom = batch[14]
+    def step(self, batch: List[torch.Tensor]) -> torch.Tensor:
+        """Compute RMSE for a batch.
+        
+        Args:
+            batch: List of tensors with energy data at BatchIdx.E_* indices.
+            
+        Returns:
+            RMSE per atom.
+        """
+        grp_descrp = batch[BatchIdx.E_DESCRP]
+        grp_energy = batch[BatchIdx.E_ENERGY]
+        logic_reduce = batch[BatchIdx.E_LOGIC_REDUCE]
+        grp_N_atom = batch[BatchIdx.E_N_ATOM]
         
         list_E_ann = self.forward(grp_descrp, logic_reduce)   
         return get_rmse_atom(list_E_ann, grp_energy, grp_N_atom)
 
-    def training_step(self, batch, batch_idx):
+    def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
+        """Execute one training step."""
         mse = self.step(batch)
         self.log("rmse/train", 
                  mse, 
                  on_step=False, 
                  on_epoch=True, 
                  prog_bar=True,
-                 batch_size=len(batch[11]))
+                 batch_size=len(batch[BatchIdx.E_ENERGY]))
         return mse
 
-    def validation_step(self, batch, batch_idx):
+    def validation_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
+        """Execute one validation step."""
         mse = self.step(batch)
         self.log("rmse/val",
                  mse,
                  on_step=False,
                  on_epoch=True,
                  prog_bar=True,
-                 batch_size=len(batch[11]))
+                 batch_size=len(batch[BatchIdx.E_ENERGY]))
 
-    def test_step(self, batch, batch_idx):
+    def test_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
+        """Execute one test step."""
         mse = self.step(batch)
-        self.log("rmse/test", mse,  on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        self.log("rmse/test", mse, on_step=False, on_epoch=True, 
+                 batch_size=len(batch[BatchIdx.E_ENERGY]))
 
-    def predict_step(self, batch, batch_idx, dataloader_idx=0):
-        grp_descrp  = batch[10]
-        grp_energy  = batch[11]
-        logic_reduce = batch[12]
-        grp_N_atom = batch[14]
+    def predict_step(
+        self, 
+        batch: List[torch.Tensor], 
+        batch_idx: int, 
+        dataloader_idx: int = 0
+    ) -> Dict[str, np.ndarray]:
+        """Execute one prediction step.
         
-        pred = dict()
+        Args:
+            batch: List of tensors with energy data.
+            batch_idx: Batch index.
+            dataloader_idx: Dataloader index for multi-dataloader setups.
+            
+        Returns:
+            Dictionary with 'true', 'preds', and 'n_atoms' arrays.
+        """
+        grp_descrp = batch[BatchIdx.E_DESCRP]
+        grp_energy = batch[BatchIdx.E_ENERGY]
+        logic_reduce = batch[BatchIdx.E_LOGIC_REDUCE]
+        grp_N_atom = batch[BatchIdx.E_N_ATOM]
         
-        true = grp_energy/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        pred = {}
+        
+        true = grp_energy / self.net.e_scaling + self.net.e_shift * grp_N_atom
         list_E_ann = self.net.forward(grp_descrp, logic_reduce)
-        preds = list_E_ann/self.net.e_scaling + self.net.e_shift*grp_N_atom
+        preds = list_E_ann / self.net.e_scaling + self.net.e_shift * grp_N_atom
 
         pred["true"] = true.cpu().numpy()
         pred["preds"] = preds.cpu().numpy()
-        pred["n_atoms"] = batch[14].cpu().numpy()
+        pred["n_atoms"] = grp_N_atom.cpu().numpy()
         return pred
     
     def configure_optimizers(self):
@@ -377,12 +500,19 @@ class NN_Forces(NN):
         self.force_weight = force_weight
         self.alpha = alpha  # Weight for force loss: (1-alpha)*E_loss + alpha*F_loss
     
-    def compute_force_loss(self, batch):
-        """Compute force RMSE from batch."""
-        # Get force data from batch
-        F_group_descrp = batch[15] if len(batch) > 15 else None
-        F_group_forces = batch[16] if len(batch) > 16 else None
-        F_logic_reduce = batch[17] if len(batch) > 17 else None
+    def compute_force_loss(self, batch: List[torch.Tensor]) -> torch.Tensor:
+        """Compute force RMSE from batch.
+        
+        Args:
+            batch: List of tensors with force data at BatchIdx.F_* indices.
+            
+        Returns:
+            Force RMSE, or 0.0 if no force data available.
+        """
+        # Get force data from batch using BatchIdx constants
+        F_group_descrp = batch[BatchIdx.F_DESCRP] if len(batch) > BatchIdx.F_DESCRP else None
+        F_group_forces = batch[BatchIdx.F_FORCES] if len(batch) > BatchIdx.F_FORCES else None
+        F_logic_reduce = batch[BatchIdx.F_LOGIC_REDUCE] if len(batch) > BatchIdx.F_LOGIC_REDUCE else None
         
         if F_group_descrp is None or len(F_group_descrp) == 0:
             return torch.tensor(0.0, device=self.device)
@@ -417,7 +547,7 @@ class NN_Forces(NN):
         force_rmse = torch.sqrt(torch.mean((forces_pred - forces_true) ** 2))
         return force_rmse
     
-    def training_step(self, batch, batch_idx):
+    def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
         # Energy loss
         energy_rmse = self.step(batch)
         
@@ -429,34 +559,39 @@ class NN_Forces(NN):
         total_loss = (1 - alpha) * energy_rmse + alpha * self.force_weight * force_rmse
         
         # Logging
-        self.log("rmse/train", energy_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(batch[11]))
-        self.log("force_rmse/train", force_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(batch[11]))
-        self.log("total_loss/train", total_loss, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        batch_size = len(batch[BatchIdx.E_ENERGY])
+        self.log("rmse/train", energy_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=batch_size)
+        self.log("force_rmse/train", force_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=batch_size)
+        self.log("total_loss/train", total_loss, on_step=False, on_epoch=True, batch_size=batch_size)
         self.log("alpha", alpha, on_step=False, on_epoch=True)
         
         return total_loss
     
-    def validation_step(self, batch, batch_idx):
+    def validation_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
+        """Validation step with energy and force metrics."""
         energy_rmse = self.step(batch)
         force_rmse = self.compute_force_loss(batch)
         
         # Combined metric for HPS optimization: weighted sum of energy and force RMSE
         total_rmse = (1 - self.alpha) * energy_rmse + self.alpha * force_rmse
         
-        self.log("rmse/val", energy_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(batch[11]))
-        self.log("force_rmse/val", force_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(batch[11]))
-        self.log("total_rmse/val", total_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(batch[11]))
+        batch_size = len(batch[BatchIdx.E_ENERGY])
+        self.log("rmse/val", energy_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=batch_size)
+        self.log("force_rmse/val", force_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=batch_size)
+        self.log("total_rmse/val", total_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=batch_size)
     
-    def test_step(self, batch, batch_idx):
+    def test_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
+        """Test step with energy and force metrics."""
         energy_rmse = self.step(batch)
         force_rmse = self.compute_force_loss(batch)
         
         # Combined metric
         total_rmse = (1 - self.alpha) * energy_rmse + self.alpha * force_rmse
         
-        self.log("rmse/test", energy_rmse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
-        self.log("force_rmse/test", force_rmse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
-        self.log("total_rmse/test", total_rmse, on_step=False, on_epoch=True, batch_size=len(batch[11]))
+        batch_size = len(batch[BatchIdx.E_ENERGY])
+        self.log("rmse/test", energy_rmse, on_step=False, on_epoch=True, batch_size=batch_size)
+        self.log("force_rmse/test", force_rmse, on_step=False, on_epoch=True, batch_size=batch_size)
+        self.log("total_rmse/test", total_rmse, on_step=False, on_epoch=True, batch_size=batch_size)
 
 
 class BNN_Forces_Aux(BNN):
@@ -505,9 +640,9 @@ class BNN_Forces_Aux(BNN):
         Returns:
             force_rmse: Root mean squared error of force predictions, or zero if no force data
         """
-        # Extract force-related data from batch
-        F_group_descrp = batch[0]
-        F_group_forces = batch[5]
+        # Extract force-related data from batch using BatchIdx constants
+        F_group_descrp = batch[BatchIdx.F_DESCRP]
+        F_group_forces = batch[BatchIdx.F_FORCES]
         
         # Check if force data is available (datamodule sets these to None if no force data)
         if F_group_descrp is None or F_group_forces is None:
@@ -519,13 +654,13 @@ class BNN_Forces_Aux(BNN):
             return torch.tensor(0.0, device=self.device, requires_grad=True)
         
         # Extract remaining force-related data
-        F_group_energy = batch[1]  
-        F_logic_reduce = batch[2]
-        F_group_N_atom = batch[4]
-        F_sfderiv_i = batch[6]
-        F_sfderiv_j = batch[7]
-        F_indices = batch[8]
-        F_indices_i = batch[9]
+        F_group_energy = batch[BatchIdx.F_ENERGY]  
+        F_logic_reduce = batch[BatchIdx.F_LOGIC_REDUCE]
+        F_group_N_atom = batch[BatchIdx.F_N_ATOM]
+        F_sfderiv_i = batch[BatchIdx.F_SFDERIV_I]
+        F_sfderiv_j = batch[BatchIdx.F_SFDERIV_J]
+        F_indices = batch[BatchIdx.F_INDICES]
+        F_indices_i = batch[BatchIdx.F_INDICES_I]
         
         # Get the underlying network from BNN
         net = self.net
@@ -584,14 +719,14 @@ class BNN_Forces_Aux(BNN):
         following the original aenet formula: loss = (1-alpha)*E_loss + alpha*F_loss
         
         Args:
-            batch: Data batch containing force information at indices [0-9]
+            batch: Data batch containing force information at BatchIdx.F_* indices
         
         Returns:
             force_rmse: Root mean squared error of force predictions (for logging)
         """
-        # Extract force-related data from batch
-        F_group_descrp = batch[0]
-        F_group_forces = batch[5]
+        # Extract force-related data from batch using BatchIdx constants
+        F_group_descrp = batch[BatchIdx.F_DESCRP]
+        F_group_forces = batch[BatchIdx.F_FORCES]
         
         # Check if force data is available
         if F_group_descrp is None or F_group_forces is None:
@@ -601,11 +736,11 @@ class BNN_Forces_Aux(BNN):
             return torch.tensor(0.0, device=self.device)
         
         # Extract remaining force-related data
-        F_logic_reduce = batch[2]
-        F_sfderiv_i = batch[6]
-        F_sfderiv_j = batch[7]
-        F_indices = batch[8]
-        F_indices_i = batch[9]
+        F_logic_reduce = batch[BatchIdx.F_LOGIC_REDUCE]
+        F_sfderiv_i = batch[BatchIdx.F_SFDERIV_I]
+        F_sfderiv_j = batch[BatchIdx.F_SFDERIV_J]
+        F_indices = batch[BatchIdx.F_INDICES]
+        F_indices_i = batch[BatchIdx.F_INDICES_I]
         
         # Compute max_nnb from sfderiv_j shape
         max_nnb = F_sfderiv_j[0].shape[1] if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0 else 0
@@ -712,13 +847,14 @@ class BNN_Forces_Aux(BNN):
         
         return force_rmse.detach()
     
-    def training_step(self, batch, batch_idx):
-        x = batch[10], batch[12]  # Energy descriptors
-        y = batch[11]  # Energy labels
+    def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
+        """Training step with energy ELBO and auxiliary force loss."""
+        # Extract energy data using BatchIdx constants
+        x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
+        y = batch[BatchIdx.E_ENERGY]
+        n_atoms = batch[BatchIdx.E_N_ATOM]
         
-        self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
-        self.svi_no_obs = SVI(self.bnn_no_obs, self.bnn.guide, self.optimizer, self.loss)
-        
+        # Note: svi_no_obs is cached in on_fit_start() for performance
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
         
         with self.fit_ctxt():
@@ -733,7 +869,7 @@ class BNN_Forces_Aux(BNN):
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
         
         # Compute energy metrics
-        rmse = get_rmse_atom(loc, y, batch[14])
+        rmse = get_rmse_atom(loc, y, n_atoms)
         mse = F.mse_loss(loc, y)
         
         # NLL for training monitoring
@@ -746,7 +882,7 @@ class BNN_Forces_Aux(BNN):
                 sharp = sharpness(scale.squeeze())
                 self.log("rmsce/train", rmsce, on_step=False, on_epoch=True, batch_size=len(y))
                 self.log("sharp/train", sharp, on_step=False, on_epoch=True, batch_size=len(y))
-        except Exception:
+        except (ValueError, RuntimeError):
             pass
         
         # Get alpha for logging
@@ -757,18 +893,19 @@ class BNN_Forces_Aux(BNN):
         self.log("rmse/train", rmse, on_step=False, prog_bar=True, on_epoch=True, batch_size=len(y))
         self.log("nll/train", nll, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("force_rmse/train", force_loss, on_step=False, on_epoch=True, batch_size=len(y), prog_bar=True)
-        self.log("alpha", alpha, on_step=False, on_epoch=True, batch_size=len(y))  # Log alpha for verification
+        self.log("alpha", alpha, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("elbo/train", elbo, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("kl/train", kl, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("likelihood/train", elbo - kl, on_step=False, on_epoch=True, batch_size=len(y))
     
-    def validation_step(self, batch, batch_idx):
-        x = batch[10], batch[12]
-        y = batch[11]
+    def validation_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
+        """Validation step with energy ELBO and force metrics."""
+        # Extract energy data using BatchIdx constants
+        x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
+        y = batch[BatchIdx.E_ENERGY]
+        n_atoms = batch[BatchIdx.E_N_ATOM]
         
-        self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
-        self.svi_no_obs = SVI(self.bnn_no_obs, self.bnn.guide, self.optimizer, self.loss)
-        
+        # Note: svi_no_obs is cached in on_fit_start() for performance
         # Energy ELBO
         elbo = self.svi.evaluate_loss(x, y.squeeze())
         loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
@@ -779,7 +916,7 @@ class BNN_Forces_Aux(BNN):
         
         # Energy metrics
         mse = F.mse_loss(loc, y)
-        rmse = get_rmse_atom(loc, y, batch[14])
+        rmse = get_rmse_atom(loc, y, n_atoms)
         
         # NLL for validation monitoring
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
@@ -791,7 +928,7 @@ class BNN_Forces_Aux(BNN):
                 sharp = sharpness(scale.squeeze())
                 self.log("rmsce/val", rmsce, on_step=False, on_epoch=True, batch_size=len(y))
                 self.log("sharp/val", sharp, on_step=False, on_epoch=True, batch_size=len(y))
-        except Exception:
+        except (ValueError, RuntimeError):
             pass
         
         # Combined metric for HPS optimization: weighted sum of energy and force RMSE
@@ -808,14 +945,17 @@ class BNN_Forces_Aux(BNN):
         self.log("kl/val", kl, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("likelihood/val", elbo - kl, on_step=False, on_epoch=True, batch_size=len(y))
     
-    def test_step(self, batch, batch_idx):
+    def test_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
         """Test step with combined energy+force metrics."""
-        x = batch[10], batch[12]
-        y = batch[11]
+        # Extract energy data using BatchIdx constants
+        x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
+        y = batch[BatchIdx.E_ENERGY]
+        n_atoms = batch[BatchIdx.E_N_ATOM]
+        
         loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
         
         # Energy metrics
-        rmse = get_rmse_atom(loc, y, batch[14])
+        rmse = get_rmse_atom(loc, y, n_atoms)
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
         
         # Force metrics
@@ -832,7 +972,7 @@ class BNN_Forces_Aux(BNN):
                 sharp = sharpness(scale.squeeze())
                 self.log("rmsce/test", rmsce, on_step=False, on_epoch=True, batch_size=len(y))
                 self.log("sharp/test", sharp, on_step=False, on_epoch=True, batch_size=len(y))
-        except Exception:
+        except (ValueError, RuntimeError):
             pass
         
         self.log("rmse/test", rmse, on_step=False, on_epoch=True, batch_size=len(y))
@@ -840,11 +980,28 @@ class BNN_Forces_Aux(BNN):
         self.log("force_rmse/test", force_loss, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("total_rmse/test", total_rmse, on_step=False, on_epoch=True, batch_size=len(y))
     
-    def predict_step(self, batch, batch_idx, dataloader_idx=0):
-        """Predict both energies and forces with uncertainty"""
-        x = batch[10], batch[12]
-        y = batch[11]
-        pred = dict()
+    def predict_step(
+        self, 
+        batch: List[torch.Tensor], 
+        batch_idx: int, 
+        dataloader_idx: int = 0
+    ) -> Dict[str, np.ndarray]:
+        """Predict both energies and forces with uncertainty.
+        
+        Args:
+            batch: List of tensors with energy and force data.
+            batch_idx: Batch index.
+            dataloader_idx: Dataloader index.
+            
+        Returns:
+            Dictionary with energy predictions, force predictions, and uncertainties.
+        """
+        # Extract energy data using BatchIdx constants
+        x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
+        y = batch[BatchIdx.E_ENERGY]
+        n_atoms = batch[BatchIdx.E_N_ATOM]
+        
+        pred = {}
         
         # Energy predictions (same as parent BNN)
         output = self.bnn.predict(
@@ -855,9 +1012,9 @@ class BNN_Forces_Aux(BNN):
         energy_preds = output.mean(axis=0)
         energy_stds = output.std(axis=0)
         
-        # Check if force data is available
-        F_group_descrp = batch[0]
-        F_group_forces = batch[5]
+        # Check if force data is available using BatchIdx constants
+        F_group_descrp = batch[BatchIdx.F_DESCRP]
+        F_group_forces = batch[BatchIdx.F_FORCES]
         has_force_data = (F_group_descrp is not None and 
                           F_group_forces is not None and
                           not (isinstance(F_group_descrp, list) and len(F_group_descrp) == 0))
@@ -871,12 +1028,12 @@ class BNN_Forces_Aux(BNN):
                     guide_trace = pyro.poutine.trace(self.bnn.guide).get_trace(x[0], x[1])
                     model_trace = pyro.poutine.trace(pyro.poutine.replay(self.bnn_no_obs, guide_trace)).get_trace(x[0], x[1])
                     
-                    # Compute forces with this sampled network
-                    F_logic_reduce = batch[2]
-                    F_sfderiv_i = batch[6]
-                    F_sfderiv_j = batch[7]
-                    F_indices = batch[8]
-                    F_indices_i = batch[9]
+                    # Compute forces with this sampled network using BatchIdx constants
+                    F_logic_reduce = batch[BatchIdx.F_LOGIC_REDUCE]
+                    F_sfderiv_i = batch[BatchIdx.F_SFDERIV_I]
+                    F_sfderiv_j = batch[BatchIdx.F_SFDERIV_J]
+                    F_indices = batch[BatchIdx.F_INDICES]
+                    F_indices_i = batch[BatchIdx.F_INDICES_I]
                     max_nnb = F_sfderiv_j[0].shape[1] if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0 else 0
                     
                     # Convert to float32 for consistency (same as compute_force_loss)
@@ -918,7 +1075,7 @@ class BNN_Forces_Aux(BNN):
         pred["true"] = y.cpu().numpy()
         pred["preds"] = energy_preds.cpu().numpy()
         pred["stds"] = energy_stds.cpu().numpy()
-        pred["n_atoms"] = batch[14].cpu().numpy()
+        pred["n_atoms"] = n_atoms.cpu().numpy()
         pred["true_forces"] = true_forces_flat
         pred["pred_forces"] = pred_forces_flat
         pred["std_forces"] = std_forces_flat
