@@ -58,7 +58,69 @@
     }
   },
   {
+    "test": "prior_scales",
+    "results": {
+      "0.01": "success",
+      "0.1": "success",
+      "0.3": "success",
+      "0.5": "success",
+      "1.0": "success"
+    }
+  },
+  {
+    "test": "different_lr",
+    "results": {
+      "1e-05": "success",
+      "0.0001": "success",
+      "0.001": "success",
+      "0.01": "success",
+      "0.1": "success"
+    }
+  },
+  {
+    "test": "q_scales",
+    "results": {
+      "1e-05": "success",
+      "0.0001": "success",
+      "0.001": "success",
+      "0.005": "success",
+      "0.01": "success"
+    }
+  },
+  {
+    "test": "bnn_flipout_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
+    "test": "nn_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
     "test": "bnn_lrt_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
+    "test": "bnn_forces_aux_init",
+    "status": "success",
+    "params": 2642
+  },
+  {
+    "test": "activation_functions",
+    "results": {
+      "tanh": "success",
+      "sigmoid": "success",
+      "relu": "success",
+      "softplus": "success",
+      "elu": "success",
+      "gelu": "success",
+      "silu": "success"
+    }
+  },
+  {
+    "test": "nn_forces_init",
     "status": "success",
     "params": 2642
   },
@@ -79,48 +141,6 @@
     }
   },
   {
-    "test": "q_scales",
-    "results": {
-      "1e-05": "success",
-      "0.0001": "success",
-      "0.001": "success",
-      "0.005": "success",
-      "0.01": "success"
-    }
-  },
-  {
-    "test": "prior_scales",
-    "results": {
-      "0.01": "success",
-      "0.1": "success",
-      "0.3": "success",
-      "0.5": "success",
-      "1.0": "success"
-    }
-  },
-  {
-    "test": "bnn_forces_aux_init",
-    "status": "success",
-    "params": 2642
-  },
-  {
-    "test": "bnn_flipout_init",
-    "status": "success",
-    "params": 2642
-  },
-  {
-    "test": "activation_functions",
-    "results": {
-      "tanh": "success",
-      "sigmoid": "success",
-      "relu": "success",
-      "softplus": "success",
-      "elu": "success",
-      "gelu": "success",
-      "silu": "success"
-    }
-  },
-  {
     "test": "imports",
     "results": {
       "bnn_aenet.models.bnn.BNN": "success",
@@ -138,26 +158,6 @@
     }
   },
   {
-    "test": "nn_init",
-    "status": "success",
-    "params": 2642
-  },
-  {
-    "test": "different_lr",
-    "results": {
-      "1e-05": "success",
-      "0.0001": "success",
-      "0.001": "success",
-      "0.01": "success",
-      "0.1": "success"
-    }
-  },
-  {
-    "test": "nn_forces_init",
-    "status": "success",
-    "params": 2642
-  },
-  {
     "test": "datamodule_tio_data20",
     "status": "success",
     "train_batches": 20
@@ -168,7 +168,7 @@
     "batch_length": 15,
     "has_forces": false,
     "energy_shape": [
-      31
+      32
     ]
   },
   {

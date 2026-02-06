@@ -151,7 +151,7 @@ def test_bnn_flipout_training_loop():
         pretrain_epochs=0,
         mc_samples_train=1,
         mc_samples_eval=5,
-        dataset_size=len(dm.train_dataloader().dataset),
+        dataset_size=dm.train_size,
         fit_context="flipout",
         prior_loc=0.0,
         prior_scale=0.3,
@@ -207,7 +207,7 @@ def test_bnn_lrt_training_loop():
         pretrain_epochs=0,
         mc_samples_train=1,
         mc_samples_eval=5,
-        dataset_size=len(dm.train_dataloader().dataset),
+        dataset_size=dm.train_size,
         fit_context="lrt",
         prior_loc=0.0,
         prior_scale=0.3,
@@ -263,7 +263,7 @@ def test_bnn_forces_aux_training_loop():
         pretrain_epochs=0,
         mc_samples_train=1,
         mc_samples_eval=5,
-        dataset_size=len(dm.train_dataloader().dataset),
+        dataset_size=dm.train_size,
         fit_context="flipout",
         prior_loc=0.0,
         prior_scale=0.3,
@@ -381,7 +381,7 @@ def test_different_batch_sizes():
         net = create_net_from_datamodule(dm)
         net.alpha = torch.tensor(0.1)
         
-        optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
+        optimizer = partial(torch.optim.Adam, lr=1e-3)
         model = NN(net=net, optimizer=optimizer)
         
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -430,7 +430,7 @@ def test_qm7_dataset():
     print(f"  Input size: {net.input_size}")
     print(f"  Train batches: {len(dm.train_dataloader())}")
     
-    optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
+    optimizer = partial(torch.optim.Adam, lr=1e-3)
     model = NN(net=net, optimizer=optimizer)
     
     with tempfile.TemporaryDirectory() as tmpdir:
