@@ -1,0 +1,25 @@
+# @package _global_
+# Hyperparameter search for Partial LRT (First+Last Layers) with Forces
+
+defaults:
+  - /hpsearch/study: study
+  - /hpsearch/objective: partial_bnn_forces
+  - override /experiment: partial_lrt_first_last_forces
+
+hpsearch:
+  monitor: total_rmse/val
+  n_trials: 30
+  study:
+    study_name: partial_lrt_first_last_forces
+
+trainer:
+  max_epochs: 3000
+  min_epochs: 100
+
+callbacks:
+  early_stopping:
+    monitor: total_rmse/val
+    patience: 50
+    mode: min
+
+tags: ["partial_bayesian", "lrt", "first_last", "forces", "hps"]

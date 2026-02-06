@@ -1,0 +1,6 @@
+defaults:
+  - partial_bnn_forces
+
+name: PartialRAD_FirstLast_Forces
+guide: radial
+bayesian_layers: first_last

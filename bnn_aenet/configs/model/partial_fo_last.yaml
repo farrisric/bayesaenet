@@ -1,0 +1,7 @@
+defaults:
+  - partial_bnn
+
+name: PartialFO_Last
+fit_context: flipout
+guide: normal
+bayesian_layers: last  # Only last layer is Bayesian (~2% params)

@@ -165,6 +165,55 @@ def objective_bnn_forces(trial: Trial, cfg: DictConfig, output_dir: str):
     return objective(trial, cfg, output_dir)
 
 
+def objective_partial_bnn_forces(trial: Trial, cfg: DictConfig, output_dir: str):
+    """Objective function for PartialBNN_Forces_Aux hyperparameter search.
+    
+    Similar to full BNN but with reduced hyperparameter space since partial BNNs
+    have fewer Bayesian parameters and are more numerically stable.
+    
+    Note: bayesian_layers is fixed in the experiment config (last, first_last, etc.)
+    """
+    cfg.model.pretrain_epochs = 0
+    log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs (fixed at 0)")
+    
+    cfg.model.lr = trial.suggest_float(
+        "lr", 1e-5, 1e-3, log=True
+    )
+    log.info(f"{cfg.model.lr} lr")
+    
+    cfg.model.mc_samples_train = trial.suggest_categorical(
+        "mc_samples_train", [1, 2]
+    )
+    log.info(f"{cfg.model.mc_samples_train} mc_samples_train")
+    
+    # Partial BNNs can handle wider ranges since fewer params are Bayesian
+    cfg.model.prior_scale = trial.suggest_float(
+        "prior_scale", 0.05, 1.0, log=True
+    )
+    log.info(f"{cfg.model.prior_scale} prior_scale")
+    
+    cfg.model.q_scale = trial.suggest_float(
+        "q_scale", 1e-5, 0.01, log=True
+    )
+    log.info(f"{cfg.model.q_scale} q_scale")
+    
+    cfg.model.obs_scale = trial.suggest_float(
+        "obs_scale", 0.1, 2.0, log=True
+    )
+    log.info(f"{cfg.model.obs_scale} obs_scale")
+    
+    cfg.model.force_weight = trial.suggest_float(
+        "force_weight", 0.1, 10.0, log=True
+    )
+    log.info(f"{cfg.model.force_weight} force_weight")
+    
+    # Log which layers are Bayesian (fixed from config)
+    log.info(f"{cfg.model.bayesian_layers} bayesian_layers (fixed)")
+    log.info(f"{cfg.model.net.alpha} alpha (fixed)")
+    
+    return objective(trial, cfg, output_dir)
+
+
 @hydra.main(version_base=None, config_path="../configs", config_name="hpsearch")
 def main(cfg: DictConfig) -> Optional[float]:
     print(cfg.trainer)

@@ -1,0 +1,6 @@
+defaults:
+  - partial_bnn_forces
+
+name: PartialRAD_Last_Forces
+guide: radial
+bayesian_layers: last  # Only last layer is Bayesian

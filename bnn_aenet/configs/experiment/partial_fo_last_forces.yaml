@@ -1,0 +1,31 @@
+# @package _global_
+
+defaults:
+  - override /model: partial_fo_last_forces
+  - override /callbacks: default
+  - override /trainer: default
+
+tags: ["partial_bayesian", "flipout", "last", "forces"]
+
+seed: 12345
+
+trainer:
+  min_epochs: 5000
+  max_epochs: 50000
+
+callbacks:
+  model_checkpoint:
+    monitor: rmse/val
+  
+  early_stopping:
+    monitor: rmse/val
+    patience: 100
+
+model:
+  name: partial_fo_last_forces
+  fit_context: flipout
+  guide: normal
+  bayesian_layers: last
+  force_weight: 1.0
+  net:
+    alpha: 0.1

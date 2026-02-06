@@ -382,6 +382,223 @@ def weights_init(m):
     elif isinstance(m, nn.Linear):
         torch.nn.init.kaiming_normal_(m.weight)
 
+
+class PartialBNN(BNN):
+    """
+    Partially Bayesian Neural Network - selective Bayesian treatment of layers.
+    
+    Allows specifying which layers should have weight uncertainty (Bayesian)
+    and which should remain deterministic. This is useful for:
+    - Last-layer Bayesian: Only uncertainty in final layer (fast, often effective)
+    - First-layer Bayesian: Uncertainty in input processing
+    - Custom selection: Any combination of layers
+    
+    The non-Bayesian layers have their variational scale (uncertainty) frozen
+    to a very small value, making them effectively deterministic.
+    
+    Args:
+        bayesian_layers: Specification of which layers should be Bayesian.
+            - "all": All layers are Bayesian (default BNN behavior)
+            - "last": Only the last linear layer of each species subnet
+            - "first": Only the first linear layer of each species subnet
+            - "first_last": First and last layers
+            - List[int]: Specific layer indices (0-indexed), e.g., [0, 2]
+            - Dict: Per-species specification, e.g., {"Ti": [0, 2], "O": "last"}
+        
+    Example:
+        ```python
+        # Last-layer Bayesian (recommended for speed + good UQ)
+        model = PartialBNN(net=net, bayesian_layers="last", ...)
+        
+        # First and last layers Bayesian
+        model = PartialBNN(net=net, bayesian_layers="first_last", ...)
+        
+        # Custom: only layers 0 and 2
+        model = PartialBNN(net=net, bayesian_layers=[0, 2], ...)
+        ```
+    """
+    
+    def __init__(
+            self,
+            net: torch.nn.Module,
+            lr: float,
+            pretrain_epochs: bool,
+            mc_samples_train: int,
+            mc_samples_eval: int,
+            dataset_size: int,
+            fit_context: str,
+            prior_loc: float,
+            prior_scale: float,
+            guide: str,
+            q_scale: float,
+            obs_scale: float,
+            bayesian_layers: Union[str, List[int], Dict] = "all",
+            name: str = "PartialBNN",
+    ):
+        # Store bayesian_layers before calling parent __init__
+        self._bayesian_layers_config = bayesian_layers
+        super().__init__(
+            net=net,
+            lr=lr,
+            pretrain_epochs=pretrain_epochs,
+            mc_samples_train=mc_samples_train,
+            mc_samples_eval=mc_samples_eval,
+            dataset_size=dataset_size,
+            fit_context=fit_context,
+            prior_loc=prior_loc,
+            prior_scale=prior_scale,
+            guide=guide,
+            q_scale=q_scale,
+            obs_scale=obs_scale,
+            name=name,
+        )
+        self.save_hyperparameters(logger=False, ignore=["net"])
+    
+    def _get_linear_layer_names(self) -> List[str]:
+        """Get names of all linear layers in the network."""
+        linear_layers = []
+        for name, module in self.net.named_modules():
+            if isinstance(module, nn.Linear):
+                linear_layers.append(name)
+        return linear_layers
+    
+    def _get_bayesian_layer_names(self) -> List[str]:
+        """Determine which layers should be Bayesian based on configuration."""
+        all_linear_layers = self._get_linear_layer_names()
+        config = self._bayesian_layers_config
+        
+        if config == "all":
+            return all_linear_layers
+        
+        # Group layers by species (e.g., "functions.0.Linear_Sp1_F1" -> species 0)
+        species_layers = {}
+        for layer_name in all_linear_layers:
+            # Extract species index from layer name
+            if "functions." in layer_name:
+                parts = layer_name.split(".")
+                species_idx = int(parts[1])  # functions.{idx}.Linear_...
+                if species_idx not in species_layers:
+                    species_layers[species_idx] = []
+                species_layers[species_idx].append(layer_name)
+        
+        bayesian_layers = []
+        
+        if config == "last":
+            # Last layer of each species subnet
+            for species_idx, layers in species_layers.items():
+                if layers:
+                    bayesian_layers.append(layers[-1])
+        
+        elif config == "first":
+            # First layer of each species subnet
+            for species_idx, layers in species_layers.items():
+                if layers:
+                    bayesian_layers.append(layers[0])
+        
+        elif config == "first_last":
+            # First and last layers of each species subnet
+            for species_idx, layers in species_layers.items():
+                if layers:
+                    bayesian_layers.append(layers[0])
+                    if len(layers) > 1:
+                        bayesian_layers.append(layers[-1])
+        
+        elif isinstance(config, list):
+            # Specific layer indices for all species
+            for species_idx, layers in species_layers.items():
+                for idx in config:
+                    if 0 <= idx < len(layers):
+                        bayesian_layers.append(layers[idx])
+        
+        elif isinstance(config, dict):
+            # Per-species configuration
+            for species_idx, layers in species_layers.items():
+                species_name = self.net.species[species_idx] if hasattr(self.net, 'species') else str(species_idx)
+                species_config = config.get(species_name, config.get(species_idx, "all"))
+                
+                if species_config == "all":
+                    bayesian_layers.extend(layers)
+                elif species_config == "last" and layers:
+                    bayesian_layers.append(layers[-1])
+                elif species_config == "first" and layers:
+                    bayesian_layers.append(layers[0])
+                elif species_config == "first_last" and layers:
+                    bayesian_layers.append(layers[0])
+                    if len(layers) > 1:
+                        bayesian_layers.append(layers[-1])
+                elif isinstance(species_config, list):
+                    for idx in species_config:
+                        if 0 <= idx < len(layers):
+                            bayesian_layers.append(layers[idx])
+        
+        return bayesian_layers
+    
+    def define_bnn(self):
+        """Override to apply selective Bayesian treatment."""
+        # First, call parent to create the full BNN
+        super().define_bnn()
+        
+        # Then freeze non-Bayesian layers by setting their scale to near-zero
+        bayesian_layer_names = self._get_bayesian_layer_names()
+        
+        # Log which layers are Bayesian
+        all_layers = self._get_linear_layer_names()
+        deterministic_layers = [l for l in all_layers if l not in bayesian_layer_names]
+        
+        if self.trainer and self.trainer.is_global_zero:
+            print(f"\n[PartialBNN] Layer configuration:")
+            print(f"  Bayesian layers ({len(bayesian_layer_names)}): {bayesian_layer_names}")
+            print(f"  Deterministic layers ({len(deterministic_layers)}): {deterministic_layers}")
+        
+        # Freeze scale parameters for non-Bayesian layers
+        # This makes them effectively deterministic (point estimates)
+        param_store = pyro.get_param_store()
+        frozen_count = 0
+        
+        for param_name in list(param_store.keys()):
+            # Scale parameters control uncertainty - freeze them for deterministic layers
+            if '.scale' in param_name:
+                # Check if this parameter belongs to a non-Bayesian layer
+                is_bayesian = False
+                for bayesian_layer in bayesian_layer_names:
+                    if bayesian_layer in param_name:
+                        is_bayesian = True
+                        break
+                
+                if not is_bayesian:
+                    # Freeze by setting requires_grad=False and value to very small
+                    param = param_store[param_name]
+                    param.data.fill_(1e-8)  # Very small scale = nearly deterministic
+                    param.requires_grad = False
+                    frozen_count += 1
+        
+        if self.trainer and self.trainer.is_global_zero:
+            print(f"  Frozen {frozen_count} scale parameters for deterministic layers\n")
+    
+    def get_bayesian_param_count(self) -> Dict[str, int]:
+        """Get count of Bayesian vs deterministic parameters."""
+        bayesian_layers = self._get_bayesian_layer_names()
+        bayesian_params = 0
+        total_params = 0
+        
+        for name, param in self.net.named_parameters():
+            param_count = param.numel()
+            total_params += param_count
+            
+            # Check if this parameter is in a Bayesian layer
+            for layer_name in bayesian_layers:
+                if layer_name in name:
+                    bayesian_params += param_count
+                    break
+        
+        return {
+            "bayesian_params": bayesian_params,
+            "deterministic_params": total_params - bayesian_params,
+            "total_params": total_params,
+            "bayesian_fraction": bayesian_params / total_params if total_params > 0 else 0,
+        }
+
+
 class NN(L.LightningModule):
     """
     Class used by BNNs to pretrain their weights. This class is instantiated,
@@ -1083,6 +1300,86 @@ class BNN_Forces_Aux(BNN):
         pred["force_mae"] = force_mae
         
         return pred
+
+
+class PartialBNN_Forces_Aux(BNN_Forces_Aux, PartialBNN):
+    """
+    Partially Bayesian Neural Network with auxiliary force loss.
+    
+    Combines selective Bayesian treatment of layers (PartialBNN) with
+    force training (BNN_Forces_Aux). Use this for:
+    - Fast UQ with forces using "last" layer Bayesian
+    - Targeted uncertainty modeling with force-aware training
+    
+    Args:
+        bayesian_layers: Same as PartialBNN - "all", "last", "first", "first_last",
+                        List[int], or Dict for per-species configuration.
+        force_weight: Multiplier for force loss (default 1.0)
+        force_lr_scale: Learning rate scale for force updates (default 0.1)
+        scale_lr_factor: Learning rate factor for scale updates (default 0.5)
+    
+    Example:
+        ```python
+        # Last-layer Bayesian with force training
+        model = PartialBNN_Forces_Aux(
+            net=net,
+            bayesian_layers="last",
+            force_weight=1.0,
+            ...
+        )
+        ```
+    """
+    
+    def __init__(
+            self,
+            net: torch.nn.Module,
+            lr: float,
+            pretrain_epochs: bool,
+            mc_samples_train: int,
+            mc_samples_eval: int,
+            dataset_size: int,
+            fit_context: str,
+            prior_loc: float,
+            prior_scale: float,
+            guide: str,
+            q_scale: float,
+            obs_scale: float,
+            bayesian_layers: Union[str, List[int], Dict] = "last",
+            force_weight: float = 1.0,
+            force_lr_scale: float = 0.1,
+            scale_lr_factor: float = 0.5,
+            name: str = "PartialBNN_Forces",
+    ):
+        # Call BNN_Forces_Aux init (which calls PartialBNN.__init__ due to MRO)
+        BNN_Forces_Aux.__init__(
+            self,
+            net=net,
+            lr=lr,
+            pretrain_epochs=pretrain_epochs,
+            mc_samples_train=mc_samples_train,
+            mc_samples_eval=mc_samples_eval,
+            dataset_size=dataset_size,
+            fit_context=fit_context,
+            prior_loc=prior_loc,
+            prior_scale=prior_scale,
+            guide=guide,
+            q_scale=q_scale,
+            obs_scale=obs_scale,
+            force_weight=force_weight,
+            force_lr_scale=force_lr_scale,
+            scale_lr_factor=scale_lr_factor,
+            name=name,
+        )
+        
+        # Set bayesian_layers AFTER parent init (MRO causes PartialBNN.__init__ 
+        # to be called which sets default "all", so we override it here)
+        self._bayesian_layers_config = bayesian_layers
+        self.save_hyperparameters(logger=False, ignore=["net"])
+    
+    def define_bnn(self):
+        """Override to use PartialBNN's selective Bayesian treatment."""
+        # Call PartialBNN's define_bnn which applies selective freezing
+        PartialBNN.define_bnn(self)
 
 
 def get_rmse_atom(list_E_ann, grp_energy, grp_N_atom):

@@ -1,0 +1,7 @@
+defaults:
+  - partial_bnn_forces
+
+name: PartialLRT_FirstLast_Forces
+fit_context: lrt
+guide: normal
+bayesian_layers: first_last  # First and last layers are Bayesian

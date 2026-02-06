@@ -1,0 +1,7 @@
+defaults:
+  - partial_bnn_forces
+
+name: PartialFO_Last_Forces
+fit_context: flipout
+guide: normal
+bayesian_layers: last  # Only last layer is Bayesian
