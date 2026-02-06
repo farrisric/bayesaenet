@@ -109,7 +109,7 @@ class BNN(L.LightningModule):
             else Trace_ELBO(self.hparams.mc_samples_train)
         )
 
-        self.svi = self.svi = SVI(
+        self.svi = SVI(
             pyro.poutine.scale(self.bnn.model,scale=1.0/self.hparams.dataset_size,),
             pyro.poutine.scale(self.bnn.guide,scale=1.0/self.hparams.dataset_size,),
             self.optimizer,
