@@ -29,9 +29,9 @@ cd /home/g15farris/bin/bayesaenet
 export CUDA_VISIBLE_DEVICES=1
 export OMP_NUM_THREADS=4
 
+# Disabled mixed precision for LRT - causes NaN in variational parameters
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=bnn_lrt_forces \
     datamodule=TiO_Data100 \
     trainer.accelerator=gpu \
-    trainer.devices=1 \
-    +trainer.precision=16-mixed
+    trainer.devices=1
