@@ -26,6 +26,5 @@ model:
   fit_context: flipout
   guide: normal
   bayesian_layers: first_last
-  force_weight: 1.0
   net:
     alpha: 0.1

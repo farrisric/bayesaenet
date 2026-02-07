@@ -25,6 +25,5 @@ model:
   name: rad_forces  # Used for log directory organization
   fit_context: null
   guide: radial
-  force_weight: 1.0
   net:
     alpha: 0.1  # FIXED at 0.1 (not optimized to avoid Optuna bias)

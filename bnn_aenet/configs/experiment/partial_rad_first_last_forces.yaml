@@ -25,6 +25,5 @@ model:
   name: partial_rad_first_last_forces
   guide: radial
   bayesian_layers: first_last
-  force_weight: 1.0
   net:
     alpha: 0.1

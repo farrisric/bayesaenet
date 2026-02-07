@@ -1,11 +1,11 @@
 # @package _global_
 
 defaults:
-  - override /model: nn_forces
+  - override /model: partial_fo_first_forces
   - override /callbacks: default
   - override /trainer: default
 
-tags: ["nn", "deep_ensemble", "forces"]
+tags: ["partial_bayesian", "flipout", "first", "forces"]
 
 seed: 12345
 
@@ -22,5 +22,9 @@ callbacks:
     patience: 100
 
 model:
-  name: nn_forces  # Used for log directory organization
-  alpha: 0.1  # FIXED at 0.1 (not optimized)
+  name: partial_fo_first_forces
+  fit_context: flipout
+  guide: normal
+  bayesian_layers: first
+  net:
+    alpha: 0.1

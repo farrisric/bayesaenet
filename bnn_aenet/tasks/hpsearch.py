@@ -51,8 +51,6 @@ def objective_nn_forces(trial: Trial, cfg: DictConfig, output_dir: str):
     
     Optimizes:
     - lr: Learning rate
-    - weight_decay: L2 regularization
-    - force_weight: Weight for force loss term
     
     Note: alpha is FIXED at 0.1 (from config) to avoid biasing Optuna toward lower values.
     No pretraining for NN models - they train from scratch.
@@ -61,17 +59,6 @@ def objective_nn_forces(trial: Trial, cfg: DictConfig, output_dir: str):
         "lr", 1e-5, 1e-2, log=True
     )
     log.info(f"{cfg.model.optimizer.lr} lr")
-    
-    cfg.model.optimizer.weight_decay = trial.suggest_float(
-        "weight_decay", 1e-6, 1e-2, log=True
-    )
-    log.info(f"{cfg.model.optimizer.weight_decay} weight_decay")
-    
-    # Force-specific hyperparameters
-    cfg.model.force_weight = trial.suggest_float(
-        "force_weight", 0.1, 10.0, log=True
-    )
-    log.info(f"{cfg.model.force_weight} force_weight")
     
     # alpha is fixed at 0.1 in config (not optimized to avoid bias)
     log.info(f"{cfg.model.alpha} alpha (fixed)")
@@ -150,15 +137,6 @@ def objective_bnn_forces(trial: Trial, cfg: DictConfig, output_dir: str):
     )
     log.info(f"{cfg.model.obs_scale} obs_scale")
     
-    # Force-specific hyperparameters
-    cfg.model.force_weight = trial.suggest_float(
-        "force_weight", 0.1, 10.0, log=True
-    )
-    log.info(f"{cfg.model.force_weight} force_weight")
-    
-    # Simplified: removed force_lr_scale and scale_lr_factor to reduce complexity
-    # force_weight alone controls force emphasis, single lr for all params
-    
     # alpha is fixed at 0.1 in net config (not optimized to avoid bias toward lower values)
     log.info(f"{cfg.model.net.alpha} alpha (fixed)")
     
@@ -171,7 +149,7 @@ def objective_partial_bnn_forces(trial: Trial, cfg: DictConfig, output_dir: str)
     Similar to full BNN but with reduced hyperparameter space since partial BNNs
     have fewer Bayesian parameters and are more numerically stable.
     
-    Note: bayesian_layers is fixed in the experiment config (last, first_last, etc.)
+    Note: bayesian_layers is fixed in the experiment config (last, first, etc.)
     """
     cfg.model.pretrain_epochs = 0
     log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs (fixed at 0)")
@@ -201,11 +179,6 @@ def objective_partial_bnn_forces(trial: Trial, cfg: DictConfig, output_dir: str)
         "obs_scale", 0.1, 2.0, log=True
     )
     log.info(f"{cfg.model.obs_scale} obs_scale")
-    
-    cfg.model.force_weight = trial.suggest_float(
-        "force_weight", 0.1, 10.0, log=True
-    )
-    log.info(f"{cfg.model.force_weight} force_weight")
     
     # Log which layers are Bayesian (fixed from config)
     log.info(f"{cfg.model.bayesian_layers} bayesian_layers (fixed)")

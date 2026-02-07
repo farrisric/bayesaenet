@@ -710,11 +710,9 @@ class NN_Forces(NN):
     def __init__(self,
                  net: torch.nn.Module,
                  optimizer: torch.optim.Optimizer,
-                 force_weight: float = 1.0,
-                 alpha: float = 0.5,
+                 alpha: float = 0.1,
                  name: str = "NN_Forces"):  # Model name for logging organization
         super().__init__(net=net, optimizer=optimizer, name=name)
-        self.force_weight = force_weight
         self.alpha = alpha  # Weight for force loss: (1-alpha)*E_loss + alpha*F_loss
     
     def compute_force_loss(self, batch: List[torch.Tensor]) -> torch.Tensor:
@@ -773,7 +771,7 @@ class NN_Forces(NN):
         
         # Combined loss with alpha weighting
         alpha = self.alpha
-        total_loss = (1 - alpha) * energy_rmse + alpha * self.force_weight * force_rmse
+        total_loss = (1 - alpha) * energy_rmse + alpha * force_rmse
         
         # Logging
         batch_size = len(batch[BatchIdx.E_ENERGY])
@@ -828,19 +826,20 @@ class BNN_Forces_Aux(BNN):
     
     def __init__(self, net, lr, pretrain_epochs, mc_samples_train, mc_samples_eval,
                  dataset_size, fit_context, prior_loc, prior_scale, guide, q_scale, 
-                 obs_scale, force_weight: float = 1.0, force_lr_scale: float = 0.1,
-                 scale_lr_factor: float = 0.5, name: str = "BNN_Forces"):
+                 obs_scale, force_lr_scale: float = 0.1,
+                 scale_lr_factor: float = 0.5, grad_clip_val: float = 1.0,
+                 name: str = "BNN_Forces"):
         """
         BNN with auxiliary force loss.
         
         Args:
-            force_weight: Additional multiplier for force loss (default 1.0)
             force_lr_scale: Learning rate scale for force updates (default 0.1 = 10% of main lr)
             scale_lr_factor: Learning rate factor for scale (uncertainty) param updates (default 0.5)
+            grad_clip_val: Max gradient norm for force gradient clipping (default 1.0)
             name: Model name for logging organization
         
-        Note: The actual force loss weight is: alpha * force_weight * force_rmse
-        where alpha comes from self.net.alpha (set in train.in, typically 0.5)
+        Note: The actual force loss weight is: alpha * force_rmse
+        where alpha comes from self.net.alpha (fixed at 0.1)
         """
         super().__init__(net, lr, pretrain_epochs, mc_samples_train, mc_samples_eval,
                         dataset_size, fit_context, prior_loc, prior_scale, guide, 
@@ -1016,9 +1015,7 @@ class BNN_Forces_Aux(BNN):
             
             # Apply alpha weighting: the force contribution should be scaled by alpha
             # (energy contribution is already handled by ELBO with implicit 1-alpha weight)
-            # We also apply force_weight as an additional tunable parameter
-            force_weight = getattr(self.hparams, 'force_weight', 1.0)
-            weighted_loss = alpha * force_weight * force_rmse
+            weighted_loss = alpha * force_rmse
             
             if weighted_loss.requires_grad:
                 # Zero existing gradients
@@ -1028,6 +1025,10 @@ class BNN_Forces_Aux(BNN):
                 
                 # Backprop to get gradients on self.net params
                 weighted_loss.backward(retain_graph=False)
+                
+                # Clip gradients to prevent NaN in variational parameters
+                grad_clip_val = getattr(self.hparams, 'grad_clip_val', 1.0)
+                torch.nn.utils.clip_grad_norm_(self.net.parameters(), grad_clip_val)
                 
                 # Apply gradients to Pyro param store directly
                 force_lr_scale = getattr(self.hparams, 'force_lr_scale', 0.1)
@@ -1345,9 +1346,9 @@ class PartialBNN_Forces_Aux(BNN_Forces_Aux, PartialBNN):
             q_scale: float,
             obs_scale: float,
             bayesian_layers: Union[str, List[int], Dict] = "last",
-            force_weight: float = 1.0,
             force_lr_scale: float = 0.1,
             scale_lr_factor: float = 0.5,
+            grad_clip_val: float = 1.0,
             name: str = "PartialBNN_Forces",
     ):
         # Call BNN_Forces_Aux init (which calls PartialBNN.__init__ due to MRO)
@@ -1365,9 +1366,9 @@ class PartialBNN_Forces_Aux(BNN_Forces_Aux, PartialBNN):
             guide=guide,
             q_scale=q_scale,
             obs_scale=obs_scale,
-            force_weight=force_weight,
             force_lr_scale=force_lr_scale,
             scale_lr_factor=scale_lr_factor,
+            grad_clip_val=grad_clip_val,
             name=name,
         )
         

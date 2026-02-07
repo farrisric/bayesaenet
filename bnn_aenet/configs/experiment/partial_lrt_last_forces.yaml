@@ -26,6 +26,5 @@ model:
   fit_context: lrt
   guide: normal
   bayesian_layers: last
-  force_weight: 1.0
   net:
     alpha: 0.1  # Fixed at 0.1

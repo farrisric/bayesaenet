@@ -142,7 +142,6 @@ def test_partial_bnn_forces():
         q_scale=0.001,
         obs_scale=0.5,
         bayesian_layers="last",
-        force_weight=1.0,
         force_lr_scale=0.1,
         scale_lr_factor=0.5,
         name="PartialBNN_Forces",

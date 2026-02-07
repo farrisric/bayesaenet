@@ -10,7 +10,5 @@ optimizer:
   _target_: torch.optim.Adam
   _partial_: true
   lr: 0.001
-  weight_decay: 0.001
 
-force_weight: 1.0
 alpha: 0.1  # Weight for force loss: (1-alpha)*E_loss + alpha*F_loss (FIXED, not optimized)
