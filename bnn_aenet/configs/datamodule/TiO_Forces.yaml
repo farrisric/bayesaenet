@@ -1,0 +1,5 @@
+defaults:
+  - datamodule
+
+name: TiO2_Forces
+data_dir: ${paths.data_dir}/TiO/train_forces.in

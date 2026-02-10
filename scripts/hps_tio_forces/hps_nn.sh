@@ -31,7 +31,7 @@ export OMP_NUM_THREADS=4
 
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=nn_forces \
-    datamodule=TiO_Data100 \
+    datamodule=TiO_Forces \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     +trainer.precision=16-mixed

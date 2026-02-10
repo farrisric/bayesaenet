@@ -146,10 +146,12 @@ class BNN(L.LightningModule):
         param_store_to(self.device)
         self.configure_optimizers()
 
+        # Use grad_clip_val if available (BNN_Forces_Aux), otherwise default to 10.0
+        clip_norm = getattr(self.hparams, 'grad_clip_val', 10.0)
         self.optimizer = pyro.optim.ClippedAdam({
             'lr': self.hparams.lr, 
             'betas': [0.95, 0.999], 
-            'clip_norm': 15
+            'clip_norm': clip_norm
         })
         self.loss = (
             TraceMeanField_ELBO(self.hparams.mc_samples_train)
@@ -188,6 +190,14 @@ class BNN(L.LightningModule):
 
         with self.fit_ctxt():
             elbo = self.svi.step(x, y)
+            
+            # NaN protection: check guide parameters after SVI step
+            with torch.no_grad():
+                for name, val in pyro.get_param_store().items():
+                    if torch.isnan(val).any():
+                        warnings.warn(f"NaN detected in Pyro param '{name}' after SVI step, clamping.")
+                        val.data = torch.nan_to_num(val.data, nan=0.0)
+            
             loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_train)
             kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
@@ -716,50 +726,55 @@ class NN_Forces(NN):
         self.alpha = alpha  # Weight for force loss: (1-alpha)*E_loss + alpha*F_loss
     
     def compute_force_loss(self, batch: List[torch.Tensor]) -> torch.Tensor:
-        """Compute force RMSE from batch.
+        """Compute force RMSE from batch using forward_F.
         
         Args:
             batch: List of tensors with force data at BatchIdx.F_* indices.
             
         Returns:
-            Force RMSE, or 0.0 if no force data available.
+            Force RMSE in mHa/Bohr, or 0.0 if no force data available.
         """
         # Get force data from batch using BatchIdx constants
-        F_group_descrp = batch[BatchIdx.F_DESCRP] if len(batch) > BatchIdx.F_DESCRP else None
-        F_group_forces = batch[BatchIdx.F_FORCES] if len(batch) > BatchIdx.F_FORCES else None
-        F_logic_reduce = batch[BatchIdx.F_LOGIC_REDUCE] if len(batch) > BatchIdx.F_LOGIC_REDUCE else None
+        F_group_descrp = batch[BatchIdx.F_DESCRP]
+        F_group_forces = batch[BatchIdx.F_FORCES]
         
-        if F_group_descrp is None or len(F_group_descrp) == 0:
+        # Check if force data is available
+        if F_group_descrp is None or F_group_forces is None:
+            return torch.tensor(0.0, device=self.device)
+        if isinstance(F_group_descrp, list) and len(F_group_descrp) == 0:
             return torch.tensor(0.0, device=self.device)
         
-        # Compute forces via autograd
-        all_forces_pred = []
-        all_forces_true = []
+        # Extract remaining force-related data
+        F_logic_reduce = batch[BatchIdx.F_LOGIC_REDUCE]
+        F_sfderiv_i = batch[BatchIdx.F_SFDERIV_I]
+        F_sfderiv_j = batch[BatchIdx.F_SFDERIV_J]
+        F_indices = batch[BatchIdx.F_INDICES]
+        F_indices_i = batch[BatchIdx.F_INDICES_I]
         
-        for i, descrp in enumerate(F_group_descrp):
-            if descrp is None or descrp.numel() == 0:
-                continue
-            
-            descrp = descrp.float().to(self.device)
-            descrp = descrp.clone().detach().requires_grad_(True)
-            
-            logic = F_logic_reduce[i].float().to(self.device) if F_logic_reduce else torch.ones(descrp.shape[0], 1, device=self.device)
-            
-            with torch.enable_grad():
-                E_pred, F_pred = self.net.forward_F(descrp, logic)
-            
-            if F_pred is not None and F_group_forces[i] is not None:
-                F_true = F_group_forces[i].float().to(self.device)
-                all_forces_pred.append(F_pred.flatten())
-                all_forces_true.append(F_true.flatten())
+        # Compute max_nnb from sfderiv_j shape
+        max_nnb = F_sfderiv_j[0].shape[1] if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0 else 0
         
-        if not all_forces_pred:
-            return torch.tensor(0.0, device=self.device)
+        net = self.net
         
-        forces_pred = torch.cat(all_forces_pred)
-        forces_true = torch.cat(all_forces_true)
+        with torch.enable_grad():
+            # Clone descriptors for gradient tracking, convert to float32
+            F_descrp_grad = [d.clone().detach().float().requires_grad_(True) for d in F_group_descrp]
+            F_sfderiv_i_f = [s.float() for s in F_sfderiv_i]
+            F_sfderiv_j_f = [s.float() for s in F_sfderiv_j]
+            F_logic_reduce_f = [l.float() for l in F_logic_reduce]
+            
+            # Compute forces via autodiff through forward_F
+            E_pred, F_pred = net.forward_F(
+                F_descrp_grad, F_sfderiv_i_f, F_sfderiv_j_f,
+                F_indices, F_indices_i, F_logic_reduce_f,
+                net.input_size,
+                max_nnb
+            )
         
-        force_rmse = torch.sqrt(torch.mean((forces_pred - forces_true) ** 2))
+        # Compute RMSE for forces (in mHa/Bohr)
+        force_diff = F_pred - F_group_forces.float()
+        force_rmse = torch.sqrt(torch.mean(force_diff ** 2)) * 1000
+        
         return force_rmse
     
     def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
@@ -1057,6 +1072,12 @@ class BNN_Forces_Aux(BNN):
                                 # Increase scale where error gradients are large
                                 scale_grad = torch.abs(grad) * torch.exp(scale_p)
                                 scale_p += force_lr * scale_lr_factor * scale_grad.mean()
+                
+                # NaN protection after force gradient update
+                for pname, val in pyro.get_param_store().items():
+                    if torch.isnan(val).any():
+                        warnings.warn(f"NaN detected in Pyro param '{pname}' after force update, clamping.")
+                        val.data = torch.nan_to_num(val.data, nan=0.0)
             
             # Restore original params
             for name, param in self.net.named_parameters():
@@ -1078,6 +1099,14 @@ class BNN_Forces_Aux(BNN):
         with self.fit_ctxt():
             # 1. Energy ELBO step (unchanged from parent BNN)
             elbo = self.svi.step(x, y)
+            
+            # NaN protection: check guide parameters after SVI step
+            with torch.no_grad():
+                for name, val in pyro.get_param_store().items():
+                    if torch.isnan(val).any():
+                        warnings.warn(f"NaN detected in Pyro param '{name}' after SVI step, clamping.")
+                        val.data = torch.nan_to_num(val.data, nan=0.0)
+            
             loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_train)
             kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
             

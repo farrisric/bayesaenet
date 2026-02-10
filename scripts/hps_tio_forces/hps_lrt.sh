@@ -32,6 +32,6 @@ export OMP_NUM_THREADS=4
 # Disabled mixed precision for LRT - causes NaN in variational parameters
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=bnn_lrt_forces \
-    datamodule=TiO_Data100 \
+    datamodule=TiO_Forces \
     trainer.accelerator=gpu \
     trainer.devices=1

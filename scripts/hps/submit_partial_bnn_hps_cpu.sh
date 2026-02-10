@@ -55,7 +55,7 @@ unset __conda_setup
 conda activate bnn
 
 cd /home/g15farris/bin/bayesaenet
-python bnn_aenet/tasks/hpsearch.py hpsearch=${MODEL}_forces datamodule=TiO_Data100 trainer.accelerator=cpu
+python bnn_aenet/tasks/hpsearch.py hpsearch=${MODEL}_forces datamodule=TiO_Forces trainer.accelerator=cpu
 HEREDOC
 
 done

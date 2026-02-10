@@ -207,7 +207,7 @@ def main(cfg: DictConfig) -> Optional[float]:
         lambda trial: objective(trial, cfg, output_dir),
         n_trials=cfg.hpsearch.n_trials,
         timeout=None,
-        catch=(RuntimeError,),
+        catch=(RuntimeError, ValueError),
     )
 
     log.info("Number of finished trials: {}".format(len(study.trials)))
