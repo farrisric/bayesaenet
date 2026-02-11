@@ -1,7 +1,7 @@
 defaults:
   - net
 
-_target_: bnn_aenet.models.bnn.PartialBNN_Forces_Aux
+_target_: bnn_aenet.models.bnn_forces.PartialBNN_Forces_Aux
 
 # Model name (used for organizing logs)
 name: PartialBNN_Forces

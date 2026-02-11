@@ -23,7 +23,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "bnn_aenet"))
 
 def load_model(checkpoint_path: str, device: str = "cuda"):
     """Load a trained BNN model from checkpoint."""
-    from models.bnn import BNN
+    from bnn_aenet.models import BNN
     
     ckpt = torch.load(checkpoint_path, map_location=device)
     

@@ -1,12 +1,12 @@
-"""Comprehensive analysis of TiO2 force-trained models.
+"""Comprehensive analysis of force-trained models.
 
 Creates Deep Ensembles from NN predictions, selects best BNN models,
 computes metrics, and generates comparison plots.
 
 Usage:
-    python scripts/final/TiO2_forces/analysis/analyze_forces.py \
-        --pred-dir bnn_aenet/logs/forces_pred \
-        --output-dir plots/TiO2_forces
+    python -m bnn_aenet.tasks.analyze \
+        --pred-dir bnn_aenet/logs/TiO2_big/forces_pred \
+        --output-dir plots/TiO2_big
 """
 
 import argparse
@@ -22,10 +22,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy import stats
-
-# Add project root to path
-PROJECT_ROOT = Path(__file__).resolve().parents[4]
-sys.path.insert(0, str(PROJECT_ROOT))
 
 from bnn_aenet.analysis.metrics import (
     compute_energy_metrics,

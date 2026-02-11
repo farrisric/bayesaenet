@@ -1,7 +1,7 @@
 defaults:
   - net
 
-_target_: bnn_aenet.models.bnn.NN_Forces
+_target_: bnn_aenet.models.nn.NN_Forces
 
 # Model name (used for organizing logs)
 name: NN_Forces

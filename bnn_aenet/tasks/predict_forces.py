@@ -1,12 +1,13 @@
-"""Standalone prediction script for TiO2 force-trained models.
+"""Prediction script for force-trained models.
 
 Runs predictions on all checkpoints for a given model type (nn/lrt/fo/rad),
 saving energy and force predictions separately to handle different array lengths.
 
 Usage:
-    python scripts/final/TiO2_forces/predict/predict_forces.py \
-        --model-type nn --runs-dir bnn_aenet/logs/nn_forces/nn_forces_train \
-        --output-dir bnn_aenet/logs/forces_pred/nn --device gpu
+    python -m bnn_aenet.tasks.predict_forces \
+        --model-type nn --runs-dir bnn_aenet/logs/TiO2_big/nn_train \
+        --output-dir bnn_aenet/logs/TiO2_big/nn_pred --device gpu \
+        --data-dir data/TiO
 """
 
 import argparse
@@ -22,11 +23,6 @@ from lightning.pytorch import Trainer
 import numpy as np
 import pandas as pd
 import yaml
-
-# Add project root to path
-PROJECT_ROOT = Path(__file__).resolve().parents[4]
-sys.path.insert(0, str(PROJECT_ROOT))
-os.environ.setdefault("PROJECT_ROOT", str(PROJECT_ROOT))
 
 # ALL bnn_aenet imports are lazy to avoid triggering bnn_aenet/models/__init__.py
 # which imports pyro/tyxe and segfaults on iqtc10 nodes when combined with
@@ -111,7 +107,7 @@ def build_net(dm, alpha: float = 0.1):
     )
 
 
-def load_nn_model(ckpt_path: Path, dm: AenetDataModule):
+def load_nn_model(ckpt_path: Path, dm):
     """Load NN_Forces model from checkpoint."""
     _ensure_nn_forces()
     net = build_net(dm, alpha=0.1)
@@ -126,7 +122,7 @@ def load_nn_model(ckpt_path: Path, dm: AenetDataModule):
     return model
 
 
-def load_bnn_model(ckpt_path: Path, dm: AenetDataModule, run_dir: Path, mc_eval: int = 20):
+def load_bnn_model(ckpt_path: Path, dm, run_dir: Path, mc_eval: int = 20):
     """Load BNN_Forces_Aux model from checkpoint."""
     _ensure_bnn_forces_aux()
     overrides = load_overrides(run_dir)

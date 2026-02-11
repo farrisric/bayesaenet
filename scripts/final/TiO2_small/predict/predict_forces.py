@@ -1,1 +1,1 @@
-../../TiO2_big/predict/predict_forces.py
+../../../../bnn_aenet/tasks/predict_forces.py

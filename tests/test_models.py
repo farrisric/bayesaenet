@@ -56,7 +56,7 @@ class TestBNNModels:
     
     def test_bnn_import(self):
         """Test BNN module imports."""
-        from bnn_aenet.models.bnn import BNN, NN, BNN_Forces_Aux, NN_Forces
+        from bnn_aenet.models import BNN, NN, BNN_Forces_Aux, NN_Forces
         assert BNN is not None
         assert NN is not None
         assert BNN_Forces_Aux is not None
@@ -64,7 +64,7 @@ class TestBNNModels:
     
     def test_nn_initialization(self, device):
         """Test NN model initialization with current API."""
-        from bnn_aenet.models.bnn import NN
+        from bnn_aenet.models import NN
         from bnn_aenet.models.nets.network import NetAtom
         
         # First create the network with proper list/2D structure

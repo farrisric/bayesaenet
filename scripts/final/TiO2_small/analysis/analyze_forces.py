@@ -1,1 +1,1 @@
-../../TiO2_big/analysis/analyze_forces.py
+../../../../bnn_aenet/tasks/analyze.py

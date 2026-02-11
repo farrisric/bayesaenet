@@ -19,7 +19,7 @@ from lightning.pytorch import Callback, LightningDataModule, LightningModule, Tr
 from lightning.pytorch.loggers import Logger
 from omegaconf import DictConfig, OmegaConf
 import pyrootutils
-from bnn_aenet.models.bnn import NN
+from bnn_aenet.models import NN
 
 
 from bnn_aenet.tasks.utils import (

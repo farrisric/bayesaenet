@@ -41,7 +41,7 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
-python scripts/final/TiO2_forces/predict/predict_forces.py \
+python -m bnn_aenet.tasks.predict_forces \
     --model-type nn \
     --runs-dir bnn_aenet/logs/nn_forces/nn_forces_train \
     --output-dir bnn_aenet/logs/forces_pred/nn \
@@ -86,7 +86,7 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
-python scripts/final/TiO2_forces/predict/predict_forces.py \
+python -m bnn_aenet.tasks.predict_forces \
     --model-type lrt \
     --runs-dir bnn_aenet/logs/lrt_forces/lrt_forces_train \
     --output-dir bnn_aenet/logs/forces_pred/lrt \
@@ -132,7 +132,7 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
-python scripts/final/TiO2_forces/predict/predict_forces.py \
+python -m bnn_aenet.tasks.predict_forces \
     --model-type fo \
     --runs-dir bnn_aenet/logs/fo_forces/fo_forces_train \
     --output-dir bnn_aenet/logs/forces_pred/fo \
@@ -178,7 +178,7 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
-python scripts/final/TiO2_forces/predict/predict_forces.py \
+python -m bnn_aenet.tasks.predict_forces \
     --model-type rad \
     --runs-dir bnn_aenet/logs/rad_forces/rad_forces_train \
     --output-dir bnn_aenet/logs/forces_pred/rad \

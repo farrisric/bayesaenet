@@ -1,7 +1,7 @@
 defaults:
   - net
 
-_target_: bnn_aenet.models.bnn.NN
+_target_: bnn_aenet.models.nn.NN
 
 # Model name (used for organizing logs)
 name: NN
