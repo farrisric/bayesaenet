@@ -343,8 +343,8 @@ def plot_energy_parity_comparison(method_data: dict, output_dir: Path, subset: s
 
         name = METHOD_NAMES.get(method, method)
         ax.set_title(f"{name}\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
-        ax.set_xlabel("True Energy")
-        ax.set_ylabel("Predicted Energy")
+        ax.set_xlabel("True Energy (meV/atom)")
+        ax.set_ylabel("Predicted Energy (meV/atom)")
         ax.set_xlim(lim)
         ax.set_ylim(lim)
         ax.set_aspect("equal")
@@ -397,8 +397,8 @@ def plot_force_parity_comparison(method_data: dict, output_dir: Path, subset: st
 
         name = METHOD_NAMES.get(method, method)
         ax.set_title(f"{name}\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
-        ax.set_xlabel("True Force Component")
-        ax.set_ylabel("Predicted Force Component")
+        ax.set_xlabel(r"True Force Component (eV/$\mathrm{\AA}$)")
+        ax.set_ylabel(r"Predicted Force Component (eV/$\mathrm{\AA}$)")
         ax.set_xlim(lim)
         ax.set_ylim(lim)
         ax.set_aspect("equal")
@@ -443,8 +443,8 @@ def plot_force_components_comparison(method_data: dict, output_dir: Path, subset
             idx = np.random.choice(n, min(n, 5000), replace=False) if n > 5000 else np.arange(n)
             axes[i].scatter(ct[idx], cp[idx], alpha=0.4, s=10, c=color, edgecolors="none")
             axes[i].set_title(f"F_{comp}: RMSE={rmse:.4f}")
-            axes[i].set_xlabel(f"True F_{comp}")
-            axes[i].set_ylabel(f"Pred F_{comp}")
+            axes[i].set_xlabel(f"True F$_{comp}$" + r" (eV/$\mathrm{\AA}$)")
+            axes[i].set_ylabel(f"Pred F$_{comp}$" + r" (eV/$\mathrm{\AA}$)")
             axes[i].set_xlim(lim)
             axes[i].set_ylim(lim)
             axes[i].set_aspect("equal")
@@ -550,8 +550,8 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
 
         name = METHOD_NAMES.get(method, method)
         ax.set_title(f"{name}\nCorr: {corr:.3f}")
-        ax.set_xlabel("Predicted Uncertainty")
-        ax.set_ylabel("|Error|")
+        ax.set_xlabel("Predicted Uncertainty (meV/atom)")
+        ax.set_ylabel("|Error| (meV/atom)")
 
     fig.suptitle(f"Energy: Error vs Uncertainty ({subset})", fontsize=14, y=1.02)
     fig.tight_layout()
@@ -590,8 +590,8 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
 
         name = METHOD_NAMES.get(method, method)
         ax.set_title(f"{name}\nCorr: {corr:.3f}")
-        ax.set_xlabel("Predicted Uncertainty")
-        ax.set_ylabel("|Error|")
+        ax.set_xlabel(r"Predicted Uncertainty (eV/$\mathrm{\AA}$)")
+        ax.set_ylabel(r"|Error| (eV/$\mathrm{\AA}$)")
 
     fig.suptitle(f"Forces: Error vs Uncertainty ({subset})", fontsize=14, y=1.02)
     fig.tight_layout()
@@ -602,8 +602,8 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
 def plot_method_comparison_bars(summary_df: pd.DataFrame, output_dir: Path, subset: str = "val"):
     """Plot bar charts comparing methods on key metrics."""
     metrics_to_plot = [
-        ("energy_rmse", "Energy RMSE", True),
-        ("force_rmse", "Force RMSE", True),
+        ("energy_rmse", "Energy RMSE (meV/atom)", True),
+        ("force_rmse", r"Force RMSE (eV/$\mathrm{\AA}$)", True),
         ("total_rmse", "Total RMSE", True),
         ("energy_nll", "Energy NLL", True),
         ("energy_ece", "Energy ECE", True),
@@ -688,8 +688,8 @@ def plot_single_energy_parity(data: dict, method: str, output_dir: Path, subset:
 
     name = METHOD_NAMES.get(method, method)
     ax.set_title(f"{name} ({subset})\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
-    ax.set_xlabel("True Energy (eV/atom)")
-    ax.set_ylabel("Predicted Energy (eV/atom)")
+    ax.set_xlabel("True Energy (meV/atom)")
+    ax.set_ylabel("Predicted Energy (meV/atom)")
     ax.set_xlim(lim)
     ax.set_ylim(lim)
     ax.set_aspect("equal")
@@ -728,8 +728,8 @@ def plot_single_force_parity(data: dict, method: str, output_dir: Path, subset: 
 
     name = METHOD_NAMES.get(method, method)
     ax.set_title(f"{name} ({subset})\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
-    ax.set_xlabel("True Force Component (eV/A)")
-    ax.set_ylabel("Predicted Force Component (eV/A)")
+    ax.set_xlabel(r"True Force Component (eV/$\mathrm{\AA}$)")
+    ax.set_ylabel(r"Predicted Force Component (eV/$\mathrm{\AA}$)")
     ax.set_xlim(lim)
     ax.set_ylim(lim)
     ax.set_aspect("equal")
@@ -766,8 +766,8 @@ def plot_single_force_components(data: dict, method: str, output_dir: Path, subs
         idx = np.random.choice(n, min(n, 5000), replace=False) if n > 5000 else np.arange(n)
         axes[i].scatter(ct[idx], cp[idx], alpha=0.4, s=10, c=color, edgecolors="none")
         axes[i].set_title(f"F_{comp}: RMSE={rmse:.4f}")
-        axes[i].set_xlabel(f"True F_{comp} (eV/A)")
-        axes[i].set_ylabel(f"Pred F_{comp} (eV/A)")
+        axes[i].set_xlabel(f"True F$_{comp}$" + r" (eV/$\mathrm{\AA}$)")
+        axes[i].set_ylabel(f"Pred F$_{comp}$" + r" (eV/$\mathrm{\AA}$)")
         axes[i].set_xlim(lim)
         axes[i].set_ylim(lim)
         axes[i].set_aspect("equal")
@@ -797,8 +797,8 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
         max_val = max(y_std.max(), errors.max())
         ax.plot([0, max_val], [0, max_val], "k--", alpha=0.5)
         ax.set_title(f"{name} - Energy ({subset})\nCorr: {corr:.3f}")
-        ax.set_xlabel("Predicted Uncertainty")
-        ax.set_ylabel("|Error|")
+        ax.set_xlabel("Predicted Uncertainty (meV/atom)")
+        ax.set_ylabel("|Error| (meV/atom)")
         fig.tight_layout()
         fig.savefig(output_dir / f"energy_error_vs_uq_{subset}.png")
         plt.close(fig)
@@ -819,8 +819,8 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
             max_val = max(f_std[idx].max(), errors[idx].max())
             ax.plot([0, max_val], [0, max_val], "k--", alpha=0.5)
             ax.set_title(f"{name} - Forces ({subset})\nCorr: {corr:.3f}")
-            ax.set_xlabel("Predicted Uncertainty")
-            ax.set_ylabel("|Error|")
+            ax.set_xlabel(r"Predicted Uncertainty (eV/$\mathrm{\AA}$)")
+            ax.set_ylabel(r"|Error| (eV/$\mathrm{\AA}$)")
             fig.tight_layout()
             fig.savefig(output_dir / f"force_error_vs_uq_{subset}.png")
             plt.close(fig)

@@ -1356,11 +1356,26 @@ class BNN_Forces_Aux(BNN):
             F_indices_i = batch[BatchIdx.F_INDICES_I]
             max_nnb = F_sfderiv_j[0].shape[1] if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0 else 0
             
+            # Build mapping: guide trace site name -> self.net param name
+            # Guide trace sites are "net.{param_name}" -> strip "net." to get param_name
+            # We use self.net (regular nn.Module) not self.bnn.net (PyroModule)
+            # because forward_F needs autograd through regular parameters
+            net_params = dict(self.net.named_parameters())
+            
             for _ in range(self.hparams.mc_samples_eval):
                 with torch.no_grad():
-                    # Sample network from guide
+                    # Sample network weights from the guide
                     guide_trace = pyro.poutine.trace(self.bnn.guide).get_trace(x[0], x[1])
-                    model_trace = pyro.poutine.trace(pyro.poutine.replay(self.bnn_no_obs, guide_trace)).get_trace(x[0], x[1])
+                
+                    # Copy sampled weights into self.net so forward_F uses them
+                    # Guide trace sites: "net.{param_name}" -> sampled value
+                    for site_name, site in guide_trace.nodes.items():
+                        if site.get("type") == "sample" and not site.get("is_observed", False):
+                            # Strip "net." prefix to get param name matching self.net
+                            if site_name.startswith("net."):
+                                param_name = site_name[len("net."):]
+                                if param_name in net_params:
+                                    net_params[param_name].data.copy_(site["value"].data)
                 
                 # Force computation needs gradients (autograd.grad inside forward_F)
                 # Must exit both inference_mode and no_grad
@@ -1374,10 +1389,11 @@ class BNN_Forces_Aux(BNN):
                         F_indices_c = F_indices.clone().detach()
                         F_indices_i_c = F_indices_i.clone().detach()
                         
-                        _, F_pred = self.bnn.net.forward_F(
+                        # Use self.net (regular network) with sampled weights
+                        _, F_pred = self.net.forward_F(
                             F_descrp_f, F_sfderiv_i_f, F_sfderiv_j_f,
                             F_indices_c, F_indices_i_c, F_logic_reduce_f,
-                            self.bnn.net.input_size, max_nnb
+                            self.net.input_size, max_nnb
                         )
                 force_samples.append(F_pred.detach().cpu().numpy())
             
