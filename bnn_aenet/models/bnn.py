@@ -823,6 +823,82 @@ class NN_Forces(NN):
         self.log("force_rmse/test", force_rmse, on_step=False, on_epoch=True, batch_size=batch_size)
         self.log("total_rmse/test", total_rmse, on_step=False, on_epoch=True, batch_size=batch_size)
 
+    def predict_step(
+        self, 
+        batch: List[torch.Tensor], 
+        batch_idx: int, 
+        dataloader_idx: int = 0
+    ) -> Dict[str, np.ndarray]:
+        """Predict energies and forces (deterministic, stds=0).
+        
+        Returns dict matching BNN_Forces_Aux.predict_step() format for
+        compatibility with Deep Ensemble creation.
+        """
+        # Energy predictions (deterministic)
+        grp_descrp = batch[BatchIdx.E_DESCRP]
+        grp_energy = batch[BatchIdx.E_ENERGY]
+        logic_reduce = batch[BatchIdx.E_LOGIC_REDUCE]
+        grp_N_atom = batch[BatchIdx.E_N_ATOM]
+        
+        true = grp_energy / self.net.e_scaling + self.net.e_shift * grp_N_atom
+        list_E_ann = self.net.forward(grp_descrp, logic_reduce)
+        preds = list_E_ann / self.net.e_scaling + self.net.e_shift * grp_N_atom
+        
+        pred = {}
+        pred["true"] = true.cpu().numpy()
+        pred["preds"] = preds.detach().cpu().numpy()
+        pred["stds"] = np.zeros_like(pred["preds"])  # Deterministic model
+        pred["n_atoms"] = grp_N_atom.cpu().numpy()
+        
+        # Force predictions
+        F_group_descrp = batch[BatchIdx.F_DESCRP]
+        F_group_forces = batch[BatchIdx.F_FORCES]
+        has_force_data = (F_group_descrp is not None and 
+                          F_group_forces is not None and
+                          not (isinstance(F_group_descrp, list) and len(F_group_descrp) == 0))
+        
+        if has_force_data:
+            F_logic_reduce = batch[BatchIdx.F_LOGIC_REDUCE]
+            F_sfderiv_i = batch[BatchIdx.F_SFDERIV_I]
+            F_sfderiv_j = batch[BatchIdx.F_SFDERIV_J]
+            F_indices = batch[BatchIdx.F_INDICES]
+            F_indices_i = batch[BatchIdx.F_INDICES_I]
+            max_nnb = F_sfderiv_j[0].shape[1] if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0 else 0
+            
+            with torch.enable_grad():
+                F_descrp_grad = [d.clone().detach().float().requires_grad_(True) for d in F_group_descrp]
+                F_sfderiv_i_f = [s.float() for s in F_sfderiv_i]
+                F_sfderiv_j_f = [s.float() for s in F_sfderiv_j]
+                F_logic_reduce_f = [l.float() for l in F_logic_reduce]
+                
+                _, F_pred = self.net.forward_F(
+                    F_descrp_grad, F_sfderiv_i_f, F_sfderiv_j_f,
+                    F_indices, F_indices_i, F_logic_reduce_f,
+                    self.net.input_size, max_nnb
+                )
+            
+            true_forces_flat = F_group_forces.cpu().numpy().flatten()
+            pred_forces_flat = F_pred.detach().cpu().numpy().flatten()
+            std_forces_flat = np.zeros_like(pred_forces_flat)  # Deterministic
+            
+            force_errors = np.abs(true_forces_flat - pred_forces_flat)
+            force_rmse = np.sqrt(np.mean((true_forces_flat - pred_forces_flat)**2))
+            force_mae = np.mean(force_errors)
+        else:
+            true_forces_flat = None
+            pred_forces_flat = None
+            std_forces_flat = None
+            force_rmse = np.nan
+            force_mae = np.nan
+        
+        pred["true_forces"] = true_forces_flat
+        pred["pred_forces"] = pred_forces_flat
+        pred["std_forces"] = std_forces_flat
+        pred["force_rmse"] = force_rmse
+        pred["force_mae"] = force_mae
+        
+        return pred
+
 
 class BNN_Forces_Aux(BNN):
     """

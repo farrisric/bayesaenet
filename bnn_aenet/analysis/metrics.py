@@ -253,3 +253,52 @@ def compute_calibration_curve(
         observed_freq[i] = np.mean(abs_errors < z * y_std)
     
     return expected_freq, observed_freq
+
+
+def compute_combined_metrics(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    y_std: Optional[np.ndarray] = None,
+    f_true: Optional[np.ndarray] = None,
+    f_pred: Optional[np.ndarray] = None,
+    f_std: Optional[np.ndarray] = None,
+) -> Dict[str, float]:
+    """Compute combined energy and force metrics.
+    
+    Wrapper that calls compute_energy_metrics and compute_force_metrics,
+    returning a merged dict with 'force_' prefix for force metrics.
+    
+    Args:
+        y_true: Ground truth energies
+        y_pred: Predicted energies
+        y_std: Predicted energy standard deviations (optional)
+        f_true: Ground truth forces (optional)
+        f_pred: Predicted forces (optional)
+        f_std: Predicted force standard deviations (optional)
+    
+    Returns:
+        Dictionary with all metrics (energy keys as-is, force keys prefixed with 'force_')
+    """
+    # Energy metrics
+    metrics = compute_energy_metrics(y_true, y_pred, y_std)
+    
+    # Energy uncertainty metrics
+    if y_std is not None:
+        uq_metrics = compute_uncertainty_metrics(y_true, y_pred, y_std)
+        for k, v in uq_metrics.items():
+            if k not in metrics:
+                metrics[k] = v
+    
+    # Force metrics
+    if f_true is not None and f_pred is not None:
+        force_metrics = compute_force_metrics(f_true, f_pred, f_std)
+        for k, v in force_metrics.items():
+            metrics[f"force_{k}"] = v
+        
+        # Force uncertainty metrics
+        if f_std is not None:
+            force_uq = compute_uncertainty_metrics(f_true, f_pred, f_std)
+            for k, v in force_uq.items():
+                metrics[f"force_{k}"] = v
+    
+    return metrics
