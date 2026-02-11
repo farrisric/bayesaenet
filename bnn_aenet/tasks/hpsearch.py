@@ -193,10 +193,14 @@ def main(cfg: DictConfig) -> Optional[float]:
     log.info(f"Instantiating study <{cfg.hpsearch.study._target_}>")
     
     path = Path(f"{cfg.paths.results_dir}")
-    log.info(f"Results will be stored in sqlite:///{path.as_posix()}/{cfg.tags[0]}/{cfg.hpsearch.study.study_name}.db")
+    # Store DBs in dataset-specific subdirectory: results/{dataset}/{method}.db
+    db_dir = path / cfg.tags[0]
+    db_dir.mkdir(parents=True, exist_ok=True)
+    db_path = db_dir / f"{cfg.hpsearch.study.study_name}.db"
+    log.info(f"Results will be stored in sqlite:///{db_path.as_posix()}")
     study: Study = hydra.utils.instantiate(
         cfg.hpsearch.study,
-        storage=f"sqlite:///{path.as_posix()}/{cfg.tags[0]}/{cfg.hpsearch.study.study_name}.db",
+        storage=f"sqlite:///{db_path.as_posix()}",
     )
     log.info(f"Instantiating objective <{cfg.hpsearch.objective._target_}>")
     objective = hydra.utils.instantiate(cfg.hpsearch.objective, _partial_=True)
