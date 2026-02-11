@@ -1,7 +1,0 @@
-- model=bnn_rad
-- datamodule=TiO
-- hpsearch=bnn_rad
-- task_name=rad_hps
-- tags=[TiO]
-- datamodule.valid_split=100
-- hpsearch.study.study_name=bnn_rad

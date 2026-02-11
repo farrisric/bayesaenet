@@ -1,7 +1,0 @@
-- task_name=lrt_pred
-- run_name=lrt_small_train_best_3
-- prediction=TiO
-- ckpt_path=all
-- datamodule.valid_split=100
-- +method=LRT
-- runs_dir=bnn_aenet/logs/lrt_train/runs/lrt_small_train_best_3

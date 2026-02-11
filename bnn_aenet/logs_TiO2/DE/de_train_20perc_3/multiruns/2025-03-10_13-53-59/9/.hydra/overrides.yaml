@@ -1,9 +1,0 @@
-- task_name=de_train_20perc_3
-- experiment=nn
-- datamodule=TiO
-- trainer.min_epochs=10000
-- trainer.max_epochs=50000
-- datamodule.valid_split=20
-- datamodule.batch_size=32
-- model.optimizer.lr=0.0014493825421745437
-- seed=44274817

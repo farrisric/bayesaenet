@@ -1,7 +1,0 @@
-- model=bnn_lrt
-- datamodule=QM7
-- hpsearch=bnn_lrt
-- task_name=lrt_hps
-- tags=[QM7]
-- datamodule.valid_split=100
-- hpsearch.study.study_name=bnn_lrt

@@ -1,8 +1,0 @@
-- model=bnn_fo
-- datamodule=TiO
-- hpsearch=bnn_fo
-- task_name=fo_hps
-- run_name=small_db
-- tags=[TiO]
-- datamodule.valid_split=20
-- hpsearch.study.study_name=bnn_fo_small

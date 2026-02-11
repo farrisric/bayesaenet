@@ -68,7 +68,7 @@ REPO_ROOT = _config_path.parent.parent.parent
 # TiO2 Configuration
 TIO2_CONFIG = DatasetConfig(
     name="TiO2",
-    logs_dir=REPO_ROOT / "bnn_aenet" / "logs_TiO2",
+    logs_dir=REPO_ROOT / "bnn_aenet" / "logs" / "TiO2_big",
     indices_dir=REPO_ROOT / "bnn_aenet" / "data" / "TiO2" / "indices",
     e_scaling=0.06565926932648217,
     e_shift=6.6588702845000975,

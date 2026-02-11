@@ -1,6 +1,0 @@
-- task_name=de_pred_20_4
-- prediction=TiO
-- ckpt_path=all
-- datamodule.valid_split=20
-- +method=NN
-- runs_dir=bnn_aenet/logs/de_train_20perc_4
