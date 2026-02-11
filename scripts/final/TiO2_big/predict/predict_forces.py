@@ -14,21 +14,55 @@ import os
 import sys
 from pathlib import Path
 
-import numpy as np
-import pandas as pd
+# IMPORTANT: import torch BEFORE numpy/pandas to avoid segfault on iqtc10 nodes
+# where CUDA/MKL library initialization order matters
 import torch
-import yaml
 import lightning.pytorch as L
 from lightning.pytorch import Trainer
+import numpy as np
+import pandas as pd
+import yaml
 
 # Add project root to path
 PROJECT_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(PROJECT_ROOT))
 os.environ.setdefault("PROJECT_ROOT", str(PROJECT_ROOT))
 
-from bnn_aenet.datamodule.aenet_datamodule import AenetDataModule
-from bnn_aenet.models.nets.network import NetAtom
-from bnn_aenet.models.bnn import NN_Forces, BNN_Forces_Aux
+# ALL bnn_aenet imports are lazy to avoid triggering bnn_aenet/models/__init__.py
+# which imports pyro/tyxe and segfaults on iqtc10 nodes when combined with
+# torch+lightning in the same process.
+AenetDataModule = None
+NetAtom = None
+NN_Forces = None
+BNN_Forces_Aux = None
+
+
+def _ensure_datamodule():
+    global AenetDataModule
+    if AenetDataModule is None:
+        from bnn_aenet.datamodule.aenet_datamodule import AenetDataModule as _cls
+        AenetDataModule = _cls
+
+
+def _ensure_net_atom():
+    global NetAtom
+    if NetAtom is None:
+        from bnn_aenet.models.nets.network import NetAtom as _cls
+        NetAtom = _cls
+
+
+def _ensure_nn_forces():
+    global NN_Forces
+    if NN_Forces is None:
+        from bnn_aenet.models.bnn import NN_Forces as _cls
+        NN_Forces = _cls
+
+
+def _ensure_bnn_forces_aux():
+    global BNN_Forces_Aux
+    if BNN_Forces_Aux is None:
+        from bnn_aenet.models.bnn import BNN_Forces_Aux as _cls
+        BNN_Forces_Aux = _cls
 
 
 def load_overrides(run_dir: Path) -> dict:
@@ -49,8 +83,9 @@ def load_overrides(run_dir: Path) -> dict:
     return overrides
 
 
-def instantiate_datamodule(data_dir: str, batch_size: int = 32) -> AenetDataModule:
+def instantiate_datamodule(data_dir: str, batch_size: int = 32):
     """Instantiate the TiO_Forces datamodule."""
+    _ensure_datamodule()
     return AenetDataModule(
         data_dir=data_dir,
         device="cpu",
@@ -61,8 +96,9 @@ def instantiate_datamodule(data_dir: str, batch_size: int = 32) -> AenetDataModu
     )
 
 
-def build_net(dm: AenetDataModule, alpha: float = 0.1) -> NetAtom:
+def build_net(dm, alpha: float = 0.1):
     """Build the network from datamodule parameters."""
+    _ensure_net_atom()
     return NetAtom(
         input_size=dm.input_size,
         hidden_size=dm.hidden_size,
@@ -75,8 +111,9 @@ def build_net(dm: AenetDataModule, alpha: float = 0.1) -> NetAtom:
     )
 
 
-def load_nn_model(ckpt_path: Path, dm: AenetDataModule) -> NN_Forces:
+def load_nn_model(ckpt_path: Path, dm: AenetDataModule):
     """Load NN_Forces model from checkpoint."""
+    _ensure_nn_forces()
     net = build_net(dm, alpha=0.1)
     model = NN_Forces.load_from_checkpoint(
         str(ckpt_path),
@@ -89,8 +126,9 @@ def load_nn_model(ckpt_path: Path, dm: AenetDataModule) -> NN_Forces:
     return model
 
 
-def load_bnn_model(ckpt_path: Path, dm: AenetDataModule, run_dir: Path, mc_eval: int = 20) -> BNN_Forces_Aux:
+def load_bnn_model(ckpt_path: Path, dm: AenetDataModule, run_dir: Path, mc_eval: int = 20):
     """Load BNN_Forces_Aux model from checkpoint."""
+    _ensure_bnn_forces_aux()
     overrides = load_overrides(run_dir)
     
     net = build_net(dm, alpha=0.1)

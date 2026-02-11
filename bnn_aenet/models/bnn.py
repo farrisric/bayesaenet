@@ -312,6 +312,8 @@ class BNN(L.LightningModule):
         """Initialize BNN for prediction."""
         self.define_bnn()
         param_store_to(self.device)
+        # Create bnn_no_obs (needed by BNN_Forces_Aux.predict_step for force sampling)
+        self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
 
     def predict_step(
         self, 
@@ -865,7 +867,8 @@ class NN_Forces(NN):
             F_indices_i = batch[BatchIdx.F_INDICES_I]
             max_nnb = F_sfderiv_j[0].shape[1] if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0 else 0
             
-            with torch.enable_grad():
+            # inference_mode(False) needed for PyTorch 2.x (enable_grad cant override inference_mode)
+            with torch.inference_mode(False):
                 F_descrp_grad = [d.clone().detach().float().requires_grad_(True) for d in F_group_descrp]
                 F_sfderiv_i_f = [s.float() for s in F_sfderiv_i]
                 F_sfderiv_j_f = [s.float() for s in F_sfderiv_j]
@@ -1345,33 +1348,38 @@ class BNN_Forces_Aux(BNN):
         if has_force_data:
             # Force predictions (compute for each MC sample)
             force_samples = []
+            # Extract force tensors ONCE outside the MC loop
+            F_logic_reduce = batch[BatchIdx.F_LOGIC_REDUCE]
+            F_sfderiv_i = batch[BatchIdx.F_SFDERIV_I]
+            F_sfderiv_j = batch[BatchIdx.F_SFDERIV_J]
+            F_indices = batch[BatchIdx.F_INDICES]
+            F_indices_i = batch[BatchIdx.F_INDICES_I]
+            max_nnb = F_sfderiv_j[0].shape[1] if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0 else 0
+            
             for _ in range(self.hparams.mc_samples_eval):
                 with torch.no_grad():
                     # Sample network from guide
                     guide_trace = pyro.poutine.trace(self.bnn.guide).get_trace(x[0], x[1])
                     model_trace = pyro.poutine.trace(pyro.poutine.replay(self.bnn_no_obs, guide_trace)).get_trace(x[0], x[1])
-                    
-                    # Compute forces with this sampled network using BatchIdx constants
-                    F_logic_reduce = batch[BatchIdx.F_LOGIC_REDUCE]
-                    F_sfderiv_i = batch[BatchIdx.F_SFDERIV_I]
-                    F_sfderiv_j = batch[BatchIdx.F_SFDERIV_J]
-                    F_indices = batch[BatchIdx.F_INDICES]
-                    F_indices_i = batch[BatchIdx.F_INDICES_I]
-                    max_nnb = F_sfderiv_j[0].shape[1] if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0 else 0
-                    
-                    # Convert to float32 for consistency (same as compute_force_loss)
-                    F_descrp_f = [d.clone().detach().float().requires_grad_(True) for d in F_group_descrp]
-                    F_sfderiv_i_f = [s.float() for s in F_sfderiv_i]
-                    F_sfderiv_j_f = [s.float() for s in F_sfderiv_j]
-                    F_logic_reduce_f = [l.float() for l in F_logic_reduce]
-                    
+                
+                # Force computation needs gradients (autograd.grad inside forward_F)
+                # Must exit both inference_mode and no_grad
+                with torch.inference_mode(False):
                     with torch.enable_grad():
+                        # Clone/detach all tensors to escape inference mode
+                        F_descrp_f = [d.clone().detach().float().requires_grad_(True) for d in F_group_descrp]
+                        F_sfderiv_i_f = [s.clone().detach().float() for s in F_sfderiv_i]
+                        F_sfderiv_j_f = [s.clone().detach().float() for s in F_sfderiv_j]
+                        F_logic_reduce_f = [l.clone().detach().float() for l in F_logic_reduce]
+                        F_indices_c = F_indices.clone().detach()
+                        F_indices_i_c = F_indices_i.clone().detach()
+                        
                         _, F_pred = self.bnn.net.forward_F(
                             F_descrp_f, F_sfderiv_i_f, F_sfderiv_j_f,
-                            F_indices, F_indices_i, F_logic_reduce_f,
+                            F_indices_c, F_indices_i_c, F_logic_reduce_f,
                             self.bnn.net.input_size, max_nnb
                         )
-                    force_samples.append(F_pred.detach().cpu().numpy())
+                force_samples.append(F_pred.detach().cpu().numpy())
             
             force_samples = np.array(force_samples)
             force_preds = force_samples.mean(axis=0)

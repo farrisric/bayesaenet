@@ -140,7 +140,7 @@ Since TyXe manages the Pyro parameter store, we manually apply force gradients:
 ```python
 def compute_force_loss_and_update(self, batch):
     force_rmse = self.compute_force_loss(batch)
-    weighted_loss = alpha * force_weight * force_rmse
+    weighted_loss = alpha * force_rmse
     weighted_loss.backward()
     
     # Apply gradients to Pyro guide parameters

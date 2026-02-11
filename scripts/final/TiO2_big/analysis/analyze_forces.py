@@ -35,14 +35,16 @@ from bnn_aenet.analysis.metrics import (
 )
 
 # Plotting style
-plt.style.use("seaborn-v0_8-whitegrid")
+try:
+    plt.style.use("seaborn-v0_8-whitegrid")
+except OSError:
+    plt.style.use("seaborn-whitegrid")
 plt.rcParams.update({
     "font.size": 11,
     "axes.titlesize": 13,
     "axes.labelsize": 11,
     "figure.dpi": 150,
     "savefig.dpi": 150,
-    "savefig.bbox_inches": "tight",
 })
 
 # Method display names and colors
@@ -659,6 +661,241 @@ def plot_method_comparison_bars(summary_df: pd.DataFrame, output_dir: Path, subs
 
 
 # ============================================================================
+# Per-model plots (individual parity, components, error vs UQ)
+# ============================================================================
+
+def plot_single_energy_parity(data: dict, method: str, output_dir: Path, subset: str):
+    """Plot energy parity for a single method."""
+    fig, ax = plt.subplots(figsize=(6, 6))
+    y_true = data["energy_df"]["true"].values
+    y_pred = data["energy_df"]["preds"].values
+    y_std = data["energy_df"]["stds"].values
+
+    rmse = np.sqrt(np.mean((y_true - y_pred)**2))
+    mae = np.mean(np.abs(y_true - y_pred))
+
+    all_vals = np.concatenate([y_true, y_pred])
+    vmin, vmax = all_vals.min(), all_vals.max()
+    margin = 0.05 * (vmax - vmin)
+    lim = [vmin - margin, vmax + margin]
+    ax.plot(lim, lim, "k--", lw=1, alpha=0.5)
+
+    if np.any(y_std > 0):
+        sc = ax.scatter(y_true, y_pred, c=y_std, cmap="viridis", alpha=0.7, s=25, edgecolors="none")
+        plt.colorbar(sc, ax=ax, label="Uncertainty (std)")
+    else:
+        ax.scatter(y_true, y_pred, alpha=0.6, s=25, c=METHOD_COLORS.get(method, "steelblue"), edgecolors="none")
+
+    name = METHOD_NAMES.get(method, method)
+    ax.set_title(f"{name} ({subset})\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
+    ax.set_xlabel("True Energy (eV/atom)")
+    ax.set_ylabel("Predicted Energy (eV/atom)")
+    ax.set_xlim(lim)
+    ax.set_ylim(lim)
+    ax.set_aspect("equal")
+    fig.tight_layout()
+    fig.savefig(output_dir / f"energy_parity_{subset}.png")
+    plt.close(fig)
+
+
+def plot_single_force_parity(data: dict, method: str, output_dir: Path, subset: str):
+    """Plot force parity for a single method."""
+    if data.get("forces") is None:
+        return
+    forces = data["forces"]
+    f_true = forces["true_forces"]
+    f_pred = forces["pred_forces"]
+    f_std = forces["std_forces"]
+
+    rmse = np.sqrt(np.mean((f_true - f_pred)**2))
+    mae = np.mean(np.abs(f_true - f_pred))
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+    n_pts = len(f_true)
+    idx = np.random.choice(n_pts, min(n_pts, 10000), replace=False) if n_pts > 10000 else np.arange(n_pts)
+
+    all_vals = np.concatenate([f_true, f_pred])
+    vmin, vmax = all_vals.min(), all_vals.max()
+    margin = 0.1 * (vmax - vmin)
+    lim = [vmin - margin, vmax + margin]
+    ax.plot(lim, lim, "k--", lw=1, alpha=0.5)
+
+    if np.any(f_std > 0):
+        sc = ax.scatter(f_true[idx], f_pred[idx], c=f_std[idx], cmap="plasma", alpha=0.4, s=10, edgecolors="none")
+        plt.colorbar(sc, ax=ax, label="Uncertainty (std)")
+    else:
+        ax.scatter(f_true[idx], f_pred[idx], alpha=0.3, s=10, c=METHOD_COLORS.get(method, "coral"), edgecolors="none")
+
+    name = METHOD_NAMES.get(method, method)
+    ax.set_title(f"{name} ({subset})\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
+    ax.set_xlabel("True Force Component (eV/A)")
+    ax.set_ylabel("Predicted Force Component (eV/A)")
+    ax.set_xlim(lim)
+    ax.set_ylim(lim)
+    ax.set_aspect("equal")
+    fig.tight_layout()
+    fig.savefig(output_dir / f"force_parity_{subset}.png")
+    plt.close(fig)
+
+
+def plot_single_force_components(data: dict, method: str, output_dir: Path, subset: str):
+    """Plot x, y, z force components for a single method."""
+    if data.get("forces") is None:
+        return
+    f_true = data["forces"]["true_forces"].flatten()
+    f_pred = data["forces"]["pred_forces"].flatten()
+    if len(f_true) % 3 != 0:
+        return
+
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
+    components = ["x", "y", "z"]
+    colors = ["#e74c3c", "#2ecc71", "#3498db"]
+
+    for i, (comp, color) in enumerate(zip(components, colors)):
+        ct = f_true[i::3]
+        cp = f_pred[i::3]
+        rmse = np.sqrt(np.mean((cp - ct)**2))
+
+        all_vals = np.concatenate([ct, cp])
+        vmin, vmax = all_vals.min(), all_vals.max()
+        margin = 0.1 * (vmax - vmin)
+        lim = [vmin - margin, vmax + margin]
+        axes[i].plot(lim, lim, "k--", lw=1, alpha=0.5)
+
+        n = len(ct)
+        idx = np.random.choice(n, min(n, 5000), replace=False) if n > 5000 else np.arange(n)
+        axes[i].scatter(ct[idx], cp[idx], alpha=0.4, s=10, c=color, edgecolors="none")
+        axes[i].set_title(f"F_{comp}: RMSE={rmse:.4f}")
+        axes[i].set_xlabel(f"True F_{comp} (eV/A)")
+        axes[i].set_ylabel(f"Pred F_{comp} (eV/A)")
+        axes[i].set_xlim(lim)
+        axes[i].set_ylim(lim)
+        axes[i].set_aspect("equal")
+
+    name = METHOD_NAMES.get(method, method)
+    fig.suptitle(f"{name} - Force Components ({subset})", fontsize=13, y=1.02)
+    fig.tight_layout()
+    fig.savefig(output_dir / f"force_components_{subset}.png")
+    plt.close(fig)
+
+
+def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: str):
+    """Plot error vs uncertainty for energy and forces, single method."""
+    name = METHOD_NAMES.get(method, method)
+    color = METHOD_COLORS.get(method, "steelblue")
+
+    # Energy
+    y_std = data["energy_df"]["stds"].values
+    if np.any(y_std > 0):
+        y_true = data["energy_df"]["true"].values
+        y_pred = data["energy_df"]["preds"].values
+        errors = np.abs(y_true - y_pred)
+        corr, _ = stats.pearsonr(errors, y_std) if np.std(y_std) > 0 else (0, 1)
+
+        fig, ax = plt.subplots(figsize=(6, 5))
+        ax.scatter(y_std, errors, alpha=0.5, s=20, c=color, edgecolors="none")
+        max_val = max(y_std.max(), errors.max())
+        ax.plot([0, max_val], [0, max_val], "k--", alpha=0.5)
+        ax.set_title(f"{name} - Energy ({subset})\nCorr: {corr:.3f}")
+        ax.set_xlabel("Predicted Uncertainty")
+        ax.set_ylabel("|Error|")
+        fig.tight_layout()
+        fig.savefig(output_dir / f"energy_error_vs_uq_{subset}.png")
+        plt.close(fig)
+
+    # Forces
+    if data.get("forces") is not None:
+        f_std = data["forces"]["std_forces"]
+        if np.any(f_std > 0):
+            f_true = data["forces"]["true_forces"]
+            f_pred = data["forces"]["pred_forces"]
+            errors = np.abs(f_true - f_pred)
+            n_pts = len(errors)
+            idx = np.random.choice(n_pts, min(n_pts, 5000), replace=False) if n_pts > 5000 else np.arange(n_pts)
+            corr, _ = stats.pearsonr(errors, f_std) if np.std(f_std) > 0 else (0, 1)
+
+            fig, ax = plt.subplots(figsize=(6, 5))
+            ax.scatter(f_std[idx], errors[idx], alpha=0.3, s=10, c=color, edgecolors="none")
+            max_val = max(f_std[idx].max(), errors[idx].max())
+            ax.plot([0, max_val], [0, max_val], "k--", alpha=0.5)
+            ax.set_title(f"{name} - Forces ({subset})\nCorr: {corr:.3f}")
+            ax.set_xlabel("Predicted Uncertainty")
+            ax.set_ylabel("|Error|")
+            fig.tight_layout()
+            fig.savefig(output_dir / f"force_error_vs_uq_{subset}.png")
+            plt.close(fig)
+
+
+def plot_single_calibration(data: dict, method: str, output_dir: Path, subset: str):
+    """Plot calibration curve for energy and forces, single method."""
+    name = METHOD_NAMES.get(method, method)
+    color = METHOD_COLORS.get(method, "steelblue")
+
+    # Energy
+    y_std = data["energy_df"]["stds"].values
+    if np.any(y_std > 0):
+        y_true = data["energy_df"]["true"].values
+        y_pred = data["energy_df"]["preds"].values
+        expected, observed = compute_calibration_curve(y_true, y_pred, y_std)
+
+        fig, ax = plt.subplots(figsize=(6, 6))
+        ax.plot([0, 1], [0, 1], "k--", alpha=0.5, label="Perfect")
+        ax.plot(expected, observed, "o-", markersize=4, color=color, label=name)
+        ax.set_xlabel("Expected Coverage")
+        ax.set_ylabel("Observed Coverage")
+        ax.set_title(f"{name} - Energy Calibration ({subset})")
+        ax.legend()
+        ax.set_xlim([0, 1]); ax.set_ylim([0, 1]); ax.set_aspect("equal")
+        fig.tight_layout()
+        fig.savefig(output_dir / f"energy_calibration_{subset}.png")
+        plt.close(fig)
+
+    # Forces
+    if data.get("forces") is not None:
+        f_std = data["forces"]["std_forces"]
+        if np.any(f_std > 0):
+            f_true = data["forces"]["true_forces"]
+            f_pred = data["forces"]["pred_forces"]
+            expected, observed = compute_calibration_curve(f_true, f_pred, f_std)
+
+            fig, ax = plt.subplots(figsize=(6, 6))
+            ax.plot([0, 1], [0, 1], "k--", alpha=0.5, label="Perfect")
+            ax.plot(expected, observed, "o-", markersize=4, color=color, label=name)
+            ax.set_xlabel("Expected Coverage")
+            ax.set_ylabel("Observed Coverage")
+            ax.set_title(f"{name} - Force Calibration ({subset})")
+            ax.legend()
+            ax.set_xlim([0, 1]); ax.set_ylim([0, 1]); ax.set_aspect("equal")
+            fig.tight_layout()
+            fig.savefig(output_dir / f"force_calibration_{subset}.png")
+            plt.close(fig)
+
+
+def generate_per_model_plots(data: dict, method: str, output_dir: Path, subset: str):
+    """Generate all plots for a single model into its own directory."""
+    model_dir = output_dir / method / subset
+    model_dir.mkdir(parents=True, exist_ok=True)
+
+    plot_single_energy_parity(data, method, model_dir, subset)
+    plot_single_force_parity(data, method, model_dir, subset)
+    plot_single_force_components(data, method, model_dir, subset)
+    plot_single_error_vs_uq(data, method, model_dir, subset)
+    plot_single_calibration(data, method, model_dir, subset)
+
+
+def generate_per_run_metrics(runs: list, model_type: str, output_dir: Path, subset: str, alpha: float):
+    """Save per-run metrics for all runs of a model type."""
+    if len(runs) == 0:
+        return None
+    metrics = [compute_run_metrics(r, alpha) for r in runs]
+    df = pd.DataFrame(metrics)
+    tables_dir = output_dir / "tables"
+    tables_dir.mkdir(parents=True, exist_ok=True)
+    df.to_csv(tables_dir / f"{model_type}_all_runs_{subset}.csv", index=False)
+    return df
+
+
+# ============================================================================
 # Main Analysis
 # ============================================================================
 
@@ -681,13 +918,31 @@ def main():
 
     pred_dir = Path(args.pred_dir)
     output_dir = Path(args.output_dir)
+
+    # Clean directory structure:
+    #   output_dir/
+    #     nn/train/ nn/val/ nn/test/    - per-run NN individual plots
+    #     DE/train/ DE/val/ DE/test/    - Deep Ensemble plots
+    #     lrt/train/ lrt/val/ ...       - best LRT plots
+    #     fo/train/ ...                 - best Flipout plots
+    #     rad/train/ ...                - best Radial plots
+    #     comparison/                   - cross-method comparison plots
+    #     tables/                       - summary CSVs & LaTeX
+
     output_dir.mkdir(parents=True, exist_ok=True)
+    comp_dir = output_dir / "comparison"
+    comp_dir.mkdir(parents=True, exist_ok=True)
+    tables_dir = output_dir / "tables"
+    tables_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 80)
     print("TiO2 Force Model Analysis")
     print("=" * 80)
     print(f"Predictions: {pred_dir}")
-    print(f"Output: {output_dir}")
+    print(f"Output:      {output_dir}")
+    print(f"  Per-model: {output_dir}/<model>/<subset>/")
+    print(f"  Compare:   {comp_dir}/")
+    print(f"  Tables:    {tables_dir}/")
     print()
 
     for subset in args.subsets:
@@ -710,6 +965,12 @@ def main():
         if len(nn_runs) == 0 and len(lrt_runs) == 0:
             print("  No predictions found, skipping this subset.")
             continue
+
+        # ============================================
+        # Save per-run metrics for every model type
+        # ============================================
+        for mtype, runs in [("nn", nn_runs), ("lrt", lrt_runs), ("fo", fo_runs), ("rad", rad_runs)]:
+            generate_per_run_metrics(runs, mtype, output_dir, subset, args.alpha)
 
         # ============================================
         # Create Deep Ensemble
@@ -750,14 +1011,8 @@ def main():
                 print(f"    Best forces:  {sel['best_forces']['metrics']['run_name']}")
                 print(f"      F_RMSE={sel['best_forces']['metrics']['force_rmse']:.4f}")
 
-            # Save per-run metrics
-            sel["all_metrics"].to_csv(
-                output_dir / f"{name}_all_runs_{subset}.csv", index=False
-            )
-
         # ============================================
-        # Build method_data for comparison plots
-        # (Use best_overall for each BNN)
+        # Build method_data for comparison & per-model
         # ============================================
         method_data = {}
 
@@ -767,6 +1022,36 @@ def main():
         for name in ["lrt", "fo", "rad"]:
             if name in bnn_selections:
                 method_data[name] = bnn_selections[name]["best_overall"]["run"]
+
+        # ============================================
+        # Per-model plots (each model in its own dir)
+        # ============================================
+        print("\nGenerating per-model plots...")
+
+        for method, data in method_data.items():
+            generate_per_model_plots(data, method, output_dir, subset)
+            print(f"  {output_dir}/{method}/{subset}/  (parity, components, UQ)")
+
+        # Also generate individual NN (mean across runs) plots
+        if len(nn_runs) > 0:
+            # Use the first run as a representative single NN for individual plots
+            nn_mean_data = {
+                "energy_df": pd.DataFrame({
+                    "true": nn_runs[0]["energy_df"]["true"].values,
+                    "preds": np.mean([r["energy_df"]["preds"].values for r in nn_runs], axis=0),
+                    "stds": np.std([r["energy_df"]["preds"].values for r in nn_runs], axis=0),
+                    "n_atoms": nn_runs[0]["energy_df"]["n_atoms"].values,
+                }),
+                "forces": None,
+            }
+            if all(r["forces"] is not None for r in nn_runs):
+                nn_mean_data["forces"] = {
+                    "true_forces": nn_runs[0]["forces"]["true_forces"],
+                    "pred_forces": np.mean([r["forces"]["pred_forces"] for r in nn_runs], axis=0),
+                    "std_forces": np.std([r["forces"]["pred_forces"] for r in nn_runs], axis=0),
+                }
+            generate_per_model_plots(nn_mean_data, "nn", output_dir, subset)
+            print(f"  {output_dir}/nn/{subset}/  (mean NN, parity, components, UQ)")
 
         # ============================================
         # Compute Summary Metrics Table
@@ -779,7 +1064,7 @@ def main():
             m["method"] = method
             summary_rows.append(m)
 
-        # Add sub-ensemble stats if available
+        # Add sub-ensemble stats
         if len(de_subs) > 0:
             sub_metrics = [compute_run_metrics(s, args.alpha) for s in de_subs]
             sub_df = pd.DataFrame(sub_metrics)
@@ -811,44 +1096,51 @@ def main():
         avail_cols = [c for c in key_cols if c in summary_df.columns]
         print(summary_df[avail_cols].to_string(index=False, float_format="%.4f"))
 
-        # Save
-        summary_df.to_csv(output_dir / f"summary_{subset}.csv", index=False)
-        print(f"\nSaved: {output_dir / f'summary_{subset}.csv'}")
+        # Save tables
+        summary_df.to_csv(tables_dir / f"summary_{subset}.csv", index=False)
+        print(f"\nSaved: {tables_dir / f'summary_{subset}.csv'}")
 
-        # LaTeX table
         latex_df = summary_df[avail_cols].copy()
         latex_str = latex_df.to_latex(index=False, float_format="%.4f",
                                       caption=f"TiO2 Force Model Comparison ({subset})")
-        with open(output_dir / f"summary_{subset}.tex", "w") as f:
+        with open(tables_dir / f"summary_{subset}.tex", "w") as f:
             f.write(latex_str)
-        print(f"Saved: {output_dir / f'summary_{subset}.tex'}")
+        print(f"Saved: {tables_dir / f'summary_{subset}.tex'}")
 
         # ============================================
-        # Generate Plots
+        # Comparison plots (all methods side by side)
         # ============================================
-        print("\nGenerating plots...")
+        print("\nGenerating comparison plots...")
 
-        plot_energy_parity_comparison(method_data, output_dir, subset)
-        print(f"  Saved energy_parity_{subset}.png")
+        plot_energy_parity_comparison(method_data, comp_dir, subset)
+        print(f"  {comp_dir}/energy_parity_{subset}.png")
 
-        plot_force_parity_comparison(method_data, output_dir, subset)
-        print(f"  Saved force_parity_{subset}.png")
+        plot_force_parity_comparison(method_data, comp_dir, subset)
+        print(f"  {comp_dir}/force_parity_{subset}.png")
 
-        plot_force_components_comparison(method_data, output_dir, subset)
-        print(f"  Saved force_components_*_{subset}.png")
+        plot_force_components_comparison(method_data, comp_dir, subset)
+        print(f"  {comp_dir}/force_components_*_{subset}.png")
 
-        plot_calibration_comparison(method_data, output_dir, subset)
-        print(f"  Saved calibration_{subset}.png")
+        plot_calibration_comparison(method_data, comp_dir, subset)
+        print(f"  {comp_dir}/calibration_{subset}.png")
 
-        plot_error_vs_uncertainty(method_data, output_dir, subset)
-        print(f"  Saved error_vs_uq_{subset}.png")
+        plot_error_vs_uncertainty(method_data, comp_dir, subset)
+        print(f"  {comp_dir}/error_vs_uq_{subset}.png")
 
-        plot_method_comparison_bars(summary_df, output_dir, subset)
-        print(f"  Saved method_comparison_{subset}.png")
+        plot_method_comparison_bars(summary_df, comp_dir, subset)
+        print(f"  {comp_dir}/method_comparison_{subset}.png")
 
     print("\n" + "=" * 80)
     print("Analysis complete!")
-    print(f"All outputs saved to: {output_dir}")
+    print(f"Directory structure:")
+    print(f"  {output_dir}/")
+    print(f"    nn/          - Individual NN plots")
+    print(f"    DE/          - Deep Ensemble plots")
+    print(f"    lrt/         - Best LRT plots")
+    print(f"    fo/          - Best Flipout plots")
+    print(f"    rad/         - Best Radial plots")
+    print(f"    comparison/  - Cross-method comparisons")
+    print(f"    tables/      - Summary CSVs & LaTeX")
     print("=" * 80)
 
 
