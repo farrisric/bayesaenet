@@ -1,6 +1,0 @@
-defaults:
-  - bnn
-
-name: Flipout
-fit_context: flipout
-guide: normal

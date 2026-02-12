@@ -1,6 +1,5 @@
 from .nets.network import NetAtom
 
-from .nn import NN, NN_Forces
+from .nn import NN, NN_Forces, NNBase
 from .bnn import BNN, PartialBNN
-from .bnn_forces import BNN_Forces_Aux, PartialBNN_Forces_Aux
-from .bnn_forces_likelihood import BNN_Forces_Likelihood
+from .bnn_forces import BNN_Forces, BNN_Forces_Likelihood

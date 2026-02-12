@@ -8,8 +8,8 @@ Usage:
         --pred-dir bnn_aenet/logs/TiO2_big/pred \
         --output-dir plots/TiO2_big/publication \
         --train-dir bnn_aenet/logs/TiO2_big/train \
-        --time-dirs bnn_aenet/logs/nn_forces bnn_aenet/logs/lrt_forces \
-                    bnn_aenet/logs/fo_forces bnn_aenet/logs/rad_forces
+        --time-dirs bnn_aenet/logs/nn_train bnn_aenet/logs/lrt_train \
+                    bnn_aenet/logs/rad_train
 """
 
 import argparse
@@ -86,13 +86,12 @@ plt.rcParams.update({
 })
 
 # Method display names and colors (consistent across all figures)
-METHOD_ORDER = ["DE", "nn", "lrt", "fo", "rad"]
+METHOD_ORDER = ["DE", "nn", "lrt", "rad"]
 METHOD_NAMES = {
     "DE": "Deep Ens.",
     "DE_sub": "DE (5-model)",
     "nn": "NN (mean)",
     "lrt": "LRT",
-    "fo": "Flipout",
     "rad": "Radial",
 }
 METHOD_COLORS = {
@@ -100,23 +99,20 @@ METHOD_COLORS = {
     "DE_sub": "#90CAF9",
     "nn": "#4CAF50",
     "lrt": "#FF9800",
-    "fo": "#9C27B0",
     "rad": "#F44336",
 }
 METHOD_MARKERS = {
     "DE": "o",
     "nn": "s",
     "lrt": "^",
-    "fo": "D",
     "rad": "v",
 }
 
 # For training time chart (maps to exec_time.log directories)
 TIME_METHOD_MAP = {
-    "nn_forces": "nn",
-    "lrt_forces": "lrt",
-    "fo_forces": "fo",
-    "rad_forces": "rad",
+    "nn_train": "nn",
+    "lrt_train": "lrt",
+    "rad_train": "rad",
 }
 
 
@@ -504,7 +500,7 @@ def plot_training_time(time_dirs: list, output_dir: Path):
         print("  No training time data found, skipping.")
         return
 
-    ordered = [m for m in ["nn", "lrt", "fo", "rad"] if m in times]
+    ordered = [m for m in ["nn", "lrt", "rad"] if m in times]
     if not ordered:
         return
 
@@ -545,7 +541,7 @@ def plot_training_time(time_dirs: list, output_dir: Path):
 def plot_training_curves(train_dir: Path, output_dir: Path):
     """Condensed training curves: energy RMSE + force RMSE (validation),
     all methods on the same axes."""
-    model_types = ["nn", "lrt", "fo", "rad"]
+    model_types = ["nn", "lrt", "rad"]
     available = []
     for mt in model_types:
         mdir = train_dir / mt
@@ -755,10 +751,9 @@ def main():
                         help="Directory with training logs (for curves)")
     parser.add_argument("--time-dirs", type=str, nargs="+",
                         default=[
-                            "bnn_aenet/logs/nn_forces",
-                            "bnn_aenet/logs/lrt_forces",
-                            "bnn_aenet/logs/fo_forces",
-                            "bnn_aenet/logs/rad_forces",
+                            "bnn_aenet/logs/nn_train",
+                            "bnn_aenet/logs/lrt_train",
+                            "bnn_aenet/logs/rad_train",
                         ],
                         help="Directories containing exec_time.log files")
     parser.add_argument("--alpha", type=float, default=0.1,
@@ -785,10 +780,8 @@ def main():
     print("Loading predictions...")
     nn_runs = load_run_predictions(pred_dir, "nn", subset)
     lrt_runs = load_run_predictions(pred_dir, "lrt", subset)
-    fo_runs = load_run_predictions(pred_dir, "fo", subset)
     rad_runs = load_run_predictions(pred_dir, "rad", subset)
-    print(f"  NN: {len(nn_runs)}  LRT: {len(lrt_runs)}  "
-          f"FO: {len(fo_runs)}  RAD: {len(rad_runs)}")
+    print(f"  NN: {len(nn_runs)}  LRT: {len(lrt_runs)}  RAD: {len(rad_runs)}")
 
     # ---- Build method_data ----
     method_data = {}
@@ -819,7 +812,7 @@ def main():
         method_data["nn"] = nn_mean
 
     # Best BNN per type
-    for name, runs in [("lrt", lrt_runs), ("fo", fo_runs), ("rad", rad_runs)]:
+    for name, runs in [("lrt", lrt_runs), ("rad", rad_runs)]:
         if len(runs) == 0:
             continue
         sel = select_best_bnn(runs, args.alpha)

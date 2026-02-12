@@ -1,6 +1,6 @@
 """Prediction script for force-trained models.
 
-Runs predictions on all checkpoints for a given model type (nn/lrt/fo/rad),
+Runs predictions on all checkpoints for a given model type (nn/lrt/rad),
 saving energy and force predictions separately to handle different array lengths.
 
 Usage:
@@ -30,7 +30,7 @@ import yaml
 AenetDataModule = None
 NetAtom = None
 NN_Forces = None
-BNN_Forces_Aux = None
+BNN_Forces = None
 
 
 def _ensure_datamodule():
@@ -54,11 +54,11 @@ def _ensure_nn_forces():
         NN_Forces = _cls
 
 
-def _ensure_bnn_forces_aux():
-    global BNN_Forces_Aux
-    if BNN_Forces_Aux is None:
-        from bnn_aenet.models.bnn_forces import BNN_Forces_Aux as _cls
-        BNN_Forces_Aux = _cls
+def _ensure_bnn():
+    global BNN_Forces
+    if BNN_Forces is None:
+        from bnn_aenet.models.bnn_forces import BNN_Forces as _cls
+        BNN_Forces = _cls
 
 
 def load_overrides(run_dir: Path) -> dict:
@@ -108,7 +108,7 @@ def build_net(dm, alpha: float = 0.1):
 
 
 def load_nn_model(ckpt_path: Path, dm):
-    """Load NN_Forces model from checkpoint."""
+    """Load NN model from checkpoint."""
     _ensure_nn_forces()
     net = build_net(dm, alpha=0.1)
     model = NN_Forces.load_from_checkpoint(
@@ -123,8 +123,8 @@ def load_nn_model(ckpt_path: Path, dm):
 
 
 def load_bnn_model(ckpt_path: Path, dm, run_dir: Path, mc_eval: int = 20):
-    """Load BNN_Forces_Aux model from checkpoint."""
-    _ensure_bnn_forces_aux()
+    """Load BNN_Forces model from checkpoint."""
+    _ensure_bnn()
     overrides = load_overrides(run_dir)
     
     net = build_net(dm, alpha=0.1)
@@ -135,15 +135,13 @@ def load_bnn_model(ckpt_path: Path, dm, run_dir: Path, mc_eval: int = 20):
     prior_scale = float(overrides.get("model.prior_scale", "0.1"))
     q_scale = float(overrides.get("model.q_scale", "0.001"))
     obs_scale = float(overrides.get("model.obs_scale", "0.5"))
+    scale_force = float(overrides.get("model.scale_force", "0.1"))
     pretrain_epochs = int(overrides.get("model.pretrain_epochs", "0"))
     
     # Determine fit_context and guide from experiment name
     experiment = overrides.get("experiment", "")
     if "lrt" in experiment:
         fit_context = "lrt"
-        guide = "normal"
-    elif "fo" in experiment:
-        fit_context = "flipout"
         guide = "normal"
     elif "rad" in experiment:
         fit_context = None
@@ -152,7 +150,7 @@ def load_bnn_model(ckpt_path: Path, dm, run_dir: Path, mc_eval: int = 20):
         fit_context = "lrt"
         guide = "normal"
     
-    model = BNN_Forces_Aux.load_from_checkpoint(
+    model = BNN_Forces.load_from_checkpoint(
         str(ckpt_path),
         net=net,
         lr=lr,
@@ -165,8 +163,7 @@ def load_bnn_model(ckpt_path: Path, dm, run_dir: Path, mc_eval: int = 20):
         prior_scale=prior_scale,
         q_scale=q_scale,
         obs_scale=obs_scale,
-        force_lr_scale=0.1,
-        scale_lr_factor=0.5,
+        scale_force=scale_force,
         grad_clip_val=1.0,
         pretrain_epochs=pretrain_epochs,
         strict=False,
@@ -250,7 +247,7 @@ def save_predictions(batch_results, output_path, run_name, subset, e_scaling):
 
 def main():
     parser = argparse.ArgumentParser(description="Run predictions for force-trained models")
-    parser.add_argument("--model-type", type=str, required=True, choices=["nn", "lrt", "fo", "rad"])
+    parser.add_argument("--model-type", type=str, required=True, choices=["nn", "lrt", "rad"])
     parser.add_argument("--runs-dir", type=str, required=True)
     parser.add_argument("--output-dir", type=str, required=True)
     parser.add_argument("--data-dir", type=str, required=True)

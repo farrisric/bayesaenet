@@ -1,7 +1,0 @@
-defaults:
-  - partial_bnn
-
-name: PartialLRT_Last
-fit_context: lrt
-guide: normal
-bayesian_layers: last  # Only last layer is Bayesian (~2% params)

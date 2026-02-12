@@ -1,4 +1,5 @@
 # @package _global_
+# Hyperparameter search for BNN (LRT)
 
 defaults:
   - /hpsearch/study: study
@@ -6,14 +7,19 @@ defaults:
   - override /experiment: bnn_lrt
 
 hpsearch:
-  monitor: mse/val
+  monitor: total_rmse/val
+  n_trials: 30
   study:
-    study_name: bnn_lrt
+    study_name: bnn_lrt_forces_likelihood  # Keep for DB compat
 
 trainer:
-  max_epochs: 5000
+  max_epochs: 3000
+  min_epochs: 100
 
 callbacks:
   early_stopping:
-    monitor: mse/val
+    monitor: total_rmse/val
     patience: 50
+    mode: min
+
+tags: ["bayesian", "lrt", "hps"]

@@ -1,7 +1,6 @@
 # @package _global_
 
 defaults:
-#  - override /datamodule: datamodule
   - override /model: nn
   - override /callbacks: default
   - override /trainer: default
@@ -11,13 +10,12 @@ tags: ["nn", "deep_ensemble"]
 seed: 12345
 
 trainer:
-  min_epochs: 20000
+  min_epochs: 5000
   max_epochs: 50000
 
 callbacks:
   model_checkpoint:
-    monitor: rmse/val
-
+    monitor: total_rmse/val
   early_stopping:
-    monitor: rmse/val
-    patience: 20
+    monitor: total_rmse/val
+    patience: 500

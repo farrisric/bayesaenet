@@ -49,7 +49,6 @@ METHOD_NAMES = {
     "DE_sub": "DE (5-model)",
     "nn": "NN (individual)",
     "lrt": "LRT",
-    "fo": "Flipout",
     "rad": "Radial",
 }
 
@@ -58,7 +57,6 @@ METHOD_COLORS = {
     "DE_sub": "#90CAF9",
     "nn": "#4CAF50",
     "lrt": "#FF9800",
-    "fo": "#9C27B0",
     "rad": "#F44336",
 }
 
@@ -1135,7 +1133,7 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
     with the mean as a thick line. Generates energy RMSE, force RMSE, and
     total RMSE curves, plus ELBO/KL for BNNs."""
 
-    model_types = ["nn", "lrt", "fo", "rad"]
+    model_types = ["nn", "lrt", "rad"]
     available_models = []
     for mt in model_types:
         mdir = train_dir / mt
@@ -1333,7 +1331,6 @@ def main():
     #     nn/train/ nn/val/ nn/test/    - per-run NN individual plots
     #     DE/train/ DE/val/ DE/test/    - Deep Ensemble plots
     #     lrt/train/ lrt/val/ ...       - best LRT plots
-    #     fo/train/ ...                 - best Flipout plots
     #     rad/train/ ...                - best Radial plots
     #     comparison/                   - cross-method comparison plots
     #     tables/                       - summary CSVs & LaTeX
@@ -1363,12 +1360,10 @@ def main():
         print("Loading predictions...")
         nn_runs = load_run_predictions(pred_dir, "nn", subset)
         lrt_runs = load_run_predictions(pred_dir, "lrt", subset)
-        fo_runs = load_run_predictions(pred_dir, "fo", subset)
         rad_runs = load_run_predictions(pred_dir, "rad", subset)
 
         print(f"  NN: {len(nn_runs)} runs")
         print(f"  LRT: {len(lrt_runs)} runs")
-        print(f"  FO: {len(fo_runs)} runs")
         print(f"  RAD: {len(rad_runs)} runs")
 
         if len(nn_runs) == 0 and len(lrt_runs) == 0:
@@ -1378,7 +1373,7 @@ def main():
         # ============================================
         # Save per-run metrics for every model type
         # ============================================
-        for mtype, runs in [("nn", nn_runs), ("lrt", lrt_runs), ("fo", fo_runs), ("rad", rad_runs)]:
+        for mtype, runs in [("nn", nn_runs), ("lrt", lrt_runs), ("rad", rad_runs)]:
             generate_per_run_metrics(runs, mtype, output_dir, subset, args.alpha)
 
         # ============================================
@@ -1401,7 +1396,7 @@ def main():
         # ============================================
         print("\nSelecting best BNN models...")
         bnn_selections = {}
-        for name, runs in [("lrt", lrt_runs), ("fo", fo_runs), ("rad", rad_runs)]:
+        for name, runs in [("lrt", lrt_runs), ("rad", rad_runs)]:
             if len(runs) == 0:
                 continue
             sel = select_best_bnn(runs, args.alpha)
@@ -1428,7 +1423,7 @@ def main():
         if de_full is not None:
             method_data["DE"] = de_full
 
-        for name in ["lrt", "fo", "rad"]:
+        for name in ["lrt", "rad"]:
             if name in bnn_selections:
                 method_data[name] = bnn_selections[name]["best_overall"]["run"]
 

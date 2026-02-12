@@ -139,7 +139,7 @@ class BNN(L.LightningModule):
         param_store_to(self.device)
         self.configure_optimizers()
 
-        # Use grad_clip_val if available (BNN_Forces_Aux), otherwise default to 10.0
+        # Use grad_clip_val if available (BNN_Forces), otherwise default to 10.0
         clip_norm = getattr(self.hparams, 'grad_clip_val', 10.0)
         self.optimizer = pyro.optim.ClippedAdam({
             'lr': self.hparams.lr, 
@@ -305,7 +305,7 @@ class BNN(L.LightningModule):
         """Initialize BNN for prediction."""
         self.define_bnn()
         param_store_to(self.device)
-        # Create bnn_no_obs (needed by BNN_Forces_Aux.predict_step for force sampling)
+        # Create bnn_no_obs (needed by BNN_Forces.predict_step for force sampling)
         self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
 
     def predict_step(

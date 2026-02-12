@@ -46,7 +46,7 @@ export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
-    hpsearch=nn_forces \
+    hpsearch=nn \
     datamodule=TiO_Forces_Data20 \
     trainer.accelerator=gpu \
     trainer.devices=1 \
@@ -92,7 +92,7 @@ export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
-    hpsearch=bnn_lrt_forces \
+    hpsearch=bnn_lrt \
     datamodule=TiO_Forces_Data20 \
     trainer.accelerator=gpu \
     trainer.devices=1 \
@@ -102,52 +102,6 @@ python -m bnn_aenet.tasks.hpsearch \
 HEREDOC
 
 echo "  LRT HPS submitted (iqtc10)"
-
-# FO HPS - iqtc13
-qsub << 'HEREDOC'
-#!/bin/bash
-#$ -N hps_fo_sm
-#$ -q iqtc13.q
-#$ -l iqtcgpu=1
-#$ -pe smp 4
-#$ -S /bin/bash
-#$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/hps/TiO2_small_hps_fo.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/hps/TiO2_small_hps_fo.err
-
-. /etc/profile
-__conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/aplic/anaconda/2024.10/etc/profile.d/conda.sh" ]; then
-        . "/aplic/anaconda/2024.10/etc/profile.d/conda.sh"
-    else
-        export PATH="/aplic/anaconda/2024.10/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-
-module load cuda/12.4
-conda activate bnn
-
-export OMP_NUM_THREADS=4
-export TMPDIR=/tmp/g15farris
-export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
-cd /home/g15farris/bin/bayesaenet
-
-python -m bnn_aenet.tasks.hpsearch \
-    hpsearch=bnn_fo_forces \
-    datamodule=TiO_Forces_Data20 \
-    trainer.accelerator=gpu \
-    trainer.devices=1 \
-    +trainer.precision=16-mixed \
-    hpsearch.results_subdir=TiO2_small \
-    hpsearch.study.study_name=fo_small \
-    'tags=["TiO2_small", "fo", "hps"]'
-HEREDOC
-
-echo "  FO HPS submitted (iqtc13)"
 
 # RAD HPS - iqtc13
 qsub << 'HEREDOC'
@@ -183,7 +137,7 @@ export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
-    hpsearch=bnn_rad_forces \
+    hpsearch=bnn_rad \
     datamodule=TiO_Forces_Data20 \
     trainer.accelerator=gpu \
     trainer.devices=1 \

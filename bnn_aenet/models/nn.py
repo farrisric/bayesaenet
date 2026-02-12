@@ -2,8 +2,8 @@
 Deterministic Neural Network models for atomic energy and force prediction.
 
 Classes:
-    - NN: Base deterministic NN (also used for BNN pretraining)
-    - NN_Forces: NN with force training for Deep Ensemble
+    - NNBase: Base deterministic NN (used for BNN pretraining)
+    - NN: NN with force training (canonical; always uses forces)
 """
 
 from typing import Any, Dict, List
@@ -16,7 +16,7 @@ from .utils import weights_init, get_rmse_atom
 from ..datamodule.aenet.batch_constants import BatchIdx
 
 
-class NN(L.LightningModule):
+class NNBase(L.LightningModule):
     """
     Class used by BNNs to pretrain their weights. This class is instantiated,
     trained for X epochs and then it stores its weights in the log directory.
@@ -116,19 +116,18 @@ class NN(L.LightningModule):
         return self.hparams.optimizer(params=self.parameters())
 
 
-class NN_Forces(NN):
+class NN(NNBase):
     """
-    Neural Network with force training for Deep Ensemble.
+    Neural Network with force training (canonical; always uses forces).
     
-    Extends NN to include force training via auxiliary loss.
-    Uses weighted combination of energy RMSE and force RMSE.
+    Used for Deep Ensemble baseline. Weighted combination of energy RMSE and force RMSE.
     """
     
     def __init__(self,
                  net: torch.nn.Module,
                  optimizer: torch.optim.Optimizer,
                  alpha: float = 0.1,
-                 name: str = "NN_Forces"):  # Model name for logging organization
+                 name: str = "NN"):
         super().__init__(net=net, optimizer=optimizer, name=name)
         self.alpha = alpha  # Weight for force loss: (1-alpha)*E_loss + alpha*F_loss
     
@@ -236,7 +235,7 @@ class NN_Forces(NN):
     ) -> Dict[str, np.ndarray]:
         """Predict energies and forces (deterministic, stds=0).
         
-        Returns dict matching BNN_Forces_Aux.predict_step() format for
+        Returns dict matching BNN_Forces.predict_step() format for
         compatibility with Deep Ensemble creation.
         """
         # Energy predictions (deterministic)
@@ -305,3 +304,7 @@ class NN_Forces(NN):
         pred["force_mae"] = force_mae
         
         return pred
+
+
+# Backward compatibility for checkpoints
+NN_Forces = NN

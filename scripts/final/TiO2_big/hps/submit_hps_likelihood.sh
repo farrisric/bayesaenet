@@ -47,7 +47,7 @@ export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
-    hpsearch=bnn_lrt_forces_likelihood \
+    hpsearch=bnn_lrt \
     datamodule=TiO_Forces_Data100 \
     trainer.accelerator=gpu \
     trainer.devices=1 \
@@ -92,7 +92,7 @@ export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
-    hpsearch=bnn_rad_forces_likelihood \
+    hpsearch=bnn_rad \
     datamodule=TiO_Forces_Data100 \
     trainer.accelerator=gpu \
     trainer.devices=1 \

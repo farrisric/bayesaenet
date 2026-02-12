@@ -48,37 +48,19 @@ DATAMODULE_MAP = {
 # Map method -> (experiment config, needs cuda module, needs mixed precision, queue)
 METHOD_CONFIG = {
     "nn": {
-        "experiment": "nn_forces",
+        "experiment": "nn",
         "cuda_module": False,
         "mixed_precision": True,
         "queue": "iqtc13.q",
     },
     "lrt": {
-        "experiment": "bnn_lrt_forces_aux",
+        "experiment": "bnn_lrt",
         "cuda_module": True,
         "mixed_precision": False,  # LRT + mixed precision = NaN
         "queue": "iqtc10.q",
     },
-    "lrt_likelihood": {
-        "experiment": "bnn_lrt_forces_likelihood",
-        "cuda_module": True,
-        "mixed_precision": False,
-        "queue": "iqtc10.q",
-    },
-    "fo": {
-        "experiment": "bnn_fo_forces_aux",
-        "cuda_module": True,
-        "mixed_precision": True,
-        "queue": "iqtc13.q",
-    },
     "rad": {
-        "experiment": "bnn_rad_forces_aux",
-        "cuda_module": True,
-        "mixed_precision": True,
-        "queue": "iqtc13.q",
-    },
-    "rad_likelihood": {
-        "experiment": "bnn_rad_forces_likelihood",
+        "experiment": "bnn_rad",
         "cuda_module": True,
         "mixed_precision": True,
         "queue": "iqtc13.q",
@@ -171,12 +153,9 @@ done
     return out_path
 
 
-def generate_bnn_script(
-    method: str, params: dict, dataset: str, output_dir: Path, use_likelihood: bool = False
-) -> Path:
-    """Generate BNN training script (lrt/fo/rad)."""
-    cfg_key = f"{method}_likelihood" if use_likelihood else method
-    cfg = METHOD_CONFIG[cfg_key]
+def generate_bnn_script(method: str, params: dict, dataset: str, output_dir: Path) -> Path:
+    """Generate BNN training script (lrt/rad)."""
+    cfg = METHOD_CONFIG[method]
     datamodule = DATAMODULE_MAP[dataset]
 
     lr = params["lr"]
@@ -190,8 +169,7 @@ def generate_bnn_script(
     seeds_str = " ".join(str(s) for s in SEEDS)
     precision_line = "        +trainer.precision=16-mixed \\\n" if cfg["mixed_precision"] else ""
 
-    # Display name for logs (strip _likelihood suffix)
-    display_name = method.replace("_likelihood", "")
+    display_name = method
 
     scale_force_lines = ""
     if scale_force is not None:
@@ -264,7 +242,7 @@ def main():
     parser.add_argument("--dataset", required=True, help="Dataset name (e.g., TiO2_small, TiO2_big)")
     parser.add_argument("--output-dir", required=True, help="Directory to write training scripts")
     parser.add_argument("--results-dir", default=None, help="Path to results dir (default: bnn_aenet/results)")
-    parser.add_argument("--methods", nargs="+", default=["nn", "lrt", "fo", "rad"],
+    parser.add_argument("--methods", nargs="+", default=["nn", "lrt", "rad"],
                         help="Methods to generate scripts for")
     args = parser.parse_args()
 
@@ -291,18 +269,11 @@ def main():
 
     for method in args.methods:
         # Try to find the DB file
-        # For lrt/rad: prefer likelihood DB (bnn_*_forces_likelihood.db) when it exists
-        use_likelihood = False
+        # For lrt/rad: use bnn_*_forces_likelihood.db (study name in DB)
         if method in ("lrt", "rad"):
-            likelihood_db = db_dir / f"bnn_{method}_forces_likelihood.db"
-            aux_db = db_dir / f"{method}_small.db" if dataset == "TiO2_small" else db_dir / f"{method}.db"
-            if likelihood_db.exists():
-                db_path = likelihood_db
-                use_likelihood = True
-            elif aux_db.exists():
-                db_path = aux_db
-            else:
-                db_candidates = list(db_dir.glob(f"{method}*.db"))
+            db_path = db_dir / f"bnn_{method}_forces_likelihood.db"
+            if not db_path.exists():
+                db_candidates = list(db_dir.glob(f"bnn_{method}*.db"))
                 db_path = db_candidates[0] if db_candidates else None
         else:
             db_candidates = list(db_dir.glob(f"{method}*.db"))
@@ -312,7 +283,7 @@ def main():
             print(f"[{method}] No DB found, skipping")
             continue
 
-        print(f"[{method}] Loading from {db_path.name}" + (" (likelihood)" if use_likelihood else ""))
+        print(f"[{method}] Loading from {db_path.name}")
         try:
             params = load_best_params(db_path)
         except Exception as e:
@@ -322,7 +293,7 @@ def main():
         if method == "nn":
             out_path = generate_nn_script(params, dataset, output_dir)
         else:
-            out_path = generate_bnn_script(method, params, dataset, output_dir, use_likelihood=use_likelihood)
+            out_path = generate_bnn_script(method, params, dataset, output_dir)
 
         print(f"  Written: {out_path}")
         print()
