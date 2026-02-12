@@ -41,7 +41,7 @@ cd /home/g15farris/bin/bayesaenet"""
 
 # Map dataset -> datamodule config name
 DATAMODULE_MAP = {
-    "TiO2_big": "TiO_Forces",
+    "TiO2_big": "TiO_Forces_Data100",
     "TiO2_small": "TiO_Forces_Data20",
 }
 

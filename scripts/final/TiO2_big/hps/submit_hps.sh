@@ -46,10 +46,11 @@ cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=nn_forces \
-    datamodule=TiO_Forces \
+    datamodule=TiO_Forces_Data100 \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     +trainer.precision=16-mixed \
+    hpsearch.results_subdir=TiO2_big \
     hpsearch.study.study_name=nn \
     'tags=["TiO2_big", "nn", "hps"]'
 HEREDOC
@@ -91,9 +92,10 @@ cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=bnn_lrt_forces \
-    datamodule=TiO_Forces \
+    datamodule=TiO_Forces_Data100 \
     trainer.accelerator=gpu \
     trainer.devices=1 \
+    hpsearch.results_subdir=TiO2_big \
     hpsearch.study.study_name=lrt \
     'tags=["TiO2_big", "lrt", "hps"]'
 HEREDOC
@@ -135,10 +137,11 @@ cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=bnn_fo_forces \
-    datamodule=TiO_Forces \
+    datamodule=TiO_Forces_Data100 \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     +trainer.precision=16-mixed \
+    hpsearch.results_subdir=TiO2_big \
     hpsearch.study.study_name=fo \
     'tags=["TiO2_big", "fo", "hps"]'
 HEREDOC
@@ -180,10 +183,11 @@ cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=bnn_rad_forces \
-    datamodule=TiO_Forces \
+    datamodule=TiO_Forces_Data100 \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     +trainer.precision=16-mixed \
+    hpsearch.results_subdir=TiO2_big \
     hpsearch.study.study_name=rad \
     'tags=["TiO2_big", "rad", "hps"]'
 HEREDOC

@@ -134,7 +134,7 @@ print(f"Force RMSE: {metrics_with_forces['force_rmse']:.4f}")
 - Force data must be present in training set (controlled by `train.in`)
 - If no force data available, force metrics return NaN/None
 - Force components stored as flattened arrays (atom1_x, atom1_y, atom1_z, atom2_x, ...)
-- All force units in mHa/Bohr (milli-Hartree per Bohr)
+- All force units in meV/Å (milli-electronvolt per Angstrom)
 - Angular errors use cosine similarity (0° = perfect alignment)
 
 ## Integration with Existing Analysis

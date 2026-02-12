@@ -420,7 +420,7 @@ def plot_metric_bars(summary_df: pd.DataFrame, output_dir: Path):
     """Grouped bar chart for key metrics across methods."""
     metric_defs = [
         ("energy_rmse", "Energy RMSE\n(meV/atom)"),
-        ("force_rmse", r"Force RMSE" + "\n" + r"(eV/$\mathrm{\AA}$)"),
+        ("force_rmse", r"Force RMSE" + "\n" + r"(meV/$\mathrm{\AA}$)"),
         ("energy_nll", "Energy NLL"),
         ("force_ece", "Force ECE"),
     ]
@@ -578,7 +578,7 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
 
     for tag_idx, (tag, ylabel) in enumerate([
         ("rmse/val", "Energy RMSE (meV/atom)"),
-        ("force_rmse/val", r"Force RMSE (eV/$\mathrm{\AA}$)"),
+        ("force_rmse/val", r"Force RMSE (meV/$\mathrm{\AA}$)"),
     ]):
         ax = axes[tag_idx]
         for mt in available:
@@ -643,7 +643,7 @@ def generate_latex_table(summary_df: pd.DataFrame, time_data: dict,
     lines.append(r"\begin{table*}")
     lines.append(r"\centering")
     lines.append(r"\caption{Test set performance of TiO$_2$ force-trained models. "
-                 r"Energy in meV/atom, forces in eV/\AA{}. "
+                 r"Energy in meV/atom, forces in meV/\AA{}. "
                  r"Best values per column in \textbf{bold}.}")
     lines.append(r"\label{tab:tio2_results}")
 

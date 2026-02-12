@@ -51,6 +51,7 @@ python -m bnn_aenet.tasks.hpsearch \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     +trainer.precision=16-mixed \
+    hpsearch.results_subdir=TiO2_small \
     hpsearch.study.study_name=nn_small \
     'tags=["TiO2_small", "nn", "hps"]'
 HEREDOC
@@ -95,6 +96,7 @@ python -m bnn_aenet.tasks.hpsearch \
     datamodule=TiO_Forces_Data20 \
     trainer.accelerator=gpu \
     trainer.devices=1 \
+    hpsearch.results_subdir=TiO2_small \
     hpsearch.study.study_name=lrt_small \
     'tags=["TiO2_small", "lrt", "hps"]'
 HEREDOC
@@ -140,6 +142,7 @@ python -m bnn_aenet.tasks.hpsearch \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     +trainer.precision=16-mixed \
+    hpsearch.results_subdir=TiO2_small \
     hpsearch.study.study_name=fo_small \
     'tags=["TiO2_small", "fo", "hps"]'
 HEREDOC
@@ -185,6 +188,7 @@ python -m bnn_aenet.tasks.hpsearch \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     +trainer.precision=16-mixed \
+    hpsearch.results_subdir=TiO2_small \
     hpsearch.study.study_name=rad_small \
     'tags=["TiO2_small", "rad", "hps"]'
 HEREDOC

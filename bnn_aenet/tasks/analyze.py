@@ -728,7 +728,7 @@ def plot_method_comparison_bars(summary_df: pd.DataFrame, output_dir: Path, subs
     """Plot bar charts comparing methods on key metrics."""
     metrics_to_plot = [
         ("energy_rmse", "Energy RMSE (meV/atom)", True),
-        ("force_rmse", r"Force RMSE (eV/$\mathrm{\AA}$)", True),
+        ("force_rmse", r"Force RMSE (meV/$\mathrm{\AA}$)", True),
         ("total_rmse", "Total RMSE", True),
         ("energy_nll", "Energy NLL", True),
         ("energy_ece", "Energy ECE", True),
@@ -1182,7 +1182,7 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
 
         for tag_idx, (tag, ylabel) in enumerate([
             ("rmse/val", "Energy RMSE (meV/atom)"),
-            ("force_rmse/val", r"Force RMSE (eV/$\mathrm{\AA}$)"),
+            ("force_rmse/val", r"Force RMSE (meV/$\mathrm{\AA}$)"),
         ]):
             ax = axes[tag_idx]
             all_vals = []
@@ -1258,7 +1258,7 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
     for tag_idx, (tag, ylabel) in enumerate([
         ("rmse/val", "Energy RMSE (meV/atom)"),
-        ("force_rmse/val", r"Force RMSE (eV/$\mathrm{\AA}$)"),
+        ("force_rmse/val", r"Force RMSE (meV/$\mathrm{\AA}$)"),
     ]):
         ax = axes[tag_idx]
         for mt in available_models:

@@ -143,6 +143,51 @@ def objective_bnn_forces(trial: Trial, cfg: DictConfig, output_dir: str):
     return objective(trial, cfg, output_dir)
 
 
+def objective_bnn_forces_likelihood(trial: Trial, cfg: DictConfig, output_dir: str):
+    """Objective function for BNN_Forces_Likelihood hyperparameter search.
+    
+    Optimizes the same BNN hyperparameters as auxiliary, plus:
+    - scale_force: Observation noise scale for force likelihood (analogous to obs_scale)
+    """
+    cfg.model.pretrain_epochs = 0
+    log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs (fixed at 0)")
+    
+    cfg.model.lr = trial.suggest_float(
+        "lr", 1e-5, 1e-3, log=True
+    )
+    log.info(f"{cfg.model.lr} lr")
+    
+    cfg.model.mc_samples_train = trial.suggest_categorical(
+        "mc_samples_train", [1, 2]
+    )
+    log.info(f"{cfg.model.mc_samples_train} mc_samples_train")
+    
+    cfg.model.prior_scale = trial.suggest_float(
+        "prior_scale", 0.1, 0.5, log=True
+    )
+    log.info(f"{cfg.model.prior_scale} prior_scale")
+    
+    cfg.model.q_scale = trial.suggest_float(
+        "q_scale", 1e-5, 0.005, log=True
+    )
+    log.info(f"{cfg.model.q_scale} q_scale")
+    
+    cfg.model.obs_scale = trial.suggest_float(
+        "obs_scale", 0.1, 2.0, log=True
+    )
+    log.info(f"{cfg.model.obs_scale} obs_scale")
+    
+    # scale_force: force likelihood noise (critical for energy/force balance)
+    cfg.model.scale_force = trial.suggest_float(
+        "scale_force", 0.05, 2.0, log=True
+    )
+    log.info(f"{cfg.model.scale_force} scale_force")
+    
+    log.info(f"{cfg.model.net.alpha} alpha (fixed)")
+    
+    return objective(trial, cfg, output_dir)
+
+
 def objective_partial_bnn_forces(trial: Trial, cfg: DictConfig, output_dir: str):
     """Objective function for PartialBNN_Forces_Aux hyperparameter search.
     
@@ -194,7 +239,11 @@ def main(cfg: DictConfig) -> Optional[float]:
     
     path = Path(f"{cfg.paths.results_dir}")
     # Store DBs in dataset-specific subdirectory: results/{dataset}/{method}.db
-    db_dir = path / cfg.tags[0]
+    # Use hpsearch.results_subdir if set (TiO2_big, TiO2_small, QM7), else tags[0]
+    results_subdir = cfg.hpsearch.get("results_subdir", None)
+    if results_subdir is None or results_subdir == "":
+        results_subdir = cfg.tags[0]
+    db_dir = path / str(results_subdir)
     db_dir.mkdir(parents=True, exist_ok=True)
     db_path = db_dir / f"{cfg.hpsearch.study.study_name}.db"
     log.info(f"Results will be stored in sqlite:///{db_path.as_posix()}")

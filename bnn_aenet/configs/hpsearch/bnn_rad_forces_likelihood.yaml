@@ -1,0 +1,25 @@
+# @package _global_
+# Hyperparameter search for BNN_Forces_Likelihood (Radial)
+
+defaults:
+  - /hpsearch/study: study
+  - /hpsearch/objective: bnn_forces_likelihood
+  - override /experiment: bnn_rad_forces_likelihood
+
+hpsearch:
+  monitor: total_rmse/val
+  n_trials: 30
+  study:
+    study_name: bnn_rad_forces_likelihood
+
+trainer:
+  max_epochs: 3000
+  min_epochs: 100
+
+callbacks:
+  early_stopping:
+    monitor: total_rmse/val
+    patience: 50
+    mode: min
+
+tags: ["bayesian", "radial", "forces", "likelihood", "hps"]

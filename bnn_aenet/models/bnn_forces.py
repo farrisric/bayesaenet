@@ -128,8 +128,8 @@ class BNN_Forces_Aux(BNN):
         # Compute RMSE for forces (in mHa/Bohr for consistency)
         # Convert target forces to float32 for consistency
         force_diff = F_pred - F_group_forces.float()
-        force_rmse = torch.sqrt(torch.mean(force_diff ** 2)) * 1000  # Convert to mHa/Bohr
-        
+        scale = float(net.e_scaling) if hasattr(net.e_scaling, "item") else float(net.e_scaling)
+        force_rmse = torch.sqrt(torch.mean(force_diff ** 2)) / scale * 1000  # meV/Å
         return force_rmse
     
     def compute_force_loss_and_update(self, batch):
@@ -222,9 +222,10 @@ class BNN_Forces_Aux(BNN):
                 max_nnb
             )
             
-            # Compute RMSE for forces (in mHa/Bohr)
+            # Compute RMSE for forces (meV/Å)
             force_diff = F_pred - F_target
-            force_rmse = torch.sqrt(torch.mean(force_diff ** 2)) * 1000
+            scale = float(self.net.e_scaling) if hasattr(self.net.e_scaling, "item") else float(self.net.e_scaling)
+            force_rmse = torch.sqrt(torch.mean(force_diff ** 2)) / scale * 1000
             
             # Apply alpha weighting: the force contribution should be scaled by alpha
             # (energy contribution is already handled by ELBO with implicit 1-alpha weight)
@@ -314,7 +315,7 @@ class BNN_Forces_Aux(BNN):
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
         
         # Compute energy metrics
-        rmse = get_rmse_atom(loc, y, n_atoms)
+        rmse = get_rmse_atom(loc, y, n_atoms, self.net.e_scaling)
         mse = F.mse_loss(loc, y)
         
         # NLL for training monitoring
@@ -361,7 +362,7 @@ class BNN_Forces_Aux(BNN):
         
         # Energy metrics
         mse = F.mse_loss(loc, y)
-        rmse = get_rmse_atom(loc, y, n_atoms)
+        rmse = get_rmse_atom(loc, y, n_atoms, self.net.e_scaling)
         
         # NLL for validation monitoring
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
@@ -400,7 +401,7 @@ class BNN_Forces_Aux(BNN):
         loc, scale = self.bnn.predict(x[0], x[1], num_predictions=self.hparams.mc_samples_eval)
         
         # Energy metrics
-        rmse = get_rmse_atom(loc, y, n_atoms)
+        rmse = get_rmse_atom(loc, y, n_atoms, self.net.e_scaling)
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
         
         # Force metrics
@@ -525,9 +526,10 @@ class BNN_Forces_Aux(BNN):
             pred_forces_flat = force_preds.flatten()
             std_forces_flat = force_stds.flatten()
             
-            # Compute per-atom force errors
-            force_errors = np.abs(true_forces_flat - pred_forces_flat)
-            force_rmse = np.sqrt(np.mean((true_forces_flat - pred_forces_flat)**2))
+            # Compute per-atom force errors (meV/Å)
+            scale = float(self.net.e_scaling) if hasattr(self.net.e_scaling, "item") else float(self.net.e_scaling)
+            force_errors = np.abs(true_forces_flat - pred_forces_flat) / scale * 1000
+            force_rmse = np.sqrt(np.mean((true_forces_flat - pred_forces_flat) ** 2)) / scale * 1000
             force_mae = np.mean(force_errors)
         else:
             # No force data - set to None/NaN

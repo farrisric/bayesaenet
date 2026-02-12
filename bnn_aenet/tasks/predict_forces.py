@@ -200,8 +200,8 @@ def run_predictions(model, datamodule, subsets, device):
     return results
 
 
-def save_predictions(batch_results, output_path, run_name, subset):
-    """Save predictions: energy to CSV, forces to npz."""
+def save_predictions(batch_results, output_path, run_name, subset, e_scaling):
+    """Save predictions: energy to CSV, forces to npz. Metrics in meV/atom and meV/Å."""
     output_path.mkdir(parents=True, exist_ok=True)
 
     all_true, all_preds, all_stds, all_n_atoms = [], [], [], []
@@ -218,7 +218,7 @@ def save_predictions(batch_results, output_path, run_name, subset):
             all_pred_forces.append(np.asarray(batch["pred_forces"]).flatten())
             all_std_forces.append(np.asarray(batch["std_forces"]).flatten())
 
-    # Energy DataFrame
+    # Energy DataFrame (values in normalized units)
     energy_df = pd.DataFrame({
         "true": np.concatenate(all_true),
         "preds": np.concatenate(all_preds),
@@ -228,11 +228,13 @@ def save_predictions(batch_results, output_path, run_name, subset):
 
     energy_file = output_path / f"{run_name}_{subset}_energy.csv"
     energy_df.to_csv(energy_file, index=False)
-    e_rmse = np.sqrt(np.mean((energy_df["true"] - energy_df["preds"]) ** 2))
-    e_mae = np.mean(np.abs(energy_df["true"] - energy_df["preds"]))
-    print(f"    Energy: {len(energy_df)} structures, RMSE={e_rmse:.4f}, MAE={e_mae:.4f}")
+    # Per-atom energy RMSE in meV/atom
+    per_atom_err = (energy_df["true"] - energy_df["preds"]) / energy_df["n_atoms"]
+    e_rmse = np.sqrt(np.mean(per_atom_err**2)) / e_scaling * 1000
+    e_mae = np.mean(np.abs(per_atom_err)) / e_scaling * 1000
+    print(f"    Energy: {len(energy_df)} structures, RMSE={e_rmse:.4f} meV/atom, MAE={e_mae:.4f} meV/atom")
 
-    # Force data
+    # Force data (values in normalized units)
     if len(all_true_forces) > 0:
         ft = np.concatenate(all_true_forces)
         fp = np.concatenate(all_pred_forces)
@@ -241,9 +243,9 @@ def save_predictions(batch_results, output_path, run_name, subset):
         force_file = output_path / f"{run_name}_{subset}_forces.npz"
         np.savez_compressed(force_file, true_forces=ft, pred_forces=fp, std_forces=fs)
 
-        f_rmse = np.sqrt(np.mean((ft - fp) ** 2))
-        f_mae = np.mean(np.abs(ft - fp))
-        print(f"    Forces: {len(ft)} components, RMSE={f_rmse:.4f}, MAE={f_mae:.4f}")
+        f_rmse = np.sqrt(np.mean((ft - fp) ** 2)) / e_scaling * 1000  # meV/Å
+        f_mae = np.mean(np.abs(ft - fp)) / e_scaling * 1000
+        print(f"    Forces: {len(ft)} components, RMSE={f_rmse:.4f} meV/Å, MAE={f_mae:.4f} meV/Å")
 
 
 def main():
@@ -307,7 +309,7 @@ def main():
             results = run_predictions(model, dm, args.subsets, args.device)
 
             for subset, batch_results in results.items():
-                save_predictions(batch_results, output_dir, run_name, subset)
+                save_predictions(batch_results, output_dir, run_name, subset, dm.e_scaling)
 
         except Exception as e:
             print(f"  ERROR: {e}")

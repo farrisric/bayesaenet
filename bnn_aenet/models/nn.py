@@ -50,8 +50,8 @@ class NN(L.LightningModule):
         logic_reduce = batch[BatchIdx.E_LOGIC_REDUCE]
         grp_N_atom = batch[BatchIdx.E_N_ATOM]
         
-        list_E_ann = self.forward(grp_descrp, logic_reduce)   
-        return get_rmse_atom(list_E_ann, grp_energy, grp_N_atom)
+        list_E_ann = self.forward(grp_descrp, logic_reduce)
+        return get_rmse_atom(list_E_ann, grp_energy, grp_N_atom, self.net.e_scaling)
 
     def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
         """Execute one training step."""
@@ -180,8 +180,8 @@ class NN_Forces(NN):
         
         # Compute RMSE for forces (in mHa/Bohr)
         force_diff = F_pred - F_group_forces.float()
-        force_rmse = torch.sqrt(torch.mean(force_diff ** 2)) * 1000
-        
+        scale = float(self.net.e_scaling) if hasattr(self.net.e_scaling, "item") else float(self.net.e_scaling)
+        force_rmse = torch.sqrt(torch.mean(force_diff ** 2)) / scale * 1000  # meV/Å
         return force_rmse
     
     def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
@@ -289,8 +289,9 @@ class NN_Forces(NN):
             pred_forces_flat = F_pred.detach().cpu().numpy().flatten()
             std_forces_flat = np.zeros_like(pred_forces_flat)  # Deterministic
             
-            force_errors = np.abs(true_forces_flat - pred_forces_flat)
-            force_rmse = np.sqrt(np.mean((true_forces_flat - pred_forces_flat)**2))
+            scale = float(self.net.e_scaling) if hasattr(self.net.e_scaling, "item") else float(self.net.e_scaling)
+            force_errors = np.abs(true_forces_flat - pred_forces_flat) / scale * 1000
+            force_rmse = np.sqrt(np.mean((true_forces_flat - pred_forces_flat) ** 2)) / scale * 1000
             force_mae = np.mean(force_errors)
         else:
             true_forces_flat = None

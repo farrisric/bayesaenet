@@ -42,16 +42,16 @@ def weights_init(m):
         torch.nn.init.kaiming_normal_(m.weight)
 
 
-def get_rmse_atom(list_E_ann, grp_energy, grp_N_atom):
+def get_rmse_atom(list_E_ann, grp_energy, grp_N_atom, e_scaling):
     """
-    Compute RMSE per atom in meV.
+    Compute RMSE per atom in meV/atom.
 
-    Matches original aenet_pytorch formula:
-    RMSE = sqrt(mean((E_pred - E_true)^2 / N_atom^2)) * 1000
-
-    This computes the RMSE of per-atom energy errors.
+    Energies are in normalized units; divide by e_scaling to get physical (eV/atom)
+    then multiply by 1000 for meV/atom. Matches original aenet_pytorch after
+    io_train_step divides by E_scaling.
     """
-    # Per-atom energy error for each structure
+    # Per-atom energy error for each structure (normalized units)
     per_atom_err = (list_E_ann - grp_energy) / grp_N_atom
-    # RMSE of per-atom errors, converted to meV
-    return torch.sqrt(torch.mean(per_atom_err**2)) * 1000
+    # Convert to physical: / e_scaling -> eV/atom, * 1000 -> meV/atom
+    scale = float(e_scaling) if hasattr(e_scaling, "item") else float(e_scaling)
+    return torch.sqrt(torch.mean(per_atom_err**2)) / scale * 1000
