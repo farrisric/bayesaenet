@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N multi_rad_sm
+#$ -N multi_rad
 #$ -q iqtc13.q
 #$ -l iqtcgpu=1
 #$ -pe smp 4
@@ -29,20 +29,21 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
-# TODO: Fill in best HPS parameters after HPS completes
-LR=PLACEHOLDER
-BS=PLACEHOLDER
-MC=PLACEHOLDER
-PRIOR_SCALE=PLACEHOLDER
-Q_SCALE=PLACEHOLDER
-OBS_SCALE=PLACEHOLDER
+# Best RAD HPS parameters
+LR=0.0007707725310702081
+BS=256
+MC=2
+PRIOR_SCALE=0.21380042973105887
+Q_SCALE=1.4513837427658247e-05
+OBS_SCALE=0.12019856849128742
+SCALE_FORCE=0.16723055999153458
 
 SEEDS=(121958 671155 131932 365838 259178 644167 110268 732180 54886 137337)
 
 for i in $(seq 0 9); do
     echo "=== Starting RAD run $i with seed ${SEEDS[$i]} at $(date) ==="
     python -m bnn_aenet.tasks.train \
-        experiment=bnn_rad_forces_aux \
+        experiment=bnn_rad_forces_likelihood \
         datamodule=TiO_Forces_Data20 \
         trainer.accelerator=gpu \
         trainer.devices=1 \
@@ -57,9 +58,11 @@ for i in $(seq 0 9); do
         model.q_scale=${Q_SCALE} \
         model.obs_scale=${OBS_SCALE} \
         model.pretrain_epochs=0 \
+        model.scale_force=${SCALE_FORCE} \
         callbacks.model_checkpoint.monitor=total_rmse/val \
         callbacks.early_stopping.monitor=total_rmse/val \
         callbacks.early_stopping.patience=500 \
-        seed=${SEEDS[$i]}
+        seed=${SEEDS[$i]} \
+        'tags=["TiO2_small", "rad", "train"]'
     echo "=== Finished RAD run $i at $(date) ==="
 done

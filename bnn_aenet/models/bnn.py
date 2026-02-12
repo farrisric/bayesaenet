@@ -196,7 +196,7 @@ class BNN(L.LightningModule):
 
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
         
-        rmse = get_rmse_atom(loc, y, n_atoms, self.net.e_scaling)
+        rmse = get_rmse_atom(loc, y, n_atoms)  # normalized units
         mse = F.mse_loss(loc, y)
         
         # NLL for training monitoring
@@ -238,7 +238,7 @@ class BNN(L.LightningModule):
         kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         mse = F.mse_loss(loc, y)
-        rmse = get_rmse_atom(loc, y, n_atoms, self.net.e_scaling)
+        rmse = get_rmse_atom(loc, y, n_atoms)  # normalized units
         
         # NLL (Negative Log-Likelihood) for proper Bayesian evaluation
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
@@ -284,7 +284,7 @@ class BNN(L.LightningModule):
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
 
         mse = F.mse_loss(loc, y)
-        rmse = get_rmse_atom(loc, y, n_atoms, self.net.e_scaling)
+        rmse = get_rmse_atom(loc, y, n_atoms)  # normalized units
         
         # Calibration metrics
         try:

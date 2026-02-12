@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N multi_nn_sm
+#$ -N multi_nn
 #$ -q iqtc13.q
 #$ -l iqtcgpu=1
 #$ -pe smp 4
@@ -21,6 +21,7 @@ else
 fi
 unset __conda_setup
 
+
 conda activate bnn
 
 export OMP_NUM_THREADS=4
@@ -28,9 +29,9 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
-# TODO: Fill in best HPS parameters after HPS completes
-LR=PLACEHOLDER
-BS=PLACEHOLDER
+# Best NN HPS parameters
+LR=0.0007511120816413128
+BS=256
 
 SEEDS=(121958 671155 131932 365838 259178 644167 110268 732180 54886 137337)
 
@@ -50,6 +51,7 @@ for i in $(seq 0 9); do
         callbacks.model_checkpoint.monitor=total_rmse/val \
         callbacks.early_stopping.monitor=total_rmse/val \
         callbacks.early_stopping.patience=500 \
-        seed=${SEEDS[$i]}
+        seed=${SEEDS[$i]} \
+        'tags=["TiO2_small", "nn", "train"]'
     echo "=== Finished NN run $i at $(date) ==="
 done

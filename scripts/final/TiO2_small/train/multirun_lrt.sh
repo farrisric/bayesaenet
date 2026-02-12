@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -N multi_lrt_sm
+#$ -N multi_lrt
 #$ -q iqtc10.q
 #$ -l iqtcgpu=1
 #$ -pe smp 4
@@ -29,21 +29,21 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
-# TODO: Fill in best HPS parameters after HPS completes
-# No mixed precision for LRT (causes NaN)
-LR=PLACEHOLDER
-BS=PLACEHOLDER
-MC=PLACEHOLDER
-PRIOR_SCALE=PLACEHOLDER
-Q_SCALE=PLACEHOLDER
-OBS_SCALE=PLACEHOLDER
+# Best LRT HPS parameters
+LR=0.0003673106686620573
+BS=512
+MC=1
+PRIOR_SCALE=0.15633991783475454
+Q_SCALE=3.176106366029204e-05
+OBS_SCALE=0.6697686182057512
+SCALE_FORCE=0.8809934736485561
 
 SEEDS=(121958 671155 131932 365838 259178 644167 110268 732180 54886 137337)
 
 for i in $(seq 0 9); do
     echo "=== Starting LRT run $i with seed ${SEEDS[$i]} at $(date) ==="
     python -m bnn_aenet.tasks.train \
-        experiment=bnn_lrt_forces_aux \
+        experiment=bnn_lrt_forces_likelihood \
         datamodule=TiO_Forces_Data20 \
         trainer.accelerator=gpu \
         trainer.devices=1 \
@@ -57,9 +57,11 @@ for i in $(seq 0 9); do
         model.q_scale=${Q_SCALE} \
         model.obs_scale=${OBS_SCALE} \
         model.pretrain_epochs=0 \
+        model.scale_force=${SCALE_FORCE} \
         callbacks.model_checkpoint.monitor=total_rmse/val \
         callbacks.early_stopping.monitor=total_rmse/val \
         callbacks.early_stopping.patience=500 \
-        seed=${SEEDS[$i]}
+        seed=${SEEDS[$i]} \
+        'tags=["TiO2_small", "lrt", "train"]'
     echo "=== Finished LRT run $i at $(date) ==="
 done

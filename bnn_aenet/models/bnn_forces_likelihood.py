@@ -187,7 +187,7 @@ class BNN_Forces_Likelihood(BNN):
 
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
 
-        rmse = get_rmse_atom(loc.squeeze(-1), y, n_atoms, self.net.e_scaling)
+        rmse = get_rmse_atom(loc.squeeze(-1), y, n_atoms)  # normalized units
         force_rmse = self._compute_force_rmse(batch)
         alpha = self.net.alpha.item() if hasattr(self.net, "alpha") else 0.1
         total_rmse = (1 - alpha) * rmse + alpha * force_rmse
@@ -234,8 +234,7 @@ class BNN_Forces_Likelihood(BNN):
                     max_nnb,
                 )
         diff = F_pred.detach() - F_forces.float()
-        scale = float(self.net.e_scaling) if hasattr(self.net.e_scaling, "item") else float(self.net.e_scaling)
-        return torch.sqrt(torch.mean(diff ** 2)) / scale * 1000  # meV/Å
+        return torch.sqrt(torch.mean(diff ** 2))  # normalized; meV/Å in prediction
 
     def validation_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
         x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
@@ -253,7 +252,7 @@ class BNN_Forces_Likelihood(BNN):
             if loc.dim() == 1:
                 loc = loc.unsqueeze(-1)
 
-        rmse = get_rmse_atom(loc.squeeze(-1), y, n_atoms, self.net.e_scaling)
+        rmse = get_rmse_atom(loc.squeeze(-1), y, n_atoms)  # normalized units
         force_rmse = self._compute_force_rmse(batch)
         alpha = getattr(self.net, "alpha", 0.1)
         if hasattr(alpha, "item"):

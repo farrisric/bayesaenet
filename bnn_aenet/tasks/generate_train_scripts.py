@@ -59,6 +59,12 @@ METHOD_CONFIG = {
         "mixed_precision": False,  # LRT + mixed precision = NaN
         "queue": "iqtc10.q",
     },
+    "lrt_likelihood": {
+        "experiment": "bnn_lrt_forces_likelihood",
+        "cuda_module": True,
+        "mixed_precision": False,
+        "queue": "iqtc10.q",
+    },
     "fo": {
         "experiment": "bnn_fo_forces_aux",
         "cuda_module": True,
@@ -67,6 +73,12 @@ METHOD_CONFIG = {
     },
     "rad": {
         "experiment": "bnn_rad_forces_aux",
+        "cuda_module": True,
+        "mixed_precision": True,
+        "queue": "iqtc13.q",
+    },
+    "rad_likelihood": {
+        "experiment": "bnn_rad_forces_likelihood",
         "cuda_module": True,
         "mixed_precision": True,
         "queue": "iqtc13.q",
@@ -159,9 +171,12 @@ done
     return out_path
 
 
-def generate_bnn_script(method: str, params: dict, dataset: str, output_dir: Path) -> Path:
+def generate_bnn_script(
+    method: str, params: dict, dataset: str, output_dir: Path, use_likelihood: bool = False
+) -> Path:
     """Generate BNN training script (lrt/fo/rad)."""
-    cfg = METHOD_CONFIG[method]
+    cfg_key = f"{method}_likelihood" if use_likelihood else method
+    cfg = METHOD_CONFIG[cfg_key]
     datamodule = DATAMODULE_MAP[dataset]
 
     lr = params["lr"]
@@ -169,21 +184,28 @@ def generate_bnn_script(method: str, params: dict, dataset: str, output_dir: Pat
     prior_scale = params.get("prior_scale", 0.1)
     q_scale = params.get("q_scale", 0.001)
     obs_scale = params.get("obs_scale", 0.5)
-    # BNN HPS doesn't tune batch_size, use default 256
+    scale_force = params.get("scale_force", None)
     bs = params.get("batch_size", 256)
 
     seeds_str = " ".join(str(s) for s in SEEDS)
     precision_line = "        +trainer.precision=16-mixed \\\n" if cfg["mixed_precision"] else ""
 
+    # Display name for logs (strip _likelihood suffix)
+    display_name = method.replace("_likelihood", "")
+
+    scale_force_lines = ""
+    if scale_force is not None:
+        scale_force_lines = f"        model.scale_force=${{SCALE_FORCE}} \\\n"
+
     script = f"""#!/bin/bash
-#$ -N multi_{method}
+#$ -N multi_{display_name}
 #$ -q {cfg['queue']}
 #$ -l iqtcgpu=1
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/multirun/{dataset}_{method}.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/multirun/{dataset}_{method}.err
+#$ -o /home/g15farris/bin/bayesaenet/logs/multirun/{dataset}_{display_name}.out
+#$ -e /home/g15farris/bin/bayesaenet/logs/multirun/{dataset}_{display_name}.err
 
 {CONDA_BLOCK}
 
@@ -192,26 +214,29 @@ conda activate bnn
 
 {ENV_BLOCK}
 
-# Best {method.upper()} HPS parameters
+# Best {display_name.upper()} HPS parameters
 LR={lr}
 BS={bs}
 MC={mc}
 PRIOR_SCALE={prior_scale}
 Q_SCALE={q_scale}
 OBS_SCALE={obs_scale}
+"""
+    if scale_force is not None:
+        script += f"SCALE_FORCE={scale_force}\n\n"
 
-SEEDS=({seeds_str})
+    script += f"""SEEDS=({seeds_str})
 
 for i in $(seq 0 9); do
-    echo "=== Starting {method.upper()} run $i with seed ${{SEEDS[$i]}} at $(date) ==="
+    echo "=== Starting {display_name.upper()} run $i with seed ${{SEEDS[$i]}} at $(date) ==="
     python -m bnn_aenet.tasks.train \\
         experiment={cfg['experiment']} \\
         datamodule={datamodule} \\
         trainer.accelerator=gpu \\
         trainer.devices=1 \\
 {precision_line}        trainer.max_epochs=50000 \\
-        task_name={method}_train \\
-        run_name={method}_train_${{i}} \\
+        task_name={display_name}_train \\
+        run_name={display_name}_train_${{i}} \\
         datamodule.batch_size=${{BS}} \\
         model.lr=${{LR}} \\
         model.mc_samples_train=${{MC}} \\
@@ -219,15 +244,15 @@ for i in $(seq 0 9); do
         model.q_scale=${{Q_SCALE}} \\
         model.obs_scale=${{OBS_SCALE}} \\
         model.pretrain_epochs=0 \\
-        callbacks.model_checkpoint.monitor=total_rmse/val \\
+{scale_force_lines}        callbacks.model_checkpoint.monitor=total_rmse/val \\
         callbacks.early_stopping.monitor=total_rmse/val \\
         callbacks.early_stopping.patience=500 \\
         seed=${{SEEDS[$i]}} \\
-        'tags=["{dataset}", "{method}", "train"]'
-    echo "=== Finished {method.upper()} run $i at $(date) ==="
+        'tags=["{dataset}", "{display_name}", "train"]'
+    echo "=== Finished {display_name.upper()} run $i at $(date) ==="
 done
 """
-    out_path = output_dir / f"multirun_{method}.sh"
+    out_path = output_dir / f"multirun_{display_name}.sh"
     out_path.write_text(script)
     return out_path
 
@@ -266,14 +291,28 @@ def main():
 
     for method in args.methods:
         # Try to find the DB file
-        db_candidates = list(db_dir.glob(f"{method}*.db"))
-        if not db_candidates:
+        # For lrt/rad: prefer likelihood DB (bnn_*_forces_likelihood.db) when it exists
+        use_likelihood = False
+        if method in ("lrt", "rad"):
+            likelihood_db = db_dir / f"bnn_{method}_forces_likelihood.db"
+            aux_db = db_dir / f"{method}_small.db" if dataset == "TiO2_small" else db_dir / f"{method}.db"
+            if likelihood_db.exists():
+                db_path = likelihood_db
+                use_likelihood = True
+            elif aux_db.exists():
+                db_path = aux_db
+            else:
+                db_candidates = list(db_dir.glob(f"{method}*.db"))
+                db_path = db_candidates[0] if db_candidates else None
+        else:
+            db_candidates = list(db_dir.glob(f"{method}*.db"))
+            db_path = db_candidates[0] if db_candidates else None
+
+        if db_path is None or not db_path.exists():
             print(f"[{method}] No DB found, skipping")
             continue
 
-        db_path = db_candidates[0]  # Take first match
-
-        print(f"[{method}] Loading from {db_path.name}")
+        print(f"[{method}] Loading from {db_path.name}" + (" (likelihood)" if use_likelihood else ""))
         try:
             params = load_best_params(db_path)
         except Exception as e:
@@ -283,7 +322,7 @@ def main():
         if method == "nn":
             out_path = generate_nn_script(params, dataset, output_dir)
         else:
-            out_path = generate_bnn_script(method, params, dataset, output_dir)
+            out_path = generate_bnn_script(method, params, dataset, output_dir, use_likelihood=use_likelihood)
 
         print(f"  Written: {out_path}")
         print()

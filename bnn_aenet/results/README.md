@@ -20,10 +20,8 @@ bnn_aenet/results/
 │   ├── rad_small.db
 │   ├── bnn_lrt_forces_likelihood.db
 │   └── bnn_rad_forces_likelihood.db
-├── QM7/               # QM7 dataset (when applicable)
-│   └── ...
-└── bayesian/          # DEPRECATED - legacy location
-    └── README_DEPRECATED.md
+└── QM7/               # QM7 dataset (when applicable)
+    └── ...
 ```
 
 ## Configuring the DB path
@@ -40,14 +38,3 @@ hpsearch.results_subdir=TiO2_big
 ```
 
 If not set, `tags[0]` is used (tags should start with the dataset name).
-
-## Legacy (bayesian/)
-
-The `bayesian/` subdirectory was used by older likelihood HPS runs with
-`tags=["bayesian", ...]`. Those runs used `datamodule=TiO_Forces` with
-`split_config=null` (default splits from data/TiO/splits/), which is
-**not** the same as TiO2 Data20 or Data100.
-
-For proper TiO2_big and TiO2_small HPS, use the scripts in:
-- `scripts/final/TiO2_big/hps/submit_hps_likelihood.sh`
-- `scripts/final/TiO2_small/hps/submit_hps_likelihood.sh`

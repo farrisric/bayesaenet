@@ -51,7 +51,7 @@ class NN(L.LightningModule):
         grp_N_atom = batch[BatchIdx.E_N_ATOM]
         
         list_E_ann = self.forward(grp_descrp, logic_reduce)
-        return get_rmse_atom(list_E_ann, grp_energy, grp_N_atom, self.net.e_scaling)
+        return get_rmse_atom(list_E_ann, grp_energy, grp_N_atom)  # normalized units
 
     def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
         """Execute one training step."""
@@ -178,11 +178,9 @@ class NN_Forces(NN):
                 max_nnb
             )
         
-        # Compute RMSE for forces (in mHa/Bohr)
+        # Compute RMSE for forces (normalized units; meV/Å only in prediction)
         force_diff = F_pred - F_group_forces.float()
-        scale = float(self.net.e_scaling) if hasattr(self.net.e_scaling, "item") else float(self.net.e_scaling)
-        force_rmse = torch.sqrt(torch.mean(force_diff ** 2)) / scale * 1000  # meV/Å
-        return force_rmse
+        return torch.sqrt(torch.mean(force_diff ** 2))
     
     def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
         # Energy loss
