@@ -4,8 +4,8 @@
 # Format matches the working training scripts (multirun_*_forces.sh)
 
 cd /home/g15farris/bin/bayesaenet
-mkdir -p bnn_aenet/logs/forces_pred
-mkdir -p logs/predict
+mkdir -p task/predict/runs/TiO2_big
+mkdir -p log/predict
 
 echo "Submitting prediction jobs..."
 
@@ -18,8 +18,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/predict/pred_nn_forces.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/predict/pred_nn_forces.err
+#$ -o /home/g15farris/bin/bayesaenet/log/predict/pred_nn_forces.out
+#$ -e /home/g15farris/bin/bayesaenet/log/predict/pred_nn_forces.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -43,8 +43,8 @@ cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.predict_forces \
     --model-type nn \
-    --runs-dir bnn_aenet/logs/nn_forces/nn_forces_train \
-    --output-dir bnn_aenet/logs/forces_pred/nn \
+    --runs-dir task/train/runs/nn \
+    --output-dir task/predict/runs/TiO2_big/nn \
     --data-dir data/TiO/train_forces.in \
     --subsets train val test \
     --device gpu \
@@ -62,8 +62,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/predict/pred_lrt_forces.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/predict/pred_lrt_forces.err
+#$ -o /home/g15farris/bin/bayesaenet/log/predict/pred_lrt_forces.out
+#$ -e /home/g15farris/bin/bayesaenet/log/predict/pred_lrt_forces.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -88,8 +88,8 @@ cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.predict_forces \
     --model-type lrt \
-    --runs-dir bnn_aenet/logs/lrt_forces/lrt_forces_train \
-    --output-dir bnn_aenet/logs/forces_pred/lrt \
+    --runs-dir task/train/runs/lrt \
+    --output-dir task/predict/runs/TiO2_big/lrt \
     --data-dir data/TiO/train_forces.in \
     --subsets train val test \
     --device gpu \
@@ -108,8 +108,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/predict/pred_rad_forces.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/predict/pred_rad_forces.err
+#$ -o /home/g15farris/bin/bayesaenet/log/predict/pred_rad_forces.out
+#$ -e /home/g15farris/bin/bayesaenet/log/predict/pred_rad_forces.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -134,8 +134,8 @@ cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.predict_forces \
     --model-type rad \
-    --runs-dir bnn_aenet/logs/rad_forces/rad_forces_train \
-    --output-dir bnn_aenet/logs/forces_pred/rad \
+    --runs-dir task/train/runs/rad \
+    --output-dir task/predict/runs/TiO2_big/rad \
     --data-dir data/TiO/train_forces.in \
     --subsets train val test \
     --device gpu \

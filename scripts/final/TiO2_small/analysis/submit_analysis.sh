@@ -3,11 +3,11 @@
 # Can run on CPU (no GPU needed), but using cluster for consistency
 #
 # Directory convention:
-#   Input:  bnn_aenet/logs/TiO2_small/forces_pred/
+#   Input:  task/predict/runs/TiO2_small/
 #   Output: plots/TiO2_small/
 
 cd /home/g15farris/bin/bayesaenet
-mkdir -p logs/analysis
+mkdir -p log/analysis
 
 echo "=== TiO2_small Analysis ==="
 
@@ -19,8 +19,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/analysis/TiO2_small_analysis.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/analysis/TiO2_small_analysis.err
+#$ -o /home/g15farris/bin/bayesaenet/log/analysis/TiO2_small_analysis.out
+#$ -e /home/g15farris/bin/bayesaenet/log/analysis/TiO2_small_analysis.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -43,9 +43,9 @@ export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.analyze \
-    --pred-dir bnn_aenet/logs/TiO2_small/forces_pred \
+    --pred-dir task/predict/runs/TiO2_small \
     --output-dir plots/TiO2_small \
-    --train-dir bnn_aenet/logs/TiO2_small
+    --train-dir task/train/runs
 HEREDOC
 
 echo "  Analysis submitted"

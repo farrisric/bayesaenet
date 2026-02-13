@@ -1,0 +1,29 @@
+defaults:
+  - net
+
+_target_: bnn_aenet.models.bnn_forces_hetero.BNN_Forces_Hetero
+
+name: BNN_Forces_Hetero
+
+lr: 0.0001
+pretrain_epochs: 0
+mc_samples_train: 2
+mc_samples_eval: 20
+dataset_size: ??? # Set by datamodule
+fit_context: lrt
+guide: normal
+prior_loc: 0
+prior_scale: 0.1
+q_scale: 0.001
+grad_clip_val: 1.0
+
+# obs_scale / scale_force / learn_noise are NOT used by the hetero model
+# (noise is predicted per-sample by NoiseNet), but the parent class
+# constructor requires them.  Keep at harmless defaults.
+obs_scale: 1.0
+scale_force: 1.0
+learn_noise: false
+
+# Heteroscedastic noise network
+noise_hidden_size: 15
+noise_min: 0.01

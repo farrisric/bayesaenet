@@ -3,19 +3,28 @@
 # you can replace it with "." if you want the root to be the current working directory
 root_dir: ${oc.env:PROJECT_ROOT}
 
+# Structure: bnn_aenet/logs/{dataset}/{train,hps,pred}/
+# log/        - SGE job stdout/stderr (at project root)
+# logs_base   - bnn_aenet/logs/ (dataset-specific outputs)
+# dataset_dir - bnn_aenet/logs/{dataset}/ (train, hps, pred underneath)
+log_dir: ${paths.root_dir}/log/
+logs_base: ${paths.root_dir}/bnn_aenet/logs/
+dataset_dir: ${paths.logs_base}/${dataset}
+task_dir: ${paths.dataset_dir}
+
+# Optuna DBs for HPS: bnn_aenet/logs/{dataset}/ (submit sets hpsearch.results_subdir=TiO2_small)
+db_dir: ${paths.logs_base}
+
 # path to data directory
 data_dir: ${paths.root_dir}/data/
 
-# path to logging directory
-log_dir: ${paths.root_dir}/bnn_aenet/logs/
-
 # path to output directory, created dynamically by hydra
 # path generation pattern is specified in `configs/hydra/default.yaml`
-# use it to store all files generated during the run, like ckpts and metrics
+# Structure: bnn_aenet/logs/{dataset}/{task_name}/runs/{model}/{run_name}
 output_dir: ${hydra:runtime.output_dir}
 
 # path to working directory
 work_dir: ${hydra:runtime.cwd}
 
-# path to stored results
-results_dir: ${paths.root_dir}/bnn_aenet/results/
+# Optuna DBs (alias for db_dir for backward compatibility)
+results_dir: ${paths.db_dir}

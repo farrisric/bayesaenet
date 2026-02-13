@@ -14,7 +14,7 @@ from uncertainty_toolbox.metrics_calibration import (
 import numpy as np
 import pandas as pd
 
-from ..utils.miscellaneous import assert_same_shapes
+from .miscellaneous import assert_same_shapes
 
 
 class Metrics:

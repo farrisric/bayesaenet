@@ -102,10 +102,10 @@ class NNBase(L.LightningModule):
         grp_N_atom = batch[BatchIdx.E_N_ATOM]
         
         pred = {}
-        
-        true = grp_energy / self.net.e_scaling + self.net.e_shift * grp_N_atom
+        # Keep normalized units (match BNN) for analysis compatibility
+        true = grp_energy
         list_E_ann = self.net.forward(grp_descrp, logic_reduce)
-        preds = list_E_ann / self.net.e_scaling + self.net.e_shift * grp_N_atom
+        preds = list_E_ann
 
         pred["true"] = true.cpu().numpy()
         pred["preds"] = preds.cpu().numpy()
@@ -196,7 +196,7 @@ class NN(NNBase):
         batch_size = len(batch[BatchIdx.E_ENERGY])
         self.log("rmse/train", energy_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=batch_size)
         self.log("force_rmse/train", force_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=batch_size)
-        self.log("total_loss/train", total_loss, on_step=False, on_epoch=True, batch_size=batch_size)
+        self.log("total_rmse/train", total_loss, on_step=False, on_epoch=True, batch_size=batch_size)
         self.log("alpha", alpha, on_step=False, on_epoch=True)
         
         return total_loss
@@ -238,15 +238,15 @@ class NN(NNBase):
         Returns dict matching BNN_Forces.predict_step() format for
         compatibility with Deep Ensemble creation.
         """
-        # Energy predictions (deterministic)
+        # Energy predictions (deterministic); keep normalized units (match BNN) for analysis
         grp_descrp = batch[BatchIdx.E_DESCRP]
         grp_energy = batch[BatchIdx.E_ENERGY]
         logic_reduce = batch[BatchIdx.E_LOGIC_REDUCE]
         grp_N_atom = batch[BatchIdx.E_N_ATOM]
         
-        true = grp_energy / self.net.e_scaling + self.net.e_shift * grp_N_atom
+        true = grp_energy
         list_E_ann = self.net.forward(grp_descrp, logic_reduce)
-        preds = list_E_ann / self.net.e_scaling + self.net.e_shift * grp_N_atom
+        preds = list_E_ann
         
         pred = {}
         pred["true"] = true.cpu().numpy()

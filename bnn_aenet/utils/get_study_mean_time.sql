@@ -1,5 +1,5 @@
 /* 
-    For the whole study (results/ncmapss/studies/single_obj/studies.db)
+    For the whole study
     computes the average time of training for one model, for successful trials
 */
 SELECT STUDY_ID, avg(TIME) FROM (

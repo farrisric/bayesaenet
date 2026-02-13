@@ -153,7 +153,7 @@ def load_pretrained_net(cfg, model):
     """Load pretrained network weights for BNN or NN initialization.
     
     Looks for pretrained checkpoints at:
-        {results_dir}/{tags[0]}/pretrained/{epochs-1}/checkpoints/pretrained.ckpt
+        {task_dir}/pretrained/{tag}/{epochs-1}/checkpoints/pretrained.ckpt
     
     Args:
         cfg: Hydra configuration
@@ -163,7 +163,7 @@ def load_pretrained_net(cfg, model):
         The network with pretrained weights loaded, or a fresh network if not found
     """
     tag = cfg.tags[0] if cfg.get("tags") else "bayesian"
-    ckpt_path_dir = Path(f"{cfg.paths.results_dir}/{tag}/pretrained")
+    ckpt_path_dir = Path(f"{cfg.paths.task_dir}/pretrained/{tag}")
     
     if ckpt_path_dir.exists():
         ckpt_path = None

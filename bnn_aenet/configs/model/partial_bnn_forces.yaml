@@ -1,0 +1,7 @@
+defaults:
+  - bnn
+
+_target_: bnn_aenet.models.bnn_forces.PartialBNN_Forces
+
+name: PartialBNN_Forces
+bayesian_layers: last  # "last" | "first" | "first_last" | [0, 2] | {"Ti": "last", "O": "first"}

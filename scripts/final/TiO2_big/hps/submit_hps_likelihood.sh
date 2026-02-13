@@ -9,7 +9,7 @@
 
 BASEDIR="/home/g15farris/bin/bayesaenet"
 cd ${BASEDIR}
-mkdir -p logs/hps
+mkdir -p log/hps
 
 echo "=== TiO2_big BNN_Forces_Likelihood HPS (iqtc13) ==="
 
@@ -22,8 +22,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/hps/TiO2_big_hps_lrt_likelihood.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/hps/TiO2_big_hps_lrt_likelihood.err
+#$ -o /home/g15farris/bin/bayesaenet/log/hps/TiO2_big_hps_lrt_likelihood.out
+#$ -e /home/g15farris/bin/bayesaenet/log/hps/TiO2_big_hps_lrt_likelihood.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -67,8 +67,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/hps/TiO2_big_hps_rad_likelihood.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/hps/TiO2_big_hps_rad_likelihood.err
+#$ -o /home/g15farris/bin/bayesaenet/log/hps/TiO2_big_hps_rad_likelihood.out
+#$ -e /home/g15farris/bin/bayesaenet/log/hps/TiO2_big_hps_rad_likelihood.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"

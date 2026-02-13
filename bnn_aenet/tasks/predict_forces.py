@@ -33,6 +33,7 @@ NetAtom = None
 NN_Forces = None
 BNN_Forces = None
 PartialBNN_Forces = None
+BNN_Forces_Hetero = None
 
 
 def _ensure_datamodule():
@@ -68,6 +69,13 @@ def _ensure_partial_bnn():
     if PartialBNN_Forces is None:
         from bnn_aenet.models.bnn_forces import PartialBNN_Forces as _cls
         PartialBNN_Forces = _cls
+
+
+def _ensure_bnn_hetero():
+    global BNN_Forces_Hetero
+    if BNN_Forces_Hetero is None:
+        from bnn_aenet.models.bnn_forces_hetero import BNN_Forces_Hetero as _cls
+        BNN_Forces_Hetero = _cls
 
 
 def load_overrides(run_dir: Path) -> dict:
@@ -142,9 +150,13 @@ def load_bnn_model(ckpt_path: Path, dm, run_dir: Path, mc_eval: int = 20):
     experiment = overrides.get("experiment", "")
 
     use_partial = "partial" in experiment
+    use_hetero = "hetero" in experiment
     if use_partial:
         _ensure_partial_bnn()
         cls = PartialBNN_Forces
+    elif use_hetero:
+        _ensure_bnn_hetero()
+        cls = BNN_Forces_Hetero
     else:
         _ensure_bnn()
         cls = BNN_Forces
@@ -205,6 +217,9 @@ def load_bnn_model(ckpt_path: Path, dm, run_dir: Path, mc_eval: int = 20):
     )
     if use_partial:
         kwargs["bayesian_layers"] = bayesian_layers
+    if use_hetero:
+        kwargs["noise_hidden_size"] = int(overrides.get("model.noise_hidden_size", "15"))
+        kwargs["noise_min"] = float(overrides.get("model.noise_min", "0.01"))
     model = cls.load_from_checkpoint(str(ckpt_path), **kwargs)
     model.eval()
     return model
@@ -294,7 +309,7 @@ def save_predictions(batch_results, output_path, run_name, subset, e_scaling):
 
 def main():
     parser = argparse.ArgumentParser(description="Run predictions for force-trained models")
-    parser.add_argument("--model-type", type=str, required=True, choices=["nn", "lrt", "rad"])
+    parser.add_argument("--model-type", type=str, required=True, choices=["nn", "lrt", "rad", "lrt_hetero", "rad_hetero"])
     parser.add_argument("--runs-dir", type=str, required=True)
     parser.add_argument("--output-dir", type=str, required=True)
     parser.add_argument("--data-dir", type=str, required=True)

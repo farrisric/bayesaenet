@@ -3,16 +3,17 @@
 # NN on iqtc13, BNNs split across iqtc10 + iqtc13
 #
 # Directory convention:
-#   Predictions: bnn_aenet/logs/TiO2_small/forces_pred/{model}/
-#   SGE logs:    logs/predict/TiO2_small_pred_{model}.{out,err}
+#   Predictions: task/predict/runs/TiO2_small/{model}/
+#   SGE logs:    log/predict/TiO2_small_pred_{model}.{out,err}
 
 cd /home/g15farris/bin/bayesaenet
-mkdir -p bnn_aenet/logs/TiO2_small/forces_pred
-mkdir -p logs/predict
+mkdir -p task/predict/runs/TiO2_small
+mkdir -p log/predict
 
 echo "=== TiO2_small Prediction Jobs ==="
 
 # NN Forces - iqtc13
+# Runs-dir: task/train/runs/nn (or legacy bnn_aenet/logs/... for old runs)
 qsub << 'HEREDOC'
 #!/bin/bash
 #$ -N pred_nn_sm
@@ -21,8 +22,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/predict/TiO2_small_pred_nn.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/predict/TiO2_small_pred_nn.err
+#$ -o /home/g15farris/bin/bayesaenet/log/predict/TiO2_small_pred_nn.out
+#$ -e /home/g15farris/bin/bayesaenet/log/predict/TiO2_small_pred_nn.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -46,8 +47,8 @@ cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.predict_forces \
     --model-type nn \
-    --runs-dir bnn_aenet/logs/TiO2_small/nn_train \
-    --output-dir bnn_aenet/logs/TiO2_small/forces_pred/nn \
+    --runs-dir task/train/runs/nn \
+    --output-dir task/predict/runs/TiO2_small/nn \
     --data-dir data/TiO/train_forces.in \
     --subsets train val test \
     --device gpu \
@@ -65,8 +66,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/predict/TiO2_small_pred_lrt.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/predict/TiO2_small_pred_lrt.err
+#$ -o /home/g15farris/bin/bayesaenet/log/predict/TiO2_small_pred_lrt.out
+#$ -e /home/g15farris/bin/bayesaenet/log/predict/TiO2_small_pred_lrt.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -91,8 +92,8 @@ cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.predict_forces \
     --model-type lrt \
-    --runs-dir bnn_aenet/logs/TiO2_small/lrt_train \
-    --output-dir bnn_aenet/logs/TiO2_small/forces_pred/lrt \
+    --runs-dir task/train/runs/lrt \
+    --output-dir task/predict/runs/TiO2_small/lrt \
     --data-dir data/TiO/train_forces.in \
     --subsets train val test \
     --device gpu \
@@ -111,8 +112,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/predict/TiO2_small_pred_rad.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/predict/TiO2_small_pred_rad.err
+#$ -o /home/g15farris/bin/bayesaenet/log/predict/TiO2_small_pred_rad.out
+#$ -e /home/g15farris/bin/bayesaenet/log/predict/TiO2_small_pred_rad.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -137,8 +138,8 @@ cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.predict_forces \
     --model-type rad \
-    --runs-dir bnn_aenet/logs/TiO2_small/rad_train \
-    --output-dir bnn_aenet/logs/TiO2_small/forces_pred/rad \
+    --runs-dir task/train/runs/rad \
+    --output-dir task/predict/runs/TiO2_small/rad \
     --data-dir data/TiO/train_forces.in \
     --subsets train val test \
     --device gpu \

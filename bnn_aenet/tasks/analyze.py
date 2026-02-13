@@ -89,6 +89,7 @@ def load_run_predictions(pred_dir: Path, model_type: str, subset: str = "val"):
         # Try to load corresponding force data
         force_file = model_dir / f"{run_name}_{subset}_forces.npz"
         forces = None
+        e_scaling = None
         if force_file.exists():
             fdata = np.load(force_file)
             forces = {
@@ -96,11 +97,14 @@ def load_run_predictions(pred_dir: Path, model_type: str, subset: str = "val"):
                 "pred_forces": fdata["pred_forces"],
                 "std_forces": fdata["std_forces"],
             }
+            if "e_scaling" in fdata:
+                e_scaling = float(fdata["e_scaling"].flat[0])
 
         runs.append({
             "energy_df": energy_df,
             "forces": forces,
             "run_name": run_name,
+            "e_scaling": e_scaling,
         })
 
     return runs
@@ -156,12 +160,15 @@ def create_deep_ensemble(runs: list) -> dict:
             "std_forces": f_sigma,
         }
 
-    return {
+    result = {
         "energy_df": energy_df,
         "forces": forces,
         "run_name": f"DE_{n_models}models",
         "n_models": n_models,
     }
+    if runs[0].get("e_scaling") is not None:
+        result["e_scaling"] = runs[0]["e_scaling"]
+    return result
 
 
 def create_sub_ensembles(runs: list, n_per_ensemble: int = 5, max_ensembles: int = 20) -> list:
@@ -204,30 +211,52 @@ def create_sub_ensembles(runs: list, n_per_ensemble: int = 5, max_ensembles: int
 # ============================================================================
 
 def compute_run_metrics(run: dict, alpha: float = 0.1) -> dict:
-    """Compute metrics for a single run."""
+    """Compute metrics for a single run.
+
+    Uses per-atom energy RMSE when n_atoms available (matches TensorBoard).
+    """
     df = run["energy_df"]
     y_true = df["true"].values
     y_pred = df["preds"].values
     y_std = df["stds"].values if "stds" in df.columns else None
+    n_atoms = df["n_atoms"].values if "n_atoms" in df.columns else None
 
-    e_metrics = compute_energy_metrics(y_true, y_pred, y_std)
+    e_metrics = compute_energy_metrics(y_true, y_pred, y_std, n_atoms=n_atoms)
+    e_scaling = run.get("e_scaling")
 
-    metrics = {
-        "run_name": run["run_name"],
-        "energy_rmse": e_metrics["rmse"],
-        "energy_mae": e_metrics["mae"],
-        "energy_r2": e_metrics["r2"],
-        "energy_maxerr": e_metrics["max_err"],
-    }
+    # Store normalized energy RMSE for total_rmse computation
+    energy_rmse_norm = e_metrics["rmse"]
 
-    # Uncertainty metrics for energy
+    # Convert energy metrics to meV/atom when e_scaling is available
+    if e_scaling is not None and e_scaling > 0:
+        e_scale = 1000.0 / e_scaling
+        metrics = {
+            "run_name": run["run_name"],
+            "energy_rmse": energy_rmse_norm * e_scale,
+            "energy_mae": e_metrics["mae"] * e_scale,
+            "energy_r2": e_metrics["r2"],
+            "energy_maxerr": e_metrics["max_err"] * e_scale,
+        }
+    else:
+        metrics = {
+            "run_name": run["run_name"],
+            "energy_rmse": energy_rmse_norm,
+            "energy_mae": e_metrics["mae"],
+            "energy_r2": e_metrics["r2"],
+            "energy_maxerr": e_metrics["max_err"],
+        }
+
+    # Uncertainty metrics for energy (computed in normalized units for ratio consistency)
     if y_std is not None and np.any(y_std > 0):
         uq = compute_uncertainty_metrics(y_true, y_pred, y_std)
         metrics["energy_nll"] = uq["nll"]
         metrics["energy_ece"] = uq["ece"]
         metrics["energy_picp_95"] = uq["picp_95"]
         metrics["energy_sharpness"] = uq["sharpness"]
-        metrics["energy_mean_std"] = uq["mean_std"]
+        if e_scaling is not None and e_scaling > 0:
+            metrics["energy_mean_std"] = uq["mean_std"] * 1000.0 / e_scaling
+        else:
+            metrics["energy_mean_std"] = uq["mean_std"]
         metrics["energy_error_std_corr"] = uq["error_std_corr"]
 
     if run["forces"] is not None:
@@ -236,13 +265,28 @@ def compute_run_metrics(run: dict, alpha: float = 0.1) -> dict:
         f_std = run["forces"]["std_forces"]
 
         f_metrics = compute_force_metrics(f_true, f_pred, f_std)
-        metrics["force_rmse"] = f_metrics["rmse"]
-        metrics["force_mae"] = f_metrics["mae"]
+
+        # Normalized units for total_rmse (must match training)
+        force_rmse_norm = f_metrics["rmse"]
+        force_mae_norm = f_metrics["mae"]
+
+        # Convert to meV/Å for display when e_scaling available
+        if e_scaling is not None and e_scaling > 0:
+            scale = 1000.0 / e_scaling
+            metrics["force_rmse"] = force_rmse_norm * scale
+            metrics["force_mae"] = force_mae_norm * scale
+            metrics["force_maxerr"] = f_metrics["max_err"] * scale
+            if "mag_mae" in f_metrics:
+                metrics["force_mag_mae"] = f_metrics["mag_mae"] * scale
+                metrics["force_mag_rmse"] = f_metrics["mag_rmse"] * scale
+        else:
+            metrics["force_rmse"] = force_rmse_norm
+            metrics["force_mae"] = force_mae_norm
+            metrics["force_maxerr"] = f_metrics["max_err"]
+            if "mag_mae" in f_metrics:
+                metrics["force_mag_mae"] = f_metrics["mag_mae"]
+                metrics["force_mag_rmse"] = f_metrics["mag_rmse"]
         metrics["force_r2"] = f_metrics["r2"]
-        metrics["force_maxerr"] = f_metrics["max_err"]
-        if "mag_mae" in f_metrics:
-            metrics["force_mag_mae"] = f_metrics["mag_mae"]
-            metrics["force_mag_rmse"] = f_metrics["mag_rmse"]
         if "mean_angle_error" in f_metrics:
             metrics["force_angle_error"] = f_metrics["mean_angle_error"]
 
@@ -253,12 +297,15 @@ def compute_run_metrics(run: dict, alpha: float = 0.1) -> dict:
             metrics["force_ece"] = f_uq["ece"]
             metrics["force_picp_95"] = f_uq["picp_95"]
             metrics["force_sharpness"] = f_uq["sharpness"]
-            metrics["force_mean_std"] = f_uq["mean_std"]
+            if e_scaling is not None and e_scaling > 0:
+                metrics["force_mean_std"] = f_uq["mean_std"] * 1000.0 / e_scaling
+            else:
+                metrics["force_mean_std"] = f_uq["mean_std"]
 
-        # Combined total RMSE
-        metrics["total_rmse"] = (1 - alpha) * metrics["energy_rmse"] + alpha * metrics.get("force_rmse", 0)
+        # Combined total RMSE (normalized units for model selection, matches training)
+        metrics["total_rmse"] = (1 - alpha) * energy_rmse_norm + alpha * force_rmse_norm
     else:
-        metrics["total_rmse"] = metrics["energy_rmse"]
+        metrics["total_rmse"] = energy_rmse_norm
 
     return metrics
 
@@ -361,13 +408,27 @@ def plot_force_parity_comparison(method_data: dict, output_dir: Path, subset: st
         axes = [axes]
 
     for ax, method in zip(axes, methods):
-        forces = method_data[method]["forces"]
-        f_true = forces["true_forces"]
-        f_pred = forces["pred_forces"]
-        f_std = forces["std_forces"]
+        data = method_data[method]
+        forces = data["forces"]
+        f_true = forces["true_forces"].copy()
+        f_pred = forces["pred_forces"].copy()
+        f_std = forces["std_forces"].copy()
 
-        rmse = np.sqrt(np.mean((f_true - f_pred)**2))
-        mae = np.mean(np.abs(f_true - f_pred))
+        # Convert from normalized units to eV/Ang if e_scaling is available
+        e_scaling = data.get("e_scaling")
+        if e_scaling is not None and e_scaling > 0:
+            f_true /= e_scaling
+            f_pred /= e_scaling
+            f_std /= e_scaling
+            unit_label = r"eV/$\mathrm{\AA}$"
+            rmse = np.sqrt(np.mean((f_true - f_pred)**2))
+            mae = np.mean(np.abs(f_true - f_pred))
+            metric_str = f"RMSE: {rmse*1000:.1f} meV/\u00c5\nMAE: {mae*1000:.1f} meV/\u00c5"
+        else:
+            unit_label = "normalized"
+            rmse = np.sqrt(np.mean((f_true - f_pred)**2))
+            mae = np.mean(np.abs(f_true - f_pred))
+            metric_str = f"RMSE: {rmse:.4f}, MAE: {mae:.4f}"
 
         # Subsample for plotting
         n_pts = len(f_true)
@@ -385,14 +446,14 @@ def plot_force_parity_comparison(method_data: dict, output_dir: Path, subset: st
 
         if np.any(f_std > 0):
             sc = ax.scatter(f_true[idx], f_pred[idx], c=f_std[idx], cmap="plasma", alpha=0.4, s=10, edgecolors="none")
-            plt.colorbar(sc, ax=ax, label="Uncertainty")
+            plt.colorbar(sc, ax=ax, label=f"Uncertainty ({unit_label})")
         else:
             ax.scatter(f_true[idx], f_pred[idx], alpha=0.3, s=10, c=METHOD_COLORS.get(method, "coral"), edgecolors="none")
 
         name = METHOD_NAMES.get(method, method)
-        ax.set_title(f"{name}\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
-        ax.set_xlabel(r"True Force Component (eV/$\mathrm{\AA}$)")
-        ax.set_ylabel(r"Predicted Force Component (eV/$\mathrm{\AA}$)")
+        ax.set_title(f"{name}\n{metric_str}")
+        ax.set_xlabel(f"True Force Component ({unit_label})")
+        ax.set_ylabel(f"Predicted Force Component ({unit_label})")
         ax.set_xlim(lim)
         ax.set_ylim(lim)
         ax.set_aspect("equal")
@@ -408,12 +469,24 @@ def plot_force_components_comparison(method_data: dict, output_dir: Path, subset
     methods = [m for m in method_data if method_data[m].get("forces") is not None]
 
     for method in methods:
-        forces = method_data[method]["forces"]
-        f_true = forces["true_forces"].flatten()
-        f_pred = forces["pred_forces"].flatten()
+        data = method_data[method]
+        forces = data["forces"]
+        f_true = forces["true_forces"].flatten().copy()
+        f_pred = forces["pred_forces"].flatten().copy()
 
         if len(f_true) % 3 != 0:
             continue
+
+        # Convert from normalized units to eV/Ang if e_scaling is available
+        e_scaling = data.get("e_scaling")
+        if e_scaling is not None and e_scaling > 0:
+            f_true /= e_scaling
+            f_pred /= e_scaling
+            unit_label = r"eV/$\mathrm{\AA}$"
+            rmse_fmt = lambda r: f"{r*1000:.1f} meV/\u00c5"
+        else:
+            unit_label = "normalized"
+            rmse_fmt = lambda r: f"{r:.4f}"
 
         fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
         components = ["x", "y", "z"]
@@ -436,9 +509,9 @@ def plot_force_components_comparison(method_data: dict, output_dir: Path, subset
             n = len(ct)
             idx = np.random.choice(n, min(n, 5000), replace=False) if n > 5000 else np.arange(n)
             axes[i].scatter(ct[idx], cp[idx], alpha=0.4, s=10, c=color, edgecolors="none")
-            axes[i].set_title(f"F_{comp}: RMSE={rmse:.4f}")
-            axes[i].set_xlabel(f"True F$_{comp}$" + r" (eV/$\mathrm{\AA}$)")
-            axes[i].set_ylabel(f"Pred F$_{comp}$" + r" (eV/$\mathrm{\AA}$)")
+            axes[i].set_title(f"F_{comp}: RMSE={rmse_fmt(rmse)}")
+            axes[i].set_xlabel(f"True F$_{comp}$" + f" ({unit_label})")
+            axes[i].set_ylabel(f"Pred F$_{comp}$" + f" ({unit_label})")
             axes[i].set_xlim(lim)
             axes[i].set_ylim(lim)
             axes[i].set_aspect("equal")
@@ -573,10 +646,21 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
         axes = [axes]
 
     for ax, method in zip(axes, methods_with_f_uq):
-        forces = method_data[method]["forces"]
-        f_true = forces["true_forces"]
-        f_pred = forces["pred_forces"]
-        f_std = forces["std_forces"]
+        data = method_data[method]
+        forces = data["forces"]
+        f_true = forces["true_forces"].copy()
+        f_pred = forces["pred_forces"].copy()
+        f_std = forces["std_forces"].copy()
+
+        # Convert from normalized units to eV/Ang if e_scaling is available
+        e_scaling = data.get("e_scaling")
+        if e_scaling is not None and e_scaling > 0:
+            f_true /= e_scaling
+            f_pred /= e_scaling
+            f_std /= e_scaling
+            unit_label = r"eV/$\mathrm{\AA}$"
+        else:
+            unit_label = "normalized"
 
         errors = np.abs(f_true - f_pred)
         # Subsample
@@ -599,8 +683,8 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
 
         name = METHOD_NAMES.get(method, method)
         ax.set_title(f"{name}\nSpearman r: {spearman_r:.3f}")
-        ax.set_xlabel(r"Predicted Uncertainty (eV/$\mathrm{\AA}$)")
-        ax.set_ylabel(r"|Error| (eV/$\mathrm{\AA}$)")
+        ax.set_xlabel(f"Predicted Uncertainty ({unit_label})")
+        ax.set_ylabel(f"|Error| ({unit_label})")
 
     fig.suptitle(f"Forces: Error vs Uncertainty ({subset})", fontsize=14, y=1.02)
     fig.tight_layout()
@@ -616,10 +700,22 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
 
         n_bins = 10
         for ax, method in zip(axes, methods_with_f_uq):
-            forces = method_data[method]["forces"]
-            f_true = forces["true_forces"]
-            f_pred = forces["pred_forces"]
-            f_std = forces["std_forces"]
+            data = method_data[method]
+            forces = data["forces"]
+            f_true = forces["true_forces"].copy()
+            f_pred = forces["pred_forces"].copy()
+            f_std = forces["std_forces"].copy()
+
+            # Convert from normalized units to eV/Ang if e_scaling is available
+            e_scaling = data.get("e_scaling")
+            if e_scaling is not None and e_scaling > 0:
+                f_true /= e_scaling
+                f_pred /= e_scaling
+                f_std /= e_scaling
+                unit_label = r"eV/$\mathrm{\AA}$"
+            else:
+                unit_label = "normalized"
+
             errors = np.abs(f_true - f_pred)
 
             # Bin by uncertainty quantiles
@@ -657,8 +753,8 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
             spearman_r, _ = stats.spearmanr(f_std, errors) if np.std(f_std) > 0 else (0, 1)
             name = METHOD_NAMES.get(method, method)
             ax.set_title(f"{name}\nSpearman r: {spearman_r:.3f}")
-            ax.set_xlabel(r"Predicted Uncertainty (eV/$\mathrm{\AA}$)")
-            ax.set_ylabel(r"Mean |Error| (eV/$\mathrm{\AA}$)")
+            ax.set_xlabel(f"Predicted Uncertainty ({unit_label})")
+            ax.set_ylabel(f"Mean |Error| ({unit_label})")
             ax.legend(fontsize=8, loc="upper left")
 
         fig.suptitle(f"Forces: Binned Error vs Uncertainty ({subset})", fontsize=14, y=1.02)
@@ -826,12 +922,27 @@ def plot_single_force_parity(data: dict, method: str, output_dir: Path, subset: 
     if data.get("forces") is None:
         return
     forces = data["forces"]
-    f_true = forces["true_forces"]
-    f_pred = forces["pred_forces"]
-    f_std = forces["std_forces"]
+    f_true = forces["true_forces"].copy()
+    f_pred = forces["pred_forces"].copy()
+    f_std = forces["std_forces"].copy()
 
-    rmse = np.sqrt(np.mean((f_true - f_pred)**2))
-    mae = np.mean(np.abs(f_true - f_pred))
+    # Convert from normalized units to eV/Å if e_scaling is available
+    e_scaling = data.get("e_scaling")
+    if e_scaling is not None and e_scaling > 0:
+        f_true = f_true / e_scaling
+        f_pred = f_pred / e_scaling
+        f_std = f_std / e_scaling
+        unit_label = r"eV/$\mathrm{\AA}$"
+        rmse = np.sqrt(np.mean((f_true - f_pred)**2))
+        mae = np.mean(np.abs(f_true - f_pred))
+        rmse_mev = rmse * 1000
+        mae_mev = mae * 1000
+        metric_str = f"RMSE: {rmse_mev:.1f} meV/Å, MAE: {mae_mev:.1f} meV/Å"
+    else:
+        unit_label = "normalized"
+        rmse = np.sqrt(np.mean((f_true - f_pred)**2))
+        mae = np.mean(np.abs(f_true - f_pred))
+        metric_str = f"RMSE: {rmse:.4f}, MAE: {mae:.4f}"
 
     fig, ax = plt.subplots(figsize=(6, 6))
     n_pts = len(f_true)
@@ -845,14 +956,14 @@ def plot_single_force_parity(data: dict, method: str, output_dir: Path, subset: 
 
     if np.any(f_std > 0):
         sc = ax.scatter(f_true[idx], f_pred[idx], c=f_std[idx], cmap="plasma", alpha=0.4, s=10, edgecolors="none")
-        plt.colorbar(sc, ax=ax, label="Uncertainty (std)")
+        plt.colorbar(sc, ax=ax, label=f"Uncertainty ({unit_label})")
     else:
         ax.scatter(f_true[idx], f_pred[idx], alpha=0.3, s=10, c=METHOD_COLORS.get(method, "coral"), edgecolors="none")
 
     name = METHOD_NAMES.get(method, method)
-    ax.set_title(f"{name} ({subset})\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
-    ax.set_xlabel(r"True Force Component (eV/$\mathrm{\AA}$)")
-    ax.set_ylabel(r"Predicted Force Component (eV/$\mathrm{\AA}$)")
+    ax.set_title(f"{name} ({subset})\n{metric_str}")
+    ax.set_xlabel(f"True Force Component ({unit_label})")
+    ax.set_ylabel(f"Predicted Force Component ({unit_label})")
     ax.set_xlim(lim)
     ax.set_ylim(lim)
     ax.set_aspect("equal")
@@ -865,10 +976,21 @@ def plot_single_force_components(data: dict, method: str, output_dir: Path, subs
     """Plot x, y, z force components for a single method."""
     if data.get("forces") is None:
         return
-    f_true = data["forces"]["true_forces"].flatten()
-    f_pred = data["forces"]["pred_forces"].flatten()
+    f_true = data["forces"]["true_forces"].flatten().copy()
+    f_pred = data["forces"]["pred_forces"].flatten().copy()
     if len(f_true) % 3 != 0:
         return
+
+    # Convert from normalized units to eV/Ang if e_scaling is available
+    e_scaling = data.get("e_scaling")
+    if e_scaling is not None and e_scaling > 0:
+        f_true /= e_scaling
+        f_pred /= e_scaling
+        unit_label = r"eV/$\mathrm{\AA}$"
+        rmse_fmt = lambda r: f"{r*1000:.1f} meV/\u00c5"
+    else:
+        unit_label = "normalized"
+        rmse_fmt = lambda r: f"{r:.4f}"
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
     components = ["x", "y", "z"]
@@ -888,9 +1010,9 @@ def plot_single_force_components(data: dict, method: str, output_dir: Path, subs
         n = len(ct)
         idx = np.random.choice(n, min(n, 5000), replace=False) if n > 5000 else np.arange(n)
         axes[i].scatter(ct[idx], cp[idx], alpha=0.4, s=10, c=color, edgecolors="none")
-        axes[i].set_title(f"F_{comp}: RMSE={rmse:.4f}")
-        axes[i].set_xlabel(f"True F$_{comp}$" + r" (eV/$\mathrm{\AA}$)")
-        axes[i].set_ylabel(f"Pred F$_{comp}$" + r" (eV/$\mathrm{\AA}$)")
+        axes[i].set_title(f"F_{comp}: RMSE={rmse_fmt(rmse)}")
+        axes[i].set_xlabel(f"True F$_{comp}$" + f" ({unit_label})")
+        axes[i].set_ylabel(f"Pred F$_{comp}$" + f" ({unit_label})")
         axes[i].set_xlim(lim)
         axes[i].set_ylim(lim)
         axes[i].set_aspect("equal")
@@ -934,10 +1056,21 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
 
     # Forces
     if data.get("forces") is not None:
-        f_std = data["forces"]["std_forces"]
+        f_std = data["forces"]["std_forces"].copy()
         if np.any(f_std > 0):
-            f_true = data["forces"]["true_forces"]
-            f_pred = data["forces"]["pred_forces"]
+            f_true = data["forces"]["true_forces"].copy()
+            f_pred = data["forces"]["pred_forces"].copy()
+
+            # Convert from normalized units to eV/Ang if e_scaling is available
+            e_scaling = data.get("e_scaling")
+            if e_scaling is not None and e_scaling > 0:
+                f_true /= e_scaling
+                f_pred /= e_scaling
+                f_std /= e_scaling
+                unit_label = r"eV/$\mathrm{\AA}$"
+            else:
+                unit_label = "normalized"
+
             errors = np.abs(f_true - f_pred)
             n_pts = len(errors)
             idx = np.random.choice(n_pts, min(n_pts, 5000), replace=False) if n_pts > 5000 else np.arange(n_pts)
@@ -954,8 +1087,8 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
                     label=f"fit (slope={slope:.1f})")
             ax.legend(fontsize=8, loc="upper left")
             ax.set_title(f"{name} - Forces ({subset})\nSpearman r: {spearman_r:.3f}")
-            ax.set_xlabel(r"Predicted Uncertainty (eV/$\mathrm{\AA}$)")
-            ax.set_ylabel(r"|Error| (eV/$\mathrm{\AA}$)")
+            ax.set_xlabel(f"Predicted Uncertainty ({unit_label})")
+            ax.set_ylabel(f"|Error| ({unit_label})")
             fig.tight_layout()
             fig.savefig(output_dir / f"force_error_vs_uq_{subset}.png")
             plt.close(fig)
@@ -983,8 +1116,8 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
             max_val = max(bin_means_x.max(), bin_means_y.max())
             ax.plot([0, max_val], [0, max_val], "k--", alpha=0.3, label="y = x")
             ax.set_title(f"{name} - Forces ({subset})\nSpearman r: {spearman_r:.3f}")
-            ax.set_xlabel(r"Predicted Uncertainty (eV/$\mathrm{\AA}$)")
-            ax.set_ylabel(r"Mean |Error| (eV/$\mathrm{\AA}$)")
+            ax.set_xlabel(f"Predicted Uncertainty ({unit_label})")
+            ax.set_ylabel(f"Mean |Error| ({unit_label})")
             ax.legend(fontsize=8, loc="upper left")
             fig.tight_layout()
             fig.savefig(output_dir / f"force_error_vs_uq_binned_{subset}.png")
@@ -1314,6 +1447,9 @@ def main():
     parser.add_argument("--train-dir", type=str, default=None,
                        help="Directory with training logs (for training curves). "
                             "If not set, inferred from pred-dir as ../train")
+    parser.add_argument("--e-scaling", type=float, default=None,
+                       help="Energy scaling factor (eV/atom) for converting force RMSE to meV/Å. "
+                            "If not set, loaded from npz when available (added in newer predictions).")
 
     args = parser.parse_args()
 
@@ -1361,6 +1497,13 @@ def main():
         nn_runs = load_run_predictions(pred_dir, "nn", subset)
         lrt_runs = load_run_predictions(pred_dir, "lrt", subset)
         rad_runs = load_run_predictions(pred_dir, "rad", subset)
+
+        # Fill e_scaling from --e-scaling for runs missing it (backward compat)
+        if args.e_scaling is not None:
+            for runs in (nn_runs, lrt_runs, rad_runs):
+                for r in runs:
+                    if r.get("e_scaling") is None:
+                        r["e_scaling"] = args.e_scaling
 
         print(f"  NN: {len(nn_runs)} runs")
         print(f"  LRT: {len(lrt_runs)} runs")
@@ -1447,6 +1590,7 @@ def main():
                     "n_atoms": nn_runs[0]["energy_df"]["n_atoms"].values,
                 }),
                 "forces": None,
+                "e_scaling": nn_runs[0].get("e_scaling"),
             }
             if all(r["forces"] is not None for r in nn_runs):
                 nn_mean_data["forces"] = {

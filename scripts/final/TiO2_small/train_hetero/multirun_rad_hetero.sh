@@ -1,12 +1,12 @@
 #!/bin/bash
-#$ -N multi_lrt
-#$ -q iqtc10.q
+#$ -N rad_het
+#$ -q iqtc13.q
 #$ -l iqtcgpu=1
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/log/multirun/TiO2_small_lrt.out
-#$ -e /home/g15farris/bin/bayesaenet/log/multirun/TiO2_small_lrt.err
+#$ -o /home/g15farris/bin/bayesaenet/log/multirun/TiO2_small_rad_hetero.out
+#$ -e /home/g15farris/bin/bayesaenet/log/multirun/TiO2_small_rad_hetero.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -29,40 +29,40 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
-# Best LRT HPS parameters
-LR=0.0003673106686620573
-BS=512
-MC=1
-PRIOR_SCALE=0.15633991783475454
-Q_SCALE=3.176106366029204e-05
-OBS_SCALE=0.6697686182057512
-SCALE_FORCE=0.8809934736485561
+# Best RAD HPS parameters (same as original; obs_scale/scale_force not
+# used by the hetero model -- NoiseNet predicts all noise)
+LR=0.0007707725310702081
+BS=256
+MC=2
+PRIOR_SCALE=0.21380042973105887
+Q_SCALE=1.4513837427658247e-05
 
 SEEDS=(121958 671155 131932 365838 259178 644167 110268 732180 54886 137337)
 
 for i in $(seq 0 9); do
-    echo "=== Starting LRT run $i with seed ${SEEDS[$i]} at $(date) ==="
+    echo "=== Starting RAD hetero run $i with seed ${SEEDS[$i]} at $(date) ==="
     python -m bnn_aenet.tasks.train \
-        experiment=bnn_lrt \
+        experiment=bnn_rad_hetero \
         datamodule=TiO_Forces_Data20 \
         trainer.accelerator=gpu \
         trainer.devices=1 \
+        +trainer.precision=16-mixed \
         trainer.max_epochs=50000 \
         dataset=TiO2_small \
         task_name=train \
-        run_name=lrt_train_${i} \
+        run_name=rad_hetero_train_${i} \
         datamodule.batch_size=${BS} \
         model.lr=${LR} \
         model.mc_samples_train=${MC} \
         model.prior_scale=${PRIOR_SCALE} \
         model.q_scale=${Q_SCALE} \
-        model.obs_scale=${OBS_SCALE} \
         model.pretrain_epochs=0 \
-        model.scale_force=${SCALE_FORCE} \
+        model.noise_hidden_size=15 \
+        model.noise_min=0.01 \
         callbacks.model_checkpoint.monitor=total_rmse/val \
         callbacks.early_stopping.monitor=total_rmse/val \
         callbacks.early_stopping.patience=500 \
         seed=${SEEDS[$i]} \
-        'tags=["TiO2_small", "lrt", "train"]'
-    echo "=== Finished LRT run $i at $(date) ==="
+        'tags=["TiO2_small", "rad", "heteroscedastic", "train"]'
+    echo "=== Finished RAD hetero run $i at $(date) ==="
 done

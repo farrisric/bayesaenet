@@ -5,8 +5,8 @@
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/multirun/TiO2_small_nn.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/multirun/TiO2_small_nn.err
+#$ -o /home/g15farris/bin/bayesaenet/log/multirun/TiO2_small_nn.out
+#$ -e /home/g15farris/bin/bayesaenet/log/multirun/TiO2_small_nn.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -38,13 +38,14 @@ SEEDS=(121958 671155 131932 365838 259178 644167 110268 732180 54886 137337)
 for i in $(seq 0 9); do
     echo "=== Starting NN run $i with seed ${SEEDS[$i]} at $(date) ==="
     python -m bnn_aenet.tasks.train \
-        experiment=nn_forces \
+        experiment=nn \
         datamodule=TiO_Forces_Data20 \
         trainer.accelerator=gpu \
         trainer.devices=1 \
         +trainer.precision=16-mixed \
         trainer.max_epochs=50000 \
-        task_name=nn_train \
+        dataset=TiO2_small \
+        task_name=train \
         run_name=nn_train_${i} \
         datamodule.batch_size=${BS} \
         model.optimizer.lr=${LR} \

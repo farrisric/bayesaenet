@@ -9,7 +9,7 @@
 
 BASEDIR="/home/g15farris/bin/bayesaenet"
 cd ${BASEDIR}
-mkdir -p logs/multirun
+mkdir -p log/multirun
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -27,4 +27,4 @@ J3=$(qsub "${SCRIPT_DIR}/multirun_lrt.sh")
 echo "  LRT: $J3 (iqtc10)"
 
 echo ""
-echo "All jobs submitted. Logs: logs/multirun/TiO2_small_{nn,rad,lrt}.{out,err}"
+echo "All jobs submitted. Logs: log/multirun/TiO2_small_{nn,rad,lrt}.{out,err}"

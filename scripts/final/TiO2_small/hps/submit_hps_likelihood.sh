@@ -4,12 +4,12 @@
 # Note: FO (Flipout) incompatible - input-dependent reparameterization fails with trace/replay
 #
 # Directory convention:
-#   Optuna DBs: bnn_aenet/results/TiO2_small/{study_name}.db
-#   SGE logs:   logs/hps/TiO2_small_hps_{model}_likelihood.{out,err}
+#   Optuna DBs: bnn_aenet/logs/TiO2_small/{study_name}.db
+#   SGE logs:   log/hps/TiO2_small_hps_{model}_likelihood.{out,err}
 
 BASEDIR="/home/g15farris/bin/bayesaenet"
 cd ${BASEDIR}
-mkdir -p logs/hps
+mkdir -p log/hps
 
 echo "=== TiO2_small BNN_Forces_Likelihood HPS (iqtc13) ==="
 
@@ -22,8 +22,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/hps/TiO2_small_hps_lrt_likelihood.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/hps/TiO2_small_hps_lrt_likelihood.err
+#$ -o /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_lrt_likelihood.out
+#$ -e /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_lrt_likelihood.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -49,6 +49,7 @@ cd /home/g15farris/bin/bayesaenet
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=bnn_lrt \
     datamodule=TiO_Forces_Data20 \
+    dataset=TiO2_small \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     hpsearch.results_subdir=TiO2_small \
@@ -67,8 +68,8 @@ qsub << 'HEREDOC'
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/hps/TiO2_small_hps_rad_likelihood.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/hps/TiO2_small_hps_rad_likelihood.err
+#$ -o /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_rad_likelihood.out
+#$ -e /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_rad_likelihood.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -94,6 +95,7 @@ cd /home/g15farris/bin/bayesaenet
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=bnn_rad \
     datamodule=TiO_Forces_Data20 \
+    dataset=TiO2_small \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     +trainer.precision=16-mixed \

@@ -756,6 +756,9 @@ def main():
                             "bnn_aenet/logs/rad_train",
                         ],
                         help="Directories containing exec_time.log files")
+    parser.add_argument("--e-scaling", type=float, default=None,
+                       help="Energy scaling factor (eV/atom) for force RMSE to meV/Å. "
+                            "If not set, loaded from npz when available.")
     parser.add_argument("--alpha", type=float, default=0.1,
                         help="Alpha for total_rmse")
     args = parser.parse_args()
@@ -781,6 +784,11 @@ def main():
     nn_runs = load_run_predictions(pred_dir, "nn", subset)
     lrt_runs = load_run_predictions(pred_dir, "lrt", subset)
     rad_runs = load_run_predictions(pred_dir, "rad", subset)
+    if args.e_scaling is not None:
+        for runs in (nn_runs, lrt_runs, rad_runs):
+            for r in runs:
+                if r.get("e_scaling") is None:
+                    r["e_scaling"] = args.e_scaling
     print(f"  NN: {len(nn_runs)}  LRT: {len(lrt_runs)}  RAD: {len(rad_runs)}")
 
     # ---- Build method_data ----
@@ -803,6 +811,8 @@ def main():
             "forces": None,
             "run_name": "nn_mean",
         }
+        if nn_runs[0].get("e_scaling") is not None:
+            nn_mean["e_scaling"] = nn_runs[0]["e_scaling"]
         if all(r["forces"] is not None for r in nn_runs):
             nn_mean["forces"] = {
                 "true_forces": nn_runs[0]["forces"]["true_forces"],

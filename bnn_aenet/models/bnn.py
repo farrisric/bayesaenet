@@ -33,7 +33,7 @@ import contextlib
 import numpy as np
 
 from .utils import param_store_to, remove_dict_entry_startswith, weights_init, get_rmse_atom
-from ..results.metrics import sharpness, rms_calibration_error
+from ..utils.metrics import sharpness, rms_calibration_error
 from ..datamodule.aenet.batch_constants import BatchIdx
 
 

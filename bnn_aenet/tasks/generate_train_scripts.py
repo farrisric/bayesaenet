@@ -112,8 +112,8 @@ def generate_nn_script(params: dict, dataset: str, output_dir: Path) -> Path:
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/multirun/{dataset}_nn.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/multirun/{dataset}_nn.err
+#$ -o {PROJECT_ROOT.as_posix()}/log/multirun/{dataset}_nn.out
+#$ -e {PROJECT_ROOT.as_posix()}/log/multirun/{dataset}_nn.err
 
 {CONDA_BLOCK}
 
@@ -136,7 +136,8 @@ for i in $(seq 0 9); do
         trainer.accelerator=gpu \\
         trainer.devices=1 \\
 {precision_line}        trainer.max_epochs=50000 \\
-        task_name=nn_train \\
+        dataset={dataset} \\
+        task_name=train \\
         run_name=nn_train_${{i}} \\
         datamodule.batch_size=${{BS}} \\
         model.optimizer.lr=${{LR}} \\
@@ -182,8 +183,8 @@ def generate_bnn_script(method: str, params: dict, dataset: str, output_dir: Pat
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/logs/multirun/{dataset}_{display_name}.out
-#$ -e /home/g15farris/bin/bayesaenet/logs/multirun/{dataset}_{display_name}.err
+#$ -o {PROJECT_ROOT.as_posix()}/log/multirun/{dataset}_{display_name}.out
+#$ -e {PROJECT_ROOT.as_posix()}/log/multirun/{dataset}_{display_name}.err
 
 {CONDA_BLOCK}
 
@@ -213,7 +214,8 @@ for i in $(seq 0 9); do
         trainer.accelerator=gpu \\
         trainer.devices=1 \\
 {precision_line}        trainer.max_epochs=50000 \\
-        task_name={display_name}_train \\
+        dataset={dataset} \\
+        task_name=train \\
         run_name={display_name}_train_${{i}} \\
         datamodule.batch_size=${{BS}} \\
         model.lr=${{LR}} \\
@@ -241,12 +243,12 @@ def main():
     )
     parser.add_argument("--dataset", required=True, help="Dataset name (e.g., TiO2_small, TiO2_big)")
     parser.add_argument("--output-dir", required=True, help="Directory to write training scripts")
-    parser.add_argument("--results-dir", default=None, help="Path to results dir (default: bnn_aenet/results)")
+    parser.add_argument("--results-dir", default=None, help="Path to results dir (default: bnn_aenet/logs)")
     parser.add_argument("--methods", nargs="+", default=["nn", "lrt", "rad"],
                         help="Methods to generate scripts for")
     args = parser.parse_args()
 
-    results_dir = Path(args.results_dir) if args.results_dir else PROJECT_ROOT / "bnn_aenet" / "results"
+    results_dir = Path(args.results_dir) if args.results_dir else PROJECT_ROOT / "bnn_aenet" / "logs"
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 

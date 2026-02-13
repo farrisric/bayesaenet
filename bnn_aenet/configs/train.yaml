@@ -19,6 +19,8 @@ defaults:
   # debugging config (enable through command line, e.g. `python train.py debug=default)
   - debug: null
 
+# Dataset name for output path: bnn_aenet/logs/{dataset}/train/
+dataset: TiO2_small
 task_name: train
 run_name: ${now:%Y-%m-%d_%H-%M-%S}  # Auto-timestamp for unique runs
 tags: ["dev"]

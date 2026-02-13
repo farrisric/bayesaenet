@@ -1,0 +1,7 @@
+# @package _global_
+
+defaults:
+  - TiO
+
+dataset: TiO2_small
+runs_dir: ${paths.task_dir}/train/runs

@@ -1,0 +1,30 @@
+# @package _global_
+# Partial BNN (LRT): only last layer Bayesian, with force training
+
+defaults:
+  - override /model: partial_bnn_forces
+  - override /callbacks: default
+  - override /trainer: default
+
+tags: ["bayesian", "lrt", "partial"]
+
+seed: 12345
+
+trainer:
+  min_epochs: 5000
+  max_epochs: 50000
+
+callbacks:
+  model_checkpoint:
+    monitor: total_rmse/val
+  early_stopping:
+    monitor: total_rmse/val
+    patience: 100
+
+model:
+  name: lrt_partial
+  fit_context: lrt
+  guide: normal
+  bayesian_layers: last  # or "first", "first_last"
+  net:
+    alpha: 0.1

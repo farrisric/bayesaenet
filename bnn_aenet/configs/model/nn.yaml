@@ -3,8 +3,8 @@ defaults:
 
 _target_: bnn_aenet.models.nn.NN
 
-# Model name
-name: NN
+# Model name (used for output dir: task/train/runs/{name}/)
+name: nn
 
 optimizer:
   _target_: torch.optim.Adam
