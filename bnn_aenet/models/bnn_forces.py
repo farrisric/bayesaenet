@@ -341,9 +341,10 @@ class BNN_Forces(BNN):
         self.log("elbo/val", elbo, on_step=False, on_epoch=True, batch_size=len(y))
 
     def on_test_start(self) -> None:
-        """Initialize BNN for testing."""
-        self.define_bnn()
-        param_store_to(self.device)
+        """Initialize BNN for testing (skip if already defined from training)."""
+        if not hasattr(self, "bnn_net") or self.bnn_net is None:
+            self.define_bnn()
+            param_store_to(self.device)
 
     def test_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
         """Test step with energy, force, and total RMSE metrics."""
@@ -361,7 +362,9 @@ class BNN_Forces(BNN):
                 loc = loc.unsqueeze(-1)
 
         rmse = get_rmse_atom(loc.squeeze(-1), y, n_atoms)  # normalized units
-        force_rmse = self._compute_force_rmse(batch)
+        # Force RMSE needs autograd; exit inference_mode (set by Lightning test)
+        with torch.inference_mode(False):
+            force_rmse = self._compute_force_rmse(batch)
         alpha = getattr(self.net, "alpha", 0.1)
         if hasattr(alpha, "item"):
             alpha = alpha.item()
