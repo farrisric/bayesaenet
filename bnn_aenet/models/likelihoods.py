@@ -9,28 +9,43 @@ import torch
 import pyro
 import pyro.distributions as dist
 import pyro.poutine as poutine
+from torch.distributions import constraints
 
 from ..datamodule.aenet.batch_constants import BatchIdx
 
 
-def make_energy_force_model(bnn, scale_energy, scale_force, dataset_size):
+def make_energy_force_model(
+    bnn, scale_energy, scale_force, dataset_size, learn_noise=False,
+):
     """
     Create a Pyro model function for joint energy+force likelihood.
-    
+
     Returns a callable model(batch) that:
     - Uses guided_forward for energy (samples weights)
     - Uses forward_F for forces (same weights)
     - Adds pyro.sample for both energy and force observations
-    
+
     Log p(E, F | theta) = log p(E | theta) + log p(F | theta)
     with Gaussian observation noise.
+
+    Args:
+        bnn: The BNN_Forces model instance.
+        scale_energy: Initial energy observation noise scale.
+        scale_force: Initial force observation noise scale.
+        dataset_size: Total training set size (for minibatch scaling).
+        learn_noise: If True, ``scale_energy`` and ``scale_force`` become
+            learnable ``pyro.param`` values (constrained positive) that are
+            optimized jointly with the guide parameters via SVI.  The learned
+            values are stored in ``bnn.learned_scale_energy`` and
+            ``bnn.learned_scale_force`` after each forward pass for use at
+            prediction time.
     """
     def model(batch):
         # Energy data
         E_descrp = batch[BatchIdx.E_DESCRP]
         E_logic_reduce = batch[BatchIdx.E_LOGIC_REDUCE]
         E_obs = batch[BatchIdx.E_ENERGY]
-        
+
         # Force data (may be None)
         F_descrp = batch[BatchIdx.F_DESCRP]
         F_forces = batch[BatchIdx.F_FORCES]
@@ -39,14 +54,34 @@ def make_energy_force_model(bnn, scale_energy, scale_force, dataset_size):
         F_sfderiv_j = batch[BatchIdx.F_SFDERIV_J]
         F_indices = batch[BatchIdx.F_INDICES]
         F_indices_i = batch[BatchIdx.F_INDICES_I]
-        
+
         has_force = (
             F_descrp is not None
             and F_forces is not None
             and not (isinstance(F_descrp, list) and len(F_descrp) == 0)
         )
-        
+
+        # Observation noise scales (fixed or learned)
+        if learn_noise:
+            obs_scale_energy = pyro.param(
+                "obs_scale_energy",
+                torch.tensor(float(scale_energy)),
+                constraint=constraints.positive,
+            )
+            obs_scale_force = pyro.param(
+                "obs_scale_force",
+                torch.tensor(float(scale_force)),
+                constraint=constraints.positive,
+            )
+            # Expose learned values on the BNN for predict_step access
+            bnn.learned_scale_energy = obs_scale_energy.item()
+            bnn.learned_scale_force = obs_scale_force.item()
+        else:
+            obs_scale_energy = scale_energy
+            obs_scale_force = scale_force
+
         # E_pred from BNN - trace to get weight samples; replay for E_pred and F_pred (avoid duplicate sites)
+        # SVI runs guide first, then model with guide replayed; tracing bnn_net captures those values.
         energy_trace = poutine.trace(bnn.bnn_net).get_trace(E_descrp, E_logic_reduce)
         weight_sites = energy_trace.stochastic_nodes
         with poutine.block(hide=weight_sites), poutine.replay(trace=energy_trace):
@@ -57,7 +92,7 @@ def make_energy_force_model(bnn, scale_energy, scale_force, dataset_size):
         with pyro.plate("energy_plate", len(E_obs)):
             pyro.sample(
                 "energy_obs",
-                dist.Normal(E_pred.squeeze(-1), scale_energy).to_event(0),
+                dist.Normal(E_pred.squeeze(-1), obs_scale_energy).to_event(0),
                 obs=E_obs,
             )
 
@@ -69,7 +104,7 @@ def make_energy_force_model(bnn, scale_energy, scale_force, dataset_size):
                 if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0
                 else 0
             )
-            
+
             F_descrp_grad = [d.clone().detach().float().requires_grad_(True) for d in F_descrp]
             F_sfderiv_i_f = [s.float() for s in F_sfderiv_i]
             F_sfderiv_j_f = [s.float() for s in F_sfderiv_j]
@@ -86,7 +121,7 @@ def make_energy_force_model(bnn, scale_energy, scale_force, dataset_size):
                     net.input_size,
                     max_nnb,
                 )
-            
+
             F_obs_flat = F_forces.float().flatten()
             F_pred_flat = F_pred.flatten()
 
@@ -94,9 +129,9 @@ def make_energy_force_model(bnn, scale_energy, scale_force, dataset_size):
             with pyro.plate("force_plate", len(F_obs_flat)):
                 pyro.sample(
                     "force_obs",
-                    dist.Normal(F_pred_flat, scale_force).to_event(0),
+                    dist.Normal(F_pred_flat, obs_scale_force).to_event(0),
                     obs=F_obs_flat,
                 )
-        
+
         return E_pred
     return model

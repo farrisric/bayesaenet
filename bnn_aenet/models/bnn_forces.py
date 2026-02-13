@@ -60,6 +60,7 @@ class BNN_Forces(BNN):
         obs_scale,
         scale_force: float = 0.1,
         grad_clip_val: float = 1.0,
+        learn_noise: bool = False,
         name: str = "BNN_Forces",
     ):
         super().__init__(
@@ -69,6 +70,10 @@ class BNN_Forces(BNN):
         )
         self.save_hyperparameters(logger=False, ignore=["net"])
         self.scale_force = scale_force
+        self.learn_noise = learn_noise
+        # Will be populated during training if learn_noise=True
+        self.learned_scale_energy = None
+        self.learned_scale_force = None
 
     def define_bnn(self):
         if self.hparams.pretrain_epochs > 0:
@@ -113,11 +118,13 @@ class BNN_Forces(BNN):
 
         scale_energy = self.hparams.obs_scale
         scale_force = getattr(self, "scale_force", 0.1)
+        learn_noise = getattr(self, "learn_noise", False)
         self._model_fn = make_energy_force_model(
             self,
             scale_energy=scale_energy,
             scale_force=scale_force,
             dataset_size=self.hparams.dataset_size,
+            learn_noise=learn_noise,
         )
 
     def model(self, batch):
@@ -196,6 +203,12 @@ class BNN_Forces(BNN):
         self.log("force_rmse/train", force_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y))
         self.log("total_rmse/train", total_rmse, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("elbo/train", elbo, on_step=False, on_epoch=True, batch_size=len(y))
+
+        # Log learned noise scales if learn_noise is enabled
+        if getattr(self, "learn_noise", False) and self.learned_scale_force is not None:
+            self.log("obs_scale_force/train", self.learned_scale_force, on_step=False, on_epoch=True, batch_size=len(y))
+        if getattr(self, "learn_noise", False) and self.learned_scale_energy is not None:
+            self.log("obs_scale_energy/train", self.learned_scale_energy, on_step=False, on_epoch=True, batch_size=len(y))
 
     # ------------------------------------------------------------------
     # Force helpers using poutine.replay
@@ -362,6 +375,12 @@ class BNN_Forces(BNN):
         """Initialize BNN for prediction."""
         self.define_bnn()
         param_store_to(self.device)
+        # Retrieve learned noise scales from param store (if trained with learn_noise=True)
+        ps = pyro.get_param_store()
+        if "obs_scale_force" in ps:
+            self.learned_scale_force = ps["obs_scale_force"].item()
+        if "obs_scale_energy" in ps:
+            self.learned_scale_energy = ps["obs_scale_energy"].item()
 
     def predict_step(
         self,
@@ -421,7 +440,11 @@ class BNN_Forces(BNN):
 
             # Total predictive uncertainty = epistemic (MC weight std) + aleatoric (obs noise)
             # σ_total = sqrt(σ_epistemic² + σ_aleatoric²)
-            aleatoric_std = getattr(self, "scale_force", self.hparams.scale_force)
+            # Use learned scale_force if available (from learn_noise=True), else fixed.
+            if getattr(self, "learned_scale_force", None) is not None:
+                aleatoric_std = self.learned_scale_force
+            else:
+                aleatoric_std = getattr(self, "scale_force", self.hparams.scale_force)
             force_stds = np.sqrt(epistemic_std ** 2 + aleatoric_std ** 2)
 
             true_forces_flat = F_group_forces.cpu().numpy().flatten()
@@ -483,6 +506,7 @@ class PartialBNN_Forces(BNN_Forces):
         obs_scale,
         scale_force: float = 0.1,
         grad_clip_val: float = 1.0,
+        learn_noise: bool = False,
         bayesian_layers: Union[str, List[int], Dict] = "all",
         name: str = "PartialBNN_Forces",
     ):
@@ -491,7 +515,7 @@ class PartialBNN_Forces(BNN_Forces):
             net, lr, pretrain_epochs, mc_samples_train, mc_samples_eval,
             dataset_size, fit_context, prior_loc, prior_scale, guide,
             q_scale, obs_scale, scale_force=scale_force,
-            grad_clip_val=grad_clip_val, name=name,
+            grad_clip_val=grad_clip_val, learn_noise=learn_noise, name=name,
         )
         self.save_hyperparameters(logger=False, ignore=["net"])
 

@@ -18,3 +18,4 @@ q_scale: 0.001
 obs_scale: 0.5
 scale_force: 0.1
 grad_clip_val: 1.0
+learn_noise: false
