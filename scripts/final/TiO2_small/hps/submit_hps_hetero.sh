@@ -1,29 +1,30 @@
 #!/bin/bash
-# Submit BNN_Forces_Likelihood HPS for TiO2_big (100% dataset)
-# Alpha is FIXED at 0.1 (not optimized)
-# Note: FO (Flipout) incompatible - input-dependent reparameterization fails with trace/replay
+# Submit BNN_Forces_Hetero HPS for TiO2_small (20% dataset)
+# NoiseNet replaces obs_scale / scale_force with input-dependent noise.
+# Search space: lr, mc_samples_train, prior_scale, q_scale,
+#               noise_hidden_size, noise_min, batch_size
 #
 # Directory convention:
-#   Optuna DBs: bnn_aenet/results/TiO2_big/{study_name}.db
-#   SGE logs:   logs/hps/TiO2_big_hps_{model}_likelihood.{out,err}
+#   Optuna DBs: bnn_aenet/logs/TiO2_small/{study_name}.db
+#   SGE logs:   log/hps/TiO2_small_hps_{model}_hetero.{out,err}
 
 BASEDIR="/home/g15farris/bin/bayesaenet"
 cd ${BASEDIR}
 mkdir -p log/hps
 
-echo "=== TiO2_big BNN_Forces_Likelihood HPS (iqtc13) ==="
+echo "=== TiO2_small BNN_Forces_Hetero HPS (iqtc13) ==="
 
-# LRT
+# LRT hetero (no mixed precision)
 qsub << 'HEREDOC'
 #!/bin/bash
-#$ -N hps_lrt_lik
+#$ -N hps_lrt_het_sm
 #$ -q iqtc13.q
 #$ -l iqtcgpu=1
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/log/hps/TiO2_big_hps_lrt_likelihood.out
-#$ -e /home/g15farris/bin/bayesaenet/log/hps/TiO2_big_hps_lrt_likelihood.err
+#$ -o /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_lrt_hetero.out
+#$ -e /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_lrt_hetero.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -47,28 +48,29 @@ export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
-    hpsearch=bnn_lrt \
-    datamodule=TiO_Forces_Data100 \
+    hpsearch=bnn_lrt_hetero \
+    datamodule=TiO_Forces_Data20 \
+    dataset=TiO2_small \
     trainer.accelerator=gpu \
     trainer.devices=1 \
-    hpsearch.results_subdir=TiO2_big \
-    hpsearch.study.study_name=bnn_lrt_forces_likelihood \
-    'tags=["TiO2_big", "lrt", "likelihood", "hps"]'
+    hpsearch.results_subdir=TiO2_small \
+    hpsearch.study.study_name=bnn_lrt_hetero \
+    'tags=["TiO2_small", "lrt", "hetero", "hps"]'
 HEREDOC
 
-echo "  LRT HPS submitted (iqtc13)"
+echo "  LRT hetero HPS submitted (iqtc13)"
 
-# RAD (uses 16-mixed for speed)
+# RAD hetero (uses 16-mixed for speed)
 qsub << 'HEREDOC'
 #!/bin/bash
-#$ -N hps_rad_lik
+#$ -N hps_rad_het_sm
 #$ -q iqtc13.q
 #$ -l iqtcgpu=1
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/log/hps/TiO2_big_hps_rad_likelihood.out
-#$ -e /home/g15farris/bin/bayesaenet/log/hps/TiO2_big_hps_rad_likelihood.err
+#$ -o /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_rad_hetero.out
+#$ -e /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_rad_hetero.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -92,15 +94,16 @@ export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
 python -m bnn_aenet.tasks.hpsearch \
-    hpsearch=bnn_rad \
-    datamodule=TiO_Forces_Data100 \
+    hpsearch=bnn_rad_hetero \
+    datamodule=TiO_Forces_Data20 \
+    dataset=TiO2_small \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     +trainer.precision=16-mixed \
-    hpsearch.results_subdir=TiO2_big \
-    hpsearch.study.study_name=bnn_rad_forces_likelihood \
-    'tags=["TiO2_big", "rad", "likelihood", "hps"]'
+    hpsearch.results_subdir=TiO2_small \
+    hpsearch.study.study_name=bnn_rad_hetero \
+    'tags=["TiO2_small", "rad", "hetero", "hps"]'
 HEREDOC
 
-echo "  RAD HPS submitted (iqtc13)"
-echo "=== Done (LRT + RAD; FO incompatible with likelihood) ==="
+echo "  RAD hetero HPS submitted (iqtc13)"
+echo "=== Done (LRT + RAD hetero) ==="

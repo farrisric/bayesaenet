@@ -149,14 +149,15 @@ class BNN_Forces_Hetero(BNN_Forces):
     # ------------------------------------------------------------------
 
     def on_predict_start(self) -> None:
-        """Initialize BNN for prediction.
+        """Initialize BNN for prediction (skip if already defined).
 
         Noise network params are saved in the Lightning checkpoint as
         regular PyTorch parameters, so no special param-store handling
         is needed (unlike learn_noise scalar params).
         """
-        self.define_bnn()
-        param_store_to(self.device)
+        if not hasattr(self, "bnn_net") or self.bnn_net is None:
+            self.define_bnn()
+            param_store_to(self.device)
 
     # ------------------------------------------------------------------
     # Override predict_step: per-atom aleatoric noise

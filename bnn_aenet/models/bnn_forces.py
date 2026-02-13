@@ -375,9 +375,10 @@ class BNN_Forces(BNN):
         self.log("total_rmse/test", total_rmse, on_step=False, on_epoch=True, batch_size=len(y))
 
     def on_predict_start(self) -> None:
-        """Initialize BNN for prediction."""
-        self.define_bnn()
-        param_store_to(self.device)
+        """Initialize BNN for prediction (skip if already defined)."""
+        if not hasattr(self, "bnn_net") or self.bnn_net is None:
+            self.define_bnn()
+            param_store_to(self.device)
         # Retrieve learned noise scales from param store (if trained with learn_noise=True)
         ps = pyro.get_param_store()
         if "obs_scale_force" in ps:

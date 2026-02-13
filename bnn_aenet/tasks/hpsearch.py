@@ -139,6 +139,49 @@ def objective_bnn_forces_likelihood(trial: Trial, cfg: DictConfig, output_dir: s
     return objective(trial, cfg, output_dir)
 
 
+def objective_bnn_hetero(trial: Trial, cfg: DictConfig, output_dir: str):
+    """Objective function for BNN_Forces_Hetero (heteroscedastic noise) HPS.
+
+    Optimizes BNN weight-space HPs plus NoiseNet HPs.
+    obs_scale / scale_force are NOT used (NoiseNet predicts all noise).
+    """
+    cfg.model.pretrain_epochs = 0
+    log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs (fixed at 0)")
+
+    cfg.model.lr = trial.suggest_float(
+        "lr", 1e-5, 1e-3, log=True
+    )
+    log.info(f"{cfg.model.lr} lr")
+
+    cfg.model.mc_samples_train = trial.suggest_categorical(
+        "mc_samples_train", [1, 2]
+    )
+    log.info(f"{cfg.model.mc_samples_train} mc_samples_train")
+
+    cfg.model.prior_scale = trial.suggest_float(
+        "prior_scale", 0.1, 0.5, log=True
+    )
+    log.info(f"{cfg.model.prior_scale} prior_scale")
+
+    cfg.model.q_scale = trial.suggest_float(
+        "q_scale", 1e-5, 0.005, log=True
+    )
+    log.info(f"{cfg.model.q_scale} q_scale")
+
+    # NoiseNet hyperparameters
+    # noise_hidden_size is fixed (matches main network from train.in)
+    log.info(f"{cfg.model.noise_hidden_size} noise_hidden_size (fixed)")
+
+    cfg.model.noise_min = trial.suggest_float(
+        "noise_min", 1e-3, 0.1, log=True
+    )
+    log.info(f"{cfg.model.noise_min} noise_min")
+
+    log.info(f"{cfg.model.net.alpha} alpha (fixed)")
+
+    return objective(trial, cfg, output_dir)
+
+
 @hydra.main(version_base=None, config_path="../configs", config_name="hpsearch")
 def main(cfg: DictConfig) -> Optional[float]:
     print(cfg.trainer)
