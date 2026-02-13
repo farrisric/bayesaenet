@@ -63,14 +63,18 @@ def make_energy_force_model(
 
         # Observation noise scales (fixed or learned)
         if learn_noise:
+            # Initialize on the same device as the data to avoid CPU/GPU mismatch.
+            # pyro.param registers on first call; param_store_to() may have
+            # already run before this model function is first invoked.
+            device = E_obs.device
             obs_scale_energy = pyro.param(
                 "obs_scale_energy",
-                torch.tensor(float(scale_energy)),
+                torch.tensor(float(scale_energy), device=device),
                 constraint=constraints.positive,
             )
             obs_scale_force = pyro.param(
                 "obs_scale_force",
-                torch.tensor(float(scale_force)),
+                torch.tensor(float(scale_force), device=device),
                 constraint=constraints.positive,
             )
             # Expose learned values on the BNN for predict_step access
