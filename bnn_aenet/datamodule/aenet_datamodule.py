@@ -17,13 +17,15 @@ class AenetDataModule(L.LightningDataModule):
             batch_size: int = 128,
             test_split: float = 0.60,
             valid_split: float = 0.10,
-            name: str = 'default',  # Dataset name for organizing logs
-            split_config: str = None,  # Split configuration name (e.g., "Data20", "Data100")
+            train_fraction: float = 1.0,
+            name: str = 'default',
+            split_config: str = None,
         ):
         super().__init__()
         self.name = name
         self.data_dir = data_dir
-        self.split_config = split_config  # e.g., "Data20", "Data100", or None for default
+        self.split_config = split_config
+        self.train_fraction = train_fraction
         # Ensure device is a string, handle both "cuda" and torch.device objects
         if hasattr(device, 'type'):
             self.device = device.type
@@ -47,7 +49,8 @@ class AenetDataModule(L.LightningDataModule):
         self.tin.batch_size = self.batch_size
         self.tin.test_split = self.test_split
         self.tin.valid_split = self.valid_split
-        self.tin.split_config = self.split_config  # Pass split config (e.g., "Data20", "Data100")
+        self.tin.train_fraction = self.train_fraction
+        self.tin.split_config = self.split_config
         # torch.manual_seed(self.tin.pytorch_seed)
         # np.random.seed(self.tin.numpy_seed)
         self.tin.device = self.device

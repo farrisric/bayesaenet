@@ -14,7 +14,7 @@ SAVE_FORCES
 VERBOSE
 
 FORCES
-alpha=0.5
+alpha=0.1
 
 METHOD
 method=adamw   lr=0.0001

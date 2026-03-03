@@ -11,7 +11,10 @@ Usage:
 
 import argparse
 from pathlib import Path
+
 import optuna
+
+from bnn_aenet.utils.paths import get_results_db_path
 
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
@@ -243,45 +246,28 @@ def main():
     )
     parser.add_argument("--dataset", required=True, help="Dataset name (e.g., TiO2_small, TiO2_big)")
     parser.add_argument("--output-dir", required=True, help="Directory to write training scripts")
-    parser.add_argument("--results-dir", default=None, help="Path to results dir (default: bnn_aenet/logs)")
     parser.add_argument("--methods", nargs="+", default=["nn", "lrt", "rad"],
                         help="Methods to generate scripts for")
     args = parser.parse_args()
-
-    results_dir = Path(args.results_dir) if args.results_dir else PROJECT_ROOT / "bnn_aenet" / "logs"
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     dataset = args.dataset
-    db_dir = results_dir / dataset
-
-    if not db_dir.exists():
-        print(f"ERROR: No results directory found at {db_dir}")
-        return
 
     if dataset not in DATAMODULE_MAP:
         print(f"ERROR: Unknown dataset '{dataset}'. Known: {list(DATAMODULE_MAP.keys())}")
         return
 
-    # Find DBs -- try both "{method}.db" and "{method}_{suffix}.db" patterns
+    # Find DBs using the canonical layout: results/<dataset>/<model>.db
     print(f"=== Generating training scripts for {dataset} ===")
     print(f"Results dir: {db_dir}")
     print(f"Output dir:  {output_dir}")
     print()
 
     for method in args.methods:
-        # Try to find the DB file
-        # For lrt/rad: use bnn_*_forces_likelihood.db (study name in DB)
-        if method in ("lrt", "rad"):
-            db_path = db_dir / f"bnn_{method}_forces_likelihood.db"
-            if not db_path.exists():
-                db_candidates = list(db_dir.glob(f"bnn_{method}*.db"))
-                db_path = db_candidates[0] if db_candidates else None
-        else:
-            db_candidates = list(db_dir.glob(f"{method}*.db"))
-            db_path = db_candidates[0] if db_candidates else None
+        db_path = get_results_db_path(dataset=dataset.lower(), model=method)
 
-        if db_path is None or not db_path.exists():
+        if not db_path.exists():
             print(f"[{method}] No DB found, skipping")
             continue
 

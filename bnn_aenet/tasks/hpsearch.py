@@ -17,6 +17,7 @@ from optuna import Study
 from optuna.trial import Trial
 
 from bnn_aenet.tasks.utils import get_pylogger
+from bnn_aenet.utils.paths import get_results_db_path
 log = get_pylogger(__name__)
 
 
@@ -186,17 +187,17 @@ def objective_bnn_hetero(trial: Trial, cfg: DictConfig, output_dir: str):
 def main(cfg: DictConfig) -> Optional[float]:
     print(cfg.trainer)
     log.info(f"Instantiating study <{cfg.hpsearch.study._target_}>")
-    
-    path = Path(f"{cfg.paths.results_dir}")
-    # Store DBs in dataset-specific subdirectory: results/{dataset}/{method}.db
-    # Use hpsearch.results_subdir if set (TiO2_big, TiO2_small, QM7), else tags[0]
-    results_subdir = cfg.hpsearch.get("results_subdir", None)
-    if results_subdir is None or results_subdir == "":
-        results_subdir = cfg.tags[0]
-    db_dir = path / str(results_subdir)
-    db_dir.mkdir(parents=True, exist_ok=True)
-    db_path = db_dir / f"{cfg.hpsearch.study.study_name}.db"
-    log.info(f"Results will be stored in sqlite:///{db_path.as_posix()}")
+
+    # Dataset and model identifiers for canonical DB layout
+    dataset = str(cfg.get("dataset", cfg.tags[0]))
+    model = str(cfg.hpsearch.get("model_name", cfg.tags[1] if len(cfg.tags) > 1 else cfg.hpsearch.study.study_name))
+
+    db_path = get_results_db_path(dataset=dataset, model=model)
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    log.info(
+        f"Results will be stored in sqlite:///{db_path.as_posix()} "
+        f"(dataset={dataset}, model={model})"
+    )
     study: Study = hydra.utils.instantiate(
         cfg.hpsearch.study,
         storage=f"sqlite:///{db_path.as_posix()}",

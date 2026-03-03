@@ -273,21 +273,23 @@ class BNN_Forces(BNN):
             else 0
         )
 
-        with torch.enable_grad():
+        with torch.inference_mode(False):
             F_descrp_grad = [
                 d.clone().detach().float().requires_grad_(True)
                 for d in F_descrp
             ]
-            F_sfderiv_i_f = [s.float() for s in F_sfderiv_i]
-            F_sfderiv_j_f = [s.float() for s in F_sfderiv_j]
-            F_logic_reduce_f = [l.float() for l in F_logic_reduce]
+            F_sfderiv_i_f = [s.clone().float() for s in F_sfderiv_i]
+            F_sfderiv_j_f = [s.clone().float() for s in F_sfderiv_j]
+            F_logic_reduce_f = [l.clone().float() for l in F_logic_reduce]
+            F_indices_c = F_indices.clone() if isinstance(F_indices, torch.Tensor) else [idx.clone() for idx in F_indices]
+            F_indices_i_c = F_indices_i.clone() if isinstance(F_indices_i, torch.Tensor) else F_indices_i
             with poutine.replay(trace=guide_tr):
                 _, F_pred = net.forward_F(
                     F_descrp_grad,
                     F_sfderiv_i_f,
                     F_sfderiv_j_f,
-                    F_indices,
-                    F_indices_i,
+                    F_indices_c,
+                    F_indices_i_c,
                     F_logic_reduce_f,
                     net.input_size,
                     max_nnb,

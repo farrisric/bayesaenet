@@ -9,7 +9,10 @@ batch_size: 100
 test_split: 0.1
 valid_split: 0.1
 
-# Split configuration name (e.g., "Data20", "Data100")
-# If set, loads indices from bnn_aenet/data/{dataset}/indices/{split_config}/
-# If null, uses default split from data_dir/splits/ or generates random
+# Fraction of the non-test pool to use for train+valid (default 1.0 = all).
+# The test set is carved out first and stays identical across fractions,
+# so experiments at different train_fraction values are directly comparable.
+train_fraction: 1.0
+
+# Split configuration name (unused for now; reserved for future global-index system)
 split_config: null

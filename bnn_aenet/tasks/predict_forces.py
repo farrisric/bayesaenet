@@ -232,6 +232,7 @@ def run_predictions(model, datamodule, subsets, device, model_type=None, ckpt_pa
         devices=1,
         logger=False,
         enable_progress_bar=True,
+        inference_mode=False,
     )
 
     dataloader_map = {
