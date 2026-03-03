@@ -346,7 +346,7 @@ class BNN_Forces(BNN):
         """Initialize BNN for testing (skip if already defined from training)."""
         if not hasattr(self, "bnn_net") or self.bnn_net is None:
             self.define_bnn()
-            param_store_to(self.device)
+        param_store_to(self.device)
 
     def test_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
         """Test step with energy, force, and total RMSE metrics."""
@@ -380,7 +380,7 @@ class BNN_Forces(BNN):
         """Initialize BNN for prediction (skip if already defined)."""
         if not hasattr(self, "bnn_net") or self.bnn_net is None:
             self.define_bnn()
-            param_store_to(self.device)
+        param_store_to(self.device)
         # Retrieve learned noise scales from param store (if trained with learn_noise=True)
         ps = pyro.get_param_store()
         if "obs_scale_force" in ps:

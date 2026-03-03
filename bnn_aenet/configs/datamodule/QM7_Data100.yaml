@@ -1,0 +1,6 @@
+defaults:
+  - QM7
+
+# Use 100% of the training pool
+train_fraction: 1.0
+name: QM7_100pct
