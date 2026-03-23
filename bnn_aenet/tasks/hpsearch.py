@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Optional
 
 import hydra
+import optuna
 import pyrootutils
 from omegaconf import DictConfig
 
@@ -124,16 +125,28 @@ def objective_bnn_forces_likelihood(trial: Trial, cfg: DictConfig, output_dir: s
     )
     log.info(f"{cfg.model.q_scale} q_scale")
     
-    cfg.model.obs_scale = trial.suggest_float(
-        "obs_scale", 0.1, 2.0, log=True
-    )
-    log.info(f"{cfg.model.obs_scale} obs_scale")
-    
-    # scale_force: force likelihood noise (critical for energy/force balance)
-    cfg.model.scale_force = trial.suggest_float(
-        "scale_force", 0.05, 2.0, log=True
-    )
-    log.info(f"{cfg.model.scale_force} scale_force")
+    # If noise scales are learned by Pyro params, obs/force scales become
+    # trainable and these values only act as initial conditions.
+    # Keep them fixed in this mode to avoid wasting Optuna dimensions.
+    learn_noise = bool(getattr(cfg.model, "learn_noise", False))
+    if learn_noise:
+        log.info(
+            f"{cfg.model.obs_scale} obs_scale (fixed; learn_noise=true)"
+        )
+        log.info(
+            f"{cfg.model.scale_force} scale_force (fixed; learn_noise=true)"
+        )
+    else:
+        cfg.model.obs_scale = trial.suggest_float(
+            "obs_scale", 0.1, 2.0, log=True
+        )
+        log.info(f"{cfg.model.obs_scale} obs_scale")
+
+        # scale_force: force likelihood noise (critical for energy/force balance)
+        cfg.model.scale_force = trial.suggest_float(
+            "scale_force", 0.05, 2.0, log=True
+        )
+        log.info(f"{cfg.model.scale_force} scale_force")
     
     log.info(f"{cfg.model.net.alpha} alpha (fixed)")
     
@@ -211,7 +224,7 @@ def main(cfg: DictConfig) -> Optional[float]:
         lambda trial: objective(trial, cfg, output_dir),
         n_trials=cfg.hpsearch.n_trials,
         timeout=None,
-        catch=(RuntimeError, ValueError),
+        catch=(RuntimeError, ValueError, optuna.exceptions.StorageInternalError),
     )
 
     log.info("Number of finished trials: {}".format(len(study.trials)))

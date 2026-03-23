@@ -56,6 +56,7 @@ docs/_build/
 *.train
 
 # Logs
+.cursor/
 .logs/
 .bnn_aenet/logs/
 .bnn_aenet/results/
