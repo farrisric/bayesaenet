@@ -1,0 +1,28 @@
+# @package _global_
+
+defaults:
+  - override /model: bnn_hetero
+  - override /callbacks: default
+  - override /trainer: default
+
+tags: ["bayesian", "radial", "heteroscedastic"]
+
+seed: 12345
+
+trainer:
+  min_epochs: 5000
+  max_epochs: 50000
+
+callbacks:
+  model_checkpoint:
+    monitor: total_rmse/val
+  early_stopping:
+    monitor: total_rmse/val
+    patience: 100
+
+model:
+  name: rad_hetero
+  fit_context: null
+  guide: radial
+  net:
+    alpha: 0.1

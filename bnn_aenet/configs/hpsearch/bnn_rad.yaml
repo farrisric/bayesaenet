@@ -1,4 +1,5 @@
 # @package _global_
+# Hyperparameter search for BNN (Radial)
 
 defaults:
   - /hpsearch/study: study
@@ -6,12 +7,19 @@ defaults:
   - override /experiment: bnn_rad
 
 hpsearch:
-  monitor: mse/val
+  monitor: total_rmse/val
+  n_trials: 30
   study:
-    study_name: bnn_rad
+    study_name: bnn_rad_forces_likelihood  # Keep for DB compat
 
 trainer:
-  max_epochs: 500
+  max_epochs: 3000
+  min_epochs: 100
 
 callbacks:
-  early_stopping: null
+  early_stopping:
+    monitor: total_rmse/val
+    patience: 50
+    mode: min
+
+tags: ["bayesian", "radial", "hps"]

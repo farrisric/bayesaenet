@@ -28,3 +28,20 @@ For a full methodological description, implementation details, and performance r
   url={https://github.com/farrisric/bayesaenet}
 }
 ```
+
+## Logs and results
+
+New runs follow a unified layout for Optuna results and logs:
+
+- **Optuna result databases**: `bnn_aenet/results/<dataset>/<model>.db`  
+  - Examples: `bnn_aenet/results/tio2_small/lrt.db`, `bnn_aenet/results/tio2_big/rad.db`, `bnn_aenet/results/qm7/nn.db`
+- **Logs (hyperparameter search, training, predictions)**:  
+  - Root: `bnn_aenet/logs`  
+  - Per run: `bnn_aenet/logs/<dataset>/<task>/<model>/run_<N>/...`  
+    - `dataset`: e.g. `tio2_small`, `tio2_big`, `qm7`  
+    - `task`: one of `hps`, `train`, `pred`  
+    - `model`: e.g. `lrt`, `rad`, `nn`  
+    - `N`: zero-padded run index, e.g. `001`
+
+Analysis scripts and plotting utilities read from these locations, so you can identify experiments by dataset, task, model, and run id in a consistent way.
+

@@ -9,4 +9,4 @@ defaults:
   - /model@NN: nn
   
 dataset: TiO2
-runs_dir: ${paths.results_dir}/${dataset}/runs
+runs_dir: ${paths.task_dir}/train/runs

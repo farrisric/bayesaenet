@@ -6,7 +6,11 @@ defaults:
   - override /callbacks: hpsearch
   - _self_
 
-task_name: hpsearch
+dataset: TiO2_small
+task_name: hps
 hpsearch:
   n_trials: 60
+  # results_subdir: dataset name for DB storage (TiO2_big, TiO2_small, QM7)
+  # If unset, uses tags[0]. Override in submit scripts for correct structure.
+  results_subdir: null
 test: False

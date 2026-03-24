@@ -1,32 +1,28 @@
 # @package _global_
 
 defaults:
-#  - override /datamodule: datamodule
-  - override /model: bnn_rad
+  - override /model: bnn
   - override /callbacks: default
   - override /trainer: default
 
-tags: ["PdO", "bayesian", "rad"]
+tags: ["bayesian", "radial"]
 
 seed: 12345
 
 trainer:
-  min_epochs: 20000
+  min_epochs: 5000
   max_epochs: 50000
-
-model:
-  lr: 0.0009788619025802843
-  mc_samples_train: 2
-  obs_scale: 0.990878816554534 
-  pretrain_epochs: 5 
-  prior_scale: 0.019240951470053693
-  q_scale: 0.002223982343432341
-  mc_samples_eval: 20
 
 callbacks:
   model_checkpoint:
-    monitor: mse/val
-
+    monitor: total_rmse/val
   early_stopping:
-    monitor: mse/val
+    monitor: total_rmse/val
     patience: 100
+
+model:
+  name: rad
+  fit_context: null
+  guide: radial
+  net:
+    alpha: 0.1  # FIXED at 0.1 (not optimized to avoid Optuna bias)

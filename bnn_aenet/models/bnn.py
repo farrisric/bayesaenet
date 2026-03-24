@@ -33,7 +33,7 @@ import contextlib
 import numpy as np
 
 from .utils import param_store_to, remove_dict_entry_startswith, weights_init, get_rmse_atom
-from ..results.metrics import sharpness, rms_calibration_error
+from ..utils.metrics import sharpness, rms_calibration_error
 from ..datamodule.aenet.batch_constants import BatchIdx
 
 
@@ -139,7 +139,7 @@ class BNN(L.LightningModule):
         param_store_to(self.device)
         self.configure_optimizers()
 
-        # Use grad_clip_val if available (BNN_Forces_Aux), otherwise default to 10.0
+        # Use grad_clip_val if available (BNN_Forces), otherwise default to 10.0
         clip_norm = getattr(self.hparams, 'grad_clip_val', 10.0)
         self.optimizer = pyro.optim.ClippedAdam({
             'lr': self.hparams.lr, 
@@ -196,7 +196,7 @@ class BNN(L.LightningModule):
 
         self.trainer.fit_loop.epoch_loop.manual_optimization.optim_step_progress.increment_ready()
         
-        rmse = get_rmse_atom(loc, y, n_atoms)
+        rmse = get_rmse_atom(loc, y, n_atoms)  # normalized units
         mse = F.mse_loss(loc, y)
         
         # NLL for training monitoring
@@ -238,7 +238,7 @@ class BNN(L.LightningModule):
         kl = self.svi_no_obs.evaluate_loss(x[0], x[1])
 
         mse = F.mse_loss(loc, y)
-        rmse = get_rmse_atom(loc, y, n_atoms)
+        rmse = get_rmse_atom(loc, y, n_atoms)  # normalized units
         
         # NLL (Negative Log-Likelihood) for proper Bayesian evaluation
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
@@ -284,7 +284,7 @@ class BNN(L.LightningModule):
         nll = F.gaussian_nll_loss(loc.squeeze(), y.squeeze(), torch.square(scale))
 
         mse = F.mse_loss(loc, y)
-        rmse = get_rmse_atom(loc, y, n_atoms)
+        rmse = get_rmse_atom(loc, y, n_atoms)  # normalized units
         
         # Calibration metrics
         try:
@@ -305,7 +305,7 @@ class BNN(L.LightningModule):
         """Initialize BNN for prediction."""
         self.define_bnn()
         param_store_to(self.device)
-        # Create bnn_no_obs (needed by BNN_Forces_Aux.predict_step for force sampling)
+        # Create bnn_no_obs (needed by BNN_Forces.predict_step for force sampling)
         self.bnn_no_obs = pyro.poutine.block(self.bnn, hide=["obs"])
 
     def predict_step(

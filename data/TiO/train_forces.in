@@ -1,4 +1,4 @@
-TRAININGSET /work/g15farris/database/TiO/TiO.train.ascii
+TRAININGSET /work/g15farris/database/TiO2/TiO2.train.ascii
 TESTPERCENT 10
 VALIDPERCENT 10
 ITERATIONS 200000
@@ -14,7 +14,7 @@ SAVE_FORCES
 VERBOSE
 
 FORCES
-alpha=0.5
+alpha=0.1
 
 METHOD
 method=adamw   lr=0.0001

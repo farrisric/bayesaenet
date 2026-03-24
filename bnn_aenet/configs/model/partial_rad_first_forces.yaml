@@ -1,7 +1,0 @@
-defaults:
-  - partial_bnn_forces
-
-name: PartialRAD_First_Forces
-fit_context: lrt
-guide: radial
-bayesian_layers: first  # Only first layer is Bayesian

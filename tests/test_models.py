@@ -56,10 +56,10 @@ class TestBNNModels:
     
     def test_bnn_import(self):
         """Test BNN module imports."""
-        from bnn_aenet.models import BNN, NN, BNN_Forces_Aux, NN_Forces
+        from bnn_aenet.models import BNN, NN, BNN_Forces, NN_Forces
         assert BNN is not None
         assert NN is not None
-        assert BNN_Forces_Aux is not None
+        assert BNN_Forces is not None
         assert NN_Forces is not None
     
     def test_nn_initialization(self, device):
@@ -106,7 +106,6 @@ class TestConfigs:
         
         # Check BNN configs
         assert (exp_dir / "bnn_lrt.yaml").exists()
-        assert (exp_dir / "bnn_fo.yaml").exists()
         assert (exp_dir / "bnn_rad.yaml").exists()
         assert (exp_dir / "nn.yaml").exists()
     
@@ -117,8 +116,6 @@ class TestConfigs:
         # Check final configs
         assert (final_dir / "lrt_qm7.yaml").exists()
         assert (final_dir / "lrt_tio2.yaml").exists()
-        assert (final_dir / "fo_qm7.yaml").exists()
-        assert (final_dir / "fo_tio2.yaml").exists()
         assert (final_dir / "rad_qm7.yaml").exists()
         assert (final_dir / "rad_tio2.yaml").exists()
         assert (final_dir / "de_qm7.yaml").exists()

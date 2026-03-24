@@ -1,7 +1,0 @@
-defaults:
-  - partial_bnn
-
-name: PartialFO_FirstLast
-fit_context: flipout
-guide: normal
-bayesian_layers: first_last  # First and last layers are Bayesian (~55% params)

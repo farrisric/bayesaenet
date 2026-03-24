@@ -1,8 +1,7 @@
 # @package _global_
 
 defaults:
-#  - override /datamodule: datamodule
-  - override /model: bnn_lrt
+  - override /model: bnn
   - override /callbacks: default
   - override /trainer: default
 
@@ -11,22 +10,19 @@ tags: ["bayesian", "lrt"]
 seed: 12345
 
 trainer:
-  min_epochs: 20000
+  min_epochs: 5000
   max_epochs: 50000
-
-model:
-  mc_samples_eval: 20
-  lr: 0.0009549627167707569 
-  mc_samples_train: 2 
-  obs_scale: 0.47612142594698453
-  pretrain_epochs: 0
-  prior_scale: 0.026705525180274015
-  q_scale: 0.0005171823159504436
 
 callbacks:
   model_checkpoint:
-    monitor: mse/val
-
+    monitor: total_rmse/val
   early_stopping:
-    monitor: mse/val
+    monitor: total_rmse/val
     patience: 100
+
+model:
+  name: lrt
+  fit_context: lrt
+  guide: normal
+  net:
+    alpha: 0.1  # FIXED at 0.1 (not optimized to avoid Optuna bias)

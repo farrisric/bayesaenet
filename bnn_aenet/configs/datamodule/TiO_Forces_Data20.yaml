@@ -1,6 +1,6 @@
 defaults:
   - TiO_Forces
 
-# Use 20% training data split (TiO2_small)
-split_config: Data20
+# Use 20% of the training pool (test set stays identical to Data100)
+train_fraction: 0.2
 name: TiO2_Forces_20pct

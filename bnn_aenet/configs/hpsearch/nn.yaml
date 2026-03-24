@@ -1,19 +1,25 @@
 # @package _global_
+# Hyperparameter search for NN (Deep Ensemble with forces)
 
 defaults:
   - /hpsearch/study: study
-  - /hpsearch/objective: nn
+  - /hpsearch/objective: nn_forces
   - override /experiment: nn
 
 hpsearch:
-  monitor: rmse/val
+  monitor: total_rmse/val
+  n_trials: 30
   study:
-    study_name: nn_hps
+    study_name: nn_small  # or nn for TiO2_big
 
 trainer:
   max_epochs: 3000
+  min_epochs: 100
 
 callbacks:
   early_stopping:
-    monitor: rmse/val
+    monitor: total_rmse/val
     patience: 50
+    mode: min
+
+tags: ["nn", "hps"]

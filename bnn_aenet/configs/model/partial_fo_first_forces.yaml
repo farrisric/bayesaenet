@@ -1,7 +1,0 @@
-defaults:
-  - partial_bnn_forces
-
-name: PartialFO_First_Forces
-fit_context: flipout
-guide: normal
-bayesian_layers: first  # Only first layer is Bayesian

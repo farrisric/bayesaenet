@@ -310,16 +310,21 @@ bnn_aenet/logs/
 
 ### Optuna Database
 
-Results are stored in SQLite databases:
+Results are stored per dataset in SQLite databases:
 ```
 bnn_aenet/results/
-├── nn/
-│   └── nn_forces.db
-└── bayesian/
-    ├── bnn_lrt_forces.db
-    ├── bnn_fo_forces.db
-    └── bnn_rad_forces.db
+├── TiO2_big/          # 100% data
+│   ├── nn.db
+│   ├── lrt.db
+│   ├── fo.db
+│   └── rad.db
+├── TiO2_small/        # 20% data
+│   ├── nn_small.db
+│   └── ...
+└── QM7/
+    └── ...
 ```
+See `bnn_aenet/results/README.md` for details.
 
 ---
 

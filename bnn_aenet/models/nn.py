@@ -2,8 +2,8 @@
 Deterministic Neural Network models for atomic energy and force prediction.
 
 Classes:
-    - NN: Base deterministic NN (also used for BNN pretraining)
-    - NN_Forces: NN with force training for Deep Ensemble
+    - NNBase: Base deterministic NN (used for BNN pretraining)
+    - NN: NN with force training (canonical; always uses forces)
 """
 
 from typing import Any, Dict, List
@@ -16,7 +16,7 @@ from .utils import weights_init, get_rmse_atom
 from ..datamodule.aenet.batch_constants import BatchIdx
 
 
-class NN(L.LightningModule):
+class NNBase(L.LightningModule):
     """
     Class used by BNNs to pretrain their weights. This class is instantiated,
     trained for X epochs and then it stores its weights in the log directory.
@@ -50,8 +50,8 @@ class NN(L.LightningModule):
         logic_reduce = batch[BatchIdx.E_LOGIC_REDUCE]
         grp_N_atom = batch[BatchIdx.E_N_ATOM]
         
-        list_E_ann = self.forward(grp_descrp, logic_reduce)   
-        return get_rmse_atom(list_E_ann, grp_energy, grp_N_atom)
+        list_E_ann = self.forward(grp_descrp, logic_reduce)
+        return get_rmse_atom(list_E_ann, grp_energy, grp_N_atom)  # normalized units
 
     def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
         """Execute one training step."""
@@ -102,10 +102,10 @@ class NN(L.LightningModule):
         grp_N_atom = batch[BatchIdx.E_N_ATOM]
         
         pred = {}
-        
-        true = grp_energy / self.net.e_scaling + self.net.e_shift * grp_N_atom
+        # Keep normalized units (match BNN) for analysis compatibility
+        true = grp_energy
         list_E_ann = self.net.forward(grp_descrp, logic_reduce)
-        preds = list_E_ann / self.net.e_scaling + self.net.e_shift * grp_N_atom
+        preds = list_E_ann
 
         pred["true"] = true.cpu().numpy()
         pred["preds"] = preds.cpu().numpy()
@@ -116,19 +116,18 @@ class NN(L.LightningModule):
         return self.hparams.optimizer(params=self.parameters())
 
 
-class NN_Forces(NN):
+class NN(NNBase):
     """
-    Neural Network with force training for Deep Ensemble.
+    Neural Network with force training (canonical; always uses forces).
     
-    Extends NN to include force training via auxiliary loss.
-    Uses weighted combination of energy RMSE and force RMSE.
+    Used for Deep Ensemble baseline. Weighted combination of energy RMSE and force RMSE.
     """
     
     def __init__(self,
                  net: torch.nn.Module,
                  optimizer: torch.optim.Optimizer,
                  alpha: float = 0.1,
-                 name: str = "NN_Forces"):  # Model name for logging organization
+                 name: str = "NN"):
         super().__init__(net=net, optimizer=optimizer, name=name)
         self.alpha = alpha  # Weight for force loss: (1-alpha)*E_loss + alpha*F_loss
     
@@ -178,11 +177,9 @@ class NN_Forces(NN):
                 max_nnb
             )
         
-        # Compute RMSE for forces (in mHa/Bohr)
+        # Compute RMSE for forces (normalized units; meV/Å only in prediction)
         force_diff = F_pred - F_group_forces.float()
-        force_rmse = torch.sqrt(torch.mean(force_diff ** 2)) * 1000
-        
-        return force_rmse
+        return torch.sqrt(torch.mean(force_diff ** 2))
     
     def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
         # Energy loss
@@ -199,7 +196,7 @@ class NN_Forces(NN):
         batch_size = len(batch[BatchIdx.E_ENERGY])
         self.log("rmse/train", energy_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=batch_size)
         self.log("force_rmse/train", force_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=batch_size)
-        self.log("total_loss/train", total_loss, on_step=False, on_epoch=True, batch_size=batch_size)
+        self.log("total_rmse/train", total_loss, on_step=False, on_epoch=True, batch_size=batch_size)
         self.log("alpha", alpha, on_step=False, on_epoch=True)
         
         return total_loss
@@ -238,18 +235,18 @@ class NN_Forces(NN):
     ) -> Dict[str, np.ndarray]:
         """Predict energies and forces (deterministic, stds=0).
         
-        Returns dict matching BNN_Forces_Aux.predict_step() format for
+        Returns dict matching BNN_Forces.predict_step() format for
         compatibility with Deep Ensemble creation.
         """
-        # Energy predictions (deterministic)
+        # Energy predictions (deterministic); keep normalized units (match BNN) for analysis
         grp_descrp = batch[BatchIdx.E_DESCRP]
         grp_energy = batch[BatchIdx.E_ENERGY]
         logic_reduce = batch[BatchIdx.E_LOGIC_REDUCE]
         grp_N_atom = batch[BatchIdx.E_N_ATOM]
         
-        true = grp_energy / self.net.e_scaling + self.net.e_shift * grp_N_atom
+        true = grp_energy
         list_E_ann = self.net.forward(grp_descrp, logic_reduce)
-        preds = list_E_ann / self.net.e_scaling + self.net.e_shift * grp_N_atom
+        preds = list_E_ann
         
         pred = {}
         pred["true"] = true.cpu().numpy()
@@ -289,8 +286,9 @@ class NN_Forces(NN):
             pred_forces_flat = F_pred.detach().cpu().numpy().flatten()
             std_forces_flat = np.zeros_like(pred_forces_flat)  # Deterministic
             
-            force_errors = np.abs(true_forces_flat - pred_forces_flat)
-            force_rmse = np.sqrt(np.mean((true_forces_flat - pred_forces_flat)**2))
+            scale = float(self.net.e_scaling) if hasattr(self.net.e_scaling, "item") else float(self.net.e_scaling)
+            force_errors = np.abs(true_forces_flat - pred_forces_flat) / scale * 1000
+            force_rmse = np.sqrt(np.mean((true_forces_flat - pred_forces_flat) ** 2)) / scale * 1000
             force_mae = np.mean(force_errors)
         else:
             true_forces_flat = None
@@ -306,3 +304,7 @@ class NN_Forces(NN):
         pred["force_mae"] = force_mae
         
         return pred
+
+
+# Backward compatibility for checkpoints
+NN_Forces = NN

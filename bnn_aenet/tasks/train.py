@@ -74,7 +74,6 @@ def train(cfg: DictConfig, trial: Optional[optuna.trial.Trial] = None):
 
     log.info(f"Instantiating datamodule <{cfg.datamodule._target_}>")
     datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
-    print(datamodule.e_scaling, datamodule.e_shift)
     log.info(f"Instantiating model <{cfg.model._target_}>")
     cfg.model.net.input_size = datamodule.input_size
     cfg.model.net.hidden_size = datamodule.hidden_size
@@ -86,7 +85,6 @@ def train(cfg: DictConfig, trial: Optional[optuna.trial.Trial] = None):
         cfg.model.net.alpha = datamodule.alpha
     cfg.model.net.e_scaling = datamodule.e_scaling
     cfg.model.net.e_shift = datamodule.e_shift
-    #print(cfg.model.e_scaling, cfg.model.e_shift)
     if OmegaConf.is_missing(cfg.model, "dataset_size"):
         cfg.model.dataset_size = datamodule.train_size
     model: LightningModule = hydra.utils.instantiate(
@@ -155,7 +153,7 @@ def load_pretrained_net(cfg, model):
     """Load pretrained network weights for BNN or NN initialization.
     
     Looks for pretrained checkpoints at:
-        {results_dir}/{tags[0]}/pretrained/{epochs-1}/checkpoints/pretrained.ckpt
+        {task_dir}/pretrained/{tag}/{epochs-1}/checkpoints/pretrained.ckpt
     
     Args:
         cfg: Hydra configuration
@@ -165,7 +163,7 @@ def load_pretrained_net(cfg, model):
         The network with pretrained weights loaded, or a fresh network if not found
     """
     tag = cfg.tags[0] if cfg.get("tags") else "bayesian"
-    ckpt_path_dir = Path(f"{cfg.paths.results_dir}/{tag}/pretrained")
+    ckpt_path_dir = Path(f"{cfg.paths.task_dir}/pretrained/{tag}")
     
     if ckpt_path_dir.exists():
         ckpt_path = None

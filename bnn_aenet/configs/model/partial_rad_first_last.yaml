@@ -1,6 +1,0 @@
-defaults:
-  - partial_bnn
-
-name: PartialRAD_FirstLast
-guide: radial
-bayesian_layers: first_last  # First and last layers are Bayesian

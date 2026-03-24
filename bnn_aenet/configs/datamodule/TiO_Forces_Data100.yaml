@@ -1,0 +1,6 @@
+defaults:
+  - TiO_Forces
+
+# Use 100% of the training pool
+train_fraction: 1.0
+name: TiO2_Forces_100pct

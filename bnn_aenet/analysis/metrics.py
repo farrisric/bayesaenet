@@ -15,24 +15,38 @@ def compute_energy_metrics(
     y_true: np.ndarray,
     y_pred: np.ndarray,
     y_std: Optional[np.ndarray] = None,
+    n_atoms: Optional[np.ndarray] = None,
 ) -> Dict[str, float]:
     """Compute energy prediction metrics.
+
+    When n_atoms is provided, RMSE/MAE are computed per-atom to match TensorBoard
+    (training logs get_rmse_atom which uses (E_pred - E_true) / n_atoms).
     
     Args:
-        y_true: Ground truth energies
-        y_pred: Predicted energies
+        y_true: Ground truth energies (total per structure)
+        y_pred: Predicted energies (total per structure)
         y_std: Predicted standard deviations (optional)
+        n_atoms: Number of atoms per structure (optional; when set, uses per-atom errors)
     
     Returns:
         Dictionary with metrics
     """
     y_true = np.asarray(y_true).flatten()
     y_pred = np.asarray(y_pred).flatten()
-    
-    # Basic metrics
     errors = y_true - y_pred
-    mae = np.mean(np.abs(errors))
-    rmse = np.sqrt(np.mean(errors**2))
+
+    if n_atoms is not None:
+        n_atoms = np.asarray(n_atoms).flatten()
+        if len(n_atoms) == len(errors):
+            per_atom_errors = errors / np.clip(n_atoms, 1, None)
+            mae = np.mean(np.abs(per_atom_errors))
+            rmse = np.sqrt(np.mean(per_atom_errors**2))
+        else:
+            n_atoms = None
+
+    if n_atoms is None:
+        mae = np.mean(np.abs(errors))
+        rmse = np.sqrt(np.mean(errors**2))
     max_err = np.max(np.abs(errors))
     
     # R-squared
