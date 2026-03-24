@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -N hps_rad_ln_sm
-#$ -q iqtc10.q
+#$ -q iqtc13.q
 #$ -l iqtcgpu=1
 #$ -pe smp 4
 #$ -S /bin/bash
@@ -35,6 +35,9 @@ python -m bnn_aenet.tasks.hpsearch \
     trainer.accelerator=gpu \
     trainer.devices=1 \
     +trainer.precision=16-mixed \
+    trainer.max_epochs=10000 \
+    trainer.min_epochs=1000 \
+    callbacks.early_stopping.patience=800 \
     hpsearch.results_subdir=TiO2_small \
     hpsearch.study.study_name=rad_small_learn_noise \
     model.learn_noise=true \

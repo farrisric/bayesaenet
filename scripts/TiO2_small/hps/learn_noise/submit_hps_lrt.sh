@@ -34,6 +34,9 @@ python -m bnn_aenet.tasks.hpsearch \
     datamodule=TiO_Forces_Data20 \
     trainer.accelerator=gpu \
     trainer.devices=1 \
+    trainer.max_epochs=10000 \
+    trainer.min_epochs=1000 \
+    callbacks.early_stopping.patience=800 \
     hpsearch.results_subdir=TiO2_small \
     hpsearch.study.study_name=lrt_small_learn_noise \
     model.learn_noise=true \
