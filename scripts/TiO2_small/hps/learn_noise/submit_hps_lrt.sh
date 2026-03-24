@@ -29,6 +29,12 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
+# Choose HPS optimization metric:
+#   MONITOR=total_rmse/val  (default, accuracy-focused)
+#   MONITOR=elbo/val        (variational objective)
+MONITOR="${MONITOR:-total_rmse/val}"
+MODE="${MODE:-min}"
+
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=bnn_lrt \
     datamodule=TiO_Forces_Data20 \
@@ -36,7 +42,12 @@ python -m bnn_aenet.tasks.hpsearch \
     trainer.devices=1 \
     trainer.max_epochs=10000 \
     trainer.min_epochs=1000 \
+    hpsearch.monitor="${MONITOR}" \
     callbacks.early_stopping.patience=800 \
+    callbacks.early_stopping.monitor="${MONITOR}" \
+    callbacks.early_stopping.mode="${MODE}" \
+    callbacks.model_checkpoint.monitor="${MONITOR}" \
+    callbacks.model_checkpoint.mode="${MODE}" \
     hpsearch.results_subdir=TiO2_small \
     hpsearch.study.study_name=lrt_small_learn_noise \
     model.learn_noise=true \

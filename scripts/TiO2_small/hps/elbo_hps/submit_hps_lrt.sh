@@ -1,12 +1,12 @@
 #!/bin/bash
-#$ -N hps_rad_ln_sm
+#$ -N hps_lrt_ln_sm
 #$ -q iqtc13.q
 #$ -l iqtcgpu=1
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_rad_learn_noise.out
-#$ -e /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_rad_learn_noise.err
+#$ -o /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_lrt_learn_noise.out
+#$ -e /home/g15farris/bin/bayesaenet/log/hps/TiO2_small_hps_lrt_learn_noise.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -29,27 +29,20 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
-# Choose HPS optimization metric:
-#   MONITOR=total_rmse/val  (default, accuracy-focused)
-#   MONITOR=elbo/val        (variational objective)
-MONITOR="${MONITOR:-total_rmse/val}"
-MODE="${MODE:-min}"
-
 python -m bnn_aenet.tasks.hpsearch \
-    hpsearch=bnn_rad \
+    hpsearch=bnn_lrt \
     datamodule=TiO_Forces_Data20 \
     trainer.accelerator=gpu \
     trainer.devices=1 \
-    +trainer.precision=16-mixed \
     trainer.max_epochs=10000 \
     trainer.min_epochs=1000 \
-    hpsearch.monitor="${MONITOR}" \
+    hpsearch.monitor=elbo/val \
     callbacks.early_stopping.patience=800 \
-    callbacks.early_stopping.monitor="${MONITOR}" \
-    callbacks.early_stopping.mode="${MODE}" \
-    callbacks.model_checkpoint.monitor="${MONITOR}" \
-    callbacks.model_checkpoint.mode="${MODE}" \
+    callbacks.early_stopping.monitor=elbo/val \
+    callbacks.early_stopping.mode=min \
+    callbacks.model_checkpoint.monitor=elbo/val \
+    callbacks.model_checkpoint.mode=min \
     hpsearch.results_subdir=TiO2_small \
-    hpsearch.study.study_name=rad_small_learn_noise \
+    hpsearch.study.study_name=lrt_small_learn_noise_elbo \
     model.learn_noise=true \
-    'tags=["TiO2_small", "rad", "learn_noise", "hps"]'
+    'tags=["TiO2_small", "lrt", "learn_noise", "hps"]'

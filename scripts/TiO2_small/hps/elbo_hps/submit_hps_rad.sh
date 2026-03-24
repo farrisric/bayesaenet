@@ -29,12 +29,6 @@ export TMPDIR=/tmp/g15farris
 export PYTHONPATH=/home/g15farris/bin/bayesaenet:$PYTHONPATH
 cd /home/g15farris/bin/bayesaenet
 
-# Choose HPS optimization metric:
-#   MONITOR=total_rmse/val  (default, accuracy-focused)
-#   MONITOR=elbo/val        (variational objective)
-MONITOR="${MONITOR:-total_rmse/val}"
-MODE="${MODE:-min}"
-
 python -m bnn_aenet.tasks.hpsearch \
     hpsearch=bnn_rad \
     datamodule=TiO_Forces_Data20 \
@@ -43,13 +37,13 @@ python -m bnn_aenet.tasks.hpsearch \
     +trainer.precision=16-mixed \
     trainer.max_epochs=10000 \
     trainer.min_epochs=1000 \
-    hpsearch.monitor="${MONITOR}" \
+    hpsearch.monitor=elbo/val \
     callbacks.early_stopping.patience=800 \
-    callbacks.early_stopping.monitor="${MONITOR}" \
-    callbacks.early_stopping.mode="${MODE}" \
-    callbacks.model_checkpoint.monitor="${MONITOR}" \
-    callbacks.model_checkpoint.mode="${MODE}" \
+    callbacks.early_stopping.monitor=elbo/val \
+    callbacks.early_stopping.mode=min \
+    callbacks.model_checkpoint.monitor=elbo/val \
+    callbacks.model_checkpoint.mode=min \
     hpsearch.results_subdir=TiO2_small \
-    hpsearch.study.study_name=rad_small_learn_noise \
+    hpsearch.study.study_name=rad_small_learn_noise_elbo \
     model.learn_noise=true \
     'tags=["TiO2_small", "rad", "learn_noise", "hps"]'
