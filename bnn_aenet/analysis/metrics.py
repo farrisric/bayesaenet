@@ -19,8 +19,10 @@ def compute_energy_metrics(
 ) -> Dict[str, float]:
     """Compute energy prediction metrics.
 
-    When n_atoms is provided, RMSE/MAE are computed per-atom to match TensorBoard
-    (training logs get_rmse_atom which uses (E_pred - E_true) / n_atoms).
+    When n_atoms is provided and has one entry per structure, deterministic error
+    metrics are computed from per-atom errors to match TensorBoard-style reporting
+    ((E_pred - E_true) / n_atoms). If n_atoms is missing or mismatched in length,
+    deterministic metrics fall back to total-energy errors.
     
     Args:
         y_true: Ground truth energies (total per structure)
@@ -34,24 +36,22 @@ def compute_energy_metrics(
     y_true = np.asarray(y_true).flatten()
     y_pred = np.asarray(y_pred).flatten()
     errors = y_true - y_pred
+    metric_errors = errors
 
     if n_atoms is not None:
         n_atoms = np.asarray(n_atoms).flatten()
         if len(n_atoms) == len(errors):
-            per_atom_errors = errors / np.clip(n_atoms, 1, None)
-            mae = np.mean(np.abs(per_atom_errors))
-            rmse = np.sqrt(np.mean(per_atom_errors**2))
+            metric_errors = errors / np.clip(n_atoms, 1, None)
         else:
             n_atoms = None
 
-    if n_atoms is None:
-        mae = np.mean(np.abs(errors))
-        rmse = np.sqrt(np.mean(errors**2))
-    max_err = np.max(np.abs(errors))
+    mae = np.mean(np.abs(metric_errors))
+    rmse = np.sqrt(np.mean(metric_errors**2))
+    max_err = np.max(np.abs(metric_errors))
     
     # R-squared
-    ss_res = np.sum(errors**2)
-    ss_tot = np.sum((y_true - np.mean(y_true))**2)
+    ss_res = np.sum(metric_errors**2)
+    ss_tot = np.sum((metric_errors - np.mean(metric_errors))**2)
     r2 = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0.0
     
     metrics = {
@@ -59,8 +59,8 @@ def compute_energy_metrics(
         "rmse": rmse,
         "max_err": max_err,
         "r2": r2,
-        "mean_error": np.mean(errors),
-        "std_error": np.std(errors),
+        "mean_error": np.mean(metric_errors),
+        "std_error": np.std(metric_errors),
     }
     
     # Uncertainty metrics if std provided
