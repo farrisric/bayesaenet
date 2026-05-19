@@ -1,12 +1,12 @@
 #!/bin/bash
-#$ -N timing_sweep_5model
+#$ -N timing_sweep_5model_1000ep
 #$ -q iqtc13.q
 #$ -l iqtcgpu=1
 #$ -pe smp 4
 #$ -S /bin/bash
 #$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/log/time/timing_sweep_5model.out
-#$ -e /home/g15farris/bin/bayesaenet/log/time/timing_sweep_5model.err
+#$ -o /home/g15farris/bin/bayesaenet/log/time/timing_sweep_5model_1000ep.out
+#$ -e /home/g15farris/bin/bayesaenet/log/time/timing_sweep_5model_1000ep.err
 
 . /etc/profile
 __conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -26,6 +26,7 @@ mkdir -p log/time
 echo "=========================================="
 echo "BNN Training Time Benchmarking"
 echo "5 Models: LRT, LRT Hetero, RAD, RAD Hetero, NN"
+echo "1000 epochs each"
 echo "=========================================="
 echo ""
 echo "Models to test:"
@@ -35,7 +36,7 @@ echo "  3. RAD with RMSE objective (learn_noise=True)"
 echo "  4. RAD Hetero with RMSE objective (learn_noise=False)"
 echo "  5. NN (standard neural network baseline)"
 echo ""
-echo "Each model will run for 100 epochs."
+echo "Each model will run for 1000 epochs."
 echo "=========================================="
 
 # Model parameters (common across models)
@@ -56,7 +57,7 @@ START_TIME_LRT=$(date +%s)
 
 python -m bnn_aenet.tasks.train \
   experiment=bnn_lrt datamodule=TiO_Forces_Data20 trainer.accelerator=gpu trainer.devices=1 \
-  trainer.max_epochs=100 dataset=TiO2_small task_name=train run_name=time_lrt_100ep \
+  trainer.max_epochs=1000 dataset=TiO2_small task_name=train run_name=time_lrt_1000ep \
   datamodule.batch_size=$BATCH_SIZE_LRT model.lr=$LR_LRT model.mc_samples_train=1 \
   model.prior_scale=$PRIOR_SCALE_LRT model.q_scale=$Q_SCALE_LRT model.obs_scale=0.5 \
   model.pretrain_epochs=0 model.scale_force=0.1 \
@@ -75,7 +76,7 @@ START_TIME_LRT_HETERO=$(date +%s)
 
 python -m bnn_aenet.tasks.train \
   experiment=bnn_lrt datamodule=TiO_Forces_Data20 trainer.accelerator=gpu trainer.devices=1 \
-  trainer.max_epochs=100 dataset=TiO2_small task_name=train run_name=time_lrt_hetero_100ep \
+  trainer.max_epochs=1000 dataset=TiO2_small task_name=train run_name=time_lrt_hetero_1000ep \
   datamodule.batch_size=$BATCH_SIZE_LRT model.lr=$LR_LRT model.mc_samples_train=1 \
   model.prior_scale=$PRIOR_SCALE_LRT model.q_scale=$Q_SCALE_LRT model.obs_scale=0.5 \
   model.pretrain_epochs=0 model.scale_force=0.1 \
@@ -94,7 +95,7 @@ START_TIME_RAD=$(date +%s)
 
 python -m bnn_aenet.tasks.train \
   experiment=bnn_rad datamodule=TiO_Forces_Data20 trainer.accelerator=gpu trainer.devices=1 \
-  trainer.max_epochs=100 dataset=TiO2_small task_name=train run_name=time_rad_100ep \
+  trainer.max_epochs=1000 dataset=TiO2_small task_name=train run_name=time_rad_1000ep \
   datamodule.batch_size=$BATCH_SIZE_RAD model.lr=$LR_RAD model.mc_samples_train=1 \
   model.prior_scale=$PRIOR_SCALE_RAD model.q_scale=$Q_SCALE_RAD model.obs_scale=0.5 \
   model.pretrain_epochs=0 model.scale_force=0.1 \
@@ -113,7 +114,7 @@ START_TIME_RAD_HETERO=$(date +%s)
 
 python -m bnn_aenet.tasks.train \
   experiment=bnn_rad datamodule=TiO_Forces_Data20 trainer.accelerator=gpu trainer.devices=1 \
-  trainer.max_epochs=100 dataset=TiO2_small task_name=train run_name=time_rad_hetero_100ep \
+  trainer.max_epochs=1000 dataset=TiO2_small task_name=train run_name=time_rad_hetero_1000ep \
   datamodule.batch_size=$BATCH_SIZE_RAD model.lr=$LR_RAD model.mc_samples_train=1 \
   model.prior_scale=$PRIOR_SCALE_RAD model.q_scale=$Q_SCALE_RAD model.obs_scale=0.5 \
   model.pretrain_epochs=0 model.scale_force=0.1 \
@@ -132,7 +133,7 @@ START_TIME_NN=$(date +%s)
 
 python -m bnn_aenet.tasks.train \
   experiment=bnn_nn datamodule=TiO_Forces_Data20 trainer.accelerator=gpu trainer.devices=1 \
-  trainer.max_epochs=100 dataset=TiO2_small task_name=train run_name=time_nn_100ep \
+  trainer.max_epochs=1000 dataset=TiO2_small task_name=train run_name=time_nn_1000ep \
   datamodule.batch_size=512 model.lr=0.001 model.pretrain_epochs=0 model.scale_force=0.1 \
   callbacks.model_checkpoint.monitor=total_rmse/val callbacks.early_stopping.monitor=total_rmse/val \
   callbacks.early_stopping.patience=20 seed=46
@@ -144,7 +145,7 @@ echo "NN completed in ${ELAPSED_NN} seconds"
 # Summary
 echo ""
 echo "=========================================="
-echo "TIME SUMMARY (100 epochs each)"
+echo "TIME SUMMARY (1000 epochs each)"
 echo "=========================================="
 printf "%-35s %12s\n" "Model" "Time (seconds)"
 printf "%-35s %12d\n" "LRT" $ELAPSED_LRT
@@ -159,14 +160,14 @@ printf "%-35s %12d\n" "TOTAL TIME" $TOTAL_TIME
 echo "=========================================="
 
 # Save to CSV for later analysis
-cat >> log/time/timing_results_5model.csv << EOF
+cat >> log/time/timing_results_5model_1000ep.csv << EOF
 model,epochs,time_seconds
-lrt,100,$ELAPSED_LRT
-lrt_hetero,100,$ELAPSED_LRT_HETERO
-rad,100,$ELAPSED_RAD
-rad_hetero,100,$ELAPSED_RAD_HETERO
-nn_baseline,100,$ELAPSED_NN
+lrt,1000,$ELAPSED_LRT
+lrt_hetero,1000,$ELAPSED_LRT_HETERO
+rad,1000,$ELAPSED_RAD
+rad_hetero,1000,$ELAPSED_RAD_HETERO
+nn_baseline,1000,$ELAPSED_NN
 EOF
 
 echo ""
-echo "Results saved to log/time/timing_results_5model.csv"
+echo "Results saved to log/time/timing_results_5model_1000ep.csv"

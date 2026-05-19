@@ -1,0 +1,14 @@
+\begin{table*}
+\centering
+\caption{Test set performance of TiO$_2$ force-trained models. Energy in meV/atom, forces in meV/\AA{}. Best values per column in \textbf{bold}.}
+\label{tab:tio2_results}
+\begin{tabular}{lrrrrrr}
+\toprule
+Method & E RMSE & E MAE & Total RMSE & E NLL & E ECE & Time (min) \\
+\midrule
+Deep Ens. & 0.014 $\pm$ 0.000 & \textbf{0.007 $\pm$ 0.000} & 0.014 $\pm$ 0.000 & \textbf{-3.282 $\pm$ 0.126} & \textbf{0.127 $\pm$ 0.008} & -- \\
+LRT & 0.013 $\pm$ 0.000 & 0.008 $\pm$ 0.000 & 0.013 $\pm$ 0.000 & -0.917 $\pm$ 1.313 & 0.203 $\pm$ 0.074 & -- \\
+Radial & \textbf{0.012 $\pm$ 0.000} & 0.007 $\pm$ 0.000 & \textbf{0.012 $\pm$ 0.000} & -1.909 $\pm$ 5.118 & 0.161 $\pm$ 0.062 & -- \\
+\bottomrule
+\end{tabular}
+\end{table*}

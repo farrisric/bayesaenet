@@ -1,15 +1,22 @@
 #!/bin/bash
-#$ -N multi_rad
-#$ -q iqtc13.q
-#$ -l iqtcgpu=1
-#$ -pe smp 4
-#$ -S /bin/bash
-#$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/log/multirun/TiO2_small_rad.out
-#$ -e /home/g15farris/bin/bayesaenet/log/multirun/TiO2_small_rad.err
+#SBATCH --job-name=multi_rad
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
+#SBATCH --mem=20G
+#SBATCH --partition=iqtc13.q
+#SBATCH --error=tio2_nn.out
+#SBATCH --output=tio2_nn.err
+#SBATCH --output=/home/g15farris/bin/bayesaenet/log/multirun/TiO2_small_rad.out
+#SBATCH --error=/home/g15farris/bin/bayesaenet/log/multirun/TiO2_small_rad.err
+
+
+ulimit -l unlimited
+ulimit -s unlimited
 
 . /etc/profile
-__conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/aplic/anaconda/2024.10/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
@@ -22,7 +29,7 @@ fi
 unset __conda_setup
 
 module load cuda/12.4
-conda activate bnn
+source activate /home/g15farris/.conda/envs/bnn
 
 export OMP_NUM_THREADS=4
 export TMPDIR=/tmp/g15farris
@@ -34,13 +41,12 @@ LR=0.00035722967627023364
 BS=512
 MC=2
 PRIOR_SCALE=0.15593351063684593
-Q_SCALE=2.258285167134673e-05
+Q_SCALE=2.258285167134673e-03
 OBS_SCALE=1.0262810235808921
 SCALE_FORCE=0.887890491346372
 
-SEEDS=(121958 671155 131932 365838 259178 644167 110268 732180 54886 137337)
-
-for i in $(seq 0 9); do
+SEEDS=($(for i in {1..50}; do od -An -N2 -tu2 < /dev/urandom; done))
+for i in $(seq 25 29); do
     echo "=== Starting RAD run $i with seed ${SEEDS[$i]} at $(date) ==="
     python -m bnn_aenet.tasks.train \
         experiment=bnn_rad \
@@ -48,7 +54,7 @@ for i in $(seq 0 9); do
         trainer.accelerator=gpu \
         trainer.devices=1 \
         +trainer.precision=16-mixed \
-        trainer.max_epochs=50000 \
+        trainer.max_epochs=100000 \
         dataset=TiO2_small \
         task_name=train \
         run_name=rad_train_${i} \
@@ -62,7 +68,7 @@ for i in $(seq 0 9); do
         model.scale_force=${SCALE_FORCE} \
         callbacks.model_checkpoint.monitor=total_rmse/val \
         callbacks.early_stopping.monitor=total_rmse/val \
-        callbacks.early_stopping.patience=500 \
+        callbacks.early_stopping.patience=100 \
         seed=${SEEDS[$i]} \
         'tags=["TiO2_small", "rad", "train"]'
     echo "=== Finished RAD run $i at $(date) ==="

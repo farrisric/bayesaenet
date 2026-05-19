@@ -1023,6 +1023,9 @@ def main():
     parser.add_argument("--subsets", type=str, nargs="+",
                         default=["train", "val", "test"],
                         help="Prediction subsets to analyze")
+    parser.add_argument("--models", type=str, nargs="+",
+                        default=["DE", "lrt", "rad", "lrt_hetero", "rad_hetero"],
+                        help="Methods to include: DE lrt rad lrt_hetero rad_hetero")
     args = parser.parse_args()
 
     pred_dir = Path(args.pred_dir)
@@ -1055,11 +1058,12 @@ def main():
 
         # ---- Load predictions ----
         print("Loading predictions...")
-        nn_runs = load_run_predictions(pred_dir, "nn", subset)
-        lrt_runs = load_run_predictions(pred_dir, "lrt", subset)
-        rad_runs = load_run_predictions(pred_dir, "rad", subset)
-        lrt_het_runs = load_run_predictions(pred_dir, "lrt_hetero", subset)
-        rad_het_runs = load_run_predictions(pred_dir, "rad_hetero", subset)
+        _models = set(args.models)
+        nn_runs = load_run_predictions(pred_dir, "nn", subset) if "DE" in _models else []
+        lrt_runs = load_run_predictions(pred_dir, "lrt", subset) if "lrt" in _models else []
+        rad_runs = load_run_predictions(pred_dir, "rad", subset) if "rad" in _models else []
+        lrt_het_runs = load_run_predictions(pred_dir, "lrt_hetero", subset) if "lrt_hetero" in _models else []
+        rad_het_runs = load_run_predictions(pred_dir, "rad_hetero", subset) if "rad_hetero" in _models else []
 
         for model_type, runs in (
             ("nn", nn_runs),

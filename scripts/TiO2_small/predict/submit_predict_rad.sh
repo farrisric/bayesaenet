@@ -1,15 +1,20 @@
 #!/bin/bash
-#$ -N pred_rad_sm
-#$ -q iqtc10.q
-#$ -l iqtcgpu=1
-#$ -pe smp 4
-#$ -S /bin/bash
-#$ -cwd
-#$ -o /home/g15farris/bin/bayesaenet/log/predict/TiO2_small_pred_rad.out
-#$ -e /home/g15farris/bin/bayesaenet/log/predict/TiO2_small_pred_rad.err
+#SBATCH --job-name=pred_rad_sm
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
+#SBATCH --mem=20G
+#SBATCH --partition=iqtc13.q
+#SBATCH --output=/home/g15farris/bin/bayesaenet/log/predict/TiO2_small_pred_rad.out
+#SBATCH --error=/home/g15farris/bin/bayesaenet/log/predict/TiO2_small_pred_rad.err
+
+
+ulimit -l unlimited
+ulimit -s unlimited
 
 . /etc/profile
-__conda_setup="$('/aplic/anaconda/2020.02/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/aplic/anaconda/2024.10/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
@@ -22,7 +27,7 @@ fi
 unset __conda_setup
 
 module load cuda/12.4
-conda activate bnn
+source activate /home/g15farris/.conda/envs/bnn
 
 export OMP_NUM_THREADS=4
 export TMPDIR=/tmp/g15farris

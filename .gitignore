@@ -51,6 +51,9 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Paper (kept local, not versioned)
+.paper/
+
 # Aenet
 *.ascii
 *.train
