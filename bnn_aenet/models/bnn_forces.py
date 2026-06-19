@@ -3,31 +3,31 @@ BNN with joint energy+force likelihood (ELBO-integrated).
 Canonical BNN model; always uses forces.
 """
 
-from typing import Any, Dict, List, Union
+import contextlib
+import copy
 import warnings
+from functools import partial
+from typing import Any, Dict, List, Union
 
 import numpy as np
-import torch.nn as nn
 import pyro
 import pyro.poutine as poutine
 import torch
+import torch.nn as nn
 import torch.nn.functional as F
 import tyxe
-from tyxe import priors, guides
-from tyxe.bnn import VariationalBNN
 from pyro.infer import SVI, Trace_ELBO, TraceMeanField_ELBO
-from functools import partial
-import copy
-import contextlib
+from tyxe import guides, priors
+from tyxe.bnn import VariationalBNN
 
-from .bnn import BNN
-from .utils import get_rmse_atom, weights_init
-from .likelihoods import make_energy_force_model
-from ..utils.metrics import sharpness, rms_calibration_error
-from ..datamodule.aenet.batch_constants import BatchIdx
-
-from bnn_aenet.tasks.utils import get_pylogger
 from bnn_aenet.models.utils import param_store_to
+from bnn_aenet.tasks.utils import get_pylogger
+
+from ..datamodule.aenet.batch_constants import BatchIdx
+from ..utils.metrics import rms_calibration_error, sharpness
+from .bnn import BNN
+from .likelihoods import make_energy_force_model
+from .utils import get_rmse_atom, weights_init
 
 log = get_pylogger(__name__)
 
@@ -64,9 +64,19 @@ class BNN_Forces(BNN):
         name: str = "BNN_Forces",
     ):
         super().__init__(
-            net, lr, pretrain_epochs, mc_samples_train, mc_samples_eval,
-            dataset_size, fit_context, prior_loc, prior_scale, guide,
-            q_scale, obs_scale, name=name,
+            net,
+            lr,
+            pretrain_epochs,
+            mc_samples_train,
+            mc_samples_eval,
+            dataset_size,
+            fit_context,
+            prior_loc,
+            prior_scale,
+            guide,
+            q_scale,
+            obs_scale,
+            name=name,
         )
         self.save_hyperparameters(logger=False, ignore=["net"])
         self.scale_force = scale_force
@@ -98,6 +108,7 @@ class BNN_Forces(BNN):
             guide_base = tyxe.guides.AutoNormal
         elif self.hparams.guide == "radial":
             from .guides.radial import AutoRadial
+
             guide_base = AutoRadial
             self.fit_ctxt = contextlib.nullcontext
         else:
@@ -153,11 +164,13 @@ class BNN_Forces(BNN):
                 warnings.warn("LRT incompatible with mixed precision.", UserWarning)
 
         clip_norm = getattr(self.hparams, "grad_clip_val", 10.0)
-        self.optimizer = pyro.optim.ClippedAdam({
-            "lr": self.hparams.lr,
-            "betas": [0.95, 0.999],
-            "clip_norm": clip_norm,
-        })
+        self.optimizer = pyro.optim.ClippedAdam(
+            {
+                "lr": self.hparams.lr,
+                "betas": [0.95, 0.999],
+                "clip_norm": clip_norm,
+            }
+        )
 
         self.loss = (
             TraceMeanField_ELBO(self.hparams.mc_samples_train)
@@ -199,16 +212,37 @@ class BNN_Forces(BNN):
         alpha = self.net.alpha.item() if hasattr(self.net, "alpha") else 0.1
         total_rmse = (1 - alpha) * rmse + alpha * force_rmse
 
-        self.log("rmse/train", rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y))
-        self.log("force_rmse/train", force_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y))
+        self.log(
+            "rmse/train", rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y)
+        )
+        self.log(
+            "force_rmse/train",
+            force_rmse,
+            on_step=False,
+            on_epoch=True,
+            prog_bar=True,
+            batch_size=len(y),
+        )
         self.log("total_rmse/train", total_rmse, on_step=False, on_epoch=True, batch_size=len(y))
         self.log("elbo/train", elbo, on_step=False, on_epoch=True, batch_size=len(y))
 
         # Log learned noise scales if learn_noise is enabled
         if getattr(self, "learn_noise", False) and self.learned_scale_force is not None:
-            self.log("obs_scale_force/train", self.learned_scale_force, on_step=False, on_epoch=True, batch_size=len(y))
+            self.log(
+                "obs_scale_force/train",
+                self.learned_scale_force,
+                on_step=False,
+                on_epoch=True,
+                batch_size=len(y),
+            )
         if getattr(self, "learn_noise", False) and self.learned_scale_energy is not None:
-            self.log("obs_scale_energy/train", self.learned_scale_energy, on_step=False, on_epoch=True, batch_size=len(y))
+            self.log(
+                "obs_scale_energy/train",
+                self.learned_scale_energy,
+                on_step=False,
+                on_epoch=True,
+                batch_size=len(y),
+            )
 
     # ------------------------------------------------------------------
     # Force helpers using poutine.replay
@@ -234,14 +268,12 @@ class BNN_Forces(BNN):
             A Pyro trace usable with ``poutine.replay``.
         """
         guide_tr = poutine.trace(self.net_guide).get_trace(
-            E_descrp, E_logic_reduce,
+            E_descrp,
+            E_logic_reduce,
         )
         if use_mean:
             for site_name, site in guide_tr.nodes.items():
-                if (
-                    site.get("type") == "sample"
-                    and not site.get("is_observed", False)
-                ):
+                if site.get("type") == "sample" and not site.get("is_observed", False):
                     site["value"] = site["fn"].mean
         return guide_tr
 
@@ -268,21 +300,22 @@ class BNN_Forces(BNN):
         F_indices = batch[BatchIdx.F_INDICES]
         F_indices_i = batch[BatchIdx.F_INDICES_I]
         max_nnb = (
-            F_sfderiv_j[0].shape[1]
-            if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0
-            else 0
+            F_sfderiv_j[0].shape[1] if len(F_sfderiv_j) > 0 and F_sfderiv_j[0].shape[0] > 0 else 0
         )
 
         with torch.inference_mode(False):
-            F_descrp_grad = [
-                d.clone().detach().float().requires_grad_(True)
-                for d in F_descrp
-            ]
+            F_descrp_grad = [d.clone().detach().float().requires_grad_(True) for d in F_descrp]
             F_sfderiv_i_f = [s.clone().float() for s in F_sfderiv_i]
             F_sfderiv_j_f = [s.clone().float() for s in F_sfderiv_j]
             F_logic_reduce_f = [l.clone().float() for l in F_logic_reduce]
-            F_indices_c = F_indices.clone() if isinstance(F_indices, torch.Tensor) else [idx.clone() for idx in F_indices]
-            F_indices_i_c = F_indices_i.clone() if isinstance(F_indices_i, torch.Tensor) else F_indices_i
+            F_indices_c = (
+                F_indices.clone()
+                if isinstance(F_indices, torch.Tensor)
+                else [idx.clone() for idx in F_indices]
+            )
+            F_indices_i_c = (
+                F_indices_i.clone() if isinstance(F_indices_i, torch.Tensor) else F_indices_i
+            )
             with poutine.replay(trace=guide_tr):
                 _, F_pred = net.forward_F(
                     F_descrp_grad,
@@ -312,7 +345,7 @@ class BNN_Forces(BNN):
         F_pred = self._replay_forward_F(batch, guide_tr)
 
         diff = F_pred.detach() - F_forces.float()
-        return torch.sqrt(torch.mean(diff ** 2))  # normalized units
+        return torch.sqrt(torch.mean(diff**2))  # normalized units
 
     def validation_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
         x = batch[BatchIdx.E_DESCRP], batch[BatchIdx.E_LOGIC_REDUCE]
@@ -338,8 +371,22 @@ class BNN_Forces(BNN):
         total_rmse = (1 - alpha) * rmse + alpha * force_rmse
 
         self.log("rmse/val", rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y))
-        self.log("force_rmse/val", force_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y))
-        self.log("total_rmse/val", total_rmse, on_step=False, on_epoch=True, prog_bar=True, batch_size=len(y))
+        self.log(
+            "force_rmse/val",
+            force_rmse,
+            on_step=False,
+            on_epoch=True,
+            prog_bar=True,
+            batch_size=len(y),
+        )
+        self.log(
+            "total_rmse/val",
+            total_rmse,
+            on_step=False,
+            on_epoch=True,
+            prog_bar=True,
+            batch_size=len(y),
+        )
         self.log("elbo/val", elbo, on_step=False, on_epoch=True, batch_size=len(y))
 
     def on_test_start(self) -> None:
@@ -451,13 +498,19 @@ class BNN_Forces(BNN):
                 aleatoric_std = self.learned_scale_force
             else:
                 aleatoric_std = getattr(self, "scale_force", self.hparams.scale_force)
-            force_stds = np.sqrt(epistemic_std ** 2 + aleatoric_std ** 2)
+            force_stds = np.sqrt(epistemic_std**2 + aleatoric_std**2)
 
             true_forces_flat = F_group_forces.cpu().numpy().flatten()
             pred_forces_flat = force_preds.flatten()
             std_forces_flat = force_stds.flatten()
-            scale = float(self.net.e_scaling) if hasattr(self.net.e_scaling, "item") else float(self.net.e_scaling)
-            force_rmse = np.sqrt(np.mean((true_forces_flat - pred_forces_flat) ** 2)) / scale * 1000
+            scale = (
+                float(self.net.e_scaling)
+                if hasattr(self.net.e_scaling, "item")
+                else float(self.net.e_scaling)
+            )
+            force_rmse = (
+                np.sqrt(np.mean((true_forces_flat - pred_forces_flat) ** 2)) / scale * 1000
+            )
             force_mae = np.mean(np.abs(true_forces_flat - pred_forces_flat)) / scale * 1000
         else:
             true_forces_flat = None
@@ -518,10 +571,22 @@ class PartialBNN_Forces(BNN_Forces):
     ):
         self._bayesian_layers_config = bayesian_layers
         super().__init__(
-            net, lr, pretrain_epochs, mc_samples_train, mc_samples_eval,
-            dataset_size, fit_context, prior_loc, prior_scale, guide,
-            q_scale, obs_scale, scale_force=scale_force,
-            grad_clip_val=grad_clip_val, learn_noise=learn_noise, name=name,
+            net,
+            lr,
+            pretrain_epochs,
+            mc_samples_train,
+            mc_samples_eval,
+            dataset_size,
+            fit_context,
+            prior_loc,
+            prior_scale,
+            guide,
+            q_scale,
+            obs_scale,
+            scale_force=scale_force,
+            grad_clip_val=grad_clip_val,
+            learn_noise=learn_noise,
+            name=name,
         )
         self.save_hyperparameters(logger=False, ignore=["net"])
 
@@ -618,9 +683,7 @@ class PartialBNN_Forces(BNN_Forces):
         frozen_count = 0
         for param_name in list(param_store.keys()):
             if ".scale" in param_name:
-                is_bayesian = any(
-                    layer in param_name for layer in bayesian_layer_names
-                )
+                is_bayesian = any(layer in param_name for layer in bayesian_layer_names)
                 if not is_bayesian:
                     param = param_store[param_name]
                     param.data.fill_(1e-8)

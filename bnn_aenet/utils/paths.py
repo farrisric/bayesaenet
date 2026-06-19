@@ -50,11 +50,4 @@ def get_run_log_dir(exp: ExperimentId) -> Path:
     Example: bnn_aenet/logs/tio2_small/hps/lrt/run_001
     """
 
-    return (
-        get_logs_root()
-        / exp.dataset
-        / exp.task
-        / exp.model
-        / f"run_{exp.run_id}"
-    )
-
+    return get_logs_root() / exp.dataset / exp.task / exp.model / f"run_{exp.run_id}"

@@ -5,17 +5,21 @@ Provides a custom Pyro model for joint energy+force Gaussian likelihood,
 integrating both into the ELBO for proper Bayesian training.
 """
 
-import torch
 import pyro
 import pyro.distributions as dist
 import pyro.poutine as poutine
+import torch
 from torch.distributions import constraints
 
 from ..datamodule.aenet.batch_constants import BatchIdx
 
 
 def make_energy_force_model(
-    bnn, scale_energy, scale_force, dataset_size, learn_noise=False,
+    bnn,
+    scale_energy,
+    scale_force,
+    dataset_size,
+    learn_noise=False,
 ):
     """
     Create a Pyro model function for joint energy+force likelihood.
@@ -40,6 +44,7 @@ def make_energy_force_model(
             ``bnn.learned_scale_force`` after each forward pass for use at
             prediction time.
     """
+
     def model(batch):
         # Energy data
         E_descrp = batch[BatchIdx.E_DESCRP]
@@ -114,7 +119,11 @@ def make_energy_force_model(
             F_sfderiv_j_f = [s.float() for s in F_sfderiv_j]
             F_logic_reduce_f = [l.float() for l in F_logic_reduce]
 
-            with poutine.block(hide=weight_sites), poutine.replay(trace=energy_trace), torch.enable_grad():
+            with (
+                poutine.block(hide=weight_sites),
+                poutine.replay(trace=energy_trace),
+                torch.enable_grad(),
+            ):
                 _, F_pred = net.forward_F(
                     F_descrp_grad,
                     F_sfderiv_i_f,
@@ -138,4 +147,5 @@ def make_energy_force_model(
                 )
 
         return E_pred
+
     return model

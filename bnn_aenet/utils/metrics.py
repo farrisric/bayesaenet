@@ -1,5 +1,7 @@
 from typing import Dict, List, Optional, Tuple, Union
 
+import numpy as np
+import pandas as pd
 import scipy
 import torch
 from shapely.geometry import LineString, Polygon
@@ -10,9 +12,6 @@ from torch.nn.functional import gaussian_nll_loss
 from uncertainty_toolbox.metrics_calibration import (
     get_proportion_lists_vectorized,
 )
-
-import numpy as np
-import pandas as pd
 
 from .miscellaneous import assert_same_shapes
 
@@ -31,25 +30,16 @@ class Metrics:
         df = self._metrics_by(["method", "model"])
         if top is not None:
             self.df_preds = df_preds[
-                df_preds.model.isin(
-                    df.sort_values("nll").groupby("method").head(top).model
-                )
+                df_preds.model.isin(df.sort_values("nll").groupby("method").head(top).model)
             ]
 
     def _metrics_by(self, by: List[str]) -> pd.DataFrame:
-        return (
-            self.df_preds.groupby(by)
-            .apply(compute_metrics)
-            .apply(pd.Series)
-            .reset_index()
-        )[by + self.metrics]
+        return (self.df_preds.groupby(by).apply(compute_metrics).apply(pd.Series).reset_index())[
+            by + self.metrics
+        ]
 
-    def _metrics_agg(
-        self, df: pd.DataFrame, agg: Union[str, List[str]]
-    ) -> pd.DataFrame:
-        df = df.groupby(agg).agg(
-            dict((metric, ["mean", "std"]) for metric in self.metrics)
-        )
+    def _metrics_agg(self, df: pd.DataFrame, agg: Union[str, List[str]]) -> pd.DataFrame:
+        df = df.groupby(agg).agg(dict((metric, ["mean", "std"]) for metric in self.metrics))
         df.columns = ["_".join(a) for a in df.columns.to_flat_index()]
         return df.sort_values("nll_mean")
 
@@ -111,9 +101,7 @@ class Metrics:
         self, rlt_round: Optional[int] = 1, ewm_span: Optional[int] = None
     ) -> pd.DataFrame:
         return (
-            self.df_preds.assign(
-                relative_time=lambda x: x.relative_time.round(rlt_round)
-            )
+            self.df_preds.assign(relative_time=lambda x: x.relative_time.round(rlt_round))
             .groupby(["relative_time", "method", "model", "unit"])
             .mean(numeric_only=True)
             .reset_index()
@@ -124,9 +112,7 @@ class Metrics:
         self, rlt_round: Optional[int] = 2, ewm_span: Optional[int] = 3
     ) -> pd.DataFrame:
         return (
-            self.df_preds.assign(
-                relative_time=lambda x: x.relative_time.round(rlt_round)
-            )
+            self.df_preds.assign(relative_time=lambda x: x.relative_time.round(rlt_round))
             .groupby(["relative_time", "method", "model", "unit"])
             .mean(numeric_only=True)
             .ewm(span=ewm_span)
@@ -155,9 +141,7 @@ class Metrics:
         self, rlt_round: Optional[int] = 2, ewm_span: Optional[int] = 5
     ) -> pd.DataFrame:
         return (
-            self.df_preds.assign(
-                relative_time=lambda x: x.relative_time.round(rlt_round)
-            )
+            self.df_preds.assign(relative_time=lambda x: x.relative_time.round(rlt_round))
             .groupby(["relative_time", "method", "model", "unit"])
             .mean(numeric_only=True)
             .ewm(span=ewm_span)
@@ -189,12 +173,8 @@ def compute_metrics(df: pd.DataFrame) -> Dict[str, float]:
     metrics["rmse"] = torch.sqrt(((y_true - y_pred) ** 2).mean()).cpu().item()
     metrics["sharp"] = sharpness(std).cpu().item()
     metrics["rmsce"] = rms_calibration_error(y_pred, std, y_true).cpu().item()
-    metrics["ece"] = (
-        mean_absolute_calibration_error(y_pred, std, y_true).cpu().item()
-    )
-    metrics["nll"] = (
-        gaussian_nll_loss(y_pred, y_true, torch.square(std)).cpu().item()
-    )
+    metrics["ece"] = mean_absolute_calibration_error(y_pred, std, y_true).cpu().item()
+    metrics["nll"] = gaussian_nll_loss(y_pred, y_true, torch.square(std)).cpu().item()
     metrics["entropy"] = lambda x: torch.distributions.normal.Normal(
         torch.tensor(x.labels.values), torch.tensor(x.stds.values)
     ).entropy()
@@ -221,17 +201,14 @@ def get_proportion_lists(
     prop_type: Optional[str] = "interval",
 ) -> Tuple[Tensor, Tensor]:
     """To compute RMSCE"""
-    #exp_proportions = torch.linspace(0, 1, num_bins, device=y_true.get_device())
+    # exp_proportions = torch.linspace(0, 1, num_bins, device=y_true.get_device())
     exp_proportions = torch.linspace(0, 1, num_bins)
 
-
     residuals = y_pred - y_true
-    normalized_residuals = (residuals.flatten() / y_std.flatten()).reshape(
-        -1, 1
-    )
+    normalized_residuals = (residuals.flatten() / y_std.flatten()).reshape(-1, 1)
     dist = Normal(  # type: ignore
-        torch.tensor([0.0]),#, device=y_true.get_device()),
-        torch.tensor([1.0]),#, device=y_true.get_device()),
+        torch.tensor([0.0]),  # , device=y_true.get_device()),
+        torch.tensor([1.0]),  # , device=y_true.get_device()),
     )
     if prop_type == "interval":
         gaussian_lower_bound = dist.icdf(0.5 - exp_proportions / 2.0)
@@ -241,15 +218,11 @@ def get_proportion_lists(
         below_upper = normalized_residuals <= gaussian_upper_bound
 
         within_quantile = above_lower * below_upper
-        obs_proportions = torch.sum(within_quantile, axis=0).flatten() / len(
-            residuals
-        )
+        obs_proportions = torch.sum(within_quantile, axis=0).flatten() / len(residuals)
     elif prop_type == "quantile":
         gaussian_quantile_bound = dist.icdf(exp_proportions)
         below_quantile = normalized_residuals <= gaussian_quantile_bound
-        obs_proportions = torch.sum(below_quantile, axis=0).flatten() / len(
-            residuals
-        )
+        obs_proportions = torch.sum(below_quantile, axis=0).flatten() / len(residuals)
 
     return exp_proportions, obs_proportions
 
@@ -266,9 +239,7 @@ def rms_calibration_error(
     assert y_std.min() >= 0, "Not all values are positive"
     assert prop_type in ["interval", "quantile"]
 
-    exp_props, obs_props = get_proportion_lists(
-        y_pred, y_std, y_true, num_bins, prop_type
-    )
+    exp_props, obs_props = get_proportion_lists(y_pred, y_std, y_true, num_bins, prop_type)
 
     squared_diff_props = torch.square(exp_props - obs_props)
     rmsce = torch.sqrt(torch.mean(squared_diff_props))
@@ -289,9 +260,7 @@ def mean_absolute_calibration_error(
     assert prop_type in ["interval", "quantile"]
 
     # Get lists of expected and observed proportions for a range of quantiles
-    exp_props, obs_props = get_proportion_lists(
-        y_pred, y_std, y_true, num_bins, prop_type
-    )
+    exp_props, obs_props = get_proportion_lists(y_pred, y_std, y_true, num_bins, prop_type)
 
     abs_diff_proportions = torch.abs(exp_props - obs_props)
     mace = torch.mean(abs_diff_proportions)
@@ -299,9 +268,7 @@ def mean_absolute_calibration_error(
     return mace
 
 
-def miscalibration_area(
-    exp_proportions: np.array, obs_proportions: np.array
-) -> np.array:
+def miscalibration_area(exp_proportions: np.array, obs_proportions: np.array) -> np.array:
     polygon_points = []
     for point in zip(exp_proportions, obs_proportions):
         polygon_points.append(point)
@@ -330,9 +297,7 @@ def calibration(df: pd.DataFrame) -> pd.DataFrame:
         # break
     cumul.append(("GT", "GT", expected_p, expected_p, 0))
     df_cal = (
-        pd.DataFrame.from_records(
-            cumul, columns=["method", "model", "exp_c", "obs_c", "area"]
-        )
+        pd.DataFrame.from_records(cumul, columns=["method", "model", "exp_c", "obs_c", "area"])
         .explode(["exp_c", "obs_c"])
         .reset_index(drop=True)
     )
@@ -373,9 +338,7 @@ def compute_cdf(df: pd.DataFrame) -> pd.DataFrame:
             cumul.append((method, model, unc_, prob_, ood_id))
 
     return (
-        pd.DataFrame.from_records(
-            cumul, columns=["method", "model", "entropy", "cdf", "ood_id"]
-        )
+        pd.DataFrame.from_records(cumul, columns=["method", "model", "entropy", "cdf", "ood_id"])
         .explode(["entropy", "cdf"])
         .reset_index(drop=True)
     )

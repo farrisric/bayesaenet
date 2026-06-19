@@ -55,27 +55,28 @@ def test_split_database_invalid_sizes_raises():
 
 def test_train_fraction_preserves_test_set():
     """Test set must be identical between 100% and 20% train fractions."""
-    full = split_database(7424, valid_split=0.1, test_split=0.1, seed=42,
-                          train_fraction=1.0)
-    small = split_database(7424, valid_split=0.1, test_split=0.1, seed=42,
-                           train_fraction=0.2)
+    full = split_database(7424, valid_split=0.1, test_split=0.1, seed=42, train_fraction=1.0)
+    small = split_database(7424, valid_split=0.1, test_split=0.1, seed=42, train_fraction=0.2)
     assert full[2] == small[2], "test sets differ between train_fraction=1.0 and 0.2"
 
 
 def test_train_fraction_reduces_train_size():
     """20% train_fraction should yield ~20% of the non-test pool."""
     full_train, full_valid, full_test = split_database(
-        1000, valid_split=0.1, test_split=0.1, seed=42, train_fraction=1.0)
+        1000, valid_split=0.1, test_split=0.1, seed=42, train_fraction=1.0
+    )
     small_train, small_valid, small_test = split_database(
-        1000, valid_split=0.1, test_split=0.1, seed=42, train_fraction=0.2)
+        1000, valid_split=0.1, test_split=0.1, seed=42, train_fraction=0.2
+    )
     full_pool = len(full_train) + len(full_valid)
     small_pool = len(small_train) + len(small_valid)
     assert 0.15 < small_pool / full_pool < 0.25
 
 
 def test_train_fraction_no_overlap():
-    train, valid, test = split_database(500, valid_split=0.1, test_split=0.1,
-                                        seed=42, train_fraction=0.3)
+    train, valid, test = split_database(
+        500, valid_split=0.1, test_split=0.1, seed=42, train_fraction=0.3
+    )
     assert len(set(train) & set(valid)) == 0
     assert len(set(train) & set(test)) == 0
     assert len(set(valid) & set(test)) == 0
@@ -84,9 +85,11 @@ def test_train_fraction_no_overlap():
 def test_train_fraction_subset_of_full():
     """Subsampled train+valid must be a subset of the full train+valid."""
     full_train, full_valid, _ = split_database(
-        500, valid_split=0.1, test_split=0.1, seed=42, train_fraction=1.0)
+        500, valid_split=0.1, test_split=0.1, seed=42, train_fraction=1.0
+    )
     small_train, small_valid, _ = split_database(
-        500, valid_split=0.1, test_split=0.1, seed=42, train_fraction=0.5)
+        500, valid_split=0.1, test_split=0.1, seed=42, train_fraction=0.5
+    )
     full_pool = set(full_train + full_valid)
     small_pool = set(small_train + small_valid)
     assert small_pool.issubset(full_pool)
@@ -126,7 +129,5 @@ def test_two_runs_identical_splits_and_shared_test_set():
     # --- print first 5 test indices for manual inspection -----------------
     first5 = run1_100[2][:5]
     print(f"First 5 test indices (shared): {first5}")
-    print(f"100%: train={len(run1_100[0])}, valid={len(run1_100[1])}, "
-          f"test={len(run1_100[2])}")
-    print(f" 20%: train={len(run1_20[0])}, valid={len(run1_20[1])}, "
-          f"test={len(run1_20[2])}")
+    print(f"100%: train={len(run1_100[0])}, valid={len(run1_100[1])}, " f"test={len(run1_100[2])}")
+    print(f" 20%: train={len(run1_20[0])}, valid={len(run1_20[1])}, " f"test={len(run1_20[2])}")

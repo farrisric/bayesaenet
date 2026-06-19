@@ -2,24 +2,24 @@
 
 ## Prompt scope evaluation
 
-Before any task, evaluate prompt on 3 dimensions:
-1. **Scope** — too broad? (e.g. targets "everything", "the whole codebase", "all files")
-2. **Specificity** — clear target file, function, or behaviour?
-3. **Feature creep** — more than one distinct change?
+Before executing any task, evaluate the prompt on these three dimensions:
+1. **Scope** — is it too broad? (e.g. targets "everything", "the whole codebase", "all files")
+2. **Specificity** — is there a clear target file, function, or behaviour?
+3. **Feature creep** — does it ask for more than one distinct change?
 
-If any dimension raises concern, stop and report:
-- What concern is and why
-- How to split into smaller focused tasks (with concrete examples)
+If any dimension raises a concern, stop and report:
+- What the concern is and why
+- How to split the prompt into smaller focused tasks (with concrete examples)
 
-Proceed only after confirm.
+Only proceed after I confirm.
 
 ## Project overview
 
-**bayesaenet**: research framework benchmarking **uncertainty quantification (UQ)** in **machine learning interatomic potentials (MLIPs)**. Compares:
+**bayesaenet** is a research framework for benchmarking **uncertainty quantification (UQ)** methods in **machine learning interatomic potentials (MLIPs)**. It compares:
 - **Deep Ensembles (DE)**: Multiple independent deterministic NNs
 - **Variational Bayesian Neural Networks (VBNNs)**: Pyro/TyXe ELBO-based inference
 
-Models predict DFT energies + forces for atomic structures (primary dataset: 7,815 TiO₂ structures). Built on PyTorch Lightning + Hydra + Pyro.
+Models predict DFT energies and forces for atomic structures (primary dataset: 7,815 TiO₂ structures). The codebase is built on PyTorch Lightning + Hydra + Pyro.
 
 ## Dev commands
 
@@ -90,16 +90,16 @@ LightningModule
 
 ## Key design decisions
 
-1. **Alpha fixed at 0.1**: Energy/force trade-off *not* optimized by Optuna — would bias search toward one modality.
-2. **force_weight in training only**: Validation metric excludes `force_weight` for fair HPS comparison across weight values.
+1. **Alpha fixed at 0.1**: Energy/force trade-off is *not* optimized by Optuna — would bias search toward one modality.
+2. **force_weight in training only**: The validation metric excludes `force_weight` for fair HPS comparison across different weight values.
 3. **Validation metric**: `total_rmse/val = (1 - alpha) * E_RMSE + alpha * F_RMSE` — no force_weight.
-4. **Joint likelihood** (not auxiliary): Forces integrated directly into ELBO via `likelihoods.py`. Both energy + forces use *same* weight sample in one forward pass — theoretically rigorous.
-5. **Learnable noise**: `learn_noise=True` makes `obs_scale` and `scale_force` trainable Pyro params instead of fixed hyperparameters.
-6. **LRT incompatible with mixed precision**: `fit_context=LRT` (Local Reparameterization Trick) with `torch.autocast` / AMP → NaN losses. Use `precision=32` with LRT.
+4. **Joint likelihood** (not auxiliary): Forces are integrated directly into the ELBO via `likelihoods.py`. Both energy and forces use the *same* weight sample in one forward pass — this is the theoretically rigorous approach.
+5. **Learnable noise**: Setting `learn_noise=True` makes `obs_scale` and `scale_force` trainable Pyro parameters instead of fixed hyperparameters.
+6. **LRT incompatible with mixed precision**: Using `fit_context=LRT` (Local Reparameterization Trick) with `torch.autocast` / AMP causes NaN losses. Always use `precision=32` with LRT.
 
 ## Batch structure
 
-`GroupedDataset` batches = list of 15 tensors, indexed via `BatchIdx`:
+Batches from `GroupedDataset` are lists of 15 tensors, indexed via `BatchIdx`:
 
 ```
 Indices 0-9:  Force data (optional — may be empty)
@@ -117,7 +117,7 @@ Use BatchIdx.get_force_data(batch) / BatchIdx.get_energy_data(batch) — never u
 
 ## Configuration system (Hydra)
 
-Config resolution (later overrides earlier):
+Config resolution order (later overrides earlier):
 1. `configs/train.yaml` — base defaults
 2. `configs/experiment/<name>.yaml` — model + trainer + callback presets
 3. CLI overrides (e.g. `datamodule.batch_size=512`)
@@ -144,14 +144,14 @@ Log/result paths:
 
 ## NetAtom internals
 
-- One sub-network per atomic species (element-specific params)
+- One sub-network per atomic species (element-specific parameters)
 - `forward(grp_descrp, logic_reduce)` → structure energies
 - `forward_F(grp_descrp, grp_sfderiv_i, grp_sfderiv_j, ...)` → energies + forces via autodiff through descriptors (`dE/dG * dG/dr`)
 - Supported activations: tanh, sigmoid, relu, softplus, elu, gelu, silu
 
 ## Uncertainty quantification
 
-At prediction, BNN draws `mc_samples_eval` (default 20) weight samples from variational posterior:
+At prediction time, BNN draws `mc_samples_eval` (default 20) weight samples from the variational posterior:
 - **Epistemic uncertainty**: `std(E_preds)` across MC samples
 - **Aleatoric uncertainty** (if `learn_noise=True`): learned `obs_scale`
 - **Total**: `sqrt(epistemic² + aleatoric²)`
@@ -174,7 +174,7 @@ pytest tests/ -v
 - **TiO₂ small**: 20% of 7,815 DFT structures — fast iteration
 - **TiO₂ big**: Full 7,815 structures — benchmarking
 - **QM7**: Organic molecules dataset
-- Format: AENET binary, read via `bnn_aenet/datamodule/aenet/`
+- Data format: AENET binary format, read via `bnn_aenet/datamodule/aenet/`
 
 ## Dependencies
 
@@ -182,3 +182,81 @@ Core: `torch`, `lightning`, `pyro-ppl`, `tyxe` (git), `hydra-core`, `optuna`
 UQ: `uncertainty-toolbox`
 Data: `fastparquet`, `pyarrow`
 Dev: `pytest`, `black`, `isort`, `flake8`
+
+Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
+
+**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+
+## 1. Think Before Coding
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before implementing:
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them - don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
+
+## 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+## 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+When editing existing code:
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it - don't delete it.
+
+When your changes create orphans:
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: Every changed line should trace directly to the user's request.
+
+## 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Transform tasks into verifiable goals:
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan:
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
+
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+---
+
+**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in this repo's GitHub Issues via the `gh` CLI; external PRs are not a triage surface. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Canonical label vocabulary — `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context layout — `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.

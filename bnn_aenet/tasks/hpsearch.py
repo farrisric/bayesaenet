@@ -13,12 +13,13 @@ root = pyrootutils.setup_root(
     dotenv=True,
 )
 
-from bnn_aenet.tasks.train import train
 from optuna import Study
 from optuna.trial import Trial
 
+from bnn_aenet.tasks.train import train
 from bnn_aenet.tasks.utils import get_pylogger
 from bnn_aenet.utils.paths import get_results_db_path
+
 log = get_pylogger(__name__)
 
 
@@ -27,9 +28,7 @@ def objective(trial: Trial, cfg: DictConfig, output_dir: str):
         "batch_size", [128, 256, 512, 1024]  # Removed 32/64 for stability, added 1024 for speed
     )
     log.info(f"{cfg.datamodule.batch_size} batch_size")
-    log.info(
-        f"_________________ Starting trial {trial.number:03d} __________________"
-    )
+    log.info(f"_________________ Starting trial {trial.number:03d} __________________")
     cfg.paths.output_dir = f"{output_dir}/{trial.number:03d}"
     metric_dict, _ = train(cfg, trial)
     return metric_dict[cfg.hpsearch.monitor]
@@ -37,119 +36,85 @@ def objective(trial: Trial, cfg: DictConfig, output_dir: str):
 
 def objective_nn(trial: Trial, cfg: DictConfig, output_dir: str):
     """Objective function for Deep Ensemble (NN) hyperparameter search."""
-    cfg.model.optimizer.lr = trial.suggest_float(
-        "lr", 1e-5, 1e-2, log=True
-    )
+    cfg.model.optimizer.lr = trial.suggest_float("lr", 1e-5, 1e-2, log=True)
     log.info(f"{cfg.model.optimizer.lr} lr")
-    cfg.model.optimizer.weight_decay = trial.suggest_float(
-        "weight_decay", 1e-6, 1e-2, log=True
-    )
+    cfg.model.optimizer.weight_decay = trial.suggest_float("weight_decay", 1e-6, 1e-2, log=True)
     log.info(f"{cfg.model.optimizer.weight_decay} weight_decay")
     return objective(trial, cfg, output_dir)
 
 
 def objective_nn_forces(trial: Trial, cfg: DictConfig, output_dir: str):
     """Objective function for NN_Forces (Deep Ensemble with forces) hyperparameter search.
-    
+
     Optimizes:
     - lr: Learning rate
-    
+
     Note: alpha is FIXED at 0.1 (from config) to avoid biasing Optuna toward lower values.
     No pretraining for NN models - they train from scratch.
     """
-    cfg.model.optimizer.lr = trial.suggest_float(
-        "lr", 1e-5, 1e-2, log=True
-    )
+    cfg.model.optimizer.lr = trial.suggest_float("lr", 1e-5, 1e-2, log=True)
     log.info(f"{cfg.model.optimizer.lr} lr")
-    
+
     # alpha is fixed at 0.1 in config (not optimized to avoid bias)
     log.info(f"{cfg.model.alpha} alpha (fixed)")
-    
+
     return objective(trial, cfg, output_dir)
 
 
 def objective_bnn(trial: Trial, cfg: DictConfig, output_dir: str):
-    cfg.model.pretrain_epochs = trial.suggest_categorical(
-        "pretrain_epochs", [0, 5]
-    )
+    cfg.model.pretrain_epochs = trial.suggest_categorical("pretrain_epochs", [0, 5])
     log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs")
-    cfg.model.lr = trial.suggest_float(
-        "lr", 1e-5, 1e-3, log=True
-    )
+    cfg.model.lr = trial.suggest_float("lr", 1e-5, 1e-3, log=True)
     log.info(f"{cfg.model.lr}, lr")
-    cfg.model.mc_samples_train = trial.suggest_categorical(
-        "mc_samples_train", [1, 2]
-    )
+    cfg.model.mc_samples_train = trial.suggest_categorical("mc_samples_train", [1, 2])
     log.info(f"{cfg.model.mc_samples_train} mc_samples_train")
-    cfg.model.prior_scale = trial.suggest_float(
-        "prior_scale", 0.1, 1.5, log=True
-    )
+    cfg.model.prior_scale = trial.suggest_float("prior_scale", 0.1, 1.5, log=True)
     log.info(f"{cfg.model.prior_scale} prior_scale")
-    cfg.model.q_scale = trial.suggest_float(
-        "q_scale", 1e-4, 0.1, log=True
-        )
+    cfg.model.q_scale = trial.suggest_float("q_scale", 1e-4, 0.1, log=True)
     log.info(f"{cfg.model.q_scale} q_scale")
-    cfg.model.obs_scale = trial.suggest_float(
-        "obs_scale", 0.1, 2, log=True
-        )
+    cfg.model.obs_scale = trial.suggest_float("obs_scale", 0.1, 2, log=True)
     log.info(f"{cfg.model.obs_scale} obs_scale")
     return objective(trial, cfg, output_dir)
 
 
 def objective_bnn_forces_likelihood(trial: Trial, cfg: DictConfig, output_dir: str):
     """Objective function for BNN_Forces_Likelihood hyperparameter search.
-    
+
     Optimizes the same BNN hyperparameters as auxiliary, plus:
     - scale_force: Observation noise scale for force likelihood (analogous to obs_scale)
     """
     cfg.model.pretrain_epochs = 0
     log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs (fixed at 0)")
-    
-    cfg.model.lr = trial.suggest_float(
-        "lr", 1e-5, 1e-3, log=True
-    )
+
+    cfg.model.lr = trial.suggest_float("lr", 1e-5, 1e-3, log=True)
     log.info(f"{cfg.model.lr} lr")
-    
-    cfg.model.mc_samples_train = trial.suggest_categorical(
-        "mc_samples_train", [1, 2]
-    )
+
+    cfg.model.mc_samples_train = trial.suggest_categorical("mc_samples_train", [1, 2])
     log.info(f"{cfg.model.mc_samples_train} mc_samples_train")
-    
-    cfg.model.prior_scale = trial.suggest_float(
-        "prior_scale", 0.1, 0.5, log=True
-    )
+
+    cfg.model.prior_scale = trial.suggest_float("prior_scale", 0.1, 0.5, log=True)
     log.info(f"{cfg.model.prior_scale} prior_scale")
-    
-    cfg.model.q_scale = trial.suggest_float(
-        "q_scale", 1e-5, 0.005, log=True
-    )
+
+    cfg.model.q_scale = trial.suggest_float("q_scale", 1e-5, 0.005, log=True)
     log.info(f"{cfg.model.q_scale} q_scale")
-    
+
     # If noise scales are learned by Pyro params, obs/force scales become
     # trainable and these values only act as initial conditions.
     # Keep them fixed in this mode to avoid wasting Optuna dimensions.
     learn_noise = bool(getattr(cfg.model, "learn_noise", False))
     if learn_noise:
-        log.info(
-            f"{cfg.model.obs_scale} obs_scale (fixed; learn_noise=true)"
-        )
-        log.info(
-            f"{cfg.model.scale_force} scale_force (fixed; learn_noise=true)"
-        )
+        log.info(f"{cfg.model.obs_scale} obs_scale (fixed; learn_noise=true)")
+        log.info(f"{cfg.model.scale_force} scale_force (fixed; learn_noise=true)")
     else:
-        cfg.model.obs_scale = trial.suggest_float(
-            "obs_scale", 0.1, 2.0, log=True
-        )
+        cfg.model.obs_scale = trial.suggest_float("obs_scale", 0.1, 2.0, log=True)
         log.info(f"{cfg.model.obs_scale} obs_scale")
 
         # scale_force: force likelihood noise (critical for energy/force balance)
-        cfg.model.scale_force = trial.suggest_float(
-            "scale_force", 0.05, 2.0, log=True
-        )
+        cfg.model.scale_force = trial.suggest_float("scale_force", 0.05, 2.0, log=True)
         log.info(f"{cfg.model.scale_force} scale_force")
-    
+
     log.info(f"{cfg.model.net.alpha} alpha (fixed)")
-    
+
     return objective(trial, cfg, output_dir)
 
 
@@ -162,33 +127,23 @@ def objective_bnn_hetero(trial: Trial, cfg: DictConfig, output_dir: str):
     cfg.model.pretrain_epochs = 0
     log.info(f"{cfg.model.pretrain_epochs} pretrain_epochs (fixed at 0)")
 
-    cfg.model.lr = trial.suggest_float(
-        "lr", 1e-5, 1e-3, log=True
-    )
+    cfg.model.lr = trial.suggest_float("lr", 1e-5, 1e-3, log=True)
     log.info(f"{cfg.model.lr} lr")
 
-    cfg.model.mc_samples_train = trial.suggest_categorical(
-        "mc_samples_train", [1, 2]
-    )
+    cfg.model.mc_samples_train = trial.suggest_categorical("mc_samples_train", [1, 2])
     log.info(f"{cfg.model.mc_samples_train} mc_samples_train")
 
-    cfg.model.prior_scale = trial.suggest_float(
-        "prior_scale", 0.1, 0.5, log=True
-    )
+    cfg.model.prior_scale = trial.suggest_float("prior_scale", 0.1, 0.5, log=True)
     log.info(f"{cfg.model.prior_scale} prior_scale")
 
-    cfg.model.q_scale = trial.suggest_float(
-        "q_scale", 1e-5, 0.005, log=True
-    )
+    cfg.model.q_scale = trial.suggest_float("q_scale", 1e-5, 0.005, log=True)
     log.info(f"{cfg.model.q_scale} q_scale")
 
     # NoiseNet hyperparameters
     # noise_hidden_size is fixed (matches main network from train.in)
     log.info(f"{cfg.model.noise_hidden_size} noise_hidden_size (fixed)")
 
-    cfg.model.noise_min = trial.suggest_float(
-        "noise_min", 1e-3, 0.1, log=True
-    )
+    cfg.model.noise_min = trial.suggest_float("noise_min", 1e-3, 0.1, log=True)
     log.info(f"{cfg.model.noise_min} noise_min")
 
     log.info(f"{cfg.model.net.alpha} alpha (fixed)")
@@ -203,7 +158,11 @@ def main(cfg: DictConfig) -> Optional[float]:
 
     # Dataset and model identifiers for canonical DB layout
     dataset = str(cfg.get("dataset", cfg.tags[0]))
-    model = str(cfg.hpsearch.get("model_name", cfg.tags[1] if len(cfg.tags) > 1 else cfg.hpsearch.study.study_name))
+    model = str(
+        cfg.hpsearch.get(
+            "model_name", cfg.tags[1] if len(cfg.tags) > 1 else cfg.hpsearch.study.study_name
+        )
+    )
 
     db_path = get_results_db_path(dataset=dataset, model=model)
     db_path.parent.mkdir(parents=True, exist_ok=True)

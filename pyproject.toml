@@ -10,7 +10,7 @@ readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.9"
 authors = [
-    {name = "G. Farris", email = "g15farris@example.com"}
+    {name = "Riccardo Farris", email = "rfarris@ub.edu"},
 ]
 keywords = [
     "bayesian neural networks",
@@ -78,10 +78,10 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/bnn-aenet"
-Documentation = "https://github.com/yourusername/bnn-aenet#readme"
-Repository = "https://github.com/yourusername/bnn-aenet"
-Issues = "https://github.com/yourusername/bnn-aenet/issues"
+Homepage = "https://github.com/farrisric/bayesaenet"
+Documentation = "https://github.com/farrisric/bayesaenet#readme"
+Repository = "https://github.com/farrisric/bayesaenet"
+Issues = "https://github.com/farrisric/bayesaenet/issues"
 
 [project.scripts]
 bnn-train = "bnn_aenet.tasks.train:main"
@@ -103,7 +103,7 @@ python_functions = ["test_*"]
 addopts = "-v --tb=short"
 
 [tool.black]
-line-length = 88
+line-length = 99
 target-version = ["py39", "py310", "py311", "py312"]
 include = '\.pyi?$'
 exclude = '''
@@ -123,7 +123,7 @@ exclude = '''
 
 [tool.isort]
 profile = "black"
-line_length = 88
+line_length = 99
 skip = [".git", ".venv", "logs", "data"]
 
 [tool.flake8]

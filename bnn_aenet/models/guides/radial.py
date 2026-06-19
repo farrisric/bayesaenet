@@ -31,9 +31,7 @@ class Radial:
 class RadialNormal(dist.Normal):
     def rsample(self, sample_shape=torch.Size()):
         shape = self._extended_shape(sample_shape)
-        eps = _standard_normal(
-            shape, dtype=self.loc.dtype, device=self.loc.device
-        )
+        eps = _standard_normal(shape, dtype=self.loc.dtype, device=self.loc.device)
         distance = torch.randn(1, device=self.loc.device)
         normalizing_factor = torch.norm(eps, p=2)
         direction = eps / normalizing_factor
@@ -63,22 +61,16 @@ class AutoRadial(autoguide.AutoGuide):
 
         for name, site in self.prototype_trace.iter_stochastic_nodes():
             constrained_value = site["value"]
-            unconstrained_value = biject_to(site["fn"].support).inv(
-                constrained_value
-            )
+            unconstrained_value = biject_to(site["fn"].support).inv(constrained_value)
             if self.train_loc:
                 unconstrained_value = pyro.nn.PyroParam(unconstrained_value)
-            autoguide.guides.deep_setattr(
-                self, name + ".loc", unconstrained_value
-            )
+            autoguide.guides.deep_setattr(self, name + ".loc", unconstrained_value)
             if isinstance(self.init_scale, numbers.Real):
                 scale_value = torch.full_like(site["value"], self.init_scale)
             elif isinstance(self.init_scale, str):
                 scale_value = torch.full_like(
                     site["value"],
-                    tyxe.util.calculate_prior_std(
-                        self.init_scale, site["value"]
-                    ),
+                    tyxe.util.calculate_prior_std(self.init_scale, site["value"]),
                 )
             else:
                 scale_value = self.init_scale[site["name"]]
@@ -102,9 +94,7 @@ class AutoRadial(autoguide.AutoGuide):
 
     def get_detached_distributions(self, site_names=None):
         if site_names is None:
-            site_names = list(
-                name for name, _ in self.prototype_trace.iter_stochastic_nodes()
-            )
+            site_names = list(name for name, _ in self.prototype_trace.iter_stochastic_nodes())
 
         result = dict()
         for name, site in self.prototype_trace.iter_stochastic_nodes():
@@ -115,9 +105,7 @@ class AutoRadial(autoguide.AutoGuide):
             fn = RadialNormal(loc, scale).to_event(max(loc.dim(), scale.dim()))
             base_fn = _get_base_dist(site["fn"])
             if base_fn.support is not dist.constraints.real:
-                fn = dist.TransformedDistribution(
-                    fn, biject_to(base_fn.support)
-                )
+                fn = dist.TransformedDistribution(fn, biject_to(base_fn.support))
             result[name] = fn
         return result
 
@@ -137,8 +125,6 @@ class AutoRadial(autoguide.AutoGuide):
                 fn = RadialNormal(loc, scale).to_event(site["fn"].event_dim)
                 base_fn = _get_base_dist(site["fn"])
                 if base_fn.support is not dist.constraints.real:
-                    fn = dist.TransformedDistribution(
-                        fn, biject_to(base_fn.support)
-                    )
+                    fn = dist.TransformedDistribution(fn, biject_to(base_fn.support))
                 result[name] = pyro.sample(name, fn)
         return result

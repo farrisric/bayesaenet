@@ -26,7 +26,7 @@ model:
   q_scale: 0.0005171823159504436
   obs_scale: 0.47612142594698453
   mc_samples_train: 2
-  mc_samples_eval: 50
+  mc_samples_eval: 20
   pretrain_epochs: 0
 
 callbacks:

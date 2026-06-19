@@ -51,8 +51,12 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Local environment variables (copy .env.example -> .env)
+.env
+
 # Paper (kept local, not versioned)
 .paper/
+paper/
 
 # Aenet
 *.ascii
@@ -75,3 +79,12 @@ err
 scripts/TiO/hom_lrt/qscale_priorscale/grid_pred/out
 *.tfevents*
 bnn_aenet/logs*/*/runs/*/tensorboard/
+
+# local copies of aenet training data (large binaries)
+*.forces
+
+# machine-specific dataset input
+data/TiO/train_forces_local.in
+
+# generated timing-benchmark results (scripts are tracked, results are not)
+scripts/time/*.csv

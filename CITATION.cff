@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the accompanying paper below."
+title: "bayesian-aenet: Uncertainty Quantification for Machine Learning Interatomic Potentials"
+type: software
+version: 1.0.0
+license: MIT
+repository-code: "https://github.com/farrisric/bayesaenet"
+# TODO: set date-released when a release/DOI is minted (e.g. via Zenodo)
+authors:
+  - family-names: Farris
+    given-names: Riccardo
+    email: rfarris@ub.edu
+    affiliation: "Leitat Technological Center & Universitat de Barcelona (IQTCUB)"
+preferred-citation:
+  type: article
+  title: "Bayesian Neural Networks versus deep ensembles for uncertainty quantification in machine learning interatomic potentials"
+  year: 2025
+  # TODO: update journal/DOI once published (currently a preprint)
+  journal: "arXiv preprint"
+  authors:
+    - family-names: Farris
+      given-names: Riccardo
+    - family-names: Telari
+      given-names: Emanuele
+    - family-names: Artrith
+      given-names: Nongnuch
+    - family-names: Neyman
+      given-names: "Konstantin M."
+      orcid: "https://orcid.org/0000-0002-5242-5567"
+    - family-names: Bruix
+      given-names: Albert

@@ -6,10 +6,10 @@ predicted by a ``NoiseNet``.  Per-atom noise scales replace the global
 scalar used in the homoscedastic version.
 """
 
-import torch
 import pyro
 import pyro.distributions as dist
 import pyro.poutine as poutine
+import torch
 
 from ..datamodule.aenet.batch_constants import BatchIdx
 
@@ -28,6 +28,7 @@ def make_hetero_energy_force_model(bnn, noise_net, dataset_size):
         noise_net: A ``NoiseNet`` instance (deterministic, not Bayesian).
         dataset_size: Training set size for minibatch scaling.
     """
+
     def model(batch):
         # Register noise_net so Pyro optimizes its parameters
         pyro.module("noise_net", noise_net)
@@ -57,7 +58,8 @@ def make_hetero_energy_force_model(bnn, noise_net, dataset_size):
 
         # ---------- BNN energy prediction ----------
         energy_trace = poutine.trace(bnn.bnn_net).get_trace(
-            E_descrp, E_logic_reduce,
+            E_descrp,
+            E_logic_reduce,
         )
         weight_sites = energy_trace.stochastic_nodes
         with poutine.block(hide=weight_sites), poutine.replay(trace=energy_trace):
@@ -80,10 +82,7 @@ def make_hetero_energy_force_model(bnn, noise_net, dataset_size):
                 else 0
             )
 
-            F_descrp_grad = [
-                d.clone().detach().float().requires_grad_(True)
-                for d in F_descrp
-            ]
+            F_descrp_grad = [d.clone().detach().float().requires_grad_(True) for d in F_descrp]
             F_sfderiv_i_f = [s.float() for s in F_sfderiv_i]
             F_sfderiv_j_f = [s.float() for s in F_sfderiv_j]
             F_logic_reduce_f = [l.float() for l in F_logic_reduce]
@@ -107,7 +106,8 @@ def make_hetero_energy_force_model(bnn, noise_net, dataset_size):
             # Per-atom -> per-component noise
             # F_descrp (not _grad) for noise -- no gradients needed
             obs_scale_force = noise_net.forward_forces(
-                F_descrp, F_indices_i,
+                F_descrp,
+                F_indices_i,
             )  # (n_force_atoms, 3)
 
             F_obs_flat = F_forces.float().flatten()

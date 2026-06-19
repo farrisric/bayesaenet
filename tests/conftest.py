@@ -1,9 +1,10 @@
 """Pytest configuration and shared fixtures."""
 
+from pathlib import Path
+
+import numpy as np
 import pytest
 import torch
-import numpy as np
-from pathlib import Path
 
 
 @pytest.fixture
@@ -23,7 +24,7 @@ def sample_batch():
     """Create a sample batch for testing."""
     batch_size = 8
     input_dim = 50
-    
+
     return {
         "x": torch.randn(batch_size, input_dim),
         "y": torch.randn(batch_size, 1),

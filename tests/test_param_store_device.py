@@ -26,9 +26,7 @@ def test_param_store_to_moves_tensors():
     ps = pyro.get_param_store()
     for name in ps:
         val = ps[name]
-        assert val.device == torch.device("cpu"), (
-            f"param '{name}' not on cpu after param_store_to"
-        )
+        assert val.device == torch.device("cpu"), f"param '{name}' not on cpu after param_store_to"
     pyro.clear_param_store()
 
 
@@ -61,12 +59,14 @@ class TestBNNForcesParamStoreDevice:
 
     def test_on_test_start_calls_param_store_to_unconditionally(self):
         from bnn_aenet.models.bnn_forces import BNN_Forces
+
         assert _method_calls_param_store_to_unconditionally(
             BNN_Forces, "on_test_start"
         ), "param_store_to must be called outside the `if bnn_net` block"
 
     def test_on_predict_start_calls_param_store_to_unconditionally(self):
         from bnn_aenet.models.bnn_forces import BNN_Forces
+
         assert _method_calls_param_store_to_unconditionally(
             BNN_Forces, "on_predict_start"
         ), "param_store_to must be called outside the `if bnn_net` block"

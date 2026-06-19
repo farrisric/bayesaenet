@@ -16,14 +16,15 @@ import os
 import sys
 from pathlib import Path
 
+import lightning.pytorch as L
+import numpy as np
+import pandas as pd
+
 # IMPORTANT: import torch BEFORE numpy/pandas to avoid segfault on iqtc10 nodes
 # where CUDA/MKL library initialization order matters
 import torch
-import lightning.pytorch as L
-from lightning.pytorch import Trainer
-import numpy as np
-import pandas as pd
 import yaml
+from lightning.pytorch import Trainer
 
 # ALL bnn_aenet imports are lazy to avoid triggering bnn_aenet/models/__init__.py
 # which imports pyro/tyxe and segfaults on iqtc10 nodes when combined with
@@ -40,6 +41,7 @@ def _ensure_datamodule():
     global AenetDataModule
     if AenetDataModule is None:
         from bnn_aenet.datamodule.aenet_datamodule import AenetDataModule as _cls
+
         AenetDataModule = _cls
 
 
@@ -47,6 +49,7 @@ def _ensure_net_atom():
     global NetAtom
     if NetAtom is None:
         from bnn_aenet.models.nets.network import NetAtom as _cls
+
         NetAtom = _cls
 
 
@@ -54,6 +57,7 @@ def _ensure_nn_forces():
     global NN_Forces
     if NN_Forces is None:
         from bnn_aenet.models.nn import NN_Forces as _cls
+
         NN_Forces = _cls
 
 
@@ -61,6 +65,7 @@ def _ensure_bnn():
     global BNN_Forces
     if BNN_Forces is None:
         from bnn_aenet.models.bnn_forces import BNN_Forces as _cls
+
         BNN_Forces = _cls
 
 
@@ -68,6 +73,7 @@ def _ensure_partial_bnn():
     global PartialBNN_Forces
     if PartialBNN_Forces is None:
         from bnn_aenet.models.bnn_forces import PartialBNN_Forces as _cls
+
         PartialBNN_Forces = _cls
 
 
@@ -75,6 +81,7 @@ def _ensure_bnn_hetero():
     global BNN_Forces_Hetero
     if BNN_Forces_Hetero is None:
         from bnn_aenet.models.bnn_forces_hetero import BNN_Forces_Hetero as _cls
+
         BNN_Forces_Hetero = _cls
 
 
@@ -83,10 +90,10 @@ def load_overrides(run_dir: Path) -> dict:
     override_file = run_dir / ".hydra" / "overrides.yaml"
     if not override_file.exists():
         raise FileNotFoundError(f"No overrides found at {override_file}")
-    
+
     with open(override_file) as f:
         lines = yaml.safe_load(f)
-    
+
     overrides = {}
     for line in lines:
         line = line.lstrip("+-")
@@ -225,7 +232,9 @@ def load_bnn_model(ckpt_path: Path, dm, run_dir: Path, mc_eval: int = 20):
     return model
 
 
-def run_predictions(model, datamodule, subsets, device, model_type=None, ckpt_path=None, run_dir=None, mc_eval=20):
+def run_predictions(
+    model, datamodule, subsets, device, model_type=None, ckpt_path=None, run_dir=None, mc_eval=20
+):
     """Run predictions on specified data subsets."""
     trainer = Trainer(
         accelerator=device,
@@ -273,12 +282,14 @@ def save_predictions(batch_results, output_path, run_name, subset, e_scaling):
             all_std_forces.append(np.asarray(batch["std_forces"]).flatten())
 
     # Energy DataFrame (values in normalized units)
-    energy_df = pd.DataFrame({
-        "true": np.concatenate(all_true),
-        "preds": np.concatenate(all_preds),
-        "stds": np.concatenate(all_stds),
-        "n_atoms": np.concatenate(all_n_atoms),
-    })
+    energy_df = pd.DataFrame(
+        {
+            "true": np.concatenate(all_true),
+            "preds": np.concatenate(all_preds),
+            "stds": np.concatenate(all_stds),
+            "n_atoms": np.concatenate(all_n_atoms),
+        }
+    )
 
     energy_file = output_path / f"{run_name}_{subset}_energy.csv"
     energy_df.to_csv(energy_file, index=False)
@@ -286,7 +297,9 @@ def save_predictions(batch_results, output_path, run_name, subset, e_scaling):
     per_atom_err = (energy_df["true"] - energy_df["preds"]) / energy_df["n_atoms"]
     e_rmse = np.sqrt(np.mean(per_atom_err**2)) / e_scaling * 1000
     e_mae = np.mean(np.abs(per_atom_err)) / e_scaling * 1000
-    print(f"    Energy: {len(energy_df)} structures, RMSE={e_rmse:.4f} meV/atom, MAE={e_mae:.4f} meV/atom")
+    print(
+        f"    Energy: {len(energy_df)} structures, RMSE={e_rmse:.4f} meV/atom, MAE={e_mae:.4f} meV/atom"
+    )
 
     # Force data (values in normalized units)
     if len(all_true_forces) > 0:
@@ -310,14 +323,26 @@ def save_predictions(batch_results, output_path, run_name, subset, e_scaling):
 
 def main():
     parser = argparse.ArgumentParser(description="Run predictions for force-trained models")
-    parser.add_argument("--model-type", type=str, required=True, choices=["nn", "lrt", "rad", "lrt_hetero", "rad_hetero"])
+    parser.add_argument(
+        "--model-type",
+        type=str,
+        required=True,
+        choices=["nn", "lrt", "rad", "lrt_hetero", "rad_hetero"],
+    )
     parser.add_argument("--runs-dir", type=str, required=True)
     parser.add_argument("--output-dir", type=str, required=True)
     parser.add_argument("--data-dir", type=str, required=True)
-    parser.add_argument("--split-config", type=str, default=None,
-                        help="Split config to match training (e.g. Data20 for TiO2_small). Must match dataset size.")
-    parser.add_argument("--use-run-config", action="store_true",
-                        help="Load datamodule config (data_dir, split_config) from first run's .hydra/config.yaml")
+    parser.add_argument(
+        "--split-config",
+        type=str,
+        default=None,
+        help="Split config to match training (e.g. Data20 for TiO2_small). Must match dataset size.",
+    )
+    parser.add_argument(
+        "--use-run-config",
+        action="store_true",
+        help="Load datamodule config (data_dir, split_config) from first run's .hydra/config.yaml",
+    )
     parser.add_argument("--subsets", type=str, nargs="+", default=["train", "val", "test"])
     parser.add_argument("--device", type=str, default="gpu", choices=["cpu", "gpu"])
     parser.add_argument("--batch-size", type=int, default=32)
@@ -333,7 +358,7 @@ def main():
     run_dirs = sorted(
         [d for d in runs_dir.iterdir() if d.is_dir() and (d / "checkpoints").exists()]
     )
-    
+
     if not run_dirs:
         print(f"No run directories found in {runs_dir}")
         return
@@ -395,7 +420,10 @@ def main():
                 model = load_bnn_model(ckpt_path, dm, run_dir, mc_eval=args.mc_samples)
 
             results = run_predictions(
-                model, dm, args.subsets, args.device,
+                model,
+                dm,
+                args.subsets,
+                args.device,
                 model_type=args.model_type,
                 ckpt_path=ckpt_path,
                 run_dir=run_dir,
@@ -408,6 +436,7 @@ def main():
         except Exception as e:
             print(f"  ERROR: {e}")
             import traceback
+
             traceback.print_exc()
             continue
 

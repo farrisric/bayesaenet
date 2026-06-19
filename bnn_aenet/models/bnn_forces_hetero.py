@@ -12,16 +12,17 @@ Subclasses ``BNN_Forces`` -- only overrides the methods that differ:
 from typing import Any, Dict, List
 
 import numpy as np
+import pyro
 import torch
 import torch.nn.functional as Fn
-import pyro
 
+from bnn_aenet.models.utils import param_store_to
+
+from ..datamodule.aenet.batch_constants import BatchIdx
 from .bnn_forces import BNN_Forces
 from .likelihoods_hetero import make_hetero_energy_force_model
 from .nets.noise_net import NoiseNet
 from .utils import get_rmse_atom
-from ..datamodule.aenet.batch_constants import BatchIdx
-from bnn_aenet.models.utils import param_store_to
 
 
 class BNN_Forces_Hetero(BNN_Forces):
@@ -123,25 +124,33 @@ class BNN_Forces_Hetero(BNN_Forces):
 
             sigma_E = self.noise_net.forward_energy(E_descrp, E_logic_reduce)
             self.log(
-                "noise_energy_mean/train", sigma_E.mean(),
-                on_step=False, on_epoch=True, batch_size=len(y),
+                "noise_energy_mean/train",
+                sigma_E.mean(),
+                on_step=False,
+                on_epoch=True,
+                batch_size=len(y),
             )
 
             F_descrp = batch[BatchIdx.F_DESCRP]
             F_indices_i = batch[BatchIdx.F_INDICES_I]
-            has_force = (
-                F_descrp is not None
-                and not (isinstance(F_descrp, list) and len(F_descrp) == 0)
+            has_force = F_descrp is not None and not (
+                isinstance(F_descrp, list) and len(F_descrp) == 0
             )
             if has_force:
                 sigma_F = self.noise_net.forward_forces(F_descrp, F_indices_i)
                 self.log(
-                    "noise_force_mean/train", sigma_F.mean(),
-                    on_step=False, on_epoch=True, batch_size=len(y),
+                    "noise_force_mean/train",
+                    sigma_F.mean(),
+                    on_step=False,
+                    on_epoch=True,
+                    batch_size=len(y),
                 )
                 self.log(
-                    "noise_force_std/train", sigma_F.std(),
-                    on_step=False, on_epoch=True, batch_size=len(y),
+                    "noise_force_std/train",
+                    sigma_F.std(),
+                    on_step=False,
+                    on_epoch=True,
+                    batch_size=len(y),
                 )
 
     # ------------------------------------------------------------------
@@ -187,7 +196,7 @@ class BNN_Forces_Hetero(BNN_Forces):
         with torch.no_grad():
             sigma_E = self.noise_net.forward_energy(x[0], x[1])
         energy_stds_aleatoric = sigma_E.cpu().numpy()
-        energy_stds = np.sqrt(energy_stds_epistemic ** 2 + energy_stds_aleatoric ** 2)
+        energy_stds = np.sqrt(energy_stds_epistemic**2 + energy_stds_aleatoric**2)
 
         # --- Force predictions ---
         F_group_descrp = batch[BatchIdx.F_DESCRP]
@@ -218,27 +227,26 @@ class BNN_Forces_Hetero(BNN_Forces):
             # Per-atom aleatoric force noise from NoiseNet
             with torch.no_grad():
                 sigma_F = self.noise_net.forward_forces(
-                    F_group_descrp, F_indices_i,
+                    F_group_descrp,
+                    F_indices_i,
                 )  # (n_force_atoms, 3)
             aleatoric_std = sigma_F.cpu().numpy()
 
             # Total: sqrt(epistemic² + aleatoric²)
-            force_stds = np.sqrt(epistemic_std ** 2 + aleatoric_std ** 2)
+            force_stds = np.sqrt(epistemic_std**2 + aleatoric_std**2)
 
             true_forces_flat = F_group_forces.cpu().numpy().flatten()
             pred_forces_flat = force_preds.flatten()
             std_forces_flat = force_stds.flatten()
-            scale = float(self.net.e_scaling) if hasattr(
-                self.net.e_scaling, "item"
-            ) else float(self.net.e_scaling)
+            scale = (
+                float(self.net.e_scaling)
+                if hasattr(self.net.e_scaling, "item")
+                else float(self.net.e_scaling)
+            )
             force_rmse = (
-                np.sqrt(np.mean((true_forces_flat - pred_forces_flat) ** 2))
-                / scale * 1000
+                np.sqrt(np.mean((true_forces_flat - pred_forces_flat) ** 2)) / scale * 1000
             )
-            force_mae = (
-                np.mean(np.abs(true_forces_flat - pred_forces_flat))
-                / scale * 1000
-            )
+            force_mae = np.mean(np.abs(true_forces_flat - pred_forces_flat)) / scale * 1000
         else:
             true_forces_flat = None
             pred_forces_flat = None

@@ -1,12 +1,10 @@
 from pathlib import Path
-from typing import Union
-
-import torch
-import torch.nn as nn
+from typing import Dict, List, Union
 
 import numpy as np
 import pandas as pd
-from typing import Union, List, Dict
+import torch
+import torch.nn as nn
 
 
 class ResultSaver:
@@ -24,9 +22,7 @@ class ResultSaver:
     def load(self) -> pd.DataFrame:
         return pd.read_parquet(self.file_path)
 
-    def append(
-        self, series: Union[List[pd.Series], Dict[str, np.array]]
-    ) -> None:
+    def append(self, series: Union[List[pd.Series], Dict[str, np.array]]) -> None:
         if isinstance(series, list):
             series = pd.concat(series, axis=1)
         if isinstance(series, dict):

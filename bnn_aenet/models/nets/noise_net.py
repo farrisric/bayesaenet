@@ -44,11 +44,13 @@ class NoiseNet(nn.Module):
 
         heads = []
         for i, sp in enumerate(species):
-            heads.append(nn.Sequential(
-                nn.Linear(input_size[i], hidden_size),
-                nn.Tanh(),
-                nn.Linear(hidden_size, 1),
-            ))
+            heads.append(
+                nn.Sequential(
+                    nn.Linear(input_size[i], hidden_size),
+                    nn.Tanh(),
+                    nn.Linear(hidden_size, 1),
+                )
+            )
         self.heads = nn.ModuleList(heads)
 
     # ------------------------------------------------------------------
@@ -77,15 +79,13 @@ class NoiseNet(nn.Module):
         for iesp in range(len(self.species)):
             # Per-atom noise scale -> variance
             raw = self.heads[iesp](E_descrp[iesp].float())  # (n_atoms, 1)
-            sigma_atom = Fn.softplus(raw) + self.min_noise   # (n_atoms, 1)
-            var_atom = sigma_atom ** 2                        # (n_atoms, 1)
+            sigma_atom = Fn.softplus(raw) + self.min_noise  # (n_atoms, 1)
+            var_atom = sigma_atom**2  # (n_atoms, 1)
 
             # Sum variances per structure using logic_reduce
             # logic_reduce[iesp]: (n_structures, n_atoms_of_species)
             # var_atom: (n_atoms_of_species, 1)
-            noise_var = noise_var + torch.einsum(
-                "ij,ki->k", var_atom, E_logic_reduce[iesp]
-            )
+            noise_var = noise_var + torch.einsum("ij,ki->k", var_atom, E_logic_reduce[iesp])
 
         return torch.sqrt(noise_var + 1e-8)  # per-structure sigma
 
@@ -111,7 +111,7 @@ class NoiseNet(nn.Module):
         noise_per_species = []
         for iesp in range(len(self.species)):
             raw = self.heads[iesp](F_descrp[iesp].float())  # (n_atoms, 1)
-            sigma = Fn.softplus(raw) + self.min_noise         # (n_atoms, 1)
+            sigma = Fn.softplus(raw) + self.min_noise  # (n_atoms, 1)
             noise_per_species.append(sigma)
 
         # Concatenate across species (same order as aux_F_i in forward_F)

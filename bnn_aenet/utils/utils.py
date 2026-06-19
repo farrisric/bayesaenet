@@ -1,5 +1,6 @@
-import yaml
 from pathlib import Path
+
+import yaml
 
 # Exact keys you want in the output
 ALLOWED_KEYS = {
@@ -16,7 +17,8 @@ ALLOWED_KEYS = {
     "model.q_scale",
 }
 
-def flatten_dict(d, parent_key=''):
+
+def flatten_dict(d, parent_key=""):
     """Flatten nested dicts using dot notation, skipping model.net."""
     items = []
     for k, v in d.items():
@@ -30,16 +32,18 @@ def flatten_dict(d, parent_key=''):
             items.append((new_key, v))
     return items
 
+
 def yaml_value_to_str(val):
     """Clean YAML scalar rendering for values."""
     return yaml.safe_dump(val, default_flow_style=True).replace("...", "").strip()
 
+
 def hparams_to_overrides(hparams_path, overrides_path):
-    with open(hparams_path, 'r') as f:
+    with open(hparams_path, "r") as f:
         hparams = yaml.safe_load(f)
 
     flattened = []
-    for section in ['model', 'datamodule', 'trainer', 'experiment']:
+    for section in ["model", "datamodule", "trainer", "experiment"]:
         if section in hparams:
             flattened.extend(flatten_dict(hparams[section], parent_key=section))
         elif section in hparams:  # for flat keys like 'experiment'
@@ -52,18 +56,20 @@ def hparams_to_overrides(hparams_path, overrides_path):
 
     overrides_path = Path(overrides_path)
     overrides_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(overrides_path, 'w') as f:
+    with open(overrides_path, "w") as f:
         for line in overrides:
             f.write(f"{line}\n")
 
     return overrides
 
+
 if __name__ == "__main__":
     import glob
-    lrt = 'hom_lrt_hps_100perc/runs/2025-05-09_16-07-29'
-    fo = 'hom_fo_hps_100perc/runs/2025-05-09_16-38-44'
+
+    lrt = "hom_lrt_hps_100perc/runs/2025-05-09_16-07-29"
+    fo = "hom_fo_hps_100perc/runs/2025-05-09_16-38-44"
     for model in [fo, lrt]:
-        pattern = f'/home/g15farris/bin/bayesaenet/bnn_aenet/logs/{model}/*/tensorboard/version_0/hparams.yaml'
+        pattern = f"/home/g15farris/bin/bayesaenet/bnn_aenet/logs/{model}/*/tensorboard/version_0/hparams.yaml"
         for hpruns in glob.glob(pattern):
-            overrides = Path(hpruns).parent.parent.parent / '.hydra' / 'overrides.yaml'
+            overrides = Path(hpruns).parent.parent.parent / ".hydra" / "overrides.yaml"
             hparams_to_overrides(hpruns, overrides)

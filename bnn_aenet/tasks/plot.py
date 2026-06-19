@@ -19,6 +19,7 @@ import warnings
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
@@ -37,7 +38,9 @@ except (ModuleNotFoundError, ImportError):
     # Fallback when utils.metrics is unavailable or does not expose needed symbols.
     # Load analysis/metrics.py directly to avoid package __init__ side effects.
     _metrics_path = Path(__file__).resolve().parents[1] / "analysis" / "metrics.py"
-    _metrics_spec = importlib.util.spec_from_file_location("analysis_metrics_fallback", _metrics_path)
+    _metrics_spec = importlib.util.spec_from_file_location(
+        "analysis_metrics_fallback", _metrics_path
+    )
     _metrics_mod = importlib.util.module_from_spec(_metrics_spec)
     _metrics_spec.loader.exec_module(_metrics_mod)
     compute_calibration_curve = _metrics_mod.compute_calibration_curve
@@ -49,15 +52,21 @@ except (ModuleNotFoundError, ImportError):
 # Prefer package module when available; fallback to script module in this repo.
 try:
     from bnn_aenet.tasks.analyze import (
+        compute_run_metrics,
         create_deep_ensemble,
         create_sub_ensembles,
-        compute_run_metrics,
         load_run_predictions,
         load_tensorboard_scalars,
         select_best_bnn,
     )
 except ModuleNotFoundError:
-    _analysis_path = Path(__file__).resolve().parents[2] / "scripts" / "TiO2_big" / "analysis" / "analyze_forces.py"
+    _analysis_path = (
+        Path(__file__).resolve().parents[2]
+        / "scripts"
+        / "TiO2_big"
+        / "analysis"
+        / "analyze_forces.py"
+    )
     _spec = importlib.util.spec_from_file_location("analyze_forces_fallback", _analysis_path)
     _mod = importlib.util.module_from_spec(_spec)
     _spec.loader.exec_module(_mod)
@@ -71,45 +80,47 @@ except ModuleNotFoundError:
 # ---------------------------------------------------------------------------
 # Publication style
 # ---------------------------------------------------------------------------
-SINGLE_COL = 3.5   # inches  (single-column figure)
-DOUBLE_COL = 7.0   # inches  (double-column / full-width figure)
+SINGLE_COL = 3.5  # inches  (single-column figure)
+DOUBLE_COL = 7.0  # inches  (double-column / full-width figure)
 DPI = 300
 
-plt.rcParams.update({
-    # Fonts
-    "font.family": "serif",
-    "font.serif": ["Computer Modern Roman", "DejaVu Serif", "Times New Roman"],
-    "mathtext.fontset": "cm",
-    "font.size": 9,
-    "axes.titlesize": 10,
-    "axes.labelsize": 9,
-    "xtick.labelsize": 8,
-    "ytick.labelsize": 8,
-    "legend.fontsize": 8,
-    # Figure
-    "figure.dpi": DPI,
-    "savefig.dpi": DPI,
-    "savefig.bbox": "tight",
-    "savefig.pad_inches": 0.05,
-    # Axes
-    "axes.linewidth": 0.6,
-    "axes.grid": False,
-    "xtick.major.width": 0.6,
-    "ytick.major.width": 0.6,
-    "xtick.minor.width": 0.4,
-    "ytick.minor.width": 0.4,
-    "xtick.major.size": 3,
-    "ytick.major.size": 3,
-    "xtick.minor.size": 1.5,
-    "ytick.minor.size": 1.5,
-    "xtick.direction": "in",
-    "ytick.direction": "in",
-    "xtick.minor.visible": True,
-    "ytick.minor.visible": True,
-    # Lines
-    "lines.linewidth": 1.2,
-    "lines.markersize": 4,
-})
+plt.rcParams.update(
+    {
+        # Fonts
+        "font.family": "serif",
+        "font.serif": ["Computer Modern Roman", "DejaVu Serif", "Times New Roman"],
+        "mathtext.fontset": "cm",
+        "font.size": 9,
+        "axes.titlesize": 10,
+        "axes.labelsize": 9,
+        "xtick.labelsize": 8,
+        "ytick.labelsize": 8,
+        "legend.fontsize": 8,
+        # Figure
+        "figure.dpi": DPI,
+        "savefig.dpi": DPI,
+        "savefig.bbox": "tight",
+        "savefig.pad_inches": 0.05,
+        # Axes
+        "axes.linewidth": 0.6,
+        "axes.grid": False,
+        "xtick.major.width": 0.6,
+        "ytick.major.width": 0.6,
+        "xtick.minor.width": 0.4,
+        "ytick.minor.width": 0.4,
+        "xtick.major.size": 3,
+        "ytick.major.size": 3,
+        "xtick.minor.size": 1.5,
+        "ytick.minor.size": 1.5,
+        "xtick.direction": "in",
+        "ytick.direction": "in",
+        "xtick.minor.visible": True,
+        "ytick.minor.visible": True,
+        # Lines
+        "lines.linewidth": 1.2,
+        "lines.markersize": 4,
+    }
+)
 
 # Method display names and colors (consistent across all figures)
 METHOD_ORDER = ["DE", "lrt", "rad", "lrt_hetero", "rad_hetero"]
@@ -224,14 +235,14 @@ def _load_run_e_scaling_from_npz(pred_dir: Path, model_type: str, run_name: str,
 # Figure 1: Energy Parity
 # ============================================================================
 
+
 def plot_energy_parity(method_data: dict, output_dir: Path):
     """Energy parity plots -- one panel per method, shared axes."""
     methods = [m for m in METHOD_ORDER if m in method_data]
     n = len(methods)
     nrows = 2 if n > 1 else 1
     ncols = int(np.ceil(n / nrows))
-    fig, axes = plt.subplots(nrows, ncols, figsize=(DOUBLE_COL, DOUBLE_COL * 0.65),
-                             squeeze=False)
+    fig, axes = plt.subplots(nrows, ncols, figsize=(DOUBLE_COL, DOUBLE_COL * 0.65), squeeze=False)
     axes = axes.flatten()
 
     # Determine global axis range
@@ -252,18 +263,23 @@ def plot_energy_parity(method_data: dict, output_dir: Path):
         y_pred = df["preds"].values
 
         color = METHOD_COLORS[method]
-        ax.scatter(y_true, y_pred, s=6, alpha=0.5, color=color,
-                   edgecolors="none", rasterized=True)
+        ax.scatter(y_true, y_pred, s=6, alpha=0.5, color=color, edgecolors="none", rasterized=True)
         ax.plot([lo, hi], [lo, hi], "k-", linewidth=0.6, alpha=0.6)
 
         # Metrics annotation
         em = compute_energy_metrics(y_true, y_pred)
         rmse_str = f"RMSE = {em['rmse']:.3f}"
         r2_str = f"$R^2$ = {em['r2']:.6f}"
-        ax.text(0.05, 0.95, f"{rmse_str}\n{r2_str}",
-                transform=ax.transAxes, va="top", ha="left", fontsize=7,
-                bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="0.8",
-                          alpha=0.85))
+        ax.text(
+            0.05,
+            0.95,
+            f"{rmse_str}\n{r2_str}",
+            transform=ax.transAxes,
+            va="top",
+            ha="left",
+            fontsize=7,
+            bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="0.8", alpha=0.85),
+        )
 
         ax.set_xlim(lo, hi)
         ax.set_ylim(lo, hi)
@@ -284,19 +300,19 @@ def plot_energy_parity(method_data: dict, output_dir: Path):
 # Figure 2: Force Parity
 # ============================================================================
 
-def plot_force_parity(method_data: dict, output_dir: Path,
-                      max_points: int = 8000):
+
+def plot_force_parity(method_data: dict, output_dir: Path, max_points: int = 8000):
     """Force parity plots -- one panel per method, density-colored."""
-    methods = [m for m in METHOD_ORDER if m in method_data
-               and method_data[m].get("forces") is not None]
+    methods = [
+        m for m in METHOD_ORDER if m in method_data and method_data[m].get("forces") is not None
+    ]
     n = len(methods)
     if n == 0:
         return
 
     nrows = 2 if n > 1 else 1
     ncols = int(np.ceil(n / nrows))
-    fig, axes = plt.subplots(nrows, ncols, figsize=(DOUBLE_COL, DOUBLE_COL * 0.65),
-                             squeeze=False)
+    fig, axes = plt.subplots(nrows, ncols, figsize=(DOUBLE_COL, DOUBLE_COL * 0.65), squeeze=False)
     axes = axes.flatten()
 
     # Global axis range
@@ -324,19 +340,33 @@ def plot_force_parity(method_data: dict, output_dir: Path,
 
         # 2D histogram for density coloring
         from matplotlib.colors import LogNorm
-        h = ax.hist2d(ft, fp, bins=100, range=[[lo, hi], [lo, hi]],
-                       cmap="viridis", norm=LogNorm(), rasterized=True)
+
+        h = ax.hist2d(
+            ft,
+            fp,
+            bins=100,
+            range=[[lo, hi], [lo, hi]],
+            cmap="viridis",
+            norm=LogNorm(),
+            rasterized=True,
+        )
         ax.plot([lo, hi], [lo, hi], "w-", linewidth=0.6, alpha=0.8)
 
         # Metrics
         fm = compute_force_metrics(ft, fp)
         rmse_str = f"RMSE = {fm['rmse']:.3f}"
         r2_str = f"$R^2$ = {fm['r2']:.4f}"
-        ax.text(0.05, 0.95, f"{rmse_str}\n{r2_str}",
-                transform=ax.transAxes, va="top", ha="left", fontsize=7,
-                color="white",
-                bbox=dict(boxstyle="round,pad=0.3", fc="black", ec="0.3",
-                          alpha=0.6))
+        ax.text(
+            0.05,
+            0.95,
+            f"{rmse_str}\n{r2_str}",
+            transform=ax.transAxes,
+            va="top",
+            ha="left",
+            fontsize=7,
+            color="white",
+            bbox=dict(boxstyle="round,pad=0.3", fc="black", ec="0.3", alpha=0.6),
+        )
 
         ax.set_xlim(lo, hi)
         ax.set_ylim(lo, hi)
@@ -357,21 +387,30 @@ def plot_force_parity(method_data: dict, output_dir: Path,
 # Figure 3: Calibration
 # ============================================================================
 
+
 def plot_calibration(method_data: dict, output_dir: Path):
     """Combined calibration plot: energy (left) + forces (right), all methods
     overlaid on the same axes."""
-    methods_e = [m for m in METHOD_ORDER if m in method_data
-                 and method_data[m]["energy_df"]["stds"].values.std() > 0]
-    methods_f = [m for m in METHOD_ORDER if m in method_data
-                 and method_data[m].get("forces") is not None
-                 and method_data[m]["forces"]["std_forces"].std() > 0]
+    methods_e = [
+        m
+        for m in METHOD_ORDER
+        if m in method_data and method_data[m]["energy_df"]["stds"].values.std() > 0
+    ]
+    methods_f = [
+        m
+        for m in METHOD_ORDER
+        if m in method_data
+        and method_data[m].get("forces") is not None
+        and method_data[m]["forces"]["std_forces"].std() > 0
+    ]
 
     if not methods_e and not methods_f:
         return
 
     n_panels = (1 if methods_e else 0) + (1 if methods_f else 0)
     fig, axes = plt.subplots(
-        n_panels, 1,
+        n_panels,
+        1,
         figsize=(SINGLE_COL * 1.05, SINGLE_COL * n_panels),
         squeeze=False,
     )
@@ -386,14 +425,18 @@ def plot_calibration(method_data: dict, output_dir: Path):
             exp_f, obs_f = compute_calibration_curve(
                 df["true"].values, df["preds"].values, df["stds"].values
             )
-            ax.plot(exp_f, obs_f, color=METHOD_COLORS[method],
-                    marker=METHOD_MARKERS.get(method, "o"), markersize=3,
-                    label=METHOD_NAMES.get(method, method))
+            ax.plot(
+                exp_f,
+                obs_f,
+                color=METHOD_COLORS[method],
+                marker=METHOD_MARKERS.get(method, "o"),
+                markersize=3,
+                label=METHOD_NAMES.get(method, method),
+            )
         ax.set_xlabel("Expected confidence")
         ax.set_ylabel("Observed coverage")
         ax.set_title("Energy calibration")
-        ax.legend(loc="lower right", frameon=True, fancybox=False,
-                  edgecolor="0.8", framealpha=0.9)
+        ax.legend(loc="lower right", frameon=True, fancybox=False, edgecolor="0.8", framealpha=0.9)
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
         ax.set_aspect("equal")
@@ -407,14 +450,18 @@ def plot_calibration(method_data: dict, output_dir: Path):
             exp_f, obs_f = compute_calibration_curve(
                 f["true_forces"], f["pred_forces"], f["std_forces"]
             )
-            ax.plot(exp_f, obs_f, color=METHOD_COLORS[method],
-                    marker=METHOD_MARKERS.get(method, "o"), markersize=3,
-                    label=METHOD_NAMES.get(method, method))
+            ax.plot(
+                exp_f,
+                obs_f,
+                color=METHOD_COLORS[method],
+                marker=METHOD_MARKERS.get(method, "o"),
+                markersize=3,
+                label=METHOD_NAMES.get(method, method),
+            )
         ax.set_xlabel("Expected confidence")
         ax.set_ylabel("Observed coverage")
         ax.set_title("Force calibration")
-        ax.legend(loc="lower right", frameon=True, fancybox=False,
-                  edgecolor="0.8", framealpha=0.9)
+        ax.legend(loc="lower right", frameon=True, fancybox=False, edgecolor="0.8", framealpha=0.9)
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
         ax.set_aspect("equal")
@@ -426,6 +473,7 @@ def plot_calibration(method_data: dict, output_dir: Path):
 # ============================================================================
 # Figure 4: Binned Error vs Uncertainty
 # ============================================================================
+
 
 def _binned_error_uq(y_true, y_pred, y_std, n_bins=10):
     """Compute binned mean |error| vs uncertainty."""
@@ -518,11 +566,18 @@ def plot_error_vs_uncertainty(
     - row 1: energy |error| vs std
     - row 2: force  |error| vs std (if forces are available)
     """
-    methods_e = [m for m in METHOD_ORDER if m in method_data
-                 and method_data[m]["energy_df"]["stds"].values.std() > 0]
-    methods_f = [m for m in METHOD_ORDER if m in method_data
-                 and method_data[m].get("forces") is not None
-                 and method_data[m]["forces"]["std_forces"].std() > 0]
+    methods_e = [
+        m
+        for m in METHOD_ORDER
+        if m in method_data and method_data[m]["energy_df"]["stds"].values.std() > 0
+    ]
+    methods_f = [
+        m
+        for m in METHOD_ORDER
+        if m in method_data
+        and method_data[m].get("forces") is not None
+        and method_data[m]["forces"]["std_forces"].std() > 0
+    ]
 
     if not methods_e and not methods_f:
         return
@@ -532,7 +587,8 @@ def plot_error_vs_uncertainty(
     nrows = (1 if methods_e else 0) + (1 if methods_f else 0)
 
     fig, axes = plt.subplots(
-        nrows, ncols,
+        nrows,
+        ncols,
         figsize=(DOUBLE_COL * 1.8, 2.6 * nrows),
         squeeze=False,
     )
@@ -572,7 +628,8 @@ def plot_error_vs_uncertainty(
             y_hi = np.percentile(y, 99.5)
 
             ax.hist2d(
-                x, y,
+                x,
+                y,
                 bins=90,
                 range=[[0, x_hi], [0, y_hi]],
                 cmap="viridis",
@@ -584,9 +641,14 @@ def plot_error_vs_uncertainty(
             ax.plot([0, lim], [0, lim], "w--", linewidth=0.7, alpha=0.8)
             corr_label = _corr_text(x, y)
             ax.text(
-                0.04, 0.96, corr_label,
+                0.04,
+                0.96,
+                corr_label,
                 transform=ax.transAxes,
-                va="top", ha="left", fontsize=7, color="white",
+                va="top",
+                ha="left",
+                fontsize=7,
+                color="white",
                 bbox=dict(boxstyle="round,pad=0.25", fc="black", ec="0.3", alpha=0.65),
             )
 
@@ -627,7 +689,8 @@ def plot_error_vs_uncertainty(
             y_hi = np.percentile(y, 99.5)
 
             ax.hist2d(
-                x, y,
+                x,
+                y,
                 bins=90,
                 range=[[0, x_hi], [0, y_hi]],
                 cmap="viridis",
@@ -639,9 +702,14 @@ def plot_error_vs_uncertainty(
             ax.plot([0, lim], [0, lim], "w--", linewidth=0.7, alpha=0.8)
             corr_label = _corr_text(x, y)
             ax.text(
-                0.04, 0.96, corr_label,
+                0.04,
+                0.96,
+                corr_label,
                 transform=ax.transAxes,
-                va="top", ha="left", fontsize=7, color="white",
+                va="top",
+                ha="left",
+                fontsize=7,
+                color="white",
                 bbox=dict(boxstyle="round,pad=0.25", fc="black", ec="0.3", alpha=0.65),
             )
 
@@ -664,6 +732,7 @@ def plot_error_vs_uncertainty(
 # Figure 5: Summary Bar Chart
 # ============================================================================
 
+
 def plot_metric_bars(summary_df: pd.DataFrame, output_dir: Path):
     """Grouped bar chart for key metrics across methods."""
     metric_defs = [
@@ -684,8 +753,7 @@ def plot_metric_bars(summary_df: pd.DataFrame, output_dir: Path):
 
     ncols = 2
     nrows = (n_metrics + 1) // 2
-    fig, axes = plt.subplots(nrows, ncols, figsize=(DOUBLE_COL, 1.8 * nrows),
-                             squeeze=False)
+    fig, axes = plt.subplots(nrows, ncols, figsize=(DOUBLE_COL, 1.8 * nrows), squeeze=False)
     axes_flat = axes.flatten()
 
     ordered_methods = [m for m in METHOD_ORDER if m in summary_df["method"].values]
@@ -704,12 +772,21 @@ def plot_metric_bars(summary_df: pd.DataFrame, output_dir: Path):
             errs.append(e if pd.notna(e) else 0)
             colors.append(METHOD_COLORS.get(m, "#888888"))
 
-        bars = ax.bar(x, vals, width, yerr=errs, capsize=3,
-                      color=colors, edgecolor="0.3", linewidth=0.5,
-                      error_kw=dict(linewidth=0.8))
+        bars = ax.bar(
+            x,
+            vals,
+            width,
+            yerr=errs,
+            capsize=3,
+            color=colors,
+            edgecolor="0.3",
+            linewidth=0.5,
+            error_kw=dict(linewidth=0.8),
+        )
         ax.set_xticks(x)
-        ax.set_xticklabels([METHOD_NAMES.get(m, m) for m in ordered_methods],
-                           rotation=25, ha="right", fontsize=7)
+        ax.set_xticklabels(
+            [METHOD_NAMES.get(m, m) for m in ordered_methods], rotation=25, ha="right", fontsize=7
+        )
         ax.set_ylabel(ylabel)
         ax.yaxis.set_minor_locator(mticker.AutoMinorLocator())
 
@@ -724,6 +801,7 @@ def plot_metric_bars(summary_df: pd.DataFrame, output_dir: Path):
 # ============================================================================
 # Figure 6: Training Time
 # ============================================================================
+
 
 def _load_exec_times(time_dirs: list) -> dict:
     """Load execution times from exec_time.log files.
@@ -768,15 +846,28 @@ def plot_training_time(time_dirs: list, output_dir: Path):
 
     fig, ax = plt.subplots(figsize=(SINGLE_COL, 2.5))
     x = np.arange(len(ordered))
-    bars = ax.bar(x, means, 0.6, yerr=stds, capsize=3,
-                  color=colors, edgecolor="0.3", linewidth=0.5,
-                  error_kw=dict(linewidth=0.8))
+    bars = ax.bar(
+        x,
+        means,
+        0.6,
+        yerr=stds,
+        capsize=3,
+        color=colors,
+        edgecolor="0.3",
+        linewidth=0.5,
+        error_kw=dict(linewidth=0.8),
+    )
 
     # Annotate total GPU-hours on each bar
     for i, (bar, hrs, nr) in enumerate(zip(bars, total_hrs, n_runs)):
-        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + stds[i] + 1,
-                f"{hrs:.1f} h\n({nr} runs)",
-                ha="center", va="bottom", fontsize=6.5)
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height() + stds[i] + 1,
+            f"{hrs:.1f} h\n({nr} runs)",
+            ha="center",
+            va="bottom",
+            fontsize=6.5,
+        )
 
     ax.set_xticks(x)
     ax.set_xticklabels([METHOD_NAMES.get(m, m) for m in ordered], fontsize=8)
@@ -793,6 +884,7 @@ def plot_training_time(time_dirs: list, output_dir: Path):
 # ============================================================================
 # Figure 7: Training Curves (condensed)
 # ============================================================================
+
 
 def plot_training_curves(train_dir: Path, output_dir: Path):
     """Condensed training curves: energy RMSE + force RMSE (validation),
@@ -828,10 +920,12 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
 
     fig, axes = plt.subplots(1, 2, figsize=(DOUBLE_COL, 2.8))
 
-    for tag_idx, (tag, ylabel) in enumerate([
-        ("rmse/val", "Energy RMSE (meV/atom)"),
-        ("force_rmse/val", r"Force RMSE (meV/$\mathrm{\AA}$)"),
-    ]):
+    for tag_idx, (tag, ylabel) in enumerate(
+        [
+            ("rmse/val", "Energy RMSE (meV/atom)"),
+            ("force_rmse/val", r"Force RMSE (meV/$\mathrm{\AA}$)"),
+        ]
+    ):
         ax = axes[tag_idx]
         for mt in available:
             if mt not in all_data:
@@ -852,13 +946,20 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
                 std_vals = truncated.std(axis=0)
                 steps = list(model_data.values())[0][tag]["steps"][:min_len]
                 ax.plot(steps, mean_vals, color=color, linewidth=1.2, label=name)
-                ax.fill_between(steps, mean_vals - std_vals, mean_vals + std_vals,
-                                color=color, alpha=0.12)
+                ax.fill_between(
+                    steps, mean_vals - std_vals, mean_vals + std_vals, color=color, alpha=0.12
+                )
 
         ax.set_xlabel("Epoch")
         ax.set_ylabel(ylabel)
-        ax.legend(loc="upper right", frameon=True, fancybox=False,
-                  edgecolor="0.8", framealpha=0.9, fontsize=7)
+        ax.legend(
+            loc="upper right",
+            frameon=True,
+            fancybox=False,
+            edgecolor="0.8",
+            framealpha=0.9,
+            fontsize=7,
+        )
         ax.yaxis.set_minor_locator(mticker.AutoMinorLocator())
         ax.xaxis.set_minor_locator(mticker.AutoMinorLocator())
 
@@ -870,8 +971,8 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
 # LaTeX Table
 # ============================================================================
 
-def generate_latex_table(summary_df: pd.DataFrame, time_data: dict,
-                         output_dir: Path):
+
+def generate_latex_table(summary_df: pd.DataFrame, time_data: dict, output_dir: Path):
     """Publication-quality LaTeX table with bold best values."""
     # Columns to include (with display names and formatting)
     col_defs = [
@@ -885,8 +986,7 @@ def generate_latex_table(summary_df: pd.DataFrame, time_data: dict,
         ("force_ece", "F ECE", ".3f", "min"),
     ]
     # Filter to columns actually present
-    col_defs = [(k, lab, fmt, opt) for k, lab, fmt, opt in col_defs
-                if k in summary_df.columns]
+    col_defs = [(k, lab, fmt, opt) for k, lab, fmt, opt in col_defs if k in summary_df.columns]
 
     ordered_methods = [m for m in METHOD_ORDER if m in summary_df["method"].values]
 
@@ -894,9 +994,11 @@ def generate_latex_table(summary_df: pd.DataFrame, time_data: dict,
     lines = []
     lines.append(r"\begin{table*}")
     lines.append(r"\centering")
-    lines.append(r"\caption{Test set performance of TiO$_2$ force-trained models. "
-                 r"Energy in meV/atom, forces in meV/\AA{}. "
-                 r"Best values per column in \textbf{bold}.}")
+    lines.append(
+        r"\caption{Test set performance of TiO$_2$ force-trained models. "
+        r"Energy in meV/atom, forces in meV/\AA{}. "
+        r"Best values per column in \textbf{bold}.}"
+    )
     lines.append(r"\label{tab:tio2_results}")
 
     # Header
@@ -993,39 +1095,63 @@ def generate_latex_table(summary_df: pd.DataFrame, time_data: dict,
 # Main
 # ============================================================================
 
+
 def main():
-    parser = argparse.ArgumentParser(
-        description="Publication-ready analysis (test set only)"
+    parser = argparse.ArgumentParser(description="Publication-ready analysis (test set only)")
+    parser.add_argument(
+        "--pred-dir",
+        type=str,
+        default="bnn_aenet/logs/TiO2_big/pred/runs",
+        help="Directory with prediction outputs",
     )
-    parser.add_argument("--pred-dir", type=str,
-                        default="bnn_aenet/logs/TiO2_big/pred/runs",
-                        help="Directory with prediction outputs")
-    parser.add_argument("--output-dir", type=str,
-                        default="plots/TiO2_big/publication",
-                        help="Output directory for publication figures")
-    parser.add_argument("--train-dir", type=str,
-                        default="bnn_aenet/logs/TiO2_big/train",
-                        help="Directory with training logs (for curves)")
-    parser.add_argument("--time-dirs", type=str, nargs="+",
-                        default=[
-                            "bnn_aenet/logs/nn_train",
-                            "bnn_aenet/logs/lrt_train",
-                            "bnn_aenet/logs/rad_train",
-                        ],
-                        help="Directories containing exec_time.log files")
-    parser.add_argument("--e-scaling", type=float, default=None,
-                       help="Energy scaling factor (eV/atom) for force RMSE to meV/Å. "
-                            "If not set, loaded from npz when available.")
-    parser.add_argument("--e-shift", type=float, default=None,
-                       help="Energy shift used for denormalizing energies.")
-    parser.add_argument("--alpha", type=float, default=0.1,
-                        help="Alpha for total_rmse")
-    parser.add_argument("--subsets", type=str, nargs="+",
-                        default=["train", "val", "test"],
-                        help="Prediction subsets to analyze")
-    parser.add_argument("--models", type=str, nargs="+",
-                        default=["DE", "lrt", "rad", "lrt_hetero", "rad_hetero"],
-                        help="Methods to include: DE lrt rad lrt_hetero rad_hetero")
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="plots/TiO2_big/publication",
+        help="Output directory for publication figures",
+    )
+    parser.add_argument(
+        "--train-dir",
+        type=str,
+        default="bnn_aenet/logs/TiO2_big/train",
+        help="Directory with training logs (for curves)",
+    )
+    parser.add_argument(
+        "--time-dirs",
+        type=str,
+        nargs="+",
+        default=[
+            "bnn_aenet/logs/nn_train",
+            "bnn_aenet/logs/lrt_train",
+            "bnn_aenet/logs/rad_train",
+        ],
+        help="Directories containing exec_time.log files",
+    )
+    parser.add_argument(
+        "--e-scaling",
+        type=float,
+        default=None,
+        help="Energy scaling factor (eV/atom) for force RMSE to meV/Å. "
+        "If not set, loaded from npz when available.",
+    )
+    parser.add_argument(
+        "--e-shift", type=float, default=None, help="Energy shift used for denormalizing energies."
+    )
+    parser.add_argument("--alpha", type=float, default=0.1, help="Alpha for total_rmse")
+    parser.add_argument(
+        "--subsets",
+        type=str,
+        nargs="+",
+        default=["train", "val", "test"],
+        help="Prediction subsets to analyze",
+    )
+    parser.add_argument(
+        "--models",
+        type=str,
+        nargs="+",
+        default=["DE", "lrt", "rad", "lrt_hetero", "rad_hetero"],
+        help="Methods to include: DE lrt rad lrt_hetero rad_hetero",
+    )
     args = parser.parse_args()
 
     pred_dir = Path(args.pred_dir)
@@ -1033,7 +1159,11 @@ def main():
     train_dir = Path(args.train_dir)
     default_e_scaling, default_e_shift = _get_default_scaling_from_path(pred_dir)
     e_scaling_used = args.e_scaling if args.e_scaling is not None else default_e_scaling
-    e_shift_used = args.e_shift if args.e_shift is not None else (default_e_shift if default_e_shift is not None else 0.0)
+    e_shift_used = (
+        args.e_shift
+        if args.e_shift is not None
+        else (default_e_shift if default_e_shift is not None else 0.0)
+    )
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1062,8 +1192,12 @@ def main():
         nn_runs = load_run_predictions(pred_dir, "nn", subset) if "DE" in _models else []
         lrt_runs = load_run_predictions(pred_dir, "lrt", subset) if "lrt" in _models else []
         rad_runs = load_run_predictions(pred_dir, "rad", subset) if "rad" in _models else []
-        lrt_het_runs = load_run_predictions(pred_dir, "lrt_hetero", subset) if "lrt_hetero" in _models else []
-        rad_het_runs = load_run_predictions(pred_dir, "rad_hetero", subset) if "rad_hetero" in _models else []
+        lrt_het_runs = (
+            load_run_predictions(pred_dir, "lrt_hetero", subset) if "lrt_hetero" in _models else []
+        )
+        rad_het_runs = (
+            load_run_predictions(pred_dir, "rad_hetero", subset) if "rad_hetero" in _models else []
+        )
 
         for model_type, runs in (
             ("nn", nn_runs),
@@ -1126,17 +1260,13 @@ def main():
             df = data["energy_df"]
             y_std = df["stds"].values if "stds" in df.columns else None
             if y_std is not None and np.any(y_std > 0):
-                m["energy_rmsce"] = _compute_rmsce(
-                    df["true"].values, df["preds"].values, y_std
-                )
+                m["energy_rmsce"] = _compute_rmsce(df["true"].values, df["preds"].values, y_std)
 
             if data.get("forces") is not None:
                 f = data["forces"]
                 f_std = f.get("std_forces")
                 if f_std is not None and np.any(f_std > 0):
-                    m["force_rmsce"] = _compute_rmsce(
-                        f["true_forces"], f["pred_forces"], f_std
-                    )
+                    m["force_rmsce"] = _compute_rmsce(f["true_forces"], f["pred_forces"], f_std)
             m["method"] = method
             summary_rows.append(m)
 
@@ -1175,8 +1305,16 @@ def main():
                     bnn_row[0][f"{col}_std"] = bnn_df[col].std()
 
         summary_df = pd.DataFrame(summary_rows)
-        key_cols = ["method", "energy_rmse", "energy_mae", "force_rmse",
-                    "force_mae", "total_rmse", "energy_nll", "energy_ece"]
+        key_cols = [
+            "method",
+            "energy_rmse",
+            "energy_mae",
+            "force_rmse",
+            "force_mae",
+            "total_rmse",
+            "energy_nll",
+            "energy_ece",
+        ]
         avail = [c for c in key_cols if c in summary_df.columns]
         print("\n" + summary_df[avail].to_string(index=False, float_format="%.4f"))
 

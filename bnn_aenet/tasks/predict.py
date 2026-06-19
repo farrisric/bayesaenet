@@ -1,17 +1,15 @@
+import os
+import sys
+from pathlib import Path
 from typing import Optional
 
-import yaml
 import hydra
-import pyrootutils
-from omegaconf import DictConfig, OmegaConf
-from lightning.pytorch import LightningDataModule, LightningModule, Trainer
-
 import pandas as pd
-from pathlib import Path
-import os
-
+import pyrootutils
+import yaml
+from lightning.pytorch import LightningDataModule, LightningModule, Trainer
+from omegaconf import DictConfig, OmegaConf
 from utils import get_pylogger
-import sys
 
 from bnn_aenet.utils.miscellaneous import ResultSaver
 
@@ -24,26 +22,28 @@ root = pyrootutils.setup_root(
 
 log = get_pylogger(__name__)
 
+
 def load_model_hyperparams(model, datamodule, hp_path):
-    with open(hp_path, 'r') as file:
+    with open(hp_path, "r") as file:
         hp_override = yaml.safe_load(file)
     for x in hp_override:
-        if x[:5] == 'model':
+        if x[:5] == "model":
             print(x)
-            key, value = x[6:].split('=')
-            if len(key.split('.')) == 2:
-                key, subkey = key.split('.')
+            key, value = x[6:].split("=")
+            if len(key.split(".")) == 2:
+                key, subkey = key.split(".")
                 model[key][subkey] = float(value)
                 continue
-            if key == 'mc_samples_eval':
+            if key == "mc_samples_eval":
                 continue
             model[key] = float(value)
             log.info(f"Overriding hyperparameter {key} with value {value}")
-        if x[:11] == 'datamodule.':
-            key, value = x[11:].split('=')
+        if x[:11] == "datamodule.":
+            key, value = x[11:].split("=")
             datamodule[key] = float(value)
             log.info(f"Overriding hyperparameter {key} with value {value}")
     return model, datamodule
+
 
 def predict(cfg: DictConfig):
     log.info(f"Instantiating trainer <{cfg.trainer._target_}>")
@@ -56,11 +56,11 @@ def predict(cfg: DictConfig):
         for ckpt_path in path.glob("**/epoch*.ckpt"):
             ckpt_paths.append(ckpt_path)
         for hp_path in path.glob("**/overrides.yaml"):
-            hp_paths.append(hp_path)            
+            hp_paths.append(hp_path)
     else:
         ckpt_paths.append(Path(cfg.ckpt_path))
         hp_paths.append(Path(cfg.ckpt_path).parent / "../.hydra/overrides.yaml")
-    
+
     run_i = 0
     for ckpt_path, hp_path in zip(ckpt_paths, hp_paths):
         method, run = ckpt_path.as_posix().split("/")[-4:-2]
@@ -70,8 +70,11 @@ def predict(cfg: DictConfig):
             run = run_i
             run_i += 1
         model = cfg[cfg.method]
-        # run = cfg.run 
-        model, cfg.datamodule, = load_model_hyperparams(model, cfg.datamodule, hp_path)
+        # run = cfg.run
+        (
+            model,
+            cfg.datamodule,
+        ) = load_model_hyperparams(model, cfg.datamodule, hp_path)
         log.info(f"Instantiating datamodule <{cfg.datamodule._target_}>")
         datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
         log.info(f"Instantiating model <{model._target_}>")
@@ -84,22 +87,16 @@ def predict(cfg: DictConfig):
         model.net.e_shift = datamodule.e_shift
         if OmegaConf.is_missing(model, "dataset_size"):
             model.dataset_size = datamodule.train_size
-        model: LightningModule = hydra.utils.instantiate(
-            model, _convert_="partial"
-        )
+        model: LightningModule = hydra.utils.instantiate(model, _convert_="partial")
         for subset in cfg.subsets:
-            
+
             filename = f"{cfg.method}_{run}_{subset}.parquet"
-            #datamodule.set_predict_dataset(subset)
-            predictions = trainer.predict(
-                model=model, datamodule=datamodule, ckpt_path=ckpt_path
-            )
+            # datamodule.set_predict_dataset(subset)
+            predictions = trainer.predict(model=model, datamodule=datamodule, ckpt_path=ckpt_path)
             predictions = pd.DataFrame.from_records(predictions)
-            predictions = predictions.explode(
-                predictions.columns.tolist()
-            ).reset_index(drop=True)
+            predictions = predictions.explode(predictions.columns.tolist()).reset_index(drop=True)
             log.info(f"Saving predicions: {cfg.paths.output_dir}")
-            results = ResultSaver(f"{cfg.paths.output_dir}", f"{filename}") 
+            results = ResultSaver(f"{cfg.paths.output_dir}", f"{filename}")
             predictions.to_csv(os.path.join(cfg.paths.output_dir, filename), index=False)
             # print(predictions)
             # results.save(predictions)

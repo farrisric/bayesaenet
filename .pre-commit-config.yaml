@@ -29,7 +29,7 @@ repos:
     rev: 5.10.1
     hooks:
       - id: isort
-        args: ["--profile", "black", "--filter-files"]
+        args: ["--profile", "black", "--filter-files", "--line-length", "99"]
 
   # python upgrading syntax to newer version
   - repo: https://github.com/asottile/pyupgrade

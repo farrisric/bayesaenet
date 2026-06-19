@@ -16,8 +16,8 @@ try:
     from .plots import (
         plot_parity,
         plot_residuals,
-        plot_uncertainty_calibration,
         plot_training_curves,
+        plot_uncertainty_calibration,
     )
 except ModuleNotFoundError:
     # Plot helpers are optional in this repo snapshot.

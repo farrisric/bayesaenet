@@ -14,7 +14,6 @@ from bnn_aenet.datamodule.aenet.read_forces_bin import (
 )
 from bnn_aenet.datamodule.aenet.read_input import read_train_in
 
-
 EXPECTED_TIO2_ASCII_STRUCTURES = 7815
 EXPECTED_TIO2_FORCE_STRUCTURES = 7815
 EXPECTED_TOTAL_FORCE_VECTORS = 165229
@@ -83,11 +82,12 @@ def test_tio2_random_split_produces_valid_partitions() -> None:
     ):
         train, valid, test = split_database(size, valid_split=0.1, test_split=0.1)
         total = len(train) + len(valid) + len(test)
-        print(f"SPLIT {label}: train={len(train)} valid={len(valid)} test={len(test)} total={total}")
+        print(
+            f"SPLIT {label}: train={len(train)} valid={len(valid)} test={len(test)} total={total}"
+        )
         assert total == size, f"{label}: expected {size}, got {total}"
         all_idx = sorted(train + valid + test)
         assert all_idx == list(range(size)), f"{label}: indices don't cover full range"
         assert len(set(train) & set(valid)) == 0, f"{label}: train/valid overlap"
         assert len(set(train) & set(test)) == 0, f"{label}: train/test overlap"
         assert len(set(valid) & set(test)) == 0, f"{label}: valid/test overlap"
-

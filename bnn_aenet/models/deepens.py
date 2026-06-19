@@ -23,10 +23,7 @@ def deep_ensemble(df: pd.DataFrame) -> pd.DataFrame:
     mu = mu_m.mean(axis=0)
     sigma = np.sqrt((mu_m**2 + sigma_m**2).mean(axis=0) - mu**2)
     return pd.DataFrame(
-        dict(
-            (k, v)
-            for k, v in zip(["preds", "labels", "stds"], [mu, labels, sigma])
-        )
+        dict((k, v) for k, v in zip(["preds", "labels", "stds"], [mu, labels, sigma]))
     )
 
 
