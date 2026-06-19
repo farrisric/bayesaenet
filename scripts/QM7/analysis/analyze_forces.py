@@ -17,6 +17,7 @@ from itertools import combinations
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")  # Non-interactive backend for cluster
 import matplotlib.pyplot as plt
 import numpy as np
@@ -28,10 +29,10 @@ PROJECT_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from bnn_aenet.analysis.metrics import (
+    compute_calibration_curve,
     compute_energy_metrics,
     compute_force_metrics,
     compute_uncertainty_metrics,
-    compute_calibration_curve,
 )
 
 # Plotting style
@@ -39,13 +40,15 @@ try:
     plt.style.use("seaborn-v0_8-whitegrid")
 except OSError:
     plt.style.use("seaborn-whitegrid")
-plt.rcParams.update({
-    "font.size": 11,
-    "axes.titlesize": 13,
-    "axes.labelsize": 11,
-    "figure.dpi": 150,
-    "savefig.dpi": 150,
-})
+plt.rcParams.update(
+    {
+        "font.size": 11,
+        "axes.titlesize": 13,
+        "axes.labelsize": 11,
+        "figure.dpi": 150,
+        "savefig.dpi": 150,
+    }
+)
 
 # Method display names and colors
 METHOD_NAMES = {
@@ -70,6 +73,7 @@ METHOD_COLORS = {
 # ============================================================================
 # Data Loading
 # ============================================================================
+
 
 def load_run_predictions(pred_dir: Path, model_type: str, subset: str = "val"):
     """Load all predictions for a model type and subset.
@@ -103,11 +107,13 @@ def load_run_predictions(pred_dir: Path, model_type: str, subset: str = "val"):
                 "std_forces": fdata["std_forces"],
             }
 
-        runs.append({
-            "energy_df": energy_df,
-            "forces": forces,
-            "run_name": run_name,
-        })
+        runs.append(
+            {
+                "energy_df": energy_df,
+                "forces": forces,
+                "run_name": run_name,
+            }
+        )
 
     return runs
 
@@ -115,6 +121,7 @@ def load_run_predictions(pred_dir: Path, model_type: str, subset: str = "val"):
 # ============================================================================
 # Deep Ensemble Creation
 # ============================================================================
+
 
 def create_deep_ensemble(runs: list) -> dict:
     """Create a Deep Ensemble from multiple NN predictions.
@@ -140,12 +147,14 @@ def create_deep_ensemble(runs: list) -> dict:
     mu = energy_preds.mean(axis=0)
     sigma = np.sqrt((energy_preds**2 + energy_stds**2).mean(axis=0) - mu**2)
 
-    energy_df = pd.DataFrame({
-        "true": runs[0]["energy_df"]["true"].values,
-        "preds": mu,
-        "stds": sigma,
-        "n_atoms": runs[0]["energy_df"]["n_atoms"].values,
-    })
+    energy_df = pd.DataFrame(
+        {
+            "true": runs[0]["energy_df"]["true"].values,
+            "preds": mu,
+            "stds": sigma,
+            "n_atoms": runs[0]["energy_df"]["n_atoms"].values,
+        }
+    )
 
     # Force ensemble
     forces = None
@@ -182,6 +191,7 @@ def create_sub_ensembles(runs: list, n_per_ensemble: int = 5, max_ensembles: int
         List of ensemble dicts.
     """
     import random
+
     random.seed(42)
 
     n_models = len(runs)
@@ -208,6 +218,7 @@ def create_sub_ensembles(runs: list, n_per_ensemble: int = 5, max_ensembles: int
 # ============================================================================
 # BNN Model Selection
 # ============================================================================
+
 
 def compute_run_metrics(run: dict, alpha: float = 0.1) -> dict:
     """Compute metrics for a single run."""
@@ -262,7 +273,9 @@ def compute_run_metrics(run: dict, alpha: float = 0.1) -> dict:
             metrics["force_mean_std"] = f_uq["mean_std"]
 
         # Combined total RMSE
-        metrics["total_rmse"] = (1 - alpha) * metrics["energy_rmse"] + alpha * metrics.get("force_rmse", 0)
+        metrics["total_rmse"] = (1 - alpha) * metrics["energy_rmse"] + alpha * metrics.get(
+            "force_rmse", 0
+        )
     else:
         metrics["total_rmse"] = metrics["energy_rmse"]
 
@@ -311,6 +324,7 @@ def select_best_bnn(runs: list, alpha: float = 0.1) -> dict:
 # Plotting Functions
 # ============================================================================
 
+
 def plot_energy_parity_comparison(method_data: dict, output_dir: Path, subset: str = "val"):
     """Plot energy parity plots for all methods side by side."""
     methods = list(method_data.keys())
@@ -325,7 +339,7 @@ def plot_energy_parity_comparison(method_data: dict, output_dir: Path, subset: s
         y_pred = data["energy_df"]["preds"].values
         y_std = data["energy_df"]["stds"].values
 
-        rmse = np.sqrt(np.mean((y_true - y_pred)**2))
+        rmse = np.sqrt(np.mean((y_true - y_pred) ** 2))
         mae = np.mean(np.abs(y_true - y_pred))
 
         all_vals = np.concatenate([y_true, y_pred])
@@ -336,10 +350,19 @@ def plot_energy_parity_comparison(method_data: dict, output_dir: Path, subset: s
         ax.plot(lim, lim, "k--", lw=1, alpha=0.5)
 
         if np.any(y_std > 0):
-            sc = ax.scatter(y_true, y_pred, c=y_std, cmap="viridis", alpha=0.7, s=20, edgecolors="none")
+            sc = ax.scatter(
+                y_true, y_pred, c=y_std, cmap="viridis", alpha=0.7, s=20, edgecolors="none"
+            )
             plt.colorbar(sc, ax=ax, label="Uncertainty")
         else:
-            ax.scatter(y_true, y_pred, alpha=0.6, s=20, c=METHOD_COLORS.get(method, "steelblue"), edgecolors="none")
+            ax.scatter(
+                y_true,
+                y_pred,
+                alpha=0.6,
+                s=20,
+                c=METHOD_COLORS.get(method, "steelblue"),
+                edgecolors="none",
+            )
 
         name = METHOD_NAMES.get(method, method)
         ax.set_title(f"{name}\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
@@ -372,7 +395,7 @@ def plot_force_parity_comparison(method_data: dict, output_dir: Path, subset: st
         f_pred = forces["pred_forces"]
         f_std = forces["std_forces"]
 
-        rmse = np.sqrt(np.mean((f_true - f_pred)**2))
+        rmse = np.sqrt(np.mean((f_true - f_pred) ** 2))
         mae = np.mean(np.abs(f_true - f_pred))
 
         # Subsample for plotting
@@ -390,10 +413,25 @@ def plot_force_parity_comparison(method_data: dict, output_dir: Path, subset: st
         ax.plot(lim, lim, "k--", lw=1, alpha=0.5)
 
         if np.any(f_std > 0):
-            sc = ax.scatter(f_true[idx], f_pred[idx], c=f_std[idx], cmap="plasma", alpha=0.4, s=10, edgecolors="none")
+            sc = ax.scatter(
+                f_true[idx],
+                f_pred[idx],
+                c=f_std[idx],
+                cmap="plasma",
+                alpha=0.4,
+                s=10,
+                edgecolors="none",
+            )
             plt.colorbar(sc, ax=ax, label="Uncertainty")
         else:
-            ax.scatter(f_true[idx], f_pred[idx], alpha=0.3, s=10, c=METHOD_COLORS.get(method, "coral"), edgecolors="none")
+            ax.scatter(
+                f_true[idx],
+                f_pred[idx],
+                alpha=0.3,
+                s=10,
+                c=METHOD_COLORS.get(method, "coral"),
+                edgecolors="none",
+            )
 
         name = METHOD_NAMES.get(method, method)
         ax.set_title(f"{name}\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
@@ -459,8 +497,9 @@ def plot_force_components_comparison(method_data: dict, output_dir: Path, subset
 def plot_calibration_comparison(method_data: dict, output_dir: Path, subset: str = "val"):
     """Plot uncertainty calibration curves for energy and forces."""
     # Energy calibration
-    methods_with_uq = [m for m in method_data
-                       if np.any(method_data[m]["energy_df"]["stds"].values > 0)]
+    methods_with_uq = [
+        m for m in method_data if np.any(method_data[m]["energy_df"]["stds"].values > 0)
+    ]
 
     if len(methods_with_uq) > 0:
         fig, ax = plt.subplots(figsize=(6, 6))
@@ -489,9 +528,12 @@ def plot_calibration_comparison(method_data: dict, output_dir: Path, subset: str
         plt.close(fig)
 
     # Force calibration
-    methods_with_f_uq = [m for m in method_data
-                         if method_data[m].get("forces") is not None
-                         and np.any(method_data[m]["forces"]["std_forces"] > 0)]
+    methods_with_f_uq = [
+        m
+        for m in method_data
+        if method_data[m].get("forces") is not None
+        and np.any(method_data[m]["forces"]["std_forces"] > 0)
+    ]
 
     if len(methods_with_f_uq) > 0:
         fig, ax = plt.subplots(figsize=(6, 6))
@@ -522,8 +564,9 @@ def plot_calibration_comparison(method_data: dict, output_dir: Path, subset: str
 
 def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str = "val"):
     """Plot error vs predicted uncertainty scatter plots."""
-    methods_with_uq = [m for m in method_data
-                       if np.any(method_data[m]["energy_df"]["stds"].values > 0)]
+    methods_with_uq = [
+        m for m in method_data if np.any(method_data[m]["energy_df"]["stds"].values > 0)
+    ]
 
     if len(methods_with_uq) == 0:
         return
@@ -542,7 +585,14 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
         errors = np.abs(y_true - y_pred)
         spearman_r, _ = stats.spearmanr(errors, y_std) if np.std(y_std) > 0 else (0, 1)
 
-        ax.scatter(y_std, errors, alpha=0.5, s=15, c=METHOD_COLORS.get(method, "steelblue"), edgecolors="none")
+        ax.scatter(
+            y_std,
+            errors,
+            alpha=0.5,
+            s=15,
+            c=METHOD_COLORS.get(method, "steelblue"),
+            edgecolors="none",
+        )
 
         # y=x reference line
         max_val = max(y_std.max(), errors.max())
@@ -551,8 +601,14 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
         # Regression fit line
         slope, intercept, _, _, _ = stats.linregress(y_std, errors)
         x_fit = np.array([y_std.min(), y_std.max()])
-        ax.plot(x_fit, slope * x_fit + intercept, "r-", linewidth=2, alpha=0.8,
-                label=f"fit (slope={slope:.1f})")
+        ax.plot(
+            x_fit,
+            slope * x_fit + intercept,
+            "r-",
+            linewidth=2,
+            alpha=0.8,
+            label=f"fit (slope={slope:.1f})",
+        )
         ax.legend(fontsize=8, loc="upper left")
 
         name = METHOD_NAMES.get(method, method)
@@ -566,9 +622,12 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
     plt.close(fig)
 
     # Force error vs uncertainty
-    methods_with_f_uq = [m for m in method_data
-                         if method_data[m].get("forces") is not None
-                         and np.any(method_data[m]["forces"]["std_forces"] > 0)]
+    methods_with_f_uq = [
+        m
+        for m in method_data
+        if method_data[m].get("forces") is not None
+        and np.any(method_data[m]["forces"]["std_forces"] > 0)
+    ]
 
     if len(methods_with_f_uq) == 0:
         return
@@ -587,10 +646,21 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
         errors = np.abs(f_true - f_pred)
         # Subsample
         n_pts = len(errors)
-        idx = np.random.choice(n_pts, min(n_pts, 5000), replace=False) if n_pts > 5000 else np.arange(n_pts)
+        idx = (
+            np.random.choice(n_pts, min(n_pts, 5000), replace=False)
+            if n_pts > 5000
+            else np.arange(n_pts)
+        )
 
         spearman_r, _ = stats.spearmanr(errors, f_std) if np.std(f_std) > 0 else (0, 1)
-        ax.scatter(f_std[idx], errors[idx], alpha=0.3, s=10, c=METHOD_COLORS.get(method, "coral"), edgecolors="none")
+        ax.scatter(
+            f_std[idx],
+            errors[idx],
+            alpha=0.3,
+            s=10,
+            c=METHOD_COLORS.get(method, "coral"),
+            edgecolors="none",
+        )
 
         # y=x reference line
         max_val = max(f_std[idx].max(), errors[idx].max())
@@ -599,8 +669,14 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
         # Regression fit line (shows actual trend)
         slope, intercept, _, _, _ = stats.linregress(f_std[idx], errors[idx])
         x_fit = np.array([f_std[idx].min(), f_std[idx].max()])
-        ax.plot(x_fit, slope * x_fit + intercept, "r-", linewidth=2, alpha=0.8,
-                label=f"fit (slope={slope:.1f})")
+        ax.plot(
+            x_fit,
+            slope * x_fit + intercept,
+            "r-",
+            linewidth=2,
+            alpha=0.8,
+            label=f"fit (slope={slope:.1f})",
+        )
         ax.legend(fontsize=8, loc="upper left")
 
         name = METHOD_NAMES.get(method, method)
@@ -652,9 +728,17 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
             bin_stds_y = np.array(bin_stds_y)
 
             color = METHOD_COLORS.get(method, "coral")
-            ax.errorbar(bin_means_x, bin_means_y, yerr=bin_stds_y,
-                        fmt="o-", color=color, capsize=3, markersize=6,
-                        linewidth=2, label="Binned mean |error|")
+            ax.errorbar(
+                bin_means_x,
+                bin_means_y,
+                yerr=bin_stds_y,
+                fmt="o-",
+                color=color,
+                capsize=3,
+                markersize=6,
+                linewidth=2,
+                label="Binned mean |error|",
+            )
 
             # y=x reference
             max_val = max(bin_means_x.max(), bin_means_y.max())
@@ -708,9 +792,17 @@ def plot_error_vs_uncertainty(method_data: dict, output_dir: Path, subset: str =
             bin_stds_y = np.array(bin_stds_y)
 
             color = METHOD_COLORS.get(method, "steelblue")
-            ax.errorbar(bin_means_x, bin_means_y, yerr=bin_stds_y,
-                        fmt="o-", color=color, capsize=3, markersize=6,
-                        linewidth=2, label="Binned mean |error|")
+            ax.errorbar(
+                bin_means_x,
+                bin_means_y,
+                yerr=bin_stds_y,
+                fmt="o-",
+                color=color,
+                capsize=3,
+                markersize=6,
+                linewidth=2,
+                label="Binned mean |error|",
+            )
 
             max_val = max(bin_means_x.max(), bin_means_y.max())
             ax.plot([0, max_val], [0, max_val], "k--", alpha=0.3, label="y = x")
@@ -739,7 +831,9 @@ def plot_method_comparison_bars(summary_df: pd.DataFrame, output_dir: Path, subs
         ("force_nll", "Force NLL", True),
     ]
 
-    available = [(m, label, lower) for m, label, lower in metrics_to_plot if m in summary_df.columns]
+    available = [
+        (m, label, lower) for m, label, lower in metrics_to_plot if m in summary_df.columns
+    ]
 
     n_plots = len(available)
     if n_plots == 0:
@@ -774,7 +868,9 @@ def plot_method_comparison_bars(summary_df: pd.DataFrame, output_dir: Path, subs
         bars[best_idx].set_linewidth(2)
 
         ax.set_xticks(range(len(methods)))
-        ax.set_xticklabels([METHOD_NAMES.get(m, m) for m in methods], rotation=45, ha="right", fontsize=9)
+        ax.set_xticklabels(
+            [METHOD_NAMES.get(m, m) for m in methods], rotation=45, ha="right", fontsize=9
+        )
         ax.set_title(label)
         ax.set_ylabel(label)
 
@@ -793,6 +889,7 @@ def plot_method_comparison_bars(summary_df: pd.DataFrame, output_dir: Path, subs
 # Per-model plots (individual parity, components, error vs UQ)
 # ============================================================================
 
+
 def plot_single_energy_parity(data: dict, method: str, output_dir: Path, subset: str):
     """Plot energy parity for a single method."""
     fig, ax = plt.subplots(figsize=(6, 6))
@@ -800,7 +897,7 @@ def plot_single_energy_parity(data: dict, method: str, output_dir: Path, subset:
     y_pred = data["energy_df"]["preds"].values
     y_std = data["energy_df"]["stds"].values
 
-    rmse = np.sqrt(np.mean((y_true - y_pred)**2))
+    rmse = np.sqrt(np.mean((y_true - y_pred) ** 2))
     mae = np.mean(np.abs(y_true - y_pred))
 
     all_vals = np.concatenate([y_true, y_pred])
@@ -810,10 +907,19 @@ def plot_single_energy_parity(data: dict, method: str, output_dir: Path, subset:
     ax.plot(lim, lim, "k--", lw=1, alpha=0.5)
 
     if np.any(y_std > 0):
-        sc = ax.scatter(y_true, y_pred, c=y_std, cmap="viridis", alpha=0.7, s=25, edgecolors="none")
+        sc = ax.scatter(
+            y_true, y_pred, c=y_std, cmap="viridis", alpha=0.7, s=25, edgecolors="none"
+        )
         plt.colorbar(sc, ax=ax, label="Uncertainty (std)")
     else:
-        ax.scatter(y_true, y_pred, alpha=0.6, s=25, c=METHOD_COLORS.get(method, "steelblue"), edgecolors="none")
+        ax.scatter(
+            y_true,
+            y_pred,
+            alpha=0.6,
+            s=25,
+            c=METHOD_COLORS.get(method, "steelblue"),
+            edgecolors="none",
+        )
 
     name = METHOD_NAMES.get(method, method)
     ax.set_title(f"{name} ({subset})\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
@@ -836,12 +942,16 @@ def plot_single_force_parity(data: dict, method: str, output_dir: Path, subset: 
     f_pred = forces["pred_forces"]
     f_std = forces["std_forces"]
 
-    rmse = np.sqrt(np.mean((f_true - f_pred)**2))
+    rmse = np.sqrt(np.mean((f_true - f_pred) ** 2))
     mae = np.mean(np.abs(f_true - f_pred))
 
     fig, ax = plt.subplots(figsize=(6, 6))
     n_pts = len(f_true)
-    idx = np.random.choice(n_pts, min(n_pts, 10000), replace=False) if n_pts > 10000 else np.arange(n_pts)
+    idx = (
+        np.random.choice(n_pts, min(n_pts, 10000), replace=False)
+        if n_pts > 10000
+        else np.arange(n_pts)
+    )
 
     all_vals = np.concatenate([f_true, f_pred])
     vmin, vmax = all_vals.min(), all_vals.max()
@@ -850,10 +960,25 @@ def plot_single_force_parity(data: dict, method: str, output_dir: Path, subset: 
     ax.plot(lim, lim, "k--", lw=1, alpha=0.5)
 
     if np.any(f_std > 0):
-        sc = ax.scatter(f_true[idx], f_pred[idx], c=f_std[idx], cmap="plasma", alpha=0.4, s=10, edgecolors="none")
+        sc = ax.scatter(
+            f_true[idx],
+            f_pred[idx],
+            c=f_std[idx],
+            cmap="plasma",
+            alpha=0.4,
+            s=10,
+            edgecolors="none",
+        )
         plt.colorbar(sc, ax=ax, label="Uncertainty (std)")
     else:
-        ax.scatter(f_true[idx], f_pred[idx], alpha=0.3, s=10, c=METHOD_COLORS.get(method, "coral"), edgecolors="none")
+        ax.scatter(
+            f_true[idx],
+            f_pred[idx],
+            alpha=0.3,
+            s=10,
+            c=METHOD_COLORS.get(method, "coral"),
+            edgecolors="none",
+        )
 
     name = METHOD_NAMES.get(method, method)
     ax.set_title(f"{name} ({subset})\nRMSE: {rmse:.4f}, MAE: {mae:.4f}")
@@ -883,7 +1008,7 @@ def plot_single_force_components(data: dict, method: str, output_dir: Path, subs
     for i, (comp, color) in enumerate(zip(components, colors)):
         ct = f_true[i::3]
         cp = f_pred[i::3]
-        rmse = np.sqrt(np.mean((cp - ct)**2))
+        rmse = np.sqrt(np.mean((cp - ct) ** 2))
 
         all_vals = np.concatenate([ct, cp])
         vmin, vmax = all_vals.min(), all_vals.max()
@@ -928,8 +1053,14 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
         # Regression fit
         slope, intercept, _, _, _ = stats.linregress(y_std, errors)
         x_fit = np.array([y_std.min(), y_std.max()])
-        ax.plot(x_fit, slope * x_fit + intercept, "r-", linewidth=2, alpha=0.8,
-                label=f"fit (slope={slope:.1f})")
+        ax.plot(
+            x_fit,
+            slope * x_fit + intercept,
+            "r-",
+            linewidth=2,
+            alpha=0.8,
+            label=f"fit (slope={slope:.1f})",
+        )
         ax.legend(fontsize=8, loc="upper left")
         ax.set_title(f"{name} - Energy ({subset})\nSpearman r: {spearman_r:.3f}")
         ax.set_xlabel("Predicted Uncertainty (meV/atom)")
@@ -946,7 +1077,11 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
             f_pred = data["forces"]["pred_forces"]
             errors = np.abs(f_true - f_pred)
             n_pts = len(errors)
-            idx = np.random.choice(n_pts, min(n_pts, 5000), replace=False) if n_pts > 5000 else np.arange(n_pts)
+            idx = (
+                np.random.choice(n_pts, min(n_pts, 5000), replace=False)
+                if n_pts > 5000
+                else np.arange(n_pts)
+            )
             spearman_r, _ = stats.spearmanr(errors, f_std) if np.std(f_std) > 0 else (0, 1)
 
             fig, ax = plt.subplots(figsize=(6, 5))
@@ -956,8 +1091,14 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
             # Regression fit
             slope, intercept, _, _, _ = stats.linregress(f_std[idx], errors[idx])
             x_fit = np.array([f_std[idx].min(), f_std[idx].max()])
-            ax.plot(x_fit, slope * x_fit + intercept, "r-", linewidth=2, alpha=0.8,
-                    label=f"fit (slope={slope:.1f})")
+            ax.plot(
+                x_fit,
+                slope * x_fit + intercept,
+                "r-",
+                linewidth=2,
+                alpha=0.8,
+                label=f"fit (slope={slope:.1f})",
+            )
             ax.legend(fontsize=8, loc="upper left")
             ax.set_title(f"{name} - Forces ({subset})\nSpearman r: {spearman_r:.3f}")
             ax.set_xlabel(r"Predicted Uncertainty (eV/$\mathrm{\AA}$)")
@@ -973,7 +1114,11 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
             bin_means_x, bin_means_y, bin_stds_y = [], [], []
             for i in range(n_bins):
                 lo, hi = bin_edges[i], bin_edges[i + 1]
-                mask = (f_std >= lo) & (f_std <= hi) if i == n_bins - 1 else (f_std >= lo) & (f_std < hi)
+                mask = (
+                    (f_std >= lo) & (f_std <= hi)
+                    if i == n_bins - 1
+                    else (f_std >= lo) & (f_std < hi)
+                )
                 if mask.sum() > 0:
                     bin_means_x.append(f_std[mask].mean())
                     bin_means_y.append(errors[mask].mean())
@@ -983,9 +1128,17 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
             bin_stds_y = np.array(bin_stds_y)
 
             fig, ax = plt.subplots(figsize=(6, 5))
-            ax.errorbar(bin_means_x, bin_means_y, yerr=bin_stds_y,
-                        fmt="o-", color=color, capsize=3, markersize=6,
-                        linewidth=2, label="Binned mean |error|")
+            ax.errorbar(
+                bin_means_x,
+                bin_means_y,
+                yerr=bin_stds_y,
+                fmt="o-",
+                color=color,
+                capsize=3,
+                markersize=6,
+                linewidth=2,
+                label="Binned mean |error|",
+            )
             max_val = max(bin_means_x.max(), bin_means_y.max())
             ax.plot([0, max_val], [0, max_val], "k--", alpha=0.3, label="y = x")
             ax.set_title(f"{name} - Forces ({subset})\nSpearman r: {spearman_r:.3f}")
@@ -1009,7 +1162,9 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
         bin_means_x, bin_means_y, bin_stds_y = [], [], []
         for i in range(n_bins):
             lo, hi = bin_edges[i], bin_edges[i + 1]
-            mask = (y_std >= lo) & (y_std <= hi) if i == n_bins - 1 else (y_std >= lo) & (y_std < hi)
+            mask = (
+                (y_std >= lo) & (y_std <= hi) if i == n_bins - 1 else (y_std >= lo) & (y_std < hi)
+            )
             if mask.sum() > 0:
                 bin_means_x.append(y_std[mask].mean())
                 bin_means_y.append(errors[mask].mean())
@@ -1019,9 +1174,17 @@ def plot_single_error_vs_uq(data: dict, method: str, output_dir: Path, subset: s
         bin_stds_y = np.array(bin_stds_y)
 
         fig, ax = plt.subplots(figsize=(6, 5))
-        ax.errorbar(bin_means_x, bin_means_y, yerr=bin_stds_y,
-                    fmt="o-", color=color, capsize=3, markersize=6,
-                    linewidth=2, label="Binned mean |error|")
+        ax.errorbar(
+            bin_means_x,
+            bin_means_y,
+            yerr=bin_stds_y,
+            fmt="o-",
+            color=color,
+            capsize=3,
+            markersize=6,
+            linewidth=2,
+            label="Binned mean |error|",
+        )
         max_val = max(bin_means_x.max(), bin_means_y.max())
         ax.plot([0, max_val], [0, max_val], "k--", alpha=0.3, label="y = x")
         spearman_r, _ = stats.spearmanr(y_std, errors) if np.std(y_std) > 0 else (0, 1)
@@ -1053,7 +1216,9 @@ def plot_single_calibration(data: dict, method: str, output_dir: Path, subset: s
         ax.set_ylabel("Observed Coverage")
         ax.set_title(f"{name} - Energy Calibration ({subset})")
         ax.legend()
-        ax.set_xlim([0, 1]); ax.set_ylim([0, 1]); ax.set_aspect("equal")
+        ax.set_xlim([0, 1])
+        ax.set_ylim([0, 1])
+        ax.set_aspect("equal")
         fig.tight_layout()
         fig.savefig(output_dir / f"energy_calibration_{subset}.png")
         plt.close(fig)
@@ -1073,7 +1238,9 @@ def plot_single_calibration(data: dict, method: str, output_dir: Path, subset: s
             ax.set_ylabel("Observed Coverage")
             ax.set_title(f"{name} - Force Calibration ({subset})")
             ax.legend()
-            ax.set_xlim([0, 1]); ax.set_ylim([0, 1]); ax.set_aspect("equal")
+            ax.set_xlim([0, 1])
+            ax.set_ylim([0, 1])
+            ax.set_aspect("equal")
             fig.tight_layout()
             fig.savefig(output_dir / f"force_calibration_{subset}.png")
             plt.close(fig)
@@ -1091,7 +1258,9 @@ def generate_per_model_plots(data: dict, method: str, output_dir: Path, subset: 
     plot_single_calibration(data, method, model_dir, subset)
 
 
-def generate_per_run_metrics(runs: list, model_type: str, output_dir: Path, subset: str, alpha: float):
+def generate_per_run_metrics(
+    runs: list, model_type: str, output_dir: Path, subset: str, alpha: float
+):
     """Save per-run metrics for all runs of a model type."""
     if len(runs) == 0:
         return None
@@ -1106,6 +1275,7 @@ def generate_per_run_metrics(runs: list, model_type: str, output_dir: Path, subs
 # ============================================================================
 # Training Curves
 # ============================================================================
+
 
 def load_tensorboard_scalars(log_dir: Path, tags: list):
     """Load scalar data from tensorboard event files."""
@@ -1154,8 +1324,13 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
     curves_dir.mkdir(parents=True, exist_ok=True)
 
     # Common tags for all models
-    common_tags = ["rmse/val", "force_rmse/val", "total_rmse/val",
-                   "rmse/train", "force_rmse/train"]
+    common_tags = [
+        "rmse/val",
+        "force_rmse/val",
+        "total_rmse/val",
+        "rmse/train",
+        "force_rmse/train",
+    ]
     # BNN-specific tags
     bnn_tags = ["elbo/val", "kl/val", "nll/val", "elbo/train", "kl/train"]
 
@@ -1184,10 +1359,12 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
         # Energy + Force RMSE (val) per model
         fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-        for tag_idx, (tag, ylabel) in enumerate([
-            ("rmse/val", "Energy RMSE (meV/atom)"),
-            ("force_rmse/val", r"Force RMSE (eV/$\mathrm{\AA}$)"),
-        ]):
+        for tag_idx, (tag, ylabel) in enumerate(
+            [
+                ("rmse/val", "Energy RMSE (meV/atom)"),
+                ("force_rmse/val", r"Force RMSE (eV/$\mathrm{\AA}$)"),
+            ]
+        ):
             ax = axes[tag_idx]
             all_vals = []
             max_steps = 0
@@ -1207,10 +1384,20 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
                 mean_vals = truncated.mean(axis=0)
                 std_vals = truncated.std(axis=0)
                 steps_common = model_data[list(model_data.keys())[0]][tag]["steps"][:min_len]
-                ax.plot(steps_common, mean_vals, color=color, linewidth=2.5,
-                        label=f"Mean ({len(all_vals)} runs)")
-                ax.fill_between(steps_common, mean_vals - std_vals, mean_vals + std_vals,
-                                color=color, alpha=0.15)
+                ax.plot(
+                    steps_common,
+                    mean_vals,
+                    color=color,
+                    linewidth=2.5,
+                    label=f"Mean ({len(all_vals)} runs)",
+                )
+                ax.fill_between(
+                    steps_common,
+                    mean_vals - std_vals,
+                    mean_vals + std_vals,
+                    color=color,
+                    alpha=0.15,
+                )
 
             ax.set_xlabel("Epoch")
             ax.set_ylabel(ylabel)
@@ -1224,10 +1411,12 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
         # BNN-specific: ELBO + KL
         if mt != "nn":
             fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-            for tag_idx, (tag, ylabel) in enumerate([
-                ("elbo/val", "ELBO"),
-                ("kl/val", "KL Divergence"),
-            ]):
+            for tag_idx, (tag, ylabel) in enumerate(
+                [
+                    ("elbo/val", "ELBO"),
+                    ("kl/val", "KL Divergence"),
+                ]
+            ):
                 ax = axes[tag_idx]
                 all_vals = []
                 for run_name, rd in model_data.items():
@@ -1243,10 +1432,20 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
                     mean_vals = truncated.mean(axis=0)
                     std_vals = truncated.std(axis=0)
                     steps_common = model_data[list(model_data.keys())[0]][tag]["steps"][:min_len]
-                    ax.plot(steps_common, mean_vals, color=color, linewidth=2.5,
-                            label=f"Mean ({len(all_vals)} runs)")
-                    ax.fill_between(steps_common, mean_vals - std_vals, mean_vals + std_vals,
-                                    color=color, alpha=0.15)
+                    ax.plot(
+                        steps_common,
+                        mean_vals,
+                        color=color,
+                        linewidth=2.5,
+                        label=f"Mean ({len(all_vals)} runs)",
+                    )
+                    ax.fill_between(
+                        steps_common,
+                        mean_vals - std_vals,
+                        mean_vals + std_vals,
+                        color=color,
+                        alpha=0.15,
+                    )
 
                 ax.set_xlabel("Epoch")
                 ax.set_ylabel(ylabel)
@@ -1260,10 +1459,12 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
     # --- 2) Cross-method comparison ---
     # Energy RMSE val: all methods on same plot
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-    for tag_idx, (tag, ylabel) in enumerate([
-        ("rmse/val", "Energy RMSE (meV/atom)"),
-        ("force_rmse/val", r"Force RMSE (eV/$\mathrm{\AA}$)"),
-    ]):
+    for tag_idx, (tag, ylabel) in enumerate(
+        [
+            ("rmse/val", "Energy RMSE (meV/atom)"),
+            ("force_rmse/val", r"Force RMSE (eV/$\mathrm{\AA}$)"),
+        ]
+    ):
         ax = axes[tag_idx]
         for mt in available_models:
             model_data = all_data[mt]
@@ -1284,8 +1485,13 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
                 std_vals = truncated.std(axis=0)
                 steps_common = list(model_data.values())[0][tag]["steps"][:min_len]
                 ax.plot(steps_common, mean_vals, color=color, linewidth=2, label=name)
-                ax.fill_between(steps_common, mean_vals - std_vals, mean_vals + std_vals,
-                                color=color, alpha=0.1)
+                ax.fill_between(
+                    steps_common,
+                    mean_vals - std_vals,
+                    mean_vals + std_vals,
+                    color=color,
+                    alpha=0.1,
+                )
 
         ax.set_xlabel("Epoch")
         ax.set_ylabel(ylabel)
@@ -1303,23 +1509,47 @@ def plot_training_curves(train_dir: Path, output_dir: Path):
 # Main Analysis
 # ============================================================================
 
+
 def main():
     parser = argparse.ArgumentParser(description="Analyze TiO2 force model predictions")
-    parser.add_argument("--pred-dir", type=str, default="bnn_aenet/logs/forces_pred",
-                       help="Directory with prediction outputs")
-    parser.add_argument("--output-dir", type=str, default="plots/TiO2_forces",
-                       help="Output directory for plots and tables")
-    parser.add_argument("--subsets", type=str, nargs="+", default=["train", "val", "test"],
-                       help="Data subsets to analyze")
-    parser.add_argument("--alpha", type=float, default=0.1,
-                       help="Alpha for total_rmse = (1-alpha)*E_rmse + alpha*F_rmse")
-    parser.add_argument("--n-sub-ensemble", type=int, default=5,
-                       help="Number of models per sub-ensemble")
-    parser.add_argument("--max-sub-ensembles", type=int, default=20,
-                       help="Maximum number of sub-ensembles")
-    parser.add_argument("--train-dir", type=str, default=None,
-                       help="Directory with training logs (for training curves). "
-                            "If not set, inferred from pred-dir as ../train")
+    parser.add_argument(
+        "--pred-dir",
+        type=str,
+        default="bnn_aenet/logs/forces_pred",
+        help="Directory with prediction outputs",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="plots/TiO2_forces",
+        help="Output directory for plots and tables",
+    )
+    parser.add_argument(
+        "--subsets",
+        type=str,
+        nargs="+",
+        default=["train", "val", "test"],
+        help="Data subsets to analyze",
+    )
+    parser.add_argument(
+        "--alpha",
+        type=float,
+        default=0.1,
+        help="Alpha for total_rmse = (1-alpha)*E_rmse + alpha*F_rmse",
+    )
+    parser.add_argument(
+        "--n-sub-ensemble", type=int, default=5, help="Number of models per sub-ensemble"
+    )
+    parser.add_argument(
+        "--max-sub-ensembles", type=int, default=20, help="Maximum number of sub-ensembles"
+    )
+    parser.add_argument(
+        "--train-dir",
+        type=str,
+        default=None,
+        help="Directory with training logs (for training curves). "
+        "If not set, inferred from pred-dir as ../train",
+    )
 
     args = parser.parse_args()
 
@@ -1382,7 +1612,12 @@ def main():
         # ============================================
         # Save per-run metrics for every model type
         # ============================================
-        for mtype, runs in [("nn", nn_runs), ("lrt", lrt_runs), ("fo", fo_runs), ("rad", rad_runs)]:
+        for mtype, runs in [
+            ("nn", nn_runs),
+            ("lrt", lrt_runs),
+            ("fo", fo_runs),
+            ("rad", rad_runs),
+        ]:
             generate_per_run_metrics(runs, mtype, output_dir, subset, args.alpha)
 
         # ============================================
@@ -1413,9 +1648,11 @@ def main():
 
             print(f"\n  {name.upper()} ({len(runs)} runs):")
             print(f"    Best overall: {sel['best_overall']['metrics']['run_name']}")
-            print(f"      E_RMSE={sel['best_overall']['metrics']['energy_rmse']:.4f}, "
-                  f"F_RMSE={sel['best_overall']['metrics'].get('force_rmse', 'N/A')}, "
-                  f"Total={sel['best_overall']['metrics']['total_rmse']:.4f}")
+            print(
+                f"      E_RMSE={sel['best_overall']['metrics']['energy_rmse']:.4f}, "
+                f"F_RMSE={sel['best_overall']['metrics'].get('force_rmse', 'N/A')}, "
+                f"Total={sel['best_overall']['metrics']['total_rmse']:.4f}"
+            )
 
             print(f"    Best energy:  {sel['best_energy']['metrics']['run_name']}")
             print(f"      E_RMSE={sel['best_energy']['metrics']['energy_rmse']:.4f}")
@@ -1449,12 +1686,16 @@ def main():
         if len(nn_runs) > 0:
             # Use the first run as a representative single NN for individual plots
             nn_mean_data = {
-                "energy_df": pd.DataFrame({
-                    "true": nn_runs[0]["energy_df"]["true"].values,
-                    "preds": np.mean([r["energy_df"]["preds"].values for r in nn_runs], axis=0),
-                    "stds": np.std([r["energy_df"]["preds"].values for r in nn_runs], axis=0),
-                    "n_atoms": nn_runs[0]["energy_df"]["n_atoms"].values,
-                }),
+                "energy_df": pd.DataFrame(
+                    {
+                        "true": nn_runs[0]["energy_df"]["true"].values,
+                        "preds": np.mean(
+                            [r["energy_df"]["preds"].values for r in nn_runs], axis=0
+                        ),
+                        "stds": np.std([r["energy_df"]["preds"].values for r in nn_runs], axis=0),
+                        "n_atoms": nn_runs[0]["energy_df"]["n_atoms"].values,
+                    }
+                ),
                 "forces": None,
             }
             if all(r["forces"] is not None for r in nn_runs):
@@ -1504,8 +1745,17 @@ def main():
         print(f"SUMMARY TABLE ({subset})")
         print("=" * 100)
 
-        key_cols = ["method", "energy_rmse", "energy_mae", "force_rmse", "force_mae",
-                    "total_rmse", "energy_nll", "force_nll", "energy_ece"]
+        key_cols = [
+            "method",
+            "energy_rmse",
+            "energy_mae",
+            "force_rmse",
+            "force_mae",
+            "total_rmse",
+            "energy_nll",
+            "force_nll",
+            "energy_ece",
+        ]
         avail_cols = [c for c in key_cols if c in summary_df.columns]
         print(summary_df[avail_cols].to_string(index=False, float_format="%.4f"))
 
@@ -1514,8 +1764,9 @@ def main():
         print(f"\nSaved: {tables_dir / f'summary_{subset}.csv'}")
 
         latex_df = summary_df[avail_cols].copy()
-        latex_str = latex_df.to_latex(index=False, float_format="%.4f",
-                                      caption=f"TiO2 Force Model Comparison ({subset})")
+        latex_str = latex_df.to_latex(
+            index=False, float_format="%.4f", caption=f"TiO2 Force Model Comparison ({subset})"
+        )
         with open(tables_dir / f"summary_{subset}.tex", "w") as f:
             f.write(latex_str)
         print(f"Saved: {tables_dir / f'summary_{subset}.tex'}")

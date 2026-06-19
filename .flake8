@@ -1,9 +1,9 @@
 [flake8]
 max-line-length = 100
 # Tolerances matched to .pre-commit-config.yaml so `flake8` and the pre-commit
-# hook agree. E402/E501/F401/F841 are tolerated repo-wide (re-export __init__
-# files, long descriptor lines, legacy locals).
-extend-ignore = E203,E402,E501,F401,F841
+# hook agree. E402/E501/F401/F541/F841 are tolerated repo-wide (re-export
+# __init__ files, long descriptor lines, empty f-strings, legacy locals).
+extend-ignore = E203,E402,E501,F401,F541,F841
 inline-quotes = '
 multiline-quotes = """
 exclude = .ipynb_checkpoints
@@ -12,13 +12,10 @@ exclude = .ipynb_checkpoints
 # these files is still checked for everything else.
 per-file-ignores =
     bnn_aenet/datamodule/aenet/*:E711,F403,F405
-    bnn_aenet/models/bnn.py:E741,F541
+    bnn_aenet/models/bnn.py:E741
     bnn_aenet/models/bnn_forces.py:E741
     bnn_aenet/models/likelihoods.py:E741
     bnn_aenet/models/likelihoods_hetero.py:E741
     bnn_aenet/models/nn.py:E741
     bnn_aenet/models/guides/radial.py:E266
     bnn_aenet/tasks/train.py:E722
-    bnn_aenet/tasks/hpsearch.py:F541
-    bnn_aenet/tasks/plot.py:F541
-    bnn_aenet/notebooks/TiO2/create_plots.py:F541

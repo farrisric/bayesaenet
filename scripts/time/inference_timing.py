@@ -23,15 +23,18 @@ Usage
     python scripts/time/inference_timing.py --device cpu --mc-samples 5 --repeats 2  # quick smoke test
 """
 
-# Import torch BEFORE numpy/pandas (CUDA/MKL init order; see predict_forces.py).
-import torch
-
 import argparse
 import csv
 from pathlib import Path
 
+# isort: off
+# Import torch BEFORE numpy/pandas (CUDA/MKL init order; see predict_forces.py).
+import torch
+
 import numpy as np
 import pyrootutils
+
+# isort: on
 
 root = pyrootutils.setup_root(
     search_from=__file__,
@@ -89,6 +92,7 @@ def build_model(model_type, dm, mc_eval):
         return NN_Forces(net=net, optimizer=torch.optim.Adam, alpha=0.1)
 
     import pyro
+
     from bnn_aenet.models.bnn_forces import BNN_Forces
 
     pyro.clear_param_store()  # avoid state bleed between BNN builds
@@ -182,10 +186,18 @@ def main():
         default=str(root / "data" / "TiO" / "train_forces.in"),
         help="Path to TiO2 train_forces.in",
     )
-    p.add_argument("--batch-size", type=int, default=128,
-                   help="Eval batch size (same for all models, for fairness).")
-    p.add_argument("--mc-samples", type=int, default=20,
-                   help="mc_samples_eval for the BNNs (paper default 20).")
+    p.add_argument(
+        "--batch-size",
+        type=int,
+        default=128,
+        help="Eval batch size (same for all models, for fairness).",
+    )
+    p.add_argument(
+        "--mc-samples",
+        type=int,
+        default=20,
+        help="mc_samples_eval for the BNNs (paper default 20).",
+    )
     p.add_argument("--warmup", type=int, default=2)
     p.add_argument("--repeats", type=int, default=5)
     p.add_argument(
@@ -200,8 +212,9 @@ def main():
 
     print("=" * 60)
     print("Inference-cost benchmark (energy + forces, TiO2 test set)")
-    print(f"  device={device}  batch_size={args.batch_size}  "
-          f"mc_samples_eval={args.mc_samples}")
+    print(
+        f"  device={device}  batch_size={args.batch_size}  " f"mc_samples_eval={args.mc_samples}"
+    )
     print(f"  warmup={args.warmup}  repeats={args.repeats}")
     print("=" * 60)
 
@@ -220,17 +233,21 @@ def main():
         total_mean, total_std = mean_s * scale, std_s * scale
         per_struct_ms = total_mean / n_struct * 1000.0
         label = "DE (x5 members)" if mt == "de" else mt.upper()
-        print(f"{label:<18} total {total_mean:8.3f} +/- {total_std:.3f} s "
-              f"| {per_struct_ms:7.2f} ms/structure")
-        rows.append({
-            "model": mt.upper(),
-            "n_structures": n_struct,
-            "mc_samples": args.mc_samples if mt != "de" else 1,
-            "batch_size": args.batch_size,
-            "total_time_s_mean": round(total_mean, 4),
-            "total_time_s_std": round(total_std, 4),
-            "per_structure_ms": round(per_struct_ms, 4),
-        })
+        print(
+            f"{label:<18} total {total_mean:8.3f} +/- {total_std:.3f} s "
+            f"| {per_struct_ms:7.2f} ms/structure"
+        )
+        rows.append(
+            {
+                "model": mt.upper(),
+                "n_structures": n_struct,
+                "mc_samples": args.mc_samples if mt != "de" else 1,
+                "batch_size": args.batch_size,
+                "total_time_s_mean": round(total_mean, 4),
+                "total_time_s_std": round(total_std, 4),
+                "per_structure_ms": round(per_struct_ms, 4),
+            }
+        )
 
     with open(args.output, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
@@ -240,8 +257,10 @@ def main():
 
     print("\nLaTeX 'Inference Time (s)' column for Table 9:")
     for r in rows:
-        print(f"  {r['model']:<5} & {r['total_time_s_mean']:.2f} "
-              f"$\\pm$ {r['total_time_s_std']:.2f} \\\\")
+        print(
+            f"  {r['model']:<5} & {r['total_time_s_mean']:.2f} "
+            f"$\\pm$ {r['total_time_s_std']:.2f} \\\\"
+        )
 
 
 if __name__ == "__main__":

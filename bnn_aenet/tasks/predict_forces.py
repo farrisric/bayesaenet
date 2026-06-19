@@ -16,15 +16,18 @@ import os
 import sys
 from pathlib import Path
 
-import lightning.pytorch as L
-import numpy as np
-import pandas as pd
-
+# isort: off
 # IMPORTANT: import torch BEFORE numpy/pandas to avoid segfault on iqtc10 nodes
 # where CUDA/MKL library initialization order matters
 import torch
+
+import lightning.pytorch as L
+import numpy as np
+import pandas as pd
 import yaml
 from lightning.pytorch import Trainer
+
+# isort: on
 
 # ALL bnn_aenet imports are lazy to avoid triggering bnn_aenet/models/__init__.py
 # which imports pyro/tyxe and segfaults on iqtc10 nodes when combined with
