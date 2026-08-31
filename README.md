@@ -1,11 +1,15 @@
 # bayesian-aenet
 
+[![Paper](https://img.shields.io/badge/Paper-10.1088%2F2632--2153%2Fae9de8-blue)](https://doi.org/10.1088/2632-2153/ae9de8)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22201404.svg)](https://doi.org/10.5281/zenodo.22201404)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 **bayesian-aenet** is a research-focused extension of the [aenet-PyTorch](https://pubs.aip.org/aip/jcp/article/158/16/164105/2885330/anet-PyTorch-A-GPU-supported-implementation-for) framework for benchmarking **uncertainty quantification (UQ)** methods in **machine learning interatomic potentials (MLIPs)**. It enables the systematic comparison of two widely used strategies:
 
 - **Deep Ensembles (DE)** — multiple independently trained deterministic networks
 - **Variational Bayesian Neural Networks (VBNNs)** — Pyro/TyXe ELBO-based inference
 
-The code accompanies the paper *Bayesian Neural Networks versus deep ensembles for uncertainty quantification in machine learning interatomic potentials* (see [Citation](#citation)).
+The code accompanies the paper [*Bayesian neural networks versus deep ensembles for uncertainty quantification in machine learning interatomic potentials*](https://doi.org/10.1088/2632-2153/ae9de8), published in *Machine Learning: Science and Technology* (2026) — see [Citation](#citation).
 
 ---
 
@@ -118,14 +122,28 @@ Analysis and plotting utilities read from these locations.
 If you use this software, please cite the accompanying paper:
 
 ```bibtex
-@article{farris2025bnn,
-  title   = {Bayesian Neural Networks versus deep ensembles for uncertainty
+@article{farris2026bnn,
+  title   = {Bayesian neural networks versus deep ensembles for uncertainty
              quantification in machine learning interatomic potentials},
   author  = {Farris, Riccardo and Telari, Emanuele and Artrith, Nongnuch and
              Neyman, Konstantin M. and Bruix, Albert},
-  journal = {arXiv preprint},
-  year    = {2025},
-  url     = {https://github.com/farrisric/bayesaenet}
+  journal = {Machine Learning: Science and Technology},
+  year    = {2026},
+  doi     = {10.1088/2632-2153/ae9de8}
+}
+```
+
+The software itself is archived on Zenodo and can be cited as:
+
+```bibtex
+@software{farris2026bayesaenet,
+  author    = {Farris, Riccardo},
+  title     = {bayesaenet: uncertainty quantification for machine
+               learning interatomic potentials},
+  year      = {2026},
+  publisher = {Zenodo},
+  version   = {1.0.0},
+  doi       = {10.5281/zenodo.22201404}
 }
 ```
 
