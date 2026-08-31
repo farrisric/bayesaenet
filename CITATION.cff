@@ -5,7 +5,7 @@ type: software
 version: 1.0.0
 license: MIT
 repository-code: "https://github.com/farrisric/bayesaenet"
-# TODO: set date-released when a release/DOI is minted (e.g. via Zenodo)
+date-released: 2026-08-31
 authors:
   - family-names: Farris
     given-names: Riccardo
@@ -13,19 +13,23 @@ authors:
     affiliation: "Leitat Technological Center & Universitat de Barcelona (IQTCUB)"
 preferred-citation:
   type: article
-  title: "Bayesian Neural Networks versus deep ensembles for uncertainty quantification in machine learning interatomic potentials"
-  year: 2025
-  # TODO: update journal/DOI once published (currently a preprint)
-  journal: "arXiv preprint"
+  title: "Bayesian neural networks versus deep ensembles for uncertainty quantification in machine learning interatomic potentials"
+  year: 2026
+  journal: "Machine Learning: Science and Technology"
+  doi: "10.1088/2632-2153/ae9de8"
   authors:
     - family-names: Farris
       given-names: Riccardo
+      orcid: "https://orcid.org/0000-0002-8157-6786"
     - family-names: Telari
       given-names: Emanuele
+      orcid: "https://orcid.org/0009-0009-3296-959X"
     - family-names: Artrith
       given-names: Nongnuch
+      orcid: "https://orcid.org/0000-0003-1153-6583"
     - family-names: Neyman
       given-names: "Konstantin M."
       orcid: "https://orcid.org/0000-0002-5242-5567"
     - family-names: Bruix
       given-names: Albert
+      orcid: "https://orcid.org/0000-0003-2585-5542"
