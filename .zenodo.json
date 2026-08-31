@@ -1,0 +1,21 @@
+{
+  "title": "bayesaenet: uncertainty quantification for machine learning interatomic potentials",
+  "description": "Variational Bayesian neural networks (LRT, Radial, Flipout) and deep ensembles for aenet-PyTorch machine learning interatomic potentials, with joint energy+force ELBO training, Optuna hyperparameter search, and uncertainty quantification metrics. Software accompanying the paper doi:10.1088/2632-2153/ae9de8.",
+  "upload_type": "software",
+  "license": "MIT",
+  "creators": [
+    {
+      "name": "Farris, Riccardo",
+      "orcid": "0000-0002-8157-6786",
+      "affiliation": "Leitat Technological Center & Universitat de Barcelona (IQTCUB)"
+    }
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.1088/2632-2153/ae9de8",
+      "relation": "isSupplementTo",
+      "resource_type": "publication-article",
+      "scheme": "doi"
+    }
+  ]
+}
