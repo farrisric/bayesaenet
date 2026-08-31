@@ -6,6 +6,7 @@ version: 1.0.0
 license: MIT
 repository-code: "https://github.com/farrisric/bayesaenet"
 date-released: 2026-08-31
+doi: "10.5281/zenodo.22201404"
 authors:
   - family-names: Farris
     given-names: Riccardo
