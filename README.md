@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo-dark.svg">
+    <img src="docs/assets/logo.svg" alt="bayesian-aenet logo" width="260">
+  </picture>
+</p>
+
 # bayesian-aenet
 
 [![Paper](https://img.shields.io/badge/Paper-10.1088%2F2632--2153%2Fae9de8-blue)](https://doi.org/10.1088/2632-2153/ae9de8)
